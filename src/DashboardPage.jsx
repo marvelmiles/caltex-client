@@ -44,15 +44,14 @@ const DashboardPage = () => {
       try {
         const res = await http.get(
           `/users/${currentUser.id}/transaction-metrics`,
-          {
-            withCredentials: true
-          }
+          { withCredentials: true }
         );
 
         if (!res.success) throw res;
 
         setTransMetrics(res.data);
       } catch (err) {
+        console.log(err, " metric err");
         setSnackBar(err.message);
       }
     })();

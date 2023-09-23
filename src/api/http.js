@@ -2,8 +2,6 @@ import rootAxios from "axios";
 import { API_ENDPOINT } from "../config";
 import { HTTP_401_MSG } from "../config/constants";
 
-console.log(API_ENDPOINT, "API_MODE_...");
-
 let isRefreshing = false;
 let requestQueue = [];
 
@@ -60,29 +58,23 @@ const http = rootAxios.create({
   baseURL: API_ENDPOINT
 });
 
-// http.interceptors.request.use(function(config) {
-//   // if (
-//   //   config.headers["authorization"] ||
-//   //   /delete|put|post|patch/.test(config.method)
-//   // )
+http.interceptors.request.use(function(config) {
+  if (
+    config.headers["authorization"] ||
+    /delete|put|post|patch/.test(config.method)
+  )
+    config.withCredentials =
+      config.withCredentials === undefined ? true : config.withCredentials;
 
-//   config.withCredentials =
-//     config.withCredentials === undefined
-//       ? true
-//       : config.withCredentials || true;
+  const source = rootAxios.CancelToken.source(); // create new source token on every request
 
-//   const source = rootAxios.CancelToken.source(); // create new source token on every request
+  config.cancelToken = source.token;
 
-//   console.log(config.url, config.withCredentials, "---with cr");
+  return config;
+});
 
-//   config.cancelToken = source.token;
-
-//   return config;
-// });
 http.interceptors.response.use(
   response => {
-    console.log(response, response.headers, "http succ response");
-    console.log(response.headers["set-cookie"], "cooke");
     return Promise.resolve(response.data);
   },
   async err => {

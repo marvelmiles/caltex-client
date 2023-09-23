@@ -80,9 +80,9 @@ const App = () => {
     (
       snackbar = {
         autoHideDuration: 10000,
-        message: "Access forbidden try login again!"
+        message: "Something went wrong!"
       },
-      close
+      close = true
     ) => {
       setSnackbar({
         open: true,
@@ -107,10 +107,10 @@ const App = () => {
       err => {
         if (err.status === 403) {
           console.log(err, " in app 403 ");
-
           navigate(`/auth/login?redirect=${createRelativeUrl()}`, {
             state: locState
           });
+
           const taskId = setTimeout(() => {
             setSnackBar(
               err.code === HTTP_CODE_ACCOUNT_VERIFICATION_ERROR
@@ -118,7 +118,7 @@ const App = () => {
                 : "You need to login! Session timeout."
             );
             clearTimeout(taskId);
-          });
+          }, 500);
         }
         return Promise.reject(err);
       }
@@ -331,10 +331,7 @@ const App = () => {
         </Routes>
         <Snackbar
           open={snackbar.open}
-          autoHideDuration={
-            snackbar.autoHideDuration ||
-            (snackbar.severity === "success" ? 5000 : 10000)
-          }
+          autoHideDuration={snackbar.autoHideDuration || 8000}
           onClose={snackbar.close ? closeSnackBar : undefined}
           sx={{
             maxWidth: snackbar.maxWidth || "400px",

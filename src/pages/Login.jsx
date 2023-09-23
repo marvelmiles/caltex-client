@@ -20,8 +20,6 @@ const Login = props => {
 
   const { currentUser, locState } = useAuth();
 
-  console.log(currentUser);
-
   const stateRef = useRef({
     logout: currentUser.isLogin
   });
@@ -51,11 +49,12 @@ const Login = props => {
     const stateCtx = stateRef.current;
 
     if (stateCtx.logout) {
+      console.log("logging out...");
       stateCtx.logout = false;
       dispatch(signoutUser());
-      setSnackBar("Logged out successfully!");
+      setSnackBar("You are logged out!");
     }
-  }, [dispatch, setSnackBar, currentUser.isLogin]);
+  }, [dispatch, setSnackBar]);
 
   const onSubmit = useCallback(
     async e => {
@@ -74,7 +73,7 @@ const Login = props => {
 
         const params = new URLSearchParams(window.location.search);
 
-        // navigate(params.get("redirect") || "/u/dashboard", { state: locState });
+        navigate(params.get("redirect") || "/u/dashboard", { state: locState });
       } catch ({ message, code }) {
         setSnackBar(
           code === HTTP_CODE_ACCOUNT_VERIFICATION_ERROR ? (

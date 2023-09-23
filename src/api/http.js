@@ -81,7 +81,8 @@ const http = rootAxios.create({
 // });
 http.interceptors.response.use(
   response => {
-    console.log(response, "http succ response");
+    console.log(response, response.headers, "http succ response");
+    console.log(response.headers["set-cookie"], "cooke");
     return Promise.resolve(response.data);
   },
   async err => {

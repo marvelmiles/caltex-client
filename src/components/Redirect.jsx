@@ -13,10 +13,7 @@ const Redirect = ({
   const { setSnackBar, locState } = useCtx();
 
   useEffect(() => {
-    const taskId = setTimeout(() => {
-      setSnackBar(message);
-      clearTimeout(taskId);
-    }, 500);
+    setSnackBar(message, true);
   }, [setSnackBar, message]);
 
   return <Navigate {...rest} state={locState} to={to} />;

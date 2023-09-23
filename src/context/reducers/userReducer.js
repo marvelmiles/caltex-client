@@ -17,7 +17,7 @@ const userSlice = createSlice({
     signoutUser(state, { payload }) {
       if (state.currentUser.isLogin)
         http
-          .patch("/auth/signout")
+          .patch("/auth/signout", {}, { _noRefresh: true })
           .then(res => console.log("signed out successful!"))
           .catch(err => console.log(err));
 

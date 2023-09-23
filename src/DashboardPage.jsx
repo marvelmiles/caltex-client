@@ -51,7 +51,6 @@ const DashboardPage = () => {
 
         setTransMetrics(res.data);
       } catch (err) {
-        console.log(err, " metric err");
         setSnackBar(err.message);
       }
     })();

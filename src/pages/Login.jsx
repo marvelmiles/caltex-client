@@ -49,10 +49,9 @@ const Login = props => {
     const stateCtx = stateRef.current;
 
     if (stateCtx.logout) {
-      console.log("logging out...");
       stateCtx.logout = false;
       dispatch(signoutUser());
-      setSnackBar("You are logged out!");
+      setSnackBar("You have been logged out!", true);
     }
   }, [dispatch, setSnackBar]);
 

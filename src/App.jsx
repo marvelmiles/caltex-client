@@ -65,7 +65,9 @@ const App = () => {
     </IconButton>
   );
 
-  const closeSnackBar = useCallback(() => {
+  const closeSnackBar = useCallback((e, reason) => {
+    if (reason === "clickaway") return;
+
     setSnackbar(snackbar =>
       snackbar.open
         ? {
@@ -82,17 +84,22 @@ const App = () => {
         autoHideDuration: 10000,
         message: "Something went wrong!"
       },
-      close = true
+      withDelay
     ) => {
-      setSnackbar({
+      const config = {
         open: true,
         ...(snackbar.message
           ? snackbar
           : {
-              message: snackbar,
-              close
+              message: snackbar
             })
-      });
+      };
+      if (withDelay) {
+        const taskId = setTimeout(() => {
+          setSnackBar(config);
+          clearTimeout(taskId);
+        }, 500);
+      } else setSnackbar(config);
     },
     []
   );
@@ -111,14 +118,12 @@ const App = () => {
             state: locState
           });
 
-          const taskId = setTimeout(() => {
-            setSnackBar(
-              err.code === HTTP_CODE_ACCOUNT_VERIFICATION_ERROR
-                ? err.message
-                : "You need to login! Session timeout."
-            );
-            clearTimeout(taskId);
-          }, 500);
+          setSnackBar(
+            err.code === HTTP_CODE_ACCOUNT_VERIFICATION_ERROR
+              ? err.message
+              : "You need to login! Session timeout.",
+            true
+          );
         }
         return Promise.reject(err);
       }
@@ -332,7 +337,9 @@ const App = () => {
         <Snackbar
           open={snackbar.open}
           autoHideDuration={snackbar.autoHideDuration || 8000}
-          onClose={snackbar.close ? closeSnackBar : undefined}
+          onClose={
+            snackbar.closeSnackBar === undefined ? closeSnackBar : undefined
+          }
           sx={{
             maxWidth: snackbar.maxWidth || "400px",
             "&::first-letter": {

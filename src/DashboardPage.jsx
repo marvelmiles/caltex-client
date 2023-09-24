@@ -83,6 +83,11 @@ const DashboardPage = () => {
           <img src={deposit} id="other-icon" alt="deposit-icon" />
           Deposit
         </Link>
+
+        <Link to="/Invest/InvestPage?tradeType=forex" class="linkss">
+          <img src={deposit} id="other-icon" alt="deposit-icon" />
+          Invest
+        </Link>
         <Link to="/Withdraw/withdrawPage" class="linkss">
           <img src={withdraw} id="other-icon" alt="withdraw-icon" />
           Withdraw

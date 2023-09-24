@@ -265,7 +265,7 @@ const App = () => {
                     duration: 20,
                     tradeType: "crypto",
                     roiPct: 3.5,
-                    plan: "master"
+                    plan: "professional"
                   }}
                 />
               ) : (

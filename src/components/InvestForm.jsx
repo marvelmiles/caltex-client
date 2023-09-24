@@ -53,8 +53,9 @@ const InvestForm = ({
         const inputValue = Number(formData[keyName]);
 
         const err = "Input value is invalid.";
+
         if (inputValue > -1) {
-          if (inputValue > maxAmount && prevData)
+          if (minAmount < inputValue && inputValue > maxAmount && prevData)
             formData.amount = prevData.amount;
           else {
             const interest = inputValue * (roiPct / 100);
@@ -121,7 +122,7 @@ const InvestForm = ({
 
       return formData;
     },
-    [setSnackBar, maxAmount, roiPct, defaultDuration]
+    [setSnackBar, maxAmount, roiPct, defaultDuration, minAmount]
   );
 
   const {
@@ -140,16 +141,25 @@ const InvestForm = ({
     try {
       const { withErr, formData } = handleSubmit(e);
 
-      if (withErr) return setSnackBar("Investment details are invalid!");
+      if (withErr) {
+        resetForm(true);
+        return setSnackBar("Investment details are invalid!");
+      }
 
-      if (formData.amount < minAmount)
-        return setSnackBar(`Amount lesser than ${minAmount.toLocaleString()}`);
+      if (formData.amount < minAmount) {
+        resetForm(true);
+        return setSnackBar(
+          `Amount must be at least ${minAmount.toLocaleString()} or higher!`
+        );
+      }
 
-      if (formData.duration < 0)
+      if (formData.duration < 0) {
+        resetForm(true);
+
         return setSnackBar(
           "Investment date timeframe is invalid. Expect a future time date."
         );
-
+      }
       const response = await http.post(`/investments/invest`, formData);
 
       if (!response.success) {

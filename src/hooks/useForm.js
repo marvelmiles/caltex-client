@@ -172,7 +172,7 @@ const useForm = (config = {}) => {
 
         setIsSubmitting(true);
       }
-      console.log(errors, withErr, { ...formData }, "...post handle submit");
+      console.log(errors, withErr, { ...data }, "...post handle submit");
       return { formData: data, withErr, errors, setIsSubmitting };
     },
     [formData, errors, required, serializeData]

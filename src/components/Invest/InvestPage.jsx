@@ -285,7 +285,7 @@ const InvestPage = () => {
                                 class="master-plan"
                               >
                                 Master Plan 2.5% ROI, 21 DAYS PACKAGE
-                                $50000-$100000
+                                $51000-$100000
                               </Link>
                             </div>
                           </div>

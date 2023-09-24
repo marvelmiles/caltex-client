@@ -297,7 +297,7 @@ const App = () => {
               isLoggedIn ? (
                 <InvestTab
                   investFormProps={{
-                    minAmount: 50000,
+                    minAmount: 51000,
                     maxAmount: 100000,
                     duration: 21,
                     plan: "master"

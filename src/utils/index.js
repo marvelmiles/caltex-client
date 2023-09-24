@@ -3,10 +3,8 @@ export const setFutureDate = days => {
 };
 
 export const getDaysDifference = (startDate, endDate) => {
-  if (!(startDate && endDate) || !(startDate.getTime() && endDate.getTime()))
-    return;
-  const utcStartDate = new Date(startDate.toISOString().substring(0, 10));
-  const utcEndDate = new Date(endDate.toISOString().substring(0, 10));
+  const utcStartDate = new Date(startDate);
+  const utcEndDate = new Date(endDate);
 
   return Math.floor((utcEndDate - utcStartDate) / (1000 * 60 * 60 * 24));
 };

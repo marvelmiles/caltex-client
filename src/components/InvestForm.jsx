@@ -99,14 +99,36 @@ const InvestForm = ({
         if (endYear === startYear && endMth === startMth && endDay < startDay)
           endDay = setFutureDate(defaultDuration).getDate();
 
-        const startDate = new Date(startYear, startMth, startDay);
-        const endDate = new Date(endYear, endMth, endDay);
+        const hr = today.getHours();
+        const mn = today.getMinutes();
+        const s = today.getSeconds();
+        const ms = today.getMilliseconds();
+
+        const startDate = Date.UTC(
+          startYear,
+          startMth,
+          startDay,
+          hr,
+          mn,
+          s,
+          ms
+        );
+
+        const endDate = Date.UTC(endYear, endMth, endDay, hr, mn, s, ms);
+
+        // const startDate = new Date(
+        //   startYear,
+        //   startMth,
+        //   startDay
+        // ).toLocaleString();
+
+        // const endDate = new Date(endYear, endMth, endDay).toLocaleString();
 
         const duration = getDaysDifference(startDate, endDate);
 
         if (duration >= 0) {
-          formData.startDate = startDate.toISOString();
-          formData.endDate = endDate.toISOString();
+          formData.startDate = startDate;
+          formData.endDate = endDate;
           formData.duration = duration;
 
           formData.startYear = startYear;

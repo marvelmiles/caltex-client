@@ -64,8 +64,14 @@ const StripeForm = props => {
       setLoading(false);
   }, [elements, types]);
 
-  const createErrMsg = (type, errors = {}, val = "") => {
-    errors[type] = val ? `${type} is invalid!` : `${type} is required.`;
+  const createErrMsg = (type, errors = {}, required) => {
+    const msg = {
+      cardNumber: "card number",
+      cardExpiry: "card expiry date",
+      cardCvc: "card security number"
+    }[type];
+
+    errors[type] = required ? `Your ${msg} is required` : `Invalid ${msg}`;
 
     return errors[type];
   };
@@ -73,7 +79,7 @@ const StripeForm = props => {
   useEffect(() => {
     if (!loading) {
       const handleStripeElementChange = event => {
-        if (event.error || (!event.empty && !event.complete)) {
+        if (event.empty) {
           resetForm(true, {
             errors: errors => {
               createErrMsg(event.elementType, errors, true);
@@ -82,16 +88,22 @@ const StripeForm = props => {
               };
             }
           });
-        } else if (event.complete) {
+        } else if (event.error) {
           resetForm(true, {
             errors: errors => {
-              delete errors[event.elementType];
+              createErrMsg(event.elementType, errors);
               return {
                 ...errors
               };
             }
           });
-        }
+        } else
+          resetForm(true, {
+            errors: errors => {
+              delete errors[event.elementType];
+              return { ...errors };
+            }
+          });
       };
 
       types.forEach(type => {
@@ -108,32 +120,31 @@ const StripeForm = props => {
     }
   }, [loading, elements, types, resetForm]);
 
-  console.log(isSubmitting, "..iss");
-
   const onSubmit = async e => {
     try {
-      let { formData, errors, setIsSubmitting } = handleSubmit(e);
+      let { formData, errors, withErr, setIsSubmitting } = handleSubmit(e);
 
-      let cardNumber, withErr;
+      if (withErr) return setSnackBar("Something went wrong!");
+
+      let cardNumber;
 
       for (const type of types) {
         const elem = await elements.getElement(type);
 
         if (type === "cardNumber") cardNumber = elem;
 
-        if (!withErr) withErr = !!elem._empty;
-
         if (elem._empty) {
           withErr = true;
-          createErrMsg(type, errors);
+          createErrMsg(type, errors, true);
         } else if (elem._invalid) {
           withErr = true;
-          createErrMsg(type, errors, true);
+          createErrMsg(type, errors);
         } else delete errors[type];
-        resetForm(true, {
-          errors
-        });
       }
+
+      resetForm(true, {
+        errors: errs => (withErr ? { ...errs, ...errors } : { ...errors })
+      });
 
       console.log("will create pay", !withErr);
 

@@ -14,30 +14,22 @@ import deposit from "../../images/deposit.png";
 import legal from "../../images/legal.png";
 import logout from "../../images/logout.png";
 
-import backarrow from "../../images/backArrow.png";
-
 import { BiSolidDashboard } from "react-icons/bi";
 import useAuth from "../../hooks/useAuth";
 import InvestForm from "../InvestForm";
-import IconButton from "@mui/material/IconButton";
-import { useCtx } from "../../context";
+import ArrowAndTab from "../ArrowAndTab";
 
-const InvestTab = ({ investFormProps = {} }) => {
+const InvestTab = ({
   investFormProps = {
     plan: "starter",
     tradeType: "forex",
     maxAmount: 10000,
     minAmount: 100,
     roiPct: 2.5,
-    duration: 7,
-    ...investFormProps
-  };
-
-  const { handleGoBack } = useCtx();
-
+    duration: 7
+  }
+}) => {
   const { currentUser } = useAuth();
-
-  const isForex = investFormProps.tradeType === "forex";
 
   return (
     <div class="dashboard-container">
@@ -148,31 +140,7 @@ const InvestTab = ({ investFormProps = {} }) => {
               </div>
             </div>
 
-            <IconButton onClick={handleGoBack}>
-              <img src={backarrow} alt="backarrow" id="arrowI" />
-            </IconButton>
-
-            <div class="invest-wt-caltexF">
-              <p class="cal-text">Invest with Caltex</p>
-              <div class="forex-or-crypto">
-                <div class="forex-or-crypto-inne">
-                  <Link
-                    to="/Invest/InvestPage?tradeType=forex"
-                    className={`forex ${isForex ? "active" : ""}`}
-                    id="forex"
-                  >
-                    Forex
-                  </Link>
-                  <Link
-                    to="/Invest/InvestPage?tradeType=crypto"
-                    className={`crypto ${isForex ? "" : "active"}`}
-                    id="crypto"
-                  >
-                    Crypto
-                  </Link>
-                </div>
-              </div>
-            </div>
+            <ArrowAndTab />
 
             <div class="starter-planInvestF">
               <InvestForm {...investFormProps} />

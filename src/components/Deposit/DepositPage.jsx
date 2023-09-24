@@ -473,6 +473,7 @@ const DepositPage = () => {
                             <div className="enter-amount" id="enter-amount">
                               <h4>Enter amount</h4>
                               <select
+                                disabled={isSubmitting}
                                 id="currency"
                                 name="currency"
                                 size="1"
@@ -487,6 +488,7 @@ const DepositPage = () => {
                                 </option>
                               </select>
                               <input
+                                readOnly={isSubmitting}
                                 type="number"
                                 id="number"
                                 name="amount"
@@ -507,6 +509,7 @@ const DepositPage = () => {
                                 size="1"
                                 value={cryptoNetwork}
                                 onChange={e => setCryptoNetwork(e.target.value)}
+                                disabled={isSubmitting}
                               >
                                 <option value="bitcoin" id="btc">
                                   BTC - Bitcoin

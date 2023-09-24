@@ -86,11 +86,11 @@ const DashboardPage = () => {
           <img src={withdraw} id="other-icon" alt="withdraw-icon" />
           Withdraw
         </Link>
-        <Link to="/Invest/InvestPage" class="linkss">
+        <Link to="/Invest/InvestPage?tradeType=crypto" class="linkss">
           <img src={crypto} id="other-icon" alt="crypto-icon" />
           Crypto
         </Link>
-        <Link to="/Invest/InvestPage" class="linkss">
+        <Link to="/Invest/InvestPage?tradeType=forex" class="linkss">
           <img src={forex} id="other-icon" alt="forex-icon" />
           Forex
         </Link>
@@ -159,7 +159,7 @@ const DashboardPage = () => {
                   Withdraw
                 </Link>
                 <Link
-                  to="/Invest/InvestPage"
+                  to="/Invest/InvestPage?tradeType=forex"
                   class="control"
                   id="trading"
                   onclick=" "
@@ -167,7 +167,7 @@ const DashboardPage = () => {
                   <b>TRADING</b>
                 </Link>
                 <Link
-                  to="/Invest/InvestPage"
+                  to="/Invest/InvestPage?tradeType=crypto"
                   class="control"
                   id=" "
                   onclick=" "
@@ -176,7 +176,7 @@ const DashboardPage = () => {
                   Crypto
                 </Link>
                 <Link
-                  to="/Invest/InvestPage"
+                  to="/Invest/InvestPage?tradeType=forex"
                   class="control"
                   id=" "
                   onclick=" "
@@ -254,7 +254,10 @@ const DashboardPage = () => {
                     </h3>
                   </div>
                   <div class="monetary-options">
-                    <Link to="/Invest/InvestPage" className="invests">
+                    <Link
+                      to="/Invest/InvestPage?tradeType=forex"
+                      className="invests"
+                    >
                       Invest{" "}
                     </Link>
 

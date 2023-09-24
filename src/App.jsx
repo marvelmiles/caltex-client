@@ -44,6 +44,11 @@ import InvestTab from "./components/InvestTab";
 import backarrow from "./images/backArrow.png";
 import { HTTP_CODE_ACCOUNT_VERIFICATION_ERROR } from "./config/constants";
 
+// WORKED ON THE INVEST AND PAYMENT SCREEN SOME COMPONENT ARE
+// HAD TO BREAKDOWN UI INTO BIT OF COMPONENT BECAUSE OF THE CODE IS
+// DIRTY AND REPITITIVE. MAJORLY THE INVESTMENT DASHBOARD AND PAYMENT
+// SCREEN IS MEANT TO BE A REUSABLE UI OF FEW COMPONENT.
+
 const App = () => {
   const [theme] = useState(createTheme());
   const [snackbar, setSnackbar] = useState({});
@@ -55,12 +60,18 @@ const App = () => {
 
   const navigate = useNavigate();
 
-  const handleGoBack = useCallback(() => {
-    navigate(-1, locState);
-  }, [navigate, locState]);
+  const handleGoBack = useCallback(
+    config => {
+      navigate(-1, { state: locState, ...config });
+    },
+    [navigate, locState]
+  );
 
   const renderBackArrow = () => (
-    <IconButton onClick={handleGoBack} sx={{ ml: -8, mt: 2 }}>
+    <IconButton
+      onClick={() => handleGoBack({ replace: true })}
+      sx={{ ml: -6, mt: 2 }}
+    >
       <img src={backarrow} alt="backarrow" />
     </IconButton>
   );

@@ -105,7 +105,7 @@ const useForm = (config = {}) => {
           err =
             required && typeof required[keyName] === "string"
               ? required[keyName]
-              : `Your ${keyName} is required`;
+              : `Your ${keyName} is requiredssss`;
 
         if (err) addError(err);
         else
@@ -141,7 +141,14 @@ const useForm = (config = {}) => {
       const data = { ...formData };
 
       let withErr;
-      console.log(required, formData, errors, "required...formData...errors");
+      console.log(
+        required,
+        formData,
+        { ...errors },
+        "required...formData...errors"
+      );
+
+      const errs = {};
 
       if (required) {
         if (isObject(required)) {
@@ -150,20 +157,19 @@ const useForm = (config = {}) => {
 
             if (v && !data[key]) {
               withErr = true;
-
-              setErrors(errors => ({
-                ...errors,
-                [key]: typeof v === "string" ? v : `Your ${key} is required`
-              }));
+              errs[key] = typeof v === "string" ? v : `Your ${key} is required`;
             }
           }
         } else {
           withErr = true;
-          setErrors(errors => ({ ...errors, all: "All field is required" }));
+          errs.all = "All field is required";
         }
       }
 
-      withErr = withErr || !!Object.keys(errors).length;
+      withErr =
+        withErr || !!Object.keys(errs).length || Object.keys(errors).length;
+
+      if (withErr) setErrors(errors => ({ ...errors, ...errs }));
 
       if (!disableIsSubmitting && !withErr) {
         delete data.confirmPassword;
@@ -172,7 +178,12 @@ const useForm = (config = {}) => {
 
         setIsSubmitting(true);
       }
-      console.log(errors, withErr, { ...data }, "...post handle submit");
+      console.log(
+        { ...errs },
+        withErr,
+        { ...data },
+        "...errors...withErr...data...post handle submit"
+      );
       return { formData: data, withErr, errors, setIsSubmitting };
     },
     [formData, errors, required, serializeData]

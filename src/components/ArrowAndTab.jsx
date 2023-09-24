@@ -10,7 +10,7 @@ const ArrowAndTab = props => {
     <div class="invest-carltex" id="invest-carltex">
       <div class="invest-inner">
         {renderBackArrow()}
-        <InvestTabPane />
+        <InvestTabPane replace />
       </div>
     </div>
   );

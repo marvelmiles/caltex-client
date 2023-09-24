@@ -6,6 +6,7 @@ import { setFutureDate, getDaysDifference } from "../utils";
 import http from "../api/http";
 import { useCtx } from "../context";
 import Button from "@mui/material/Button";
+import { createUTCDate } from "../utils/serializers";
 
 const InvestForm = ({
   plan = "starter",
@@ -99,30 +100,9 @@ const InvestForm = ({
         if (endYear === startYear && endMth === startMth && endDay < startDay)
           endDay = setFutureDate(defaultDuration).getDate();
 
-        const hr = today.getHours();
-        const mn = today.getMinutes();
-        const s = today.getSeconds();
-        const ms = today.getMilliseconds();
+        const startDate = createUTCDate(startYear, startMth, startDay);
 
-        const startDate = Date.UTC(
-          startYear,
-          startMth,
-          startDay,
-          hr,
-          mn,
-          s,
-          ms
-        );
-
-        const endDate = Date.UTC(endYear, endMth, endDay, hr, mn, s, ms);
-
-        // const startDate = new Date(
-        //   startYear,
-        //   startMth,
-        //   startDay
-        // ).toLocaleString();
-
-        // const endDate = new Date(endYear, endMth, endDay).toLocaleString();
+        const endDate = createUTCDate(endYear, endMth, endDay);
 
         const duration = getDaysDifference(startDate, endDate);
 
@@ -175,8 +155,6 @@ const InvestForm = ({
       if (!response.success) {
         throw response;
       }
-
-      console.log(response.data);
 
       resetForm();
 

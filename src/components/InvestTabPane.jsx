@@ -5,7 +5,10 @@ import { useSearchParams, Link } from "react-router-dom";
 const InvestTabPane = ({ onClick, replace }) => {
   const [searchParams] = useSearchParams();
 
-  const type = (searchParams.get("tradeType") || "forex").toLowerCase();
+  const type = (
+    searchParams.get("tradeType") ||
+    (window.location.pathname.toLowerCase().endsWith("f") ? "forex" : "crypto")
+  ).toLowerCase();
 
   const isForex = type === "forex";
 

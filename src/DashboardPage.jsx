@@ -32,6 +32,7 @@ import Avatar from "@mui/material/Avatar";
 import http from "./api/http";
 import { useCtx } from "./context";
 import { formatToDecimalPlace } from "./utils/normalizers";
+import { StyledLink } from "./styled";
 
 const DashboardPage = () => {
   const { currentUser } = useAuth();
@@ -102,9 +103,9 @@ const DashboardPage = () => {
           <img src={legal} id="other-icon" alt="legal-icon" />
           Legal Documents
         </Link>
-        <Link to="/" class="linkss">
+        <Link to="/auth/login" class="linkss">
           <img src={logout} id="other-icon" alt="logout-icon" />
-          LogOut
+          Logout
         </Link>
       </div>
 
@@ -198,10 +199,17 @@ const DashboardPage = () => {
                   <img src={legal} id="other-icon" alt="legal-icon" />
                   Legal Documents
                 </span>
-                <span class="control" id=" " onclick=" ">
+                <StyledLink
+                  to="/auth/login"
+                  sx={{
+                    fontSize: "16px",
+                    color: "inherit",
+                    "&:hover": { color: "rgba(240, 166, 23, 1)" }
+                  }}
+                >
                   <img src={logout} id="other-icon" alt="logout-icon" />
-                  LogOut
-                </span>
+                  Logout
+                </StyledLink>
               </div>
             </div>
           </div>

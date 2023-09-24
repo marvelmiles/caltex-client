@@ -59,9 +59,12 @@ const Signup = props => {
     async e => {
       const { formData, withErr } = handleSubmit(e);
 
-      if (!formData.agreed) return setSnackBar(agreeCheckErr);
+      if (!formData.agreed) {
+        resetForm(true);
+        return setSnackBar(agreeCheckErr);
+      }
 
-      if (withErr) return;
+      if (withErr) return resetForm(true);
 
       try {
         delete formData.agreed;

@@ -59,7 +59,7 @@ const Login = props => {
     async e => {
       const { formData, errors, withErr } = handleSubmit(e);
 
-      if (withErr) return;
+      if (withErr) return resetForm(true);
 
       try {
         const { data } = await http.post("/auth/signin", formData, {

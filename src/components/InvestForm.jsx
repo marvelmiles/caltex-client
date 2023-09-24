@@ -105,8 +105,8 @@ const InvestForm = ({
         const duration = getDaysDifference(startDate, endDate);
 
         if (duration >= 0) {
-          formData.startDate = startDate;
-          formData.endDate = endDate;
+          formData.startDate = startDate.toISOString();
+          formData.endDate = endDate.toISOString();
           formData.duration = duration;
 
           formData.startYear = startYear;

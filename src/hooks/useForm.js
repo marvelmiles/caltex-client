@@ -142,7 +142,7 @@ const useForm = (config = {}) => {
 
       let withErr;
       console.log(required, formData, errors, "required...formData...errors");
- 
+
       if (required) {
         if (isObject(required)) {
           for (const key in required) {
@@ -172,7 +172,7 @@ const useForm = (config = {}) => {
 
         setIsSubmitting(true);
       }
-      console.log(errors, withErr, "...post handle submit");
+      console.log(errors, withErr, { ...formData }, "...post handle submit");
       return { formData: data, withErr, errors, setIsSubmitting };
     },
     [formData, errors, required, serializeData]

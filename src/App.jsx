@@ -9,6 +9,7 @@ import {
 import DashboardPage from "./DashboardPage";
 import DepositPage from "./components/Deposit/DepositPage";
 import InvestPage from "./components/Invest/InvestPage";
+import CaltexCompBrief from "./components/CaltexCompanyBrief/CaltexCompBrief";
 import WithdrawPage from "./components/Withdraw/WithdrawPage";
 import StarterplanForex from "./components/ForexDetails/StarterplanForex";
 import professionalplanForex from "./components/ForexDetails/professionalplanForex";
@@ -72,7 +73,7 @@ const App = () => {
       onClick={() => handleGoBack({ replace: true })}
       sx={{ ml: -6, mt: 2 }}
     >
-      <img src={backarrow} alt="backarrow" />
+      <img src={backarrow} alt="backarrow" id="backArrow" />
     </IconButton>
   );
 
@@ -139,7 +140,7 @@ const App = () => {
         return Promise.reject(err);
       }
     );
-  }, [locState, navigate, setSnackBar]);
+  }, [locState, navigate, setSnackBar]); 
 
   return (
     <ThemeProvider theme={theme}>
@@ -333,6 +334,10 @@ const App = () => {
           <Route
             path="/Invest/InvestPage"
             Component={isLoggedIn ? InvestPage : Redirect}
+          />
+          <Route
+            path="/CaltexCompanyBrief/CaltexCompBrief"
+            Component={isLoggedIn ? CaltexCompBrief : Redirect}
           />
           <Route
             path="/Deposit/DepositPage"

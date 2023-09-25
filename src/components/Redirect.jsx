@@ -5,7 +5,7 @@ import useAuth from "../hooks/useAuth";
 import { useCtx } from "../context";
 import { createRelativeUrl } from "../api/http";
 
-const Redirect = ({
+const Redirect = ({   
   to = `/auth/login?redirect=${createRelativeUrl()}`,
   message = "You are not authroized to view the previous page!",
   ...rest
@@ -21,4 +21,4 @@ const Redirect = ({
 
 Redirect.propTypes = {};
 
-export default Redirect;
+export default Redirect;  

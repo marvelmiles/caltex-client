@@ -201,13 +201,22 @@ body {
   opacity: none !important;
   color: black !important;
   font-weight: 400 !important;
-  padding-left: var(--bc-pl);
+  padding-left: 0px!important;
+  margin-left: -10px!important;
+}
+
+#backArrow{
+  margin-left: -60px!important;
 }
 
 .forex-or-crypto,
 .forex-or-crypto-inner {
   display: flex;
-  margin-left: 20px;
+  margin-left: -10px!important;
+}
+
+.invest-wt-caltexf{
+  margin-left:-42px!important ;
 }
 
 #forex {
@@ -309,6 +318,23 @@ body {
   cursor: pointer;
 }
 
+.viewPlanDetails{
+  width: 100%!important;
+  display: flex;
+  justify-content: end!important;
+ padding-right: 160px!important;
+ padding-top: 10px!important;
+ font-size: 16px!important;
+ font-weight: 400!important;
+ color: rgba(18, 14, 251, 0.5)!important;
+ transition: 0.04s!important;
+}
+
+.viewPlanDetails:hover{
+  color: rgba(0, 0, 0, 0.5)!important;
+  cursor: pointer;
+}
+
 #close-plan1 {
   display: none;
 }
@@ -316,6 +342,7 @@ body {
 #close-plan2 {
   display: none;
 }
+
 
 #plan-forex {
   display: none;

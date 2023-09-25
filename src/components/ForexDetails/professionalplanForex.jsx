@@ -1,3 +1,4 @@
+import './professionalplanForex.css';
 import React from "react";
 import ReactDoM from "react-dom";
 import { useState, useEffect } from "react";
@@ -15,6 +16,7 @@ import deposit from "../../images/deposit.png";
 import legal from "../../images/legal.png";
 import logout from "../../images/logout.png";
 import closedeye from "../../images/closedeye.png";
+import dashboard from "../../images/dashboard (1).png";
 import ArrowAndTab from "../ArrowAndTab";
 import useAuth from "../../hooks/useAuth";
 
@@ -37,10 +39,10 @@ const ProfessionalplanForex = () => {
               </span>
             </div>
             <div class="panel-control">
-              <Link to="/" class="controld" id="dashboard" onclick=" ">
-                <BiSolidDashboard id="other-icon" className="dashboard-icon" />
-                Dashboard
-              </Link>
+            <Link to="/" class="controld" id="dashboard" onclick=" ">
+                <img src={dashboard} id="other-icon" alt="profile-icon" />
+                  Dashboard
+                </Link>
               <span class="control" id=" " onclick=" ">
                 <img src={profile} id="other-icon" alt="profile-icon" />
                 Profile
@@ -114,7 +116,7 @@ const ProfessionalplanForex = () => {
             <div class="welcome-user">
               <div class="welcome">
                 <div class="welcome-text">
-                  <p>Welcome back, {currentUser.firstName}</p>
+                  <p>Welcome back, {currentUser.firstname}</p>
                 </div>
                 <div class="welcome-asset">
                   <span>
@@ -122,7 +124,7 @@ const ProfessionalplanForex = () => {
                   </span>
                   <span class="john">
                     <p>
-                      {currentUser.firstName} {currentUser.lastName}
+                      {currentUser.firstname} {currentUser.lastname}
                     </p>
                   </span>
                   <span class="bell-notification" id=" " onclick=" ">

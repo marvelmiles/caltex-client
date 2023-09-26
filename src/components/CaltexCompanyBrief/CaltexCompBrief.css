@@ -5,6 +5,11 @@
     padding-left: 20px;
 }
 
+.plan-text{
+    margin-left: -20px;
+    font-size: 23px;
+}
+
 .downloadPlan{
     background-color: rgba(18,14,251,0.05);
     width: 90%;
@@ -54,22 +59,28 @@
 
 .downloadPlan{
         width: 90%;
-        padding: 10px 15px;
+        padding: 5px 15px 10px 15px;
         margin-right:80px;
     }
 
     #download-text{
-        font-size: 12px;
+        font-size: 10px;
         font-weight: 300;
         color: rgba(30,30,30,1);
         line-height: 10px;
-        padding-left: 10px;
+        padding-left: 5px;
     }
 
+
+    .plan-text{
+        margin-left: -20px;
+        font-size: 18px;
+    }
 
     .downloadBtn{
         text-align:left ;
         margin-top: 60px;
+        margin-bottom: 50px;
     }
 
     #downloadBtn{
@@ -82,6 +93,8 @@
         transition: 0.04s;
     }
 
-
+    #pdfIcon{
+        margin-left: -15px;
+    }
 
     }

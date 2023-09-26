@@ -234,7 +234,7 @@ const CaltexCompBrief = () => {
                 <div class="invest-inner">
                   {renderBackArrow()}
                   <div class="invest-wt-caltex">
-                    <p class="cal-text">Plan Details</p>
+                    <p class="plan-text">Plan Details</p>
                     <div class="forex-or-crypto">
                       <div class="forex-or-crypto-inner">
                         <span class="forex" id="forex" onclick=''>

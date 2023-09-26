@@ -320,11 +320,11 @@ const InvestPage = () => {
                               </Link>
                             </div>
                           </div>
- 
                           
-                               <Link to='/CaltexCompanyBrief/CaltexCompBrief' class='viewPlanDetails'>View Plan details</Link>
-                            
-
+                          <Link to='/CaltexCompanyBrief/CaltexCompBrief' class='viewPlanDetails'>
+                            View Plan details
+                          </Link>
+                        
                         </div>
                       </div>
                     </div>

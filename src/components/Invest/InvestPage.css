@@ -957,3 +957,15 @@ body {
 #transactionPro2 {
   display: none;
 }
+
+@media screen and (max-width: 600px) {
+
+  .viewPlanDetails{
+      font-size: 12px!important;
+      font-weight: 300;
+      width: 100%!important;
+      text-align: left!important;
+      }
+
+    }
+

@@ -3,6 +3,7 @@ import ReactDoM from "react-dom";
 import { useState, useEffect } from "react";
 import Cookies from "js-cookie";
 import { Link } from "react-router-dom";
+import './masterplanForex.css';
 import caltexTrader from "../../images/caltexTrader.png";
 import logo from "../../images/logo (1).png";
 import john from "../../images/John.jpg";
@@ -16,6 +17,7 @@ import legal from "../../images/legal.png";
 import logout from "../../images/logout.png";
 import closedeye from "../../images/closedeye.png";
 import backarrow from "../../images/backArrow.png";
+import dashboard from "../../images/dashboard (1).png";
 import { BrowserRouter as Router, Route } from "react-router-dom";
 
 import { BiSolidDashboard } from "react-icons/bi";
@@ -38,10 +40,10 @@ const MasterplanForex = () => {
               </span>
             </div>
             <div class="panel-control">
-              <Link to="/" class="controld" id="dashboard" onclick=" ">
-                <BiSolidDashboard id="other-icon" className="dashboard-icon" />
-                Dashboard
-              </Link>
+            <Link to="/" class="controld" id="dashboard" onclick=" ">
+                <img src={dashboard} id="other-icon" alt="profile-icon" />
+                  Dashboard
+                </Link>
               <span class="control" id=" " onclick=" ">
                 <img src={profile} id="other-icon" alt="profile-icon" />
                 Profile
@@ -115,7 +117,7 @@ const MasterplanForex = () => {
             <div class="welcome-user">
               <div class="welcome">
                 <div class="welcome-text">
-                  <p>Welcome back, {currentUser.firstName}</p>
+                  <p>Welcome back, {currentUser.firstname}</p>
                 </div>
                 <div class="welcome-asset">
                   <span>
@@ -123,7 +125,7 @@ const MasterplanForex = () => {
                   </span>
                   <span class="john">
                     <p>
-                      {currentUser.firstName} {currentUser.lastName}
+                      {currentUser.firstname} {currentUser.lastname}
                     </p>
                   </span>
                   <span class="bell-notification" id=" " onclick=" ">

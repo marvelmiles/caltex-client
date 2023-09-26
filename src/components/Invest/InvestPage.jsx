@@ -16,6 +16,7 @@ import legal from "../../images/legal.png";
 import logout from "../../images/logout.png";
 import closedeye from "../../images/closedeye.png";
 import backarrow from "../../images/backArrow.png";
+import dashboard from "../../images/dashboard (1).png";
 
 import { Link, useSearchParams } from "react-router-dom";
 
@@ -58,6 +59,8 @@ const InvestPage = () => {
   };
 
   const searchParam = `tradeType=${type}`;
+
+  
 
   return (
     <>
@@ -116,11 +119,8 @@ const InvestPage = () => {
                 </span>
               </div>
               <div class="panel-control">
-                <Link to="/" class="controld" id="dashboard" onclick=" ">
-                  <BiSolidDashboard
-                    id="other-icon"
-                    className="dashboard-icon"
-                  />
+              <Link to="/" class="controld" id="dashboard" onclick=" ">
+                <img src={dashboard} id="other-icon" alt="profile-icon" />
                   Dashboard
                 </Link>
                 <span class="control" id=" " onclick=" ">
@@ -206,7 +206,7 @@ const InvestPage = () => {
               <div class="welcome-user">
                 <div class="welcome">
                   <div class="welcome-text">
-                    <p>Welcome back, {currentUser.firstName}</p>
+                    <p>Welcome back, {currentUser.firstname}</p>
                   </div>
                   <div class="welcome-asset">
                     <span>
@@ -214,7 +214,7 @@ const InvestPage = () => {
                     </span>
                     <span class="john">
                       <p>
-                        {currentUser.firstName} {currentUser.lastName}
+                        {currentUser.firstname} {currentUser.lastname}
                       </p>
                     </span>
                     <span class="bell-notification" id=" " onclick=" ">
@@ -240,7 +240,7 @@ const InvestPage = () => {
                       </p>
 
                       <div class="choose-your-plan">
-                        <div class="choose">
+                        <div class="choose" id="choose">
                           <div
                             class="choose-plan1"
                             id="choose-plan1"
@@ -320,6 +320,11 @@ const InvestPage = () => {
                               </Link>
                             </div>
                           </div>
+                          
+                          <Link to='/CaltexCompanyBrief/CaltexCompBrief' class='viewPlanDetails'>
+                            View Plan details
+                          </Link>
+                        
                         </div>
                       </div>
                     </div>
@@ -327,280 +332,14 @@ const InvestPage = () => {
                 </div>
               </div>
 
-              <div class="second-page" id="second-page">
-                <div class="starter-planForex" id="starter-planForex">
-                  <div class="starter-planF">
-                    <h4>Starter Plan</h4>
-                    <p>
-                      <i class="fa fa-check" id="check"></i>Minimum
-                      Investment:$100
-                    </p>
-                    <p>
-                      <i class="fa fa-check" id="check"></i>Maximum
-                      Investment:$10,000
-                    </p>
-                    <p>
-                      <i class="fa fa-check" id="check"></i>Withdrawal fee:10%
-                      withdrawal charges
-                    </p>
-                    <p>
-                      <i class="fa fa-check" id="check"></i>3 stages referral
-                      commission
-                    </p>
-                    <p>
-                      <i class="fa fa-check" id="check"></i>10% referral for
-                      first person
-                    </p>
-                    <p>
-                      <i class="fa fa-check" id="check"></i>7% referral for
-                      second person
-                    </p>
-                    <p>
-                      <i class="fa fa-check" id="check"></i>3% referral for
-                      third person
-                    </p>
-                  </div>
-                  <div class="investment-buttons">
-                    <span class="invest-starterF" onclick=" ">
-                      <a href="C:\Users\User\Desktop\HTML Crashcourse\STEVO\CALTEX TRADER DASHBOARD PROJECT\starterPlanFormF.html">
-                        Invest
-                      </a>
-                    </span>
-                    <span class="change-starterF" onClick={changeStarterF}>
-                      Change Plan
-                    </span>
-                  </div>
-                </div>
-
-                <div class="professional-planForex" id="professional-planForex">
-                  <div class="professional-planF">
-                    <h4>Professional Plan</h4>
-                    <p>
-                      <i class="fa fa-check" id="check"></i>Minimum
-                      Investment:$11,000
-                    </p>
-                    <p>
-                      <i class="fa fa-check" id="check"></i>Maximum
-                      Investment:$50,000
-                    </p>
-                    <p>
-                      <i class="fa fa-check" id="check"></i>Withdrawal fee:7%
-                      withdrawal charges
-                    </p>
-                    <p>
-                      <i class="fa fa-check" id="check"></i>3 stages referral
-                      commission
-                    </p>
-                    <p>
-                      <i class="fa fa-check" id="check"></i>15% referral for
-                      first person
-                    </p>
-                    <p>
-                      <i class="fa fa-check" id="check"></i>10% referral for
-                      second person
-                    </p>
-                    <p>
-                      <i class="fa fa-check" id="check"></i>7% referral for
-                      third person
-                    </p>
-                  </div>
-                  <div class="investment-buttons">
-                    <span class="invest-professionalF" onclick=" ">
-                      <a href="C:\Users\User\Desktop\HTML Crashcourse\STEVO\CALTEX TRADER DASHBOARD PROJECT\professionalPlanInvFormF.html">
-                        Invest
-                      </a>
-                    </span>
-                    <span
-                      class="change-professionalF"
-                      onclick="changeProfessionalF() "
-                    >
-                      Change Plan
-                    </span>
-                  </div>
-                </div>
-
-                <div class="master-planForex" id="master-planForex">
-                  <div class="master-planF">
-                    <h4>Master Plan</h4>
-                    <p>
-                      <i class="fa fa-check" id="check"></i>Minimum
-                      Investment:$51,000
-                    </p>
-                    <p>
-                      <i class="fa fa-check" id="check"></i>Maximum
-                      Investment:$100,000
-                    </p>
-                    <p>
-                      <i class="fa fa-check" id="check"></i>Withdrawal fee:5%
-                      withdrawal charges
-                    </p>
-                    <p>
-                      <i class="fa fa-check" id="check"></i>3 stages referral
-                      commission
-                    </p>
-                    <p>
-                      <i class="fa fa-check" id="check"></i>20% referral for
-                      first person
-                    </p>
-                    <p>
-                      <i class="fa fa-check" id="check"></i>15% referral for
-                      second person
-                    </p>
-                    <p>
-                      <i class="fa fa-check" id="check"></i>10% referral for
-                      third person
-                    </p>
-                  </div>
-                  <div class="investment-buttons">
-                    <span class="invest-masterF" onclick=" ">
-                      <a href="C:\Users\User\Desktop\HTML Crashcourse\STEVO\CALTEX TRADER DASHBOARD PROJECT\masterPlanInvFormF.html">
-                        Invest
-                      </a>
-                    </span>
-                    <span class="change-masterF" onclick="changeMasterF()">
-                      Change Plan
-                    </span>
-                  </div>
-                </div>
-
-                <div class="starter-planCrypto" id="starter-planCrypto">
-                  <div class="starter-planC">
-                    <h4>Starter Plan</h4>
-                    <p>
-                      <i class="fa fa-check" id="check"></i>Minimum
-                      Investment:$300
-                    </p>
-                    <p>
-                      <i class="fa fa-check" id="check"></i>Maximum
-                      Investment:$15,000
-                    </p>
-                    <p>
-                      <i class="fa fa-check" id="check"></i>Withdrawal fee:5%
-                      withdrawal charges
-                    </p>
-                    <p>
-                      <i class="fa fa-check" id="check"></i>3 stages referral
-                      commission
-                    </p>
-                    <p>
-                      <i class="fa fa-check" id="check"></i>10% referral for
-                      first person
-                    </p>
-                    <p>
-                      <i class="fa fa-check" id="check"></i>7% referral for
-                      second person
-                    </p>
-                    <p>
-                      <i class="fa fa-check" id="check"></i>3% referral for
-                      third person
-                    </p>
-                  </div>
-                  <div class="investment-buttons">
-                    <span class="invest-starterC" onclick=" ">
-                      Invest
-                    </span>
-                    <span class="change-starterC" onclick="changeStarterC()">
-                      Change Plan
-                    </span>
-                  </div>
-                </div>
-
-                <div
-                  class="professional-planCrypto"
-                  id="professional-planCrypto"
-                >
-                  <div class="professional-planC">
-                    <h4>Professional Plan</h4>
-                    <p>
-                      <i class="fa fa-check" id="check"></i>Minimum
-                      Investment:$16,000
-                    </p>
-                    <p>
-                      <i class="fa fa-check" id="check"></i>Maximum
-                      Investment:$100,000
-                    </p>
-                    <p>
-                      <i class="fa fa-check" id="check"></i>Withdrawal fee:10%
-                      withdrawal charges
-                    </p>
-                    <p>
-                      <i class="fa fa-check" id="check"></i>3 stages referral
-                      commission
-                    </p>
-                    <p>
-                      <i class="fa fa-check" id="check"></i>15% referral for
-                      first person
-                    </p>
-                    <p>
-                      <i class="fa fa-check" id="check"></i>10% referral for
-                      second person
-                    </p>
-                    <p>
-                      <i class="fa fa-check" id="check"></i>7% referral for
-                      third person
-                    </p>
-                  </div>
-                  <div class="investment-buttons">
-                    <span class="invest-professionalC" onclick=" ">
-                      Invest
-                    </span>
-                    <span
-                      class="change-professionalC"
-                      onclick="changeProfessionalC()"
-                    >
-                      Change Plan
-                    </span>
-                  </div>
-                </div>
-
-                <div class="master-planCrypto" id="master-planCrypto">
-                  <div class="master-planC">
-                    <h4>Master Plan</h4>
-                    <p>
-                      <i class="fa fa-check" id="check"></i>Minimum
-                      Investment:$101,000
-                    </p>
-                    <p>
-                      <i class="fa fa-check" id="check"></i>Maximum
-                      Investment:UNLIMITED
-                    </p>
-                    <p>
-                      <i class="fa fa-check" id="check"></i>Withdrawal fee:10%
-                      withdrawal charges
-                    </p>
-                    <p>
-                      <i class="fa fa-check" id="check"></i>3 stages referral
-                      commission
-                    </p>
-                    <p>
-                      <i class="fa fa-check" id="check"></i>20% referral for
-                      first person
-                    </p>
-                    <p>
-                      <i class="fa fa-check" id="check"></i>15% referral for
-                      second person
-                    </p>
-                    <p>
-                      <i class="fa fa-check" id="check"></i>10% referral for
-                      third person
-                    </p>
-                  </div>
-                  <div class="investment-buttons">
-                    <span class="invest-masterC" onclick=" ">
-                      Invest
-                    </span>
-                    <span class="change-masterC" onclick="changeMasterC() ">
-                      Change Plan
-                    </span>
-                  </div>
-                </div>
-              </div>
+  
             </div>
           </div>
         </div>
       </div>
     </>
   );
+
   function checkCryptoPlan() {
     document.getElementById("crypto").style.borderBottomColor = "black";
     document.getElementById("crypto").style.color = "black";

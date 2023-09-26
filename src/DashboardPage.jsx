@@ -14,6 +14,7 @@ import deposit from "./images/deposit.png";
 import legal from "./images/legal.png";
 import logout from "./images/logout.png";
 import closedeye from "./images/closedeye.png";
+import dashboard from "./images/dashboard (1).png";
 
 import { Link } from "react-router-dom";
 
@@ -127,11 +128,8 @@ const DashboardPage = () => {
                 </span>
               </div>
               <div class="panel-control">
-                <Link to="/" class="controld" id="dashboard" onclick=" ">
-                  <BiSolidDashboard
-                    id="other-icon"
-                    className="dashboard-icon"
-                  />
+              <Link to="/" class="controld" id="dashboard" onclick=" ">
+                <img src={dashboard} id="other-icon" alt="profile-icon" />
                   Dashboard
                 </Link>
                 <span class="control" id=" " onclick=" ">
@@ -204,17 +202,13 @@ const DashboardPage = () => {
                   <img src={legal} id="other-icon" alt="legal-icon" />
                   Legal Documents
                 </span>
-                <StyledLink
+                <Link
                   to="/auth/login"
-                  sx={{
-                    fontSize: "16px",
-                    color: "inherit",
-                    "&:hover": { color: "rgba(240, 166, 23, 1)" }
-                  }}
+                  class="control"
                 >
                   <img src={logout} id="other-icon" alt="logout-icon" />
                   Logout
-                </StyledLink>
+                </Link>
               </div>
             </div>
           </div>
@@ -278,7 +272,7 @@ const DashboardPage = () => {
                       Deposit{" "}
                     </Link>
 
-                    <Link to="/Withdraw/withdrawPage" className="withdraws">
+                    <Link to="/Withdraw/WithdrawPage" className="withdraws">
                       Withdraw{" "}
                     </Link>
 

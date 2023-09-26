@@ -75,7 +75,7 @@ body {
   flex-direction: column;
   margin-top: 30px;
   padding-left: 50px;
-  margin-bottom: 40px;
+  margin-bottom: 60px!important;
 }
 
 #dashboard {
@@ -83,7 +83,9 @@ body {
 }
 
 .dashboard-icon {
-  font-size: 20px;
+  font-size: 24px!important;
+  padding-top: -20px!important;
+  padding-right: 5px!important;
 }
 
 .other-icon {
@@ -91,7 +93,7 @@ body {
 }
 
 .control {
-  margin-top: 26px;
+  margin-top: 26px!important;
   font-size: 16px;
   transition: ease 0.2s;
   line-height: 24px !important;
@@ -106,6 +108,7 @@ body {
   line-height: 24px !important;
   text-decoration-line: none !important;
   color: rgba(240, 166, 23, 1) !important;
+  
 }
 
 .controld:hover {
@@ -194,14 +197,15 @@ body {
 }
 
 .total-balance {
-  padding-top: 12px;
+  padding-top: 40px!important;
   padding-left: var(--bc-pl);
   cursor: pointer;
 }
 
 .total-balance h5 {
   color: rgba(30, 30, 30, 1);
-  opacity: 0.8;
+ opacity: 1!important;
+ font-size: 12px!important;
 }
 
 .monetary-options {
@@ -220,12 +224,14 @@ body {
   justify-content: center;
   align-items: center;
   display: flex;
-  width: 200px;
-  height: 32.5px;
+  width: 200px!important;
+  height: 65px!important;
+  padding-top: 30px!important;
+  padding-bottom: 30px!important;
   margin-right: 30px;
-  border-radius: 10px;
+  border-radius: 10px!important;
   cursor: pointer;
-  transition: ease 0.4s;
+  transition: ease 0.2s!important;
   font-size: 16px;
   line-height: 24px;
   gap: 50px;
@@ -239,16 +245,20 @@ body {
 .investments:hover {
   background-color: rgba(18, 14, 251, 1);
   color: white;
+  font-weight: 550!important;
+  font-size: 15px!important;
 }
 
 .ct-forex {
   padding-left: var(--bc-pl);
   padding-right: var(--bc-pr);
-  padding-top: 70px;
+  padding-top: 110px!important;
 }
 
 .ct-forex p {
   opacity: 0.9;
+  font-size: 16px;
+  line-height: 24px;
 }
 
 .wide-array {

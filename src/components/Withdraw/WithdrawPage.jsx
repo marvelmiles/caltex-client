@@ -1,7 +1,8 @@
+import "../../components/Deposit/DepositPage.css";
+import "./WithdrawPage.css";
 import React from "react";
 import ReactDoM from "react-dom";
 import { useState } from "react";
-import "../../components/Deposit/DepositPage.css";
 import { Link } from "react-router-dom";
 import caltexTrader from "../../images/caltexTrader.png";
 import logo from "../../images/logo (1).png";
@@ -20,10 +21,19 @@ import cryptovec from "../../images/cryptovector.png";
 import btc from "../../images/Bitcoin.png";
 import wallet from "../../images/wallet.png";
 import creditcard from "../../images/creditcard.png";
-
+import dashboard from "../../images/dashboard (1).png";
 import { BiSolidDashboard } from "react-icons/bi";
 
+import Button from "@mui/material/Button";
+import { Stack, Box } from "@mui/material";
+
+import useAuth from "../../hooks/useAuth";
+import { useCtx } from "../../context";
+
 const WithdrawPage = () => {
+  const { setSnackBar } = useCtx();
+  const { currentUser } = useAuth();
+  
   function revealTransDetails() {
     document.getElementById("trans-pro-det").style.display = "block";
     document.getElementById("transactionPro2").style.display = "block";
@@ -64,6 +74,15 @@ const WithdrawPage = () => {
     document.getElementById("congratulations").style.display = "block";
   }
 
+  function openNav() {
+    document.getElementById("sidenav").style.width = "70%";
+  }
+
+  function closeNav() {
+    document.getElementById("sidenav").style.width = "0";
+  }
+
+
   const [name, setName] = useState("");
   const [currency, setCurrency] = useState("");
   const [cryptoNetwork, setCryptoNetwork] = useState("");
@@ -71,6 +90,51 @@ const WithdrawPage = () => {
   const [walletAddress, setWalletAddress] = useState("");
 
   return (
+    <div>
+    <div className="mySidenav" id="sidenav">
+      <Link to="" className="closebtn" id="close-btn" onClick={closeNav}>
+        &times;
+      </Link>
+      <Link to="/" className=" ">
+        <BiSolidDashboard id="other-icon" className="dashboard-icon" />
+        Dashboard
+      </Link>
+      <Link to="/" className="linkss">
+        <img src={profile} id="other-icon" alt="profile-icon" />
+        Profile
+      </Link>
+      <Link to="/Deposit/DepositPage" className="linkss">
+        <img src={deposit} id="other-icon" alt="deposit-icon" />
+        Deposit
+      </Link>
+      <Link to="/Withdraw/withdrawPage" className="linkss">
+        <img src={withdraw} id="other-icon" alt="withdraw-icon" />
+        Withdraw
+      </Link>
+      <Link to="/Invest/InvestPage" className="linkss">
+        <img src={crypto} id="other-icon" alt="crypto-icon" />
+        Crypto
+      </Link>
+      <Link to="/Invest/InvestPage" className="linkss">
+        <img src={forex} id="other-icon" alt="forex-icon" />
+        Forex
+      </Link>
+      <Link to="/" className="linkss">
+        <img src={help} id="other-icon" alt="help-icon" />
+        HELP
+      </Link>
+      <Link to="/" className="linkss">
+        <img src={legal} id="other-icon" alt="legal-icon" />
+        Legal Documents
+      </Link>
+      <Link to="/" className="linkss">
+        <img src={logout} id="other-icon" alt="logout-icon" />
+        LogOut
+      </Link>
+    </div>
+
+
+
     <div class="dashboard-container">
       <div class="board">
         <div class="dashboard-panel">
@@ -84,10 +148,10 @@ const WithdrawPage = () => {
               </span>
             </div>
             <div class="panel-control">
-              <Link to="/" class="controld" id="dashboard" onclick=" ">
-                <BiSolidDashboard id="other-icon" className="dashboard-icon" />
-                Dashboard
-              </Link>
+             <Link to="/" class="controld" id="dashboard" onclick=" ">
+                <img src={dashboard} id="other-icon" alt="profile-icon" />
+                  Dashboard
+                </Link>
               <span class="control" id=" " onclick=" ">
                 <img src={profile} id="other-icon" alt="profile-icon" />
                 Profile
@@ -161,19 +225,24 @@ const WithdrawPage = () => {
             <div class="welcome-user">
               <div class="welcome">
                 <div class="welcome-text">
-                  <p>Welcome back, John</p>
+                  <p>Welcome back, {currentUser.firstname}</p>
                 </div>
                 <div class="welcome-asset">
                   <span>
-                    <img src={john} alt="user-avatar" />
+                    <img src={currentUser.photoUrl}  alt="user-avatar" />
                   </span>
                   <span class="john">
-                    <p>John Smith</p>
+                    <p>
+                      {currentUser.firstname} {currentUser.lastname}
+                    </p>
                   </span>
                   <span class="bell-notification" id=" " onclick=" ">
                     <i class="fa fa-bell"></i>
                   </span>
                 </div>
+                <div className="menu-button" onClick={openNav}>
+                    &#9776;
+                  </div>
               </div>
             </div>
 
@@ -223,8 +292,8 @@ const WithdrawPage = () => {
                       id="crypto-payments"
                       onClick={cryptoWithdrawal}
                     >
-                      <div class="crypto-pay">
-                        <span>
+                      <div class="crypto-pay1">
+                        <span class='CrypPayText'>
                           <b>Crypto Payments</b>
                         </span>
                         <span class="cp2">
@@ -243,7 +312,7 @@ const WithdrawPage = () => {
                       id="credit-card-payments"
                       onclick=""
                     >
-                      <div class="credit-pay">
+                      <div class="credit-pay1">
                         <span class="interS">
                           <b>Interswitch</b>
                         </span>
@@ -358,9 +427,13 @@ const WithdrawPage = () => {
                           />
                         </div>
 
-                        <div class="withdraw-now" onclick="">
-                          <span class="withdrawNow-crypto">Withdraw</span>
-                        </div>
+                        <Button
+                              variant="contained"
+                              type="submit"
+                              sx={{ ml: "20px", mt: "20px" }}
+                            >
+                              Withdraw
+                            </Button>
 
                         <div class="depositFee-processingTime">
                           <div class="depoFeeProTime">
@@ -467,6 +540,7 @@ const WithdrawPage = () => {
           </div>
         </div>
       </div>
+    </div>
     </div>
   );
 };

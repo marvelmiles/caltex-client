@@ -14,9 +14,10 @@ const InvestTabPane = ({ onClick, replace }) => {
 
   return (
     <div class="invest-wt-caltexF">
+      <div class="invest-wt-caltexf">
       <p class="cal-text">Invest with Caltex</p>
       <div class="forex-or-crypto">
-        <div class="forex-or-crypto-inne">
+        <div class="forex-or-crypto-inner">
           <Link
             to="/Invest/InvestPage?tradeType=forex"
             className={`forex ${isForex ? "active" : ""}`}
@@ -36,6 +37,7 @@ const InvestTabPane = ({ onClick, replace }) => {
             Crypto
           </Link>
         </div>
+      </div>
       </div>
     </div>
   );

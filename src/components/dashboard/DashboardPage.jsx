@@ -1,0 +1,162 @@
+import React from "react";
+import Cookies from "js-cookie";
+import { useEffect, useState } from "react";
+import "./dashboard.css";
+import closedeye from "./../../images/closedeye.png";
+import openedeye from "./../../images/eye1.png";
+import { Link } from "react-router-dom";
+import useAuth from "../../hooks/useAuth";
+import Sidebar from "./Sidebar";
+import { useCtx } from "../../context";
+import http from "../../api/http";
+import { formatToDecimalPlace } from "../../utils/normalizers";
+import DashboardNav from "./DashboardNav";
+
+const DashboardPage = () => {
+  const { currentUser } = useAuth();
+  const [transMetrics, setTransMetrics] = useState({ availBalance: 0 });
+  const [openEye, setOpenEye] = useState(false);
+  const [closeEye, setCloseEye] = useState(false);
+
+  const { setSnackBar } = useCtx();
+
+  const handleOpenEye = () => {
+    setOpenEye(!openEye);
+    setCloseEye(!closeEye);
+  };
+
+  const handleCloseEye = () => {
+    setCloseEye(!closeEye);
+    setOpenEye(!openEye);
+  };
+  
+
+  /** End Of script for menu */
+
+  useEffect(() => {
+    (async () => {
+      try {
+        const res = await http.get(
+          `/users/${currentUser.id}/transaction-metrics`,
+          { withCredentials: true }
+        );
+
+        if (!res.success) throw res;
+
+        setTransMetrics(res.data);
+      } catch (err) {
+        setSnackBar(err.message);
+      }
+    })();
+  }, [setSnackBar, currentUser.id]);
+
+  return (
+    <div>
+      <div class="dashboard-container">
+        <div class="board">
+          <Sidebar />
+          <div class="dashboard-content">
+            <div class="board-content">
+              <DashboardNav />
+
+              <div class="ct" id="ct">
+                <div class="ct-inner">
+                  <div class="total-balance">
+                    <h5>Total Balance</h5>
+                    {!openEye && (
+                      <h3>
+                        {`${formatToDecimalPlace(transMetrics.availBalance, true) +
+                          " USD"}`}
+                        <span class="bell-notification" id=" " onclick=" ">
+                          <img
+                            src={closedeye}
+                            id="closedEye-icon"
+                            alt="closedeye-icon"
+                            onClick={handleOpenEye}
+                          />
+                        </span>
+                      </h3>
+                    )}
+                    {closeEye && (
+                      <h3>
+                        ***********
+                        <span class="bell-notification" id=" " onclick=" ">
+                          <img
+                            src={openedeye}
+                            height={26}
+                            width={42}
+                            id="closedEye-icon"
+                            alt="closedeye-icon"
+                            style={{ marginBottom: "2px" }}
+                            onClick={handleCloseEye}
+                          />
+                        </span>
+                      </h3>
+                    )}
+                  </div>
+                  <div class="monetary-options">
+                    <Link to="/Invest/InvestPage" className="invests">
+                      Invest{" "}
+                    </Link>
+
+                    <Link to="/Deposit/DepositPage" className="deposits">
+                      Deposit{" "}
+                    </Link>
+
+                    <Link to="/Withdraw/withdrawPage" className="withdraws">
+                      Withdraw{" "}
+                    </Link>
+
+                    <Link to="/investment/Investment " className="investments">
+                      Investment{" "}
+                    </Link>
+                  </div>
+                  <div class="ct-forex">
+                    <p>
+                      CTFOREX is an international online broker offering
+                      financial services in various financial instruments.
+                    </p>
+                    <p>
+                      The brand is authorized and regulated in various jur
+                      isdictions. CTFOREX (www.ctforex.com/eu) is regulated by
+                      the Singapore Securities and Exchange Commission wi th CIF
+                      license number 195/12, licensed by the Financial Sector
+                      Conduct Authority (FSCA) of Singapore, with FSP No. 48914.
+                    </p>
+                    <p>
+                      The company is also registered with the Financial Conduct
+                      Authority of the UK with number 770475. The office is at
+                      85, saint mellanby Tower, Donlads Castle, Manchester, UK.
+                    </p>
+                    <p>
+                      Caltex Trading is UK Limited is authorised and regulated
+                      by the Financial Conduct Authority, firm reference number
+                      777911, and is situated at 30 Churchill Place, London, E14
+                      5EU, UK.
+                    </p>
+                    <p>
+                      Your capital is at risk. You should not spend more than
+                      you can afford to lose and should ensure that you fully
+                      understand the risks involved. Using the products offered
+                      may not be suitable for everyone. Before you use these
+                      products, please take into consideration your level of
+                      experience, and financial objectives and seek independent
+                      advice if ne cessary. It is the responsibility of the
+                      Client to ascertain whether he/she is permitted to use the
+                      services of the CTFOREX brand based on the legal requ
+                      irements in his/her country of residence. Please read
+                      CTFOREX’S full Risk
+                    </p>
+                    <p>Disclosure © 2023</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default DashboardPage;

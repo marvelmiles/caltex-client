@@ -14,14 +14,15 @@ import { useCtx } from "../context";
 import useAuth from "../hooks/useAuth";
 import Typography from "@mui/material/Typography";
 import { HTTP_CODE_ACCOUNT_VERIFICATION_ERROR } from "../config/constants.js";
+// import axios from "axios";
 
-const Login = props => {
+const Login = (props) => {
   const { setSnackBar } = useCtx();
 
   const { currentUser, locState } = useAuth();
 
   const stateRef = useRef({
-    logout: currentUser.isLogin
+    logout: currentUser.isLogin,
   });
 
   const {
@@ -30,15 +31,15 @@ const Login = props => {
     isSubmitting,
     handleChange,
     handleSubmit,
-    resetForm
+    resetForm,
   } = useForm({
     placeholders: {
-      rememberMe: true
+      rememberMe: true,
     },
     required: {
       email: true,
-      password: true
-    }
+      password: true,
+    },
   });
 
   const dispatch = useDispatch();
@@ -56,15 +57,20 @@ const Login = props => {
   }, [dispatch, setSnackBar]);
 
   const onSubmit = useCallback(
-    async e => {
+    async (e) => {
       const { formData, errors, withErr } = handleSubmit(e);
 
       if (withErr) return;
 
       try {
-        const { data } = await http.post("/auth/signin", formData, {
-          withCredentials: true
-        });
+        // const { data } = await http.post("/auth/signin", formData, {
+        const { data } = await http.post(
+          "https://caltex-api.onrender.com/api/auth/signin",
+          formData,
+          {
+            withCredentials: true,
+          }
+        );
 
         dispatch(signinUser(data));
 
@@ -84,8 +90,8 @@ const Login = props => {
                   user: {
                     ...locState.user,
                     ...formData,
-                    resend: true
-                  }
+                    resend: true,
+                  },
                 }}
               >
                 Get a new code
@@ -138,8 +144,8 @@ const Login = props => {
                 Forgot password?
               </StyledLink>
             </Stack>
-          )
-        }
+          ),
+        },
       ]}
     />
   );

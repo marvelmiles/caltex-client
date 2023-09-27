@@ -1,0 +1,106 @@
+import React, { useState, useEffect } from "react";
+import axios from "axios"; 
+import fakeData from "./fakeData";
+import styles from './HistoryTable.module.scss';
+
+const HistoryTable = () => {
+
+ const [data, setData] = useState([]);
+ const [seemore, setSeemore] = useState(false);
+ const [seeless, setSeeless] = useState(false);
+
+ const handleSeemore = () => {
+  setSeemore(!seemore);
+ }
+
+ const handleSeeless = () => {
+  setSeeless(seeless);
+  setSeemore(!seemore);
+  
+ }
+
+  useEffect(() => {
+    // Function to fetch data from the API
+    const fetchData = async () => {
+      try {
+        const response = await axios.get("https://api.example.com/data"); // Replace with your API endpoint
+        setData(response.data); // Assuming the API returns an array of data
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+
+    // Call the fetchData function when the component mounts
+    fetchData();
+  }, []); // The empty dependency array ensures this effect runs only once on mount
+
+  const renderTableHeader = () => {
+    return (
+      <thead className={styles.table_head}>
+        <tr>
+          <th>PLAN</th>
+          <th>Amount Invested</th>
+          <th>Return Of Investment</th>
+          <th>ROI+Capital</th>
+          <th>Date Of Investment</th>
+          <th>Matured Date</th>
+        </tr>
+      </thead>
+    );
+  };
+
+  const renderTableData = () => {
+    return fakeData.slice(0,1).map((item) => (
+      <tr key={item.id}>
+        <td>{item.column1}</td>
+        <td>{item.column2}</td>
+        <td>{item.column3}</td>
+        <td>{item.column4}</td>
+        <td>{item.column5}</td>
+        <td>{item.column6}</td>
+      </tr>
+    ));
+  };
+  const renderTableData2 = () => {
+    return fakeData.map((item) => (
+      <tr key={item.id}>
+        <td>{item.column1}</td>
+        <td>{item.column2}</td>
+        <td>{item.column3}</td>
+        <td>{item.column4}</td>
+        <td>{item.column5}</td>
+        <td>{item.column6}</td>
+      </tr>
+    ));
+  };
+
+  return (
+    <>
+      <div className={styles.fixed_header_table}>
+        <table>
+          {renderTableHeader()}
+          {!seeless && <tbody>{renderTableData()}</tbody>}
+          {seemore && <tbody>{renderTableData2()}</tbody>}
+        </table>
+      </div>
+      <span
+        id={styles.see_more}
+        className={seemore ? styles.hide : "" }
+        onClick={handleSeemore}
+      >
+        View More
+      </span>
+      <span
+        id={styles.see_less}
+        className={!seemore ? styles.hide : "" }
+        onClick={handleSeeless}
+      >
+        View less
+      </span>
+    </>
+  );
+};
+
+
+export default HistoryTable;
+

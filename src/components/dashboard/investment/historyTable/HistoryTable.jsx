@@ -1,9 +1,14 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios"; 
 import fakeData from "./fakeData";
+import useAuth from "../../../../hooks/useAuth";
 import styles from './HistoryTable.module.scss';
 
 const HistoryTable = () => {
+
+  const { currentUser } = useAuth();
+
+  const { id } = currentUser;
 
  const [data, setData] = useState([]);
  const [seemore, setSeemore] = useState(false);
@@ -23,7 +28,9 @@ const HistoryTable = () => {
     // Function to fetch data from the API
     const fetchData = async () => {
       try {
-        const response = await axios.get("https://api.example.com/data"); // Replace with your API endpoint
+        const response = await axios.get(
+          `https://caltex-api.onrender.com/api/users/${id}:/investments`
+        ); // Replace with your API endpoint
         setData(response.data); // Assuming the API returns an array of data
       } catch (error) {
         console.error("Error fetching data:", error);
@@ -32,7 +39,7 @@ const HistoryTable = () => {
 
     // Call the fetchData function when the component mounts
     fetchData();
-  }, []); // The empty dependency array ensures this effect runs only once on mount
+  }, [data, id]); // The empty dependency array ensures this effect runs only once on mount
 
   const renderTableHeader = () => {
     return (

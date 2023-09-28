@@ -29,16 +29,18 @@ const DashboardPage = () => {
     setCloseEye(!closeEye);
     setOpenEye(!openEye);
   };
-  
 
+  const { id } = currentUser;
   /** End Of script for menu */
 
   useEffect(() => {
     (async () => {
       try {
         const res = await http.get(
-          `/users/${currentUser.id}/transaction-metrics`,
-          { withCredentials: true }
+          `https://caltex-api.onrender.com/api/users/${id}/transaction-metrics`,
+          {
+            withCredentials: true,
+          }
         );
 
         if (!res.success) throw res;
@@ -48,7 +50,7 @@ const DashboardPage = () => {
         setSnackBar(err.message);
       }
     })();
-  }, [setSnackBar, currentUser.id]);
+  }, [setSnackBar, id]);
 
   return (
     <div>
@@ -65,8 +67,12 @@ const DashboardPage = () => {
                     <h5>Total Balance</h5>
                     {!openEye && (
                       <h3>
-                        {`${formatToDecimalPlace(transMetrics.availBalance, true) +
-                          " USD"}`}
+                        {`${
+                          formatToDecimalPlace(
+                            transMetrics.availBalance,
+                            true
+                          ) + " USD"
+                        }`}
                         <span class="bell-notification" id=" " onclick=" ">
                           <img
                             src={closedeye}

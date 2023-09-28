@@ -6,9 +6,9 @@ import styles from "./ElectronicVerification.module.scss";
 import Toast from "../toast/Toast";
 
 const checkboxData = [
-  { label: "National Identity Card", value: "National Identity Card" },
-  { label: "Passport Number", value: "Passport Number" },
-  { label: "Driving License", value: "Driving License" },
+  { label: "National Identity Card", value: " nationalId" },
+  { label: "Passport Number", value: "passport Number" },
+  { label: "Driving License", value: "driverLicense" },
 ];
 
 const ElectronicVerification = () => {
@@ -34,11 +34,13 @@ console.log(numberValue);
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({"documentType": "passport", "documentNumber": "AB123456"}),
+      // body: JSON.stringify({"documentType": "passport", "documentNumber": "AB123456"}),
+      body: JSON.stringify({"documentType": selectedOption, "documentNumber": numberValue}),
     })
       .then((response) => response.json())
       .then((data) => {
         setResponseMessage(data.message); // Handle the API response here
+        handleSuccess();
       })
       .catch((error) => {
         console.error("Error:", error);
@@ -103,7 +105,7 @@ console.log(numberValue);
                     <li id={styles.selected}>{selectedOption}</li>
                     <input
                       id={styles.input}
-                      type="number"
+                      type="text"
                       value={numberValue}
                       onChange={handleNumberChange}
                     />

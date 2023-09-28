@@ -70,7 +70,7 @@ const Profile = () => {
     setSwap(!swap);
     setIsSuccessModalOpen(!isSuccessModalOpen);
   };
-  console.log(isSuccessModalOpen);
+  
   return (
     <div>
       <div class="dashboard-container">

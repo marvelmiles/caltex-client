@@ -5,24 +5,22 @@ import useAuth from "../../../../hooks/useAuth";
 import styles from './HistoryTable.module.scss';
 
 const HistoryTable = () => {
-
   const { currentUser } = useAuth();
 
   const { id } = currentUser;
 
- const [data, setData] = useState([]);
- const [seemore, setSeemore] = useState(false);
- const [seeless, setSeeless] = useState(false);
+  const [data, setData] = useState([]);
+  const [seemore, setSeemore] = useState(false);
+  const [seeless, setSeeless] = useState(false);
 
- const handleSeemore = () => {
-  setSeemore(!seemore);
- }
+  const handleSeemore = () => {
+    setSeemore(!seemore);
+  };
 
- const handleSeeless = () => {
-  setSeeless(seeless);
-  setSeemore(!seemore);
-  
- }
+  const handleSeeless = () => {
+    setSeeless(seeless);
+    setSeemore(!seemore);
+  };
 
   useEffect(() => {
     // Function to fetch data from the API
@@ -55,9 +53,9 @@ const HistoryTable = () => {
       </thead>
     );
   };
-
+  // replace fakeData with data from the API
   const renderTableData = () => {
-    return fakeData.slice(0,1).map((item) => (
+    return fakeData.slice(0, 1).map((item) => (
       <tr key={item.id}>
         <td>{item.column1}</td>
         <td>{item.column2}</td>
@@ -68,6 +66,7 @@ const HistoryTable = () => {
       </tr>
     ));
   };
+  // replace fakeData with data from the API
   const renderTableData2 = () => {
     return fakeData.map((item) => (
       <tr key={item.id}>
@@ -92,14 +91,14 @@ const HistoryTable = () => {
       </div>
       <span
         id={styles.see_more}
-        className={seemore ? styles.hide : "" }
+        className={seemore ? styles.hide : ""}
         onClick={handleSeemore}
       >
         View More
       </span>
       <span
         id={styles.see_less}
-        className={!seemore ? styles.hide : "" }
+        className={!seemore ? styles.hide : ""}
         onClick={handleSeeless}
       >
         View less

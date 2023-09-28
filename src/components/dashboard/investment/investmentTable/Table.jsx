@@ -40,7 +40,7 @@ const FixedHeaderTable = () => {
       </thead>
     );
   };
-
+  // replace fakeData with data from the API
   const renderTableData = () => {
     return fakeData.map((item) => (
       <tr key={item.id}>

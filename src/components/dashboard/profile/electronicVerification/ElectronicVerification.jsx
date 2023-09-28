@@ -3,6 +3,8 @@ import idIcon from "../../../../svgs/id-verify.svg";
 import errorIcon from "../../../../svgs/error.svg";
 import successIcon from "../../../../svgs/success.svg";
 import styles from "./ElectronicVerification.module.scss";
+import { useNavigate } from "react-router-dom";
+
 import Toast from "../toast/Toast";
 import http from "../../../../api/http";
 
@@ -49,6 +51,7 @@ const ElectronicVerification = () => {
     } catch (error) {
       console.error("Error:", error);
       setNotice((prevState) => ({ ...prevState, fail: true }));
+      setSwap(!swap);
     }
   };
 
@@ -57,8 +60,15 @@ const ElectronicVerification = () => {
   };
 
   const handleRetry = () => {
-    // setSuccess(!success);
+    setNotice(false);
     setSwap(!swap);
+  };
+
+  const navigate = useNavigate();
+
+  const handleProceed = () => {
+    setSwap(!swap);
+    navigate("/u/dashboard");
   };
 
   const message = "Electronic verification has not been successful";
@@ -112,12 +122,7 @@ const ElectronicVerification = () => {
                       value={numberValue}
                       onChange={handleNumberChange}
                     />
-                    <button
-                      type="submit"
-                      // onClick={handleSuccess}
-                    >
-                      Add Number
-                    </button>
+                    <button type="submit">Add Number</button>
                   </ul>
                 </div>
               </div>
@@ -147,7 +152,7 @@ const ElectronicVerification = () => {
               message={message2}
               btnText={btnText2}
               Styles={styles.toastBtn}
-              closeModal={handleRetry}
+              closeModal={handleProceed}
             />
           </div>
         </div>

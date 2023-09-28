@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
-import axios from "axios";
 import fakeData from "../fakeData";
 import useAuth from "../../../../hooks/useAuth";
 import styles from "./Table.module.scss";
+import http from "../../../../api/http";
 
 const FixedHeaderTable = () => {
   const { currentUser } = useAuth();
@@ -13,8 +13,9 @@ const FixedHeaderTable = () => {
     // Function to fetch data from the API
     const fetchData = async () => {
       try {
-        const response = await axios.get(
-          `https://caltex-api.onrender.com/api/users/${id}/investments`
+        const response = await http.get(
+          `https://caltex-api.onrender.com/api/users/${id}/investments`,
+          { withCredentials: true }
         ); // Replace with your API endpoint
         setData(response.data); // Assuming the API returns an array of data
       } catch (error) {

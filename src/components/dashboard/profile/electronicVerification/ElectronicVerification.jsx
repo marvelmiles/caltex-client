@@ -4,16 +4,18 @@ import errorIcon from "../../../../svgs/error.svg";
 import successIcon from "../../../../svgs/success.svg";
 import styles from "./ElectronicVerification.module.scss";
 import Toast from "../toast/Toast";
+import http from "../../../../api/http";
 
 const checkboxData = [
   { label: "National Identity Card", value: " nationalId" },
-  { label: "Passport Number", value: "passport Number" },
+  { label: "Passport Number", value: "passport" },
   { label: "Driving License", value: "driverLicense" },
 ];
 
 const ElectronicVerification = () => {
   const [selectedOption, setSelectedOption] = useState("");
   const [responseMessage, setResponseMessage] = useState("");
+  const [notice, setNotice] = useState({ success: false, fail: false });
 
   const handleCheckboxChange = (value) => {
     setSelectedOption(value);
@@ -23,39 +25,41 @@ const ElectronicVerification = () => {
   const handleNumberChange = (event) => {
     setNumberValue(event.target.value);
   };
-
-  const [success, setSuccess] = useState(false);
   const [swap, setSwap] = useState(false);
-console.log(numberValue);
-  const handleSubmit = () => {
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
     // Assuming you want to upload the number when the button is clicked.
-    fetch("https://caltex-api.onrender.com/api/users/verify", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      // body: JSON.stringify({"documentType": "passport", "documentNumber": "AB123456"}),
-      body: JSON.stringify({"documentType": selectedOption, "documentNumber": numberValue}),
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        setResponseMessage(data.message); // Handle the API response here
+    try {
+      const res = await http.post(
+        "https://caltex-api.onrender.com/api/users/verify",
+        {
+          documentType: selectedOption,
+          documentNumber: numberValue,
+        },
+        {
+          withCredentials: true,
+        }
+      );
+      if (res.status === 200) {
+        setResponseMessage(res.message); // Handle the API response here
+        setNotice((prevState) => ({ ...prevState, success: true }));
         handleSuccess();
-      })
-      .catch((error) => {
-        console.error("Error:", error);
-      });
+      }
+    } catch (error) {
+      console.error("Error:", error);
+      setNotice((prevState) => ({ ...prevState, fail: true }));
+    }
   };
 
   const handleSuccess = () => {
-    setSuccess(!success);
     setSwap(!swap);
-  }
+  };
 
   const handleRetry = () => {
-    setSuccess(!success);
+    // setSuccess(!success);
     setSwap(!swap);
-  }
+  };
 
   const message = "Electronic verification has not been successful";
   const message2 = "Congratulation, your verification was approved";
@@ -63,8 +67,7 @@ console.log(numberValue);
   const btnText = "Retry Verification";
   const btnText2 = "Proceed";
 
-
-
+  const { success, fail } = notice;
   return (
     <>
       {!swap && (
@@ -78,7 +81,7 @@ console.log(numberValue);
               <li>Electronic Verification</li>
             </ul>
             <hr />
-            <form action="" onSubmit={handleSubmit}>
+            <form onSubmit={handleSubmit}>
               <div className={styles.card_cont}>
                 <div>
                   <ul>
@@ -109,8 +112,9 @@ console.log(numberValue);
                       value={numberValue}
                       onChange={handleNumberChange}
                     />
-                    <button type="submit" 
-                    // onClick={handleSuccess}
+                    <button
+                      type="submit"
+                      // onClick={handleSuccess}
                     >
                       Add Number
                     </button>
@@ -127,7 +131,7 @@ console.log(numberValue);
       )}
 
       {success && (
-         <div className={styles.main_cont}>
+        <div className={styles.main_cont}>
           <span id={styles.header}>ID VERIFICATION</span>
           <div className={styles.id_ul_main_cont}>
             <ul className={styles.id_ul}>
@@ -137,15 +141,37 @@ console.log(numberValue);
               <li>Electronic Verification</li>
             </ul>
             <hr />
-        <Toast
-          header="Electronic ID check"
-          icon={success ? successIcon : errorIcon}
-          message={success ? message2 : message}
-          btnText={success ? btnText2 : btnText}
-          Styles={styles.toastBtn}
-          closeModal={handleRetry}
-        />
+            <Toast
+              header="Electronic ID check"
+              icon={successIcon}
+              message={message2}
+              btnText={btnText2}
+              Styles={styles.toastBtn}
+              closeModal={handleRetry}
+            />
+          </div>
         </div>
+      )}
+      {fail && (
+        <div className={styles.main_cont}>
+          <span id={styles.header}>ID VERIFICATION</span>
+          <div className={styles.id_ul_main_cont}>
+            <ul className={styles.id_ul}>
+              <li>
+                <img src={idIcon} height={32} width={32} alt="id icon" />
+              </li>
+              <li>Electronic Verification</li>
+            </ul>
+            <hr />
+            <Toast
+              header="Electronic ID check"
+              icon={errorIcon}
+              message={message}
+              btnText={btnText}
+              Styles={styles.toastBtn}
+              closeModal={handleRetry}
+            />
+          </div>
         </div>
       )}
     </>

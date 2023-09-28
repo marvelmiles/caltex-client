@@ -1,55 +1,65 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
 import idIcon from "../../../../svgs/id-verify.svg";
 import check from "../../../../svgs/check-gray.svg";
-import styles from './ManualVerification.module.scss';
-import VerificationNotice from './VerificationNotice';
+import styles from "./ManualVerification.module.scss";
+import VerificationNotice from "./VerificationNotice";
+import http from "../../../../api/http";
 
 const ManualVerification = () => {
-  
-  const [success, setSuccess] =useState(false);
+  const [success, setSuccess] = useState(false);
   const [fileValue, setFileValue] = useState("");
   const [fileValue2, setFileValue2] = useState("");
   const [uploadedFile, setUploadedFile] = useState(null);
   const [uploadedFile2, setUploadedFile2] = useState(null);
 
-   const handleFileChange = (event) => {
-     const file = event.target.files[0];
-     if (file) {
-       setFileValue(file.name);
-       setUploadedFile(file);
-     } else {
-       setFileValue("");
-       setUploadedFile(null);
-     }
-   };
-   const handleFileChange2 = (event) => {
-     const file = event.target.files[0];
-     if (file) {
-       setFileValue2(file.name);
-       setUploadedFile2(file);
-     } else {
-       setFileValue2("");
-       setUploadedFile2(null);
-     }
-   };
+  const handleFileChange = (event) => {
+    const file = event.target.files[0];
+    if (file) {
+      setFileValue(file.name);
+      setUploadedFile(file);
+    } else {
+      setFileValue("");
+      setUploadedFile(null);
+    }
+  };
+  const handleFileChange2 = (event) => {
+    const file = event.target.files[0];
+    if (file) {
+      setFileValue2(file.name);
+      setUploadedFile2(file);
+    } else {
+      setFileValue2("");
+      setUploadedFile2(null);
+    }
+  };
 
-   const handleSubmit = () => {
-    if (uploadedFile || uploadedFile2) {
+  const handleSubmit = async () => {
+    if (uploadedFile && uploadedFile2) {
       const formData = new FormData();
-      formData.append('file', uploadedFile || uploadedFile2);
+      formData.append("front", uploadedFile);
+      formData.append("back", uploadedFile2);
+
+      const payload = {
+        documentType: formData,
+        documentNumber: "ManualCheck",
+      };
 
       // Replace 'your-api-endpoint' with the actual API endpoint.
-      fetch("https://caltex-api.onrender.com/api/users/verify", {
-        method: "POST",
-        body: formData,
-      })
-        .then((response) => response.json())
-        .then((data) => {
-          console.log(data); // Handle the API response here
-        })
-        .catch((error) => {
-          console.error("Error:", error);
-        });
+      try {
+        const res = await http.post(
+          "https://caltex-api.onrender.com/api/users/verify",
+          payload,
+          { withCredentials: true }
+        );
+        if (res.status === 200) {
+          console.log("Successfully Uploaded!");
+          setSuccess(true);
+        }
+      } catch (error) {
+        console.log("Uploaded Failed!", error);
+      }
+    } else {
+      console.log("Add front and back of your document!");
     }
   };
   return (
@@ -133,6 +143,6 @@ const ManualVerification = () => {
       {success && <VerificationNotice />}
     </div>
   );
-}
+};
 
 export default ManualVerification;

@@ -225,8 +225,8 @@ const DepositPage = () => {
                 </span>
               </div>
               <div className="panel-control">
-              <Link to="/" class="controld" id="dashboard" onclick=" ">
-                <img src={dashboard} id="other-icon" alt="profile-icon" />
+                <Link to="/" class="controld" id="dashboard" onclick=" ">
+                  <img src={dashboard} id="other-icon" alt="profile-icon" />
                   Dashboard
                 </Link>
                 <span className="control" id=" ">

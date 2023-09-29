@@ -10,12 +10,6 @@ import DashboardPage from "./components/dashboard/DashboardPage";
 import DepositPage from "./components/Deposit/DepositPage";
 import InvestPage from "./components/Invest/InvestPage";
 import WithdrawPage from "./components/Withdraw/WithdrawPage";
-import StarterPlanInvF from "./components/ForexInvestForms/StarterPlanInvF";
-import ProfessionalPlanInvF from "./components/ForexInvestForms/ProfessionalPlanInvF";
-import MasterPlanInvF from "./components/ForexInvestForms/MasterPlanInvF";
-import StarterPlanInvC from "./components/CryptoInvestForms/StarterPlanInvC";
-import ProfessionalPlanInvC from "./components/CryptoInvestForms/ProfessionalPlanInvC";
-import MasterPlanInvC from "./components/CryptoInvestForms/MasterPlanInvC";
 import StarterplanForex from "./components/ForexDetails/StarterplanForex";
 import professionalplanForex from "./components/ForexDetails/professionalplanForex";
 import masterplanForex from "./components/ForexDetails/masterplanForex";
@@ -219,18 +213,57 @@ const App = () => {
             )}
           </Route>
 
-          <Route path="/profile/Profile" Component={Profile} />
+          <Route
+            path="/profile/Profile"
+            Component={isLoggedIn ? Profile : Redirect}
+          />
 
-          <Route path="/investment/Investment" Component={Investment} />
+          <Route
+            path="/investment/Investment"
+            Component={isLoggedIn ? Investment : Redirect}
+          />
 
           <Route
             path="/legalDocument/LegalDocument"
-            Component={LegalDocument}
+            Component={isLoggedIn ? LegalDocument : Redirect}
           />
 
-          <Route path="/help/Help" Component={Help} />
+          <Route path="/help/Help" Component={isLoggedIn ? Help : Redirect} />
 
-          <Route path="/Deposit/DepositPage" Component={DepositPage} />
+          <Route
+            path="/CryptoDetails/masterplanCrypto"
+            Component={isLoggedIn ? masterplanCrypto : Redirect}
+          />
+
+          <Route
+            path="/CryptoDetails/professionalplanCrypto"
+            Component={isLoggedIn ? professionalplanCrypto : Redirect}
+          />
+
+          <Route
+            path="/CryptoDetails/starterplanCrypto"
+            Component={isLoggedIn ? starterplanCrypto : Redirect}
+          />
+
+          <Route
+            path="/ForexDetails/masterplanForex"
+            Component={isLoggedIn ? masterplanForex : Redirect}
+          />
+
+          <Route
+            path="/ForexDetails/professionalplanForex"
+            Component={isLoggedIn ? professionalplanForex : Redirect}
+          />
+
+          <Route
+            path="/ForexDetails/StarterplanForex"
+            Component={isLoggedIn ? StarterplanForex : Redirect}
+          />
+
+          <Route
+            path="/Withdraw/WithdrawPage"
+            Component={isLoggedIn ? WithdrawPage : Redirect}
+          />
 
           <Route
             path="/Deposit/DepositPage"
@@ -238,61 +271,11 @@ const App = () => {
           />
 
           <Route
-            path="/CryptoDetails/masterplanCrypto"
-            Component={masterplanCrypto}
-          />
-          <Route
-            path="/CryptoDetails/professionalplanCrypto"
-            Component={professionalplanCrypto}
-          />
-          <Route
-            path="/CryptoDetails/starterplanCrypto"
-            Component={starterplanCrypto}
-          />
-          <Route
-            path="/ForexDetails/masterplanForex"
-            Component={masterplanForex}
-          />
-          <Route
-            path="/ForexDetails/professionalplanForex"
-            Component={professionalplanForex}
-          />
-          <Route
-            path="/ForexDetails/StarterplanForex"
-            Component={StarterplanForex}
-          />
-          <Route
-            path="/CryptoInvestForms/MasterPlanInvC"
-            Component={MasterPlanInvC}
-          />
-          <Route
-            path="/CryptoInvestForms/ProfessionalPlanInvC"
-            Component={ProfessionalPlanInvC}
-          />
-          <Route
-            path="/CryptoInvestForms/StarterPlanInvC"
-            Component={StarterPlanInvC}
-          />
-          <Route
-            path="/ForexInvestForms/MasterPlanInvF"
-            Component={MasterPlanInvF}
-          />
-          <Route
-            path="/ForexInvestForms/ProfessionalPlanInvF"
-            Component={ProfessionalPlanInvF}
-          />
-          <Route
-            path="/ForexInvestForms/StarterPlanInvF"
-            Component={StarterPlanInvF}
-          />
-          <Route path="/Withdraw/WithdrawPage" Component={WithdrawPage} />
-          <Route path="/Invest/InvestPage" Component={InvestPage} />
-          <Route path="/Deposit/DepositPage" Component={DepositPage} />
-          <Route
             path="/DepositForm/DepositsForm"
             exact
-            Component={DepositsForm}
+            Component={isLoggedIn ? DepositsForm : Redirect}
           />
+
           <Route
             element={
               isLoggedIn ? (

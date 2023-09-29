@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 // import Cookies from "js-cookie";
 // import { useEffect, useState } from "react";
 import "./dashboard.css";
@@ -19,20 +19,18 @@ import { Link } from "react-router-dom";
 import { BiSolidDashboard } from "react-icons/bi";
 
 const Sidebar = () => {
+  /** Begininng Of script for menu **/
 
+  function openNav() {
+    document.getElementById("sidenav").style.width = "70%";
+  }
 
- /** Begininng Of script for menu **/
-
- function openNav() {
-   document.getElementById("sidenav").style.width = "70%";
- }
-
- function closeNav() {
-   document.getElementById("sidenav").style.width = "0";
- }
+  function closeNav() {
+    document.getElementById("sidenav").style.width = "0";
+  }
 
   return (
-    <div class="dashboard-panel">
+    <div class="dashboard-panel" id="sidenav">
       <div class="panel">
         <div class="logo">
           <span>
@@ -113,6 +111,6 @@ const Sidebar = () => {
       </div>
     </div>
   );
-}
+};
 
 export default Sidebar;

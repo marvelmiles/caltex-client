@@ -22,7 +22,7 @@ import {
   ThemeProvider,
   CssBaseline,
   GlobalStyles,
-  IconButton,
+  IconButton
 } from "@mui/material";
 import { createTheme, fontFamily } from "./styled/theme";
 import Login from "./pages/Login";
@@ -57,11 +57,11 @@ const App = () => {
   const { isLoggedIn } = useAuth(locState.user);
 
   const closeSnackBar = useCallback(() => {
-    setSnackbar((snackbar) =>
+    setSnackbar(snackbar =>
       snackbar.open
         ? {
             ...snackbar,
-            open: false,
+            open: false
           }
         : snackbar
     );
@@ -71,7 +71,7 @@ const App = () => {
     (
       snackbar = {
         autoHideDuration: 10000,
-        message: "You need to login!",
+        message: "You need to login!"
       },
       close
     ) => {
@@ -81,8 +81,8 @@ const App = () => {
           ? snackbar
           : {
               message: snackbar,
-              close,
-            }),
+              close
+            })
       });
     },
     []
@@ -104,8 +104,8 @@ const App = () => {
             backgroundColor: "transparent",
             transition: "background-color 5000s ease-in-out 0s",
             textFillColor: theme.palette.text.primary,
-            caretColor: theme.palette.text.primary,
-          },
+            caretColor: theme.palette.text.primary
+          }
         }}
       />
       <Provider value={{ setSnackBar, locState }}>
@@ -240,8 +240,8 @@ const App = () => {
           sx={{
             maxWidth: snackbar.maxWidth || "400px",
             "&::first-letter": {
-              textTransform: "uppercase",
-            },
+              textTransform: "uppercase"
+            }
           }}
         >
           <Alert
@@ -252,7 +252,7 @@ const App = () => {
               </IconButton>
             }
             sx={{
-              whiteSpace: "pre-line",
+              whiteSpace: "pre-line"
             }}
           >
             {snackbar.message}

@@ -1,11 +1,12 @@
-import http from "../../api/http";
-import React, { useRef } from "react";
+import React from "react";
 import ReactDoM from "react-dom";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import "../../components/Deposit/DepositPage.css";
+import Cookies from "js-cookie";
 import { Link } from "react-router-dom";
 import caltexTrader from "../../images/caltexTrader.png";
 import logo from "../../images/logo (1).png";
+import john from "../../images/John.jpg";
 import forex from "../../images/forex.png";
 import crypto from "../../images/crypto.png";
 import withdraw from "../../images/withdraw.png";
@@ -14,27 +15,21 @@ import profile from "../../images/profile.png";
 import deposit from "../../images/deposit.png";
 import legal from "../../images/legal.png";
 import logout from "../../images/logout.png";
+import closedeye from "../../images/closedeye.png";
+import backarrow from "../../images/backArrow.png";
 import visa from "../../images/visa.png";
 import mastercard from "../../images/mastercard.png";
 import cryptovec from "../../images/cryptovector.png";
 import btc from "../../images/Bitcoin.png";
 import wallet from "../../images/wallet.png";
 import creditcard from "../../images/creditcard.png";
-import dashboard from "../../images/dashboard (1).png";
-import { BiSolidDashboard } from "react-icons/bi";
+import { BrowserRouter as Router, Route } from "react-router-dom";
 
-import useAuth from "../../hooks/useAuth";
-import { useCtx } from "../../context";
-import Button from "@mui/material/Button";
-import { Stack, Box } from "@mui/material";
-import Typography from "@mui/material/Typography";
-import { GoCopy } from "react-icons/go";
-import { BsCheck2 } from "react-icons/bs";
+import { BiSolidDashboard } from "react-icons/bi";
+import Sidebar from "../../components/dashboard/Sidebar";
+import DashboardNav from "../../components/dashboard/DashboardNav";
 
 const DepositPage = () => {
-  const { setSnackBar } = useCtx();
-  const { currentUser } = useAuth();
-
   function revealTransDetails() {
     document.getElementById("trans-pro-det").style.display = "block";
     document.getElementById("transactionPro2").style.display = "block";
@@ -49,6 +44,23 @@ const DepositPage = () => {
     document.getElementById("transactionPro1").style.display = "block";
     document.getElementById("transactionPro1").style.display = "flex";
     document.getElementById("transactionPro2").style.display = "none";
+  }
+
+  function cryptoDeposit() {
+    document.getElementById("crypto-options").style.display = "none";
+    document.getElementById("crypto-payments").style.display = "none";
+    document.getElementById("credit-options").style.display = "none";
+    document.getElementById("credit-card-payments").style.display = "none";
+    document.getElementById("copy-and-paste").style.display = "none";
+    document.getElementById("cdm").style.display = "block";
+    document.getElementById("cryptoDeposit").style.display = "block";
+    document.getElementById("withdrawNow").style.display = "block";
+    document.getElementById("withdrawal-network").style.display = "block";
+    document.getElementById("enter-amount").style.display = "block";
+    document.getElementById("depositFee-processingTime").style.display =
+      "block";
+    document.getElementById("cardDeposit").style.display = "none";
+    document.getElementById("enter-id").style.display = "block";
   }
 
   function showAll() {
@@ -92,6 +104,8 @@ const DepositPage = () => {
     document.getElementById("congratulations").style.display = "block";
   }
 
+  /** Begininng Of script for menu **/
+
   function openNav() {
     document.getElementById("sidenav").style.width = "70%";
   }
@@ -99,46 +113,65 @@ const DepositPage = () => {
   function closeNav() {
     document.getElementById("sidenav").style.width = "0";
   }
+  /** End Of script for menu */
 
+  const [name, setName] = useState("");
   const [currency, setCurrency] = useState("USD");
-  const [cryptoNetwork, setCryptoNetwork] = useState("bitcoin");
+  const [cryptoNetwork, setCryptoNetwork] = useState("");
   const [amount, setAmount] = useState("");
+  const [paymentStatus, setPaymentStatus] = useState(null);
+  const [investmentId, setInvestmentId] = useState("");
+  const [investment, setInvestment] = useState("crypto");
+  const [walletAddress, setWalletAddress] = useState("");
+  const [message, setMessage] = useState("");
   const [paymentDetails, setPaymentDetails] = useState(null);
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [copied, setCopied] = useState(false);
-  const [address, setAddress] = useState("");
 
-  const addressRef = useRef();
-
-  const handleCryptoDeposit = async e => {
+  const handlePayment = async () => {
     try {
-      e.preventDefault();
-
+      // Step 1: Create a payment request on the backend
       const paymentData = {
         amount,
+        investment,
         cryptoNetwork
       };
 
-      console.log(paymentData);
-
-      setIsSubmitting(true);
-
-      const response = await http.post(
-        "/transactions/process-crypto-payment",
-        paymentData
+      const response = await fetch(
+        "https://caltex-api.onrender.com/api/transactions/process-fiat-payment",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify(paymentData)
+        }
       );
 
-      if (!response.success) throw response;
+      const responseData = await response.json();
 
-      console.log(response.data.addresses, cryptoNetwork);
-      setAddress(response.data.addresses[cryptoNetwork]);
+      if (!response.ok || !responseData.success) {
+        throw new Error("Payment request failed on the backend");
+      }
+
+      // Step 2: Handle the Coinbase charge object from the response
+      const chargeObject = responseData.chargeObject;
+
+      // Display payment details to the user
+      setPaymentDetails(chargeObject);
+
+      // You can also redirect the user to Coinbase or another payment gateway here
+      // Example: window.location.href = chargeObject.paymentUrls.checkout;
+
+      setMessage("Payment request created successfully");
     } catch (error) {
-      console.log("Error:", error);
-
-      setSnackBar(`Error processing request. ${error.message}`);
-    } finally {
-      setIsSubmitting(false);
+      console.error("Error:", error);
+      setMessage("Error creating payment request");
     }
+
+    document.getElementById("copy-and-paste").style.display = "block";
+    document.getElementById("withdrawNow").style.display = "none";
+    document.getElementById("withdrawal-network").style.display = "none";
+    document.getElementById("enter-amount").style.display = "none";
+    document.getElementById("enter-id").style.display = "none";
   };
 
   const [userData, setUserData] = useState({
@@ -148,75 +181,90 @@ const DepositPage = () => {
     address: ""
   });
 
-  function cryptoDeposit() {
-    document.getElementById("cryptoDeposit").style.display = "block";
-    document.getElementById("cdm").style.display = "block";
-    document.getElementById("cardDeposit").style.display = "none";
-    document.getElementById("crypto-payments").style.display = "none";
-    document.getElementById("crypto-options").style.display = "none";
-    document.getElementById("credit-options").style.display = "none";
-    document.getElementById("credit-card-payments").style.display = "none";
-  }
+  useEffect(() => {
+    // Function to sign in and fetch user data
+    const signInAndFetchUserData = async () => {
+      try {
+        // Send a POST request to the sign-in API endpoint to sign in
+        const signInResponse = await fetch(
+          "https://caltex-api.onrender.com/apiauth/signin",
+          {
+            method: "POST"
+            // Add any necessary headers and request body for sign-in here
+          }
+        );
 
-  const handleCopyToClipboard = () => {
-    const input = addressRef.current;
-    navigator.clipboard.writeText(input.value);
-    setCopied(true);
-    const taskId = setTimeout(() => {
-      setCopied(false);
-      clearTimeout(taskId);
-    }, 1000);
-  };
+        if (!signInResponse.ok) {
+          throw new Error("Sign-in failed");
+        }
+
+        // Assuming the user object is returned in the response
+        const userObject = await signInResponse.json();
+
+        // Store the user object in cookies
+        Cookies.set("userObject", JSON.stringify(userObject));
+
+        // Set the user's data in the component's state
+        setUserData(userObject);
+      } catch (error) {
+        console.error("Error:", error);
+      }
+    };
+
+    // Call the sign-in and fetchUserData function when the component mounts
+    signInAndFetchUserData();
+  }, []);
 
   return (
     <div>
-      <div className="mySidenav" id="sidenav">
-        <Link to="" className="closebtn" id="close-btn" onClick={closeNav}>
+      {/* <!--Menu--> */}
+      {/* <div class="mySidenav" id="sidenav">
+        <Link to="" class="closebtn" id="close-btn" onClick={closeNav}>
           &times;
         </Link>
-        <Link to="/" className=" ">
+        <Link to="/" class=" ">
           <BiSolidDashboard id="other-icon" className="dashboard-icon" />
           Dashboard
         </Link>
-        <Link to="/" className="linkss">
+        <Link to="/" class="linkss">
           <img src={profile} id="other-icon" alt="profile-icon" />
           Profile
         </Link>
-        <Link to="/Deposit/DepositPage" className="linkss">
+        <Link to="/Deposit/DepositPage" class="linkss">
           <img src={deposit} id="other-icon" alt="deposit-icon" />
           Deposit
         </Link>
-        <Link to="/Withdraw/withdrawPage" className="linkss">
+        <Link to="/Withdraw/withdrawPage" class="linkss">
           <img src={withdraw} id="other-icon" alt="withdraw-icon" />
           Withdraw
         </Link>
-        <Link to="/Invest/InvestPage" className="linkss">
+        <Link to="/Invest/InvestPage" class="linkss">
           <img src={crypto} id="other-icon" alt="crypto-icon" />
           Crypto
         </Link>
-        <Link to="/Invest/InvestPage" className="linkss">
+        <Link to="/Invest/InvestPage" class="linkss">
           <img src={forex} id="other-icon" alt="forex-icon" />
           Forex
         </Link>
-        <Link to="/" className="linkss">
+        <Link to="/" class="linkss">
           <img src={help} id="other-icon" alt="help-icon" />
           HELP
         </Link>
-        <Link to="/" className="linkss">
+        <Link to="/" class="linkss">
           <img src={legal} id="other-icon" alt="legal-icon" />
           Legal Documents
         </Link>
-        <Link to="/" className="linkss">
+        <Link to="/" class="linkss">
           <img src={logout} id="other-icon" alt="logout-icon" />
           LogOut
         </Link>
-      </div>
+      </div> */}
 
-      <div className="dashboard-container">
-        <div className="board">
-          <div className="dashboard-panel">
-            <div className="panels">
-              <div className="logo">
+      <div class="dashboard-container">
+        <div class="board">
+          {/* <div class="dashboard-panel">
+            <div class="panels">
+              <div class="logo">
                 <span>
                   <img src={logo} alt="logo" />
                 </span>
@@ -224,109 +272,143 @@ const DepositPage = () => {
                   <img src={caltexTrader} alt="caltek-logo" />
                 </span>
               </div>
-              <div className="panel-control">
-              <Link to="/" class="controld" id="dashboard" onclick=" ">
-                <img src={dashboard} id="other-icon" alt="profile-icon" />
+              <div class="panel-control">
+                <Link to="/" class="controld" id="dashboard" onclick=" ">
+                  <BiSolidDashboard
+                    id="other-icon"
+                    className="dashboard-icon"
+                  />
                   Dashboard
                 </Link>
-                <span className="control" id=" ">
+                <span class="control" id=" " onclick=" ">
                   <img src={profile} id="other-icon" alt="profile-icon" />
                   Profile
                 </span>
                 <Link
                   to="/Deposit/DepositPage"
-                  className="control"
+                  class="control"
                   id="funding"
+                  onclick=" "
                 >
                   <b>FUNDING</b>
                 </Link>
-                <Link to="/Deposit/DepositPage" className="control" id=" ">
+                <Link
+                  to="/Deposit/DepositPage"
+                  class="control"
+                  id=" "
+                  onclick=" "
+                >
                   <img src={deposit} id="other-icon" alt="deposit-icon" />
                   Deposit
                 </Link>
-                <Link to="/Withdraw/WithdrawPage" className="control" id=" ">
+                <Link
+                  to="/Withdraw/WithdrawPage"
+                  class="control"
+                  id=" "
+                  onclick=" "
+                >
                   <img src={withdraw} id="other-icon" alt="withdraw-icon" />
                   Withdraw
                 </Link>
-                <Link to="/Invest/InvestPage" className="control" id="trading">
+                <Link
+                  to="/Invest/InvestPage"
+                  class="control"
+                  id="trading"
+                  onclick=" "
+                >
                   <b>TRADING</b>
                 </Link>
-                <Link to="/Invest/InvestPage" className="control" id=" ">
+                <Link
+                  to="/Invest/InvestPage"
+                  class="control"
+                  id=" "
+                  onclick=" "
+                >
                   <img src={crypto} id="other-icon" alt="crypto-icon" />
                   Crypto
                 </Link>
-                <Link to="/Invest/InvestPage" className="control" id=" ">
+                <Link
+                  to="/Invest/InvestPage"
+                  class="control"
+                  id=" "
+                  onclick=" "
+                >
                   <img src={forex} id="other-icon" alt="forex-icon" />
                   Forex
                 </Link>
-                <span className="control" id="partners">
+                <span class="control" id="partners" onclick=" ">
                   <b> PARTNERS</b>
                 </span>
-                <span className="control" id="bam">
+                <span class="control" id="bam" onclick=" ">
                   Become a Merchant
                 </span>
-                <span className="control" id="help">
+                <span class="control" id="help" onclick=" ">
                   <img src={help} id="other-icon" alt="help-icon" />
                   HELP
                 </span>
-                <span className="control" id=" ">
+                <span class="control" id=" " onclick=" ">
                   <img src={legal} id="other-icon" alt="legal-icon" />
                   Legal Documents
                 </span>
-                <span className="control" id=" ">
+                <span class="control" id=" " onclick=" ">
                   <img src={logout} id="other-icon" alt="logout-icon" />
                   LogOut
                 </span>
               </div>
             </div>
-          </div>
-
-          <div className="dashboard-content">
-            <div className="board-content">
-              <div className="welcome-user">
-                <div className="welcome">
-                  <div className="welcome-text">
-                    <p>Welcome back, {currentUser.firstname}</p>
+          </div> */}
+          <Sidebar />
+          <div class="dashboard-content">
+            <div class="board-content">
+              {/*
+         This is the Container that displays "Welome back John" 
+        */}
+        <DashboardNav />
+              {/* <div class="welcome-user">
+                <div class="welcome">
+                  <div class="welcome-text">
+                    <p>Welcome back, {userData.firstName}</p>
                   </div>
-                  <div className="welcome-asset">
+                  <div class="welcome-asset">
                     <span>
-                      <img src={currentUser.photoUrl} alt="user-avatar" />
+                      <img src={userData.photoUrl} alt="user-avatar" />
                     </span>
-                    <span className="john">
+                    <span class="john">
                       <p>
-                        {currentUser.firstname} {currentUser.lastname}
+                        {userData.firstName} {userData.lastName}
                       </p>
                     </span>
-                    <span className="bell-notification" id=" ">
-                      <i className="fa fa-bell"></i>
+                    <span class="bell-notification" id=" " onclick=" ">
+                      <i class="fa fa-bell"></i>
                     </span>
                   </div>
-                  <div className="menu-button" onClick={openNav}>
+                  <div class="menu-button" onClick={openNav}>
                     &#9776;
                   </div>
                 </div>
-              </div>
+              </div> */}
 
-              <div className="deposit-funds-container">
-                <div className="deposit-funds">
-                  <div className="deposit-fund-text">
+              {/* <!--DEPOSIT CONTAINER-->  */}
+              <div class="deposit-funds-container">
+                <div class="deposit-funds">
+                  <div class="deposit-fund-text">
                     <h3>Deposit Fund</h3>
                   </div>
-                  <div className="deposit-content-container">
-                    <div className="deposit-container">
-                      <div className="deposit-limit-text">
+                  <div class="deposit-content-container">
+                    <div class="deposit-container">
+                      <div class="deposit-limit-text">
                         <p>
                           Your deposit limit is $5,000 , get your account fully
                           verified to increase your deposit limit by
-                          <span className="clicking-here">
+                          <span class="clicking-here">
                             {" "}
                             <b>clicking here</b>{" "}
                           </span>
                         </p>
                       </div>
-                      <div className="deposit-options">
-                        <div className="depo-options">
-                          <div className="all" onClick={showAll}>
+                      <div class="deposit-options">
+                        <div class="depo-options">
+                          <div class="all" onClick={showAll}>
                             <img
                               src={wallet}
                               id="depo-icon"
@@ -334,11 +416,11 @@ const DepositPage = () => {
                             />
                             <p>All</p>
                           </div>
-                          <div className="cryptos" onClick={cryptoDeposit}>
+                          <div class="cryptos" onClick={cryptoDeposit}>
                             <img src={btc} id="depo-icon" alt="btc-icon" />
                             <span>Crypto</span>
                           </div>
-                          <div className="credit-cards" onClick={cardDeposit}>
+                          <div class="credit-cards" onClick={cardDeposit}>
                             <img
                               src={creditcard}
                               id="depo-icon"
@@ -349,128 +431,127 @@ const DepositPage = () => {
                         </div>
                       </div>
 
-                      {paymentDetails && (
-                        <>
-                          <h2>Payment Details</h2>
-                          <p>Charge ID: {paymentDetails.chargeId}</p>
-                          <p>Name: {paymentDetails.name}</p>
-                        </>
-                      )}
-
-                      <div className="cdm" id="cdm" onClick={showAll}>
+                      <div class="cdm" id="cdm" onClick={showAll}>
                         <span>
-                          <i className="fa fa-arrow-left" id="CDM"></i>
+                          <i class="fa fa-arrow-left" id="CDM"></i>
                         </span>
                         <span>Change deposit mode</span>
                       </div>
 
-                      <div className="crypto-options" id="crypto-options">
-                        <h3 className="crypto-opt">Cryptos</h3>
+                      <div class="crypto-options" id="crypto-options">
+                        <h3 class="crypto-opt">Cryptos</h3>
                       </div>
 
                       <div
-                        className="crypto-payments"
+                        class="crypto-payments"
                         id="crypto-payments"
                         onClick={cryptoDeposit}
                       >
-                        <div className="crypto-pay">
+                        <div class="crypto-pay">
                           <span>
                             <b>Crypto Payments</b>
                           </span>
-                          <span className="cp4">
+                          <span class="cp4">
                             <img src={cryptovec} alt="crypto-icon" />
                             Crypto
                           </span>
                         </div>
                       </div>
 
-                      <div className="credit-options" id="credit-options">
-                        <h3 className="credit-opt">Credit Card</h3>
+                      <div class="credit-options" id="credit-options">
+                        <h3 class="credit-opt">Credit Card</h3>
                       </div>
 
                       <div
-                        className="credit-card-payments"
+                        class="credit-card-payments"
                         id="credit-card-payments"
                         onClick={cardDeposit}
                       >
-                        <div className="credit-pay">
-                          <span className="interS">
-                            <b>Stripe</b>
+                        <div class="credit-pay">
+                          <span class="interS">
+                            <b>Interswitch</b>
                           </span>
-                          <span className="cp1">
-                            <span className="visa">
+                          <span class="cp1">
+                            <span class="visa">
                               <img src={visa} alt="visa-icon" />
                             </span>
-                            <span className="master">
+                            <span class="master">
                               <img src={mastercard} alt="mastercard-icon" />
                             </span>
                           </span>
                         </div>
                       </div>
 
-                      <div className="cryptoDeposit" id="cryptoDeposit">
-                        <div className="cryptodeposit">
-                          <div className="cryptoprefix">
+                      <div class="cryptoDeposit" id="cryptoDeposit">
+                        <div class="cryptodeposit">
+                          <div class="cryptoprefix">
                             <span>
                               <h3>Crypto Payments</h3>
                             </span>
-                            <span className="cp2">
+                            <span class="cp2">
                               <h4>
                                 <img src={cryptovec} /> Crypto
                               </h4>
                             </span>
                           </div>
 
-                          <div className="imp-instruction">
+                          <div class="imp-instruction">
                             <h4>
                               Important instructions before making the payment
                             </h4>
                             <p>
                               {" "}
-                              <i className="fa fa-circle" id="circle"></i>{" "}
-                              Payments with this method may at our request be
-                              subject to enhanced due dilligence and security
-                              checks to ensure that they are not fraudulent.
+                              <i class="fa fa-circle" id="circle"></i> Payments
+                              with this method may at our request be subject to
+                              enhanced due dilligence and security checks to
+                              ensure that they are not fraudulent.
                             </p>
                             <p>
                               {" "}
-                              <i className="fa fa-circle" id="circle"></i> Make
-                              sure you send the Crypto Payment within the 15
-                              minutes before invoice expiration.
+                              <i class="fa fa-circle" id="circle"></i> Make sure
+                              you send the Crypto Payment within the 15 minutes
+                              before invoice expiration.
                             </p>
                             <p>
                               {" "}
-                              <i className="fa fa-circle" id="circle"></i> Make
-                              sure you always add the Payment Destination
-                              Tag/Memo or ID before making the transaction.
+                              <i class="fa fa-circle" id="circle"></i> Make sure
+                              you always add the Payment Destination Tag/Memo or
+                              ID before making the transaction.
                             </p>
                             <p>
                               {" "}
-                              <i className="fa fa-circle" id="circle"></i>{" "}
-                              Please make sure you always use the updated
-                              payment details that will be presented to you
-                              after you click Deposit. HFM will bear no
-                              responsibility for crediting and returning funds
-                              if you use invalid payment details.
+                              <i class="fa fa-circle" id="circle"></i> Please
+                              make sure you always use the updated payment
+                              details that will be presented to you after you
+                              click Deposit. HFM will bear no responsibility for
+                              crediting and returning funds if you use invalid
+                              payment details.
                             </p>
                             <p>
                               {" "}
-                              <i className="fa fa-circle" id="circle"></i> Only
+                              <i class="fa fa-circle" id="circle"></i> Only
                               accepted cryptocurrencies are processed using this
                               method. Other currencies or tokens are not
                               supported.
                             </p>
                           </div>
 
-                          <form
-                            onSubmit={handleCryptoDeposit}
-                            id="crypto-form-deposit"
-                            style={{ display: address ? "none" : "block" }}
-                          >
-                            <div className="enter-amount" id="enter-amount">
-                              <h4>Enter amount</h4>
+                          <div class="copy-and-paste" id="copy-and-paste">
+                            {message && <p>{message}</p>}
+                            {paymentDetails && (
+                              <div>
+                                <h2>Payment Details</h2>
+                                <p>Charge ID: {paymentDetails.chargeId}</p>
+                                <p>Name: {paymentDetails.name}</p>
+                                {/* Add more payment details as needed */}
+                              </div>
+                            )}
+                          </div>
+
+                          <div class="enter-amount" id="enter-amount">
+                            <h4>Enter amount</h4>
+                            <form>
                               <select
-                                disabled={isSubmitting}
                                 id="currency"
                                 name="currency"
                                 size="1"
@@ -480,145 +561,89 @@ const DepositPage = () => {
                                 <option value="USD" id="usd">
                                   USD
                                 </option>
-                                <option value="EUR" id="euro">
-                                  EUR
+                                <option value="EURO" id="euro">
+                                  EURO
                                 </option>
                               </select>
                               <input
-                                readOnly={isSubmitting}
                                 type="number"
                                 id="number"
-                                name="amount"
                                 value={amount}
                                 placeholder=" "
                                 onChange={e => setAmount(e.target.value)}
                               />
-                            </div>
+                            </form>
+                          </div>
 
-                            <div
-                              className="withdrawal-network"
-                              id="withdrawal-network"
-                            >
-                              <h4>Accepted Cryptocurrencies</h4>
-                              <select
-                                id="withdraw-net"
-                                name="Cryptocurrency-Network"
-                                size="1"
-                                value={cryptoNetwork}
-                                onChange={e => setCryptoNetwork(e.target.value)}
-                                disabled={isSubmitting}
-                              >
-                                <option value="bitcoin" id="btc">
-                                  BTC - Bitcoin
-                                </option>
-                                <option value="ethereum" id="eth">
-                                  ETH - Ethereum
-                                </option>
-                                <option value="litecoin" id="ltc">
-                                  LTC - Litecoin
-                                </option>
-                                <option value="tether" id="usdtErc20">
-                                  USDT - Tether
-                                </option>
-                                <option value="bitcoincash" id="usdtTrc20">
-                                  BCH - Bitcoin Cash
-                                </option>
-                                <option value="doigecoin" id="usdtBep20">
-                                  DOGE - Doigecoin
-                                </option>
-                              </select>
-                            </div>
-
-                            <Button
-                              variant="contained"
-                              type="submit"
-                              disabled={isSubmitting}
-                              sx={{ ml: "20px", mt: "20px" }}
-                            >
-                              Deposit
-                            </Button>
-                          </form>
-
-                          <Box
-                            id="address-selection"
-                            sx={{
-                              ml: "20px",
-                              mt: 3,
-                              width: "57%",
-                              display: address ? "block" : "none"
-                            }}
+                          <div
+                            class="withdrawal-network"
+                            id="withdrawal-network"
                           >
-                            <Typography variant="h4" sx={{ mb: 3 }}>
-                              Address
-                            </Typography>
-
-                            <Stack
-                              sx={{
-                                px: 1,
-                                backgroundColor: "grey.main",
-                                borderRadius: "5px",
-                                width: "100%",
-                                input: {
-                                  width: "100%",
-                                  border: 0,
-                                  py: 2,
-                                  background: "transparent",
-                                  outline: 0,
-                                  boxShadow: "none"
-                                },
-                                "& > div": {
-                                  fontSize: "20px",
-                                  margin: 0,
-                                  "&  > *": {
-                                    margin: "0 !important"
-                                  }
-                                }
-                              }}
+                            <h4>Accepted Cryptocurrencies</h4>
+                            <select
+                              id="withdraw-net"
+                              name="withdraw-net"
+                              size="1"
+                              value={cryptoNetwork}
+                              onChange={e => setCryptoNetwork(e.target.value)}
                             >
-                              <input
-                                variant="h6"
-                                ref={addressRef}
-                                value={address}
-                                readOnly
-                              />
+                              <option value="BTC - Bitcoin" id="btc">
+                                BTC - Bitcoin
+                              </option>
+                              <option value="ETH - Ethereum" id="eth">
+                                ETH - Ethereum
+                              </option>
+                              <option value="LTC - Litecoin" id="ltc">
+                                LTC - Litecoin
+                              </option>
+                              <option value="USDT - ERC20" id="usdtErc20">
+                                USDT - ERC20
+                              </option>
+                              <option value="USDT - TRC20" id="usdtTrc20">
+                                USDT - TRC20
+                              </option>
+                              <option value="USDT - BEP20" id="usdtBep20">
+                                USDT - BEP20
+                              </option>
+                            </select>
+                          </div>
 
-                              <div>
-                                {copied ? (
-                                  <BsCheck2 />
-                                ) : (
-                                  <GoCopy onClick={handleCopyToClipboard} />
-                                )}
-                              </div>
-                            </Stack>
-                          </Box>
+                          <div
+                            class="withdraw-now"
+                            id="withdrawNow"
+                            onClick={handlePayment}
+                          >
+                            <span class="withdrawNow-crypto">Deposit</span>
+                          </div>
                         </div>
                       </div>
 
-                      <div className="cardDeposit" id="cardDeposit">
-                        <div className="depositWithCard">
-                          <div className="cryptoprefix">
+                      {/* <!-------------------Begining of deposit by card----------------------------> */}
+                      <div class="cardDeposit" id="cardDeposit">
+                        <div class="depositWithCard">
+                          <div class="cryptoprefix">
                             <span>
-                              <h3 className="intersw">STRIPE</h3>
+                              <h3 class="intersw">INTERSWITCH</h3>
                             </span>
-                            <span className="cp3">
+                            <span class="cp3">
                               <img src={mastercard} />
                               <p>Credit Card</p>
                             </span>
                           </div>
 
-                          <div className="imp-instructionForCard">
+                          <div class="imp-instructionForCard">
                             <h4>
                               Important instructions before making the payment
                             </h4>
                             <p>
                               {" "}
-                              <i className="fa fa-circle" id="circle"></i>{" "}
+                              <i class="fa fa-circle" id="circle"></i>{" "}
                               Verification is important before completing the
                               transaction.
                             </p>
                           </div>
 
-                          <div className="enter-amount" id="enter-amount">
+                          <div class="enter-amount" id="enter-amount">
                             <h4>Enter amount</h4>
                             <select
                               id="currency"
@@ -630,8 +655,8 @@ const DepositPage = () => {
                               <option value="USD" id="usd">
                                 USD
                               </option>
-                              <option value="EUR" id="euro">
-                                EUR
+                              <option value="EURO" id="euro">
+                                EURO
                               </option>
                             </select>
                             <input
@@ -643,19 +668,19 @@ const DepositPage = () => {
                             />
                           </div>
 
-                          <Link
-                            to="/DepositForm/DepositsForm"
-                            id="depositCard-Now"
-                            state={{ payment: { amount, currency } }}
-                          >
-                            Deposit
-                          </Link>
+                          <div class="withdraw-now" id="withdrawNow" onClick="">
+                            <Link to="/DepositForm/DepositsForm" class=" ">
+                              Deposit
+                            </Link>
+                          </div>
                         </div>
                       </div>
 
-                      <div className="trans-pro-del">
+                      {/*<!------------------------------------ End of deposit-by-card-----------------------------------> */}
+
+                      <div class="trans-pro-del">
                         <div
-                          className="transaction-processings"
+                          class="transaction-processings"
                           id="transactionPro1"
                           onClick={revealTransDetails}
                         >
@@ -663,11 +688,11 @@ const DepositPage = () => {
                             Transaction Processing And Security Of Funds
                           </span>
                           <span>
-                            <i className="fa fa-caret-down"></i>
+                            <i class="fa fa-caret-down"></i>
                           </span>
                         </div>
                         <div
-                          className="transaction-processings"
+                          class="transaction-processings"
                           id="transactionPro2"
                           onClick={closeTransDetails}
                         >
@@ -675,60 +700,60 @@ const DepositPage = () => {
                             Transaction Processing And Security Of Funds
                           </span>
                           <span>
-                            <i className="fa fa-caret-up"></i>
+                            <i class="fa fa-caret-up"></i>
                           </span>
                         </div>
 
                         <div
-                          className="transaction-processing-details"
+                          class="transaction-processing-details"
                           id="trans-pro-det"
                         >
                           <p>
-                            <i className="fa fa-circle" id="circle"></i> Manual
+                            <i class="fa fa-circle" id="circle"></i> Manual
                             deposits or refunds are credited to myWallet only.
                             To transfer funds to your trading account, please
                             proceed with an internal transfer from myWallet.
                           </p>
                           <p>
-                            <i className="fa fa-circle" id="circle"></i> The
-                            company is not liable for potential losses that may
-                            occur as a result of market moves during the time
-                            your deposit is being approved.
+                            <i class="fa fa-circle" id="circle"></i> The company
+                            is not liable for potential losses that may occur as
+                            a result of market moves during the time your
+                            deposit is being approved.
                           </p>
                           <p>
-                            <i className="fa fa-circle" id="circle"></i> CALTEX
-                            does not collect, store, or process any personal
-                            credit or debit Card information.All payment
-                            transactions are processed through our independent
-                            international payment processors.
+                            <i class="fa fa-circle" id="circle"></i> CALTEX does
+                            not collect, store, or process any personal credit
+                            or debit Card information.All payment transactions
+                            are processed through our independent international
+                            payment processors.
                           </p>
                           <p>
-                            <i className="fa fa-circle" id="circle"></i> CALTEX
+                            <i class="fa fa-circle" id="circle"></i> CALTEX
                             ahall not accept any deposits from any third-party
                             to the customer's account.
                           </p>
                           <p>
-                            <i className="fa fa-circle" id="circle"></i> CALTEX
-                            does not accept cheque payments.
+                            <i class="fa fa-circle" id="circle"></i> CALTEX does
+                            not accept cheque payments.
                           </p>
                           <p>
-                            <i className="fa fa-circle" id="circle"></i>{" "}
-                            Deposits are processed 24/5 between 00:00 Server
-                            Time Monday to 00:00 Server Time Saturday.
+                            <i class="fa fa-circle" id="circle"></i> Deposits
+                            are processed 24/5 between 00:00 Server Time Monday
+                            to 00:00 Server Time Saturday.
                           </p>
                         </div>
                       </div>
 
                       <div
-                        className="depositFee-processingTime"
+                        class="depositFee-processingTime"
                         id="depositFee-processingTime"
                       >
-                        <div className="depoFeeProTime">
-                          <div className="deposit-fee">
+                        <div class="depoFeeProTime">
+                          <div class="deposit-fee">
                             <h4>Deposit Fee:</h4>
                             <p>No Deposit Fee</p>
                           </div>
-                          <div className="processingTime">
+                          <div class="processingTime">
                             <h4>Processing Time:</h4>
                             <p>
                               Up to 5 minutes, but it can take longer depending

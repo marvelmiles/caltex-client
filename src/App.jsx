@@ -1,16 +1,15 @@
 import React, { useState, useEffect, useCallback } from "react";
-import {
-  Routes,
-  Route,
-  useLocation,
-  Navigate,
-  useNavigate
-} from "react-router-dom";
-import DashboardPage from "./DashboardPage";
+import { Routes, Route, useLocation, Navigate } from "react-router-dom";
+import DashboardPage from "./components/dashboard/DashboardPage";
 import DepositPage from "./components/Deposit/DepositPage";
 import InvestPage from "./components/Invest/InvestPage";
-import CaltexCompBrief from "./components/CaltexCompanyBrief/CaltexCompBrief";
 import WithdrawPage from "./components/Withdraw/WithdrawPage";
+import StarterPlanInvF from "./components/ForexInvestForms/StarterPlanInvF";
+import ProfessionalPlanInvF from "./components/ForexInvestForms/ProfessionalPlanInvF";
+import MasterPlanInvF from "./components/ForexInvestForms/MasterPlanInvF";
+import StarterPlanInvC from "./components/CryptoInvestForms/StarterPlanInvC";
+import ProfessionalPlanInvC from "./components/CryptoInvestForms/ProfessionalPlanInvC";
+import MasterPlanInvC from "./components/CryptoInvestForms/MasterPlanInvC";
 import StarterplanForex from "./components/ForexDetails/StarterplanForex";
 import professionalplanForex from "./components/ForexDetails/professionalplanForex";
 import masterplanForex from "./components/ForexDetails/masterplanForex";
@@ -23,7 +22,7 @@ import {
   ThemeProvider,
   CssBaseline,
   GlobalStyles,
-  IconButton
+  IconButton,
 } from "@mui/material";
 import { createTheme, fontFamily } from "./styled/theme";
 import Login from "./pages/Login";
@@ -37,54 +36,32 @@ import { Provider } from "./context";
 import Snackbar from "@mui/material/Snackbar";
 import Alert from "@mui/material/Alert";
 import { AiOutlineClose } from "react-icons/ai";
+import { useSelector } from "react-redux";
 import Redirect from "./components/Redirect";
 import Page404 from "./pages/Page404";
 import useAuth from "./hooks/useAuth";
-import http, { createRelativeUrl } from "./api/http";
-import InvestTab from "./components/InvestTab";
-import backarrow from "./images/backArrow.png";
-import { HTTP_CODE_ACCOUNT_VERIFICATION_ERROR } from "./config/constants";
-
-// WORKED ON THE INVEST AND PAYMENT SCREEN SOME COMPONENT ARE
-// HAD TO BREAKDOWN UI INTO BIT OF COMPONENT BECAUSE OF THE CODE IS
-// DIRTY AND REPITITIVE. MAJORLY THE INVESTMENT DASHBOARD AND PAYMENT
-// SCREEN IS MEANT TO BE A REUSABLE UI OF FEW COMPONENT.
+import Profile from "./components/dashboard/profile/Profile";
+import Investment from "./components/dashboard/investment/Investment";
+import LegalDocument from "./components/dashboard/legalDocument/LegalDocument";
+import Help from "./components/dashboard/help/Help";
 
 const App = () => {
   const [theme] = useState(createTheme());
   const [snackbar, setSnackbar] = useState({});
 
-  let { state: locState = {}, pathname } = useLocation();
+  // defualt prop = user
+
+  let { state: locState, pathname } = useLocation();
   locState = locState || {};
 
   const { isLoggedIn } = useAuth(locState.user);
 
-  const navigate = useNavigate();
-
-  const handleGoBack = useCallback(
-    config => {
-      navigate(-1, { state: locState, ...config });
-    },
-    [navigate, locState]
-  );
-
-  const renderBackArrow = () => (
-    <IconButton
-      onClick={() => handleGoBack({ replace: true })}
-      sx={{ ml: -6, mt: 2 }}
-    >
-      <img src={backarrow} alt="backarrow" id="backArrow" />
-    </IconButton>
-  );
-
-  const closeSnackBar = useCallback((e, reason) => {
-    if (reason === "clickaway") return;
-
-    setSnackbar(snackbar =>
+  const closeSnackBar = useCallback(() => {
+    setSnackbar((snackbar) =>
       snackbar.open
         ? {
             ...snackbar,
-            open: false
+            open: false,
           }
         : snackbar
     );
@@ -94,24 +71,19 @@ const App = () => {
     (
       snackbar = {
         autoHideDuration: 10000,
-        message: "Something went wrong!"
+        message: "You need to login!",
       },
-      withDelay
+      close
     ) => {
-      const config = {
+      setSnackbar({
         open: true,
         ...(snackbar.message
           ? snackbar
           : {
-              message: snackbar
-            })
-      };
-      if (withDelay) {
-        const taskId = setTimeout(() => {
-          setSnackBar(config);
-          clearTimeout(taskId);
-        }, 500);
-      } else setSnackbar(config);
+              message: snackbar,
+              close,
+            }),
+      });
     },
     []
   );
@@ -119,28 +91,6 @@ const App = () => {
   useEffect(() => {
     if (pathname) closeSnackBar();
   }, [pathname, closeSnackBar]);
-
-  useEffect(() => {
-    http.interceptors.response.use(
-      res => res,
-      err => {
-        if (err.status === 403) {
-          console.log(err, " in app 403 ");
-          navigate(`/auth/login?redirect=${createRelativeUrl()}`, {
-            state: locState
-          });
-
-          setSnackBar(
-            err.code === HTTP_CODE_ACCOUNT_VERIFICATION_ERROR
-              ? err.message
-              : "You need to login! Session timeout.",
-            true
-          );
-        }
-        return Promise.reject(err);
-      }
-    );
-  }, [locState, navigate, setSnackBar]); 
 
   return (
     <ThemeProvider theme={theme}>
@@ -154,13 +104,11 @@ const App = () => {
             backgroundColor: "transparent",
             transition: "background-color 5000s ease-in-out 0s",
             textFillColor: theme.palette.text.primary,
-            caretColor: theme.palette.text.primary
-          }
+            caretColor: theme.palette.text.primary,
+          },
         }}
       />
-      <Provider
-        value={{ setSnackBar, locState, handleGoBack, renderBackArrow }}
-      >
+      <Provider value={{ setSnackBar, locState }}>
         <Routes>
           <Route path="/auth">
             <Route
@@ -197,6 +145,7 @@ const App = () => {
             />
             <Route path="*" element={<Page404 />} />
           </Route>
+
           <Route path="/u/*">
             {isLoggedIn ? (
               <>
@@ -204,14 +153,24 @@ const App = () => {
                 <Route path="*" element={<Page404 />} />
               </>
             ) : (
-              <Route path="*" Component={Redirect} />
+              <Route path="*" element={<Redirect to="/auth/login" />} />
             )}
           </Route>
+
+          {/* <Route path="dashboard" element={<DashboardPage />} /> */}
+
+          <Route path="/profile/Profile" Component={Profile} />
+
+          <Route path="/investment/Investment" Component={Investment} />
+
           <Route
-            path="/Deposit/DepositPage"
-            Component={isLoggedIn ? DepositPage : Redirect}
+            path="/legalDocument/LegalDocument"
+            Component={LegalDocument}
           />
 
+          <Route path="/help/Help" Component={Help} />
+
+          <Route path="/Deposit/DepositPage" Component={DepositPage} />
           <Route
             path="/CryptoDetails/masterplanCrypto"
             Component={masterplanCrypto}
@@ -238,129 +197,51 @@ const App = () => {
           />
           <Route
             path="/CryptoInvestForms/MasterPlanInvC"
-            element={
-              isLoggedIn ? (
-                <InvestTab
-                  investFormProps={{
-                    maxAmount: Infinity,
-                    minAmount: 101000,
-                    duration: 30,
-                    tradeType: "crypto",
-                    roiPct: 4.0,
-                    plan: "master"
-                  }}
-                />
-              ) : (
-                <Redirect />
-              )
-            }
+            Component={MasterPlanInvC}
           />
           <Route
             path="/CryptoInvestForms/ProfessionalPlanInvC"
-            element={
-              isLoggedIn ? (
-                <InvestTab
-                  investFormProps={{
-                    minAmount: 16000,
-                    maxAmount: 100000,
-                    duration: 20,
-                    tradeType: "crypto",
-                    roiPct: 3.5,
-                    plan: "professional"
-                  }}
-                />
-              ) : (
-                <Redirect />
-              )
-            }
+            Component={ProfessionalPlanInvC}
           />
           <Route
             path="/CryptoInvestForms/StarterPlanInvC"
-            element={
-              isLoggedIn ? (
-                <InvestTab
-                  investFormProps={{
-                    minAmount: 300,
-                    maxAmount: 15000,
-                    duration: 10,
-                    tradeType: "crypto",
-                    roiPct: 3.0
-                  }}
-                />
-              ) : (
-                <Redirect />
-              )
-            }
+            Component={StarterPlanInvC}
           />
           <Route
             path="/ForexInvestForms/MasterPlanInvF"
-            element={
-              isLoggedIn ? (
-                <InvestTab
-                  investFormProps={{
-                    minAmount: 51000,
-                    maxAmount: 100000,
-                    duration: 21,
-                    plan: "master"
-                  }}
-                />
-              ) : (
-                <Redirect />
-              )
-            }
+            Component={MasterPlanInvF}
           />
           <Route
             path="/ForexInvestForms/ProfessionalPlanInvF"
-            element={
-              isLoggedIn ? (
-                <InvestTab
-                  investFormProps={{
-                    minAmount: 11000,
-                    maxAmount: 50000,
-                    duration: 14,
-                    plan: "professional"
-                  }}
-                />
-              ) : (
-                <Redirect />
-              )
-            }
+            Component={ProfessionalPlanInvF}
           />
           <Route
             path="/ForexInvestForms/StarterPlanInvF"
-            element={isLoggedIn ? <InvestTab /> : <Redirect />}
+            Component={StarterPlanInvF}
           />
           <Route path="/Withdraw/WithdrawPage" Component={WithdrawPage} />
-          <Route
-            path="/Invest/InvestPage"
-            Component={isLoggedIn ? InvestPage : Redirect}
-          />
-          <Route
-            path="/CaltexCompanyBrief/CaltexCompBrief"
-            Component={isLoggedIn ? CaltexCompBrief : Redirect}
-          />
-          <Route
-            path="/Deposit/DepositPage"
-            Component={isLoggedIn ? DepositPage : Redirect}
-          />
+          <Route path="/Invest/InvestPage" Component={InvestPage} />
+          <Route path="/Deposit/DepositPage" Component={DepositPage} />
           <Route
             path="/DepositForm/DepositsForm"
             exact
-            Component={isLoggedIn ? DepositsForm : Redirect}
+            Component={DepositsForm}
           />
+
           <Route path="/" element={<Navigate to="/u/dashboard" />} />
         </Routes>
         <Snackbar
           open={snackbar.open}
-          autoHideDuration={snackbar.autoHideDuration || 8000}
-          onClose={
-            snackbar.closeSnackBar === undefined ? closeSnackBar : undefined
+          autoHideDuration={
+            snackbar.autoHideDuration ||
+            (snackbar.severity === "success" ? 5000 : 10000)
           }
+          onClose={snackbar.close ? closeSnackBar : undefined}
           sx={{
             maxWidth: snackbar.maxWidth || "400px",
             "&::first-letter": {
-              textTransform: "uppercase"
-            }
+              textTransform: "uppercase",
+            },
           }}
         >
           <Alert
@@ -371,7 +252,7 @@ const App = () => {
               </IconButton>
             }
             sx={{
-              whiteSpace: "pre-line"
+              whiteSpace: "pre-line",
             }}
           >
             {snackbar.message}

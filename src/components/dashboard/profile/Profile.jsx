@@ -18,7 +18,7 @@ const Profile = () => {
     address: "",
     address2: "",
     zipCode: "",
-    country: "",
+    country: ""
   });
 
   const [isSuccessModalOpen, setIsSuccessModalOpen] = useState(false);
@@ -28,19 +28,19 @@ const Profile = () => {
 
   const apiEndpoint = `https://caltex-api.onrender.com/api/users/${id}`;
 
-  const handleInputChange = (event) => {
+  const handleInputChange = event => {
     const { name, value } = event.target;
     setFormData({
       ...formData,
-      [name]: value,
+      [name]: value
     });
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async e => {
     e.preventDefault();
     try {
       const response = await http.put(apiEndpoint, formData, {
-        withCredentials: true,
+        withCredentials: true
       });
 
       if (response.status === 200) {
@@ -70,7 +70,7 @@ const Profile = () => {
     setSwap(!swap);
     setIsSuccessModalOpen(!isSuccessModalOpen);
   };
-  
+
   return (
     <div>
       <div class="dashboard-container">
@@ -157,10 +157,7 @@ const Profile = () => {
                         </div>
                       </div>
                     </div>
-                    <button
-                      type="submit"
-                      className={styles.btn}
-                    >
+                    <button type="submit" className={styles.btn}>
                       Save
                     </button>
                   </form>

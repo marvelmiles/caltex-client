@@ -1,0 +1,7 @@
+.custom-date {
+  outline-style: none;
+  padding: 10px 8px;
+  border-radius: 6px;
+  border: 2px solid rgba(18, 14, 251, 0.05);
+  background: rgba(18, 14, 251, 0.05);
+}

@@ -22,6 +22,7 @@ const ElectronicVerification = () => {
   const handleCheckboxChange = (value) => {
     setSelectedOption(value);
   };
+  
   const [numberValue, setNumberValue] = useState("");
 
   const handleNumberChange = (event) => {
@@ -115,7 +116,14 @@ const ElectronicVerification = () => {
                         <p id={styles.p_label}>{checkbox.label}</p>
                       </div>
                     ))}
-                    <li id={styles.selected}>{selectedOption}</li>
+                    <li id={styles.selected}>
+                      {
+                        checkboxData.find(
+                          (item) => item.value === selectedOption
+                        )?.label
+                      }
+                    </li>
+
                     <input
                       id={styles.input}
                       type="text"

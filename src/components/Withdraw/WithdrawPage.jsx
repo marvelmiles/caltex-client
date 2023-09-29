@@ -1,5 +1,5 @@
 import "../../components/Deposit/DepositPage.css";
-import "./WithdrawPage.css";
+import "./withdrawPage.css";
 import React from "react";
 import ReactDoM from "react-dom";
 import { useState } from "react";
@@ -383,7 +383,7 @@ const WithdrawPage = () => {
                               name="currency"
                               size="1"
                               value={currency}
-                              onChange={(e) => setCurrency(e.target.value)}
+                              onChange={e => setCurrency(e.target.value)}
                             >
                               <option value="USD" id="usd">
                                 USD
@@ -407,7 +407,7 @@ const WithdrawPage = () => {
                               name="withdraw-net"
                               size="1"
                               value={cryptoNetwork}
-                              onChange={(e) => setCryptoNetwork(e.target.value)}
+                              onChange={e => setCryptoNetwork(e.target.value)}
                             >
                               <option value="BTC - Bitcoin" id="btc">
                                 BTC - Bitcoin
@@ -438,7 +438,7 @@ const WithdrawPage = () => {
                               name="wallet-address "
                               value={walletAddress}
                               placeholder=" "
-                              onChange={(e) => setWalletAddress(e.target.value)}
+                              onChange={e => setWalletAddress(e.target.value)}
                             />
                           </div>
 

@@ -60,8 +60,6 @@
 
 //   const searchParam = `tradeType=${type}`;
 
-  
-
 //   return (
 //     <>
 //       <div class="mySidenav" id="sidenav">
@@ -320,11 +318,11 @@
 //                               </Link>
 //                             </div>
 //                           </div>
-                          
+
 //                           <Link to='/CaltexCompanyBrief/CaltexCompBrief' class='viewPlanDetails'>
 //                             View Plan details
 //                           </Link>
-                        
+
 //                         </div>
 //                       </div>
 //                     </div>
@@ -332,7 +330,6 @@
 //                 </div>
 //               </div>
 
-  
 //             </div>
 //           </div>
 //         </div>
@@ -623,7 +620,7 @@ const InvestPage = () => {
     firstName: "",
     lastName: "",
     photoUrl: "",
-    address: "",
+    address: ""
   });
 
   useEffect(() => {
@@ -634,7 +631,7 @@ const InvestPage = () => {
         const signInResponse = await fetch(
           "https://caltex-api.onrender.com/apiauth/signin",
           {
-            method: "POST",
+            method: "POST"
             // Add any necessary headers and request body for sign-in here
           }
         );

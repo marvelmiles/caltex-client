@@ -33,7 +33,6 @@ import { useCtx } from "../../context";
 const WithdrawPage = () => {
   const { setSnackBar } = useCtx();
   const { currentUser } = useAuth();
-
   function revealTransDetails() {
     document.getElementById("trans-pro-det").style.display = "block";
     document.getElementById("transactionPro2").style.display = "block";

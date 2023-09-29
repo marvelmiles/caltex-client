@@ -63,8 +63,6 @@ const CaltexCompBrief = () => {
 
   const searchParam = `tradeType=${type}`;
 
-  
-
   return (
     <>
       <div class="mySidenav" id="sidenav">
@@ -123,7 +121,7 @@ const CaltexCompBrief = () => {
               </div>
               <div class="panel-control">
                 <Link to="/" class="controld" id="dashboard" onclick=" ">
-                <img src={dashboard} id="other-icon" alt="profile-icon" />
+                  <img src={dashboard} id="other-icon" alt="profile-icon" />
                   Dashboard
                 </Link>
                 <span class="control" id=" " onclick=" ">
@@ -237,14 +235,10 @@ const CaltexCompBrief = () => {
                     <p class="plan-text">Plan Details</p>
                     <div class="forex-or-crypto">
                       <div class="forex-or-crypto-inner">
-                        <span class="forex" id="forex" onclick=''>
+                        <span class="forex" id="forex" onclick="">
                           Forex
                         </span>
-                        <span
-                          class="crypto"
-                          id="crypto"
-                          onclick=''
-                        >
+                        <span class="crypto" id="crypto" onclick="">
                           Crypto
                         </span>
                       </div>
@@ -258,16 +252,21 @@ const CaltexCompBrief = () => {
                         Choose from the options below the investment plan which
                         best suits you.
                       </p>
-      
-                        <div className="downloadPlan" id="downloadPlan">
-                          <span><img src={pdfIcon} id='pdfIcon'></img></span>
-                          <span id='download-text'>Download Caltex Company's Brief</span>
-                        </div>  
 
-                        <div className="downloadBtn">
-                            <Link to={companyBrief} id='downloadBtn' download>Download</Link>    
-                        </div>  
+                      <div className="downloadPlan" id="downloadPlan">
+                        <span>
+                          <img src={pdfIcon} id="pdfIcon"></img>
+                        </span>
+                        <span id="download-text">
+                          Download Caltex Company's Brief
+                        </span>
+                      </div>
 
+                      <div className="downloadBtn">
+                        <Link to={companyBrief} id="downloadBtn" download>
+                          Download
+                        </Link>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -282,7 +281,6 @@ const CaltexCompBrief = () => {
   function openNav() {
     document.getElementById("sidenav").style.width = "70%";
   }
-
 };
 
 export default CaltexCompBrief;

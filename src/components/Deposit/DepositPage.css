@@ -66,11 +66,6 @@ body {
   margin-left: 5px;
 }
 
-/* Board Content*/
-/* Board Content*/
-/* Board Content*/
-/* Board Content*/
-
 .board-content {
   width: 75%;
   float: left;
@@ -191,10 +186,6 @@ body {
   opacity: 0.9;
 }
 
-/**  
-Invest With Caltex[ --** CHOOSE YOUR FOREX/CRYPTO PLAN **-- ] Page
-**/
-
 .invest-wt-caltex {
   margin-left: -40px !important;
   margin-top: 30px;
@@ -239,7 +230,6 @@ Invest With Caltex[ --** CHOOSE YOUR FOREX/CRYPTO PLAN **-- ] Page
   cursor: pointer;
 }
 
-/** Invest  Forex **/
 .wide-array {
   padding-left: 0px;
   padding-right: 50px;
@@ -373,12 +363,6 @@ Invest With Caltex[ --** CHOOSE YOUR FOREX/CRYPTO PLAN **-- ] Page
   cursor: pointer;
 }
 
-/**
-***
-STARTER PLAN FOREX  
-***
-**/
-
 #check {
   color: rgba(240, 166, 23, 1);
   font-weight: 200;
@@ -428,12 +412,6 @@ STARTER PLAN FOREX
   margin-left: 70px;
 }
 
-/**
-***
-MASTER PLAN FOREX  
-***
-**/
-
 .invest-masterForex {
   margin-left: var(--if-pl);
   margin-top: 58px;
@@ -469,12 +447,6 @@ MASTER PLAN FOREX
   color: grey;
   cursor: pointer;
 }
-
-/**
-***
-PROFESSIONAL PLAN FOREX  
-***
-**/
 
 .professional-planForex {
   margin-left: var(--bc-pl);
@@ -512,12 +484,6 @@ PROFESSIONAL PLAN FOREX
   cursor: pointer;
 }
 
-/**
-***
-STARTER PLAN CRYPTO  
-***
-**/
-
 .starter-planCrypto {
   margin-left: var(--bc-pl);
 }
@@ -553,12 +519,6 @@ STARTER PLAN CRYPTO
   color: grey;
   cursor: pointer;
 }
-
-/**
-***
-PROFESSIONAL PLAN CRYPTO  
-***
-**/
 
 .professional-planCrypto {
   margin-left: var(--bc-pl);
@@ -596,12 +556,6 @@ PROFESSIONAL PLAN CRYPTO
   cursor: pointer;
 }
 
-/**
-***
-MASTER PLAN CRYPTO  
-***
-**/
-
 .master-planCrypto {
   margin-left: var(--bc-pl);
 }
@@ -637,12 +591,6 @@ MASTER PLAN CRYPTO
   color: grey;
   cursor: pointer;
 }
-
-/**
-***
-STARTER PLAN-INVEST forex form  
-***
-**/
 
 .starter-planInvestF,
 .professional-planInvestF,
@@ -734,9 +682,6 @@ STARTER PLAN-INVEST forex form
   padding-bottom: 30px;
 }
 
-/**
-congratulatory Message
-**/
 .congratulations {
   width: inherit;
   text-align: center;
@@ -776,10 +721,6 @@ congratulatory Message
   margin-top: 50px;
   margin-bottom: 30px;
 }
-
-/**
-<<<<-------------THIS IS THE START OF DEPOSIT-CONTAINER STYLE-------------------->>>>
-**/
 
 #cdm {
   display: none;
@@ -924,6 +865,38 @@ congratulatory Message
 #CDM {
   padding-right: 5px;
   color: rgba(30, 30, 30, 1);
+}
+
+#depositNow-crypto {
+  border: none;
+  padding: 10px 20px;
+  margin-left: 20px;
+  margin-top: 20px;
+  background-color: rgba(18, 14, 251, 1) !important;
+  color: white !important;
+  letter-spacing: 0.7px;
+  border-radius: 5px;
+}
+
+#depositNow-crypto:hover {
+  color: grey !important;
+  cursor: pointer;
+}
+
+#depositCard-Now {
+  border: 1px solid rgba(18, 14, 251, 1);
+  padding: 10px 20px;
+  margin-left: 20px;
+  margin-top: 40px !important;
+  background-color: rgba(18, 14, 251, 1) !important;
+  color: white !important;
+  letter-spacing: 0.7px;
+  border-radius: 5px;
+}
+
+#depositCard-Now:hover {
+  color: grey !important;
+  cursor: pointer;
 }
 
 .crypto-options {
@@ -1091,9 +1064,6 @@ congratulatory Message
   display: none;
 }
 
-/**
-<<<<-------------THIS IS THE START OF WITHDRAW-CONTAINER STYLE-------------------->>>>
-**/
 #cryptoDeposit {
   display: none;
 }
@@ -1200,6 +1170,7 @@ congratulatory Message
 .enter-amount {
   margin-left: 18px;
   margin-top: 30px;
+  margin-bottom: 30px;
 }
 
 .enter-investmentID {
@@ -1305,8 +1276,6 @@ congratulatory Message
   cursor: pointer;
 }
 
-/* deposit with card */
-
 .cp3 {
   color: grey;
   display: flex;
@@ -1355,9 +1324,6 @@ congratulatory Message
   color: blue;
 }
 
-/**
-<<<<-------------STYLE FOR TABLET-------------------->>>>
-**/
 @media screen and (max-width: 1024px) {
   .panels {
     display: none !important;
@@ -1433,10 +1399,6 @@ congratulatory Message
     width: 70% !important;
   }
 }
-
-/**
-<<<<-------------STYLE FOR MOBILE DEVICES-------------------->>>>
-**/
 
 @media screen and (max-width: 600px) {
   .board-content {

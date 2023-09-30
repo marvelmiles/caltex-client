@@ -20,7 +20,7 @@ import cryptovec from "../../images/cryptovector.png";
 import btc from "../../images/Bitcoin.png";
 import wallet from "../../images/wallet.png";
 import creditcard from "../../images/creditcard.png";
-
+import dashboard from "../../images/dashboard (1).png";
 import { BiSolidDashboard } from "react-icons/bi";
 
 import useAuth from "../../hooks/useAuth";
@@ -225,11 +225,8 @@ const DepositPage = () => {
                 </span>
               </div>
               <div className="panel-control">
-                <Link to="/" className="controld" id="dashboard">
-                  <BiSolidDashboard
-                    id="other-icon"
-                    className="dashboard-icon"
-                  />
+                <Link to="/" class="controld" id="dashboard" onclick=" ">
+                  <img src={dashboard} id="other-icon" alt="profile-icon" />
                   Dashboard
                 </Link>
                 <span className="control" id=" ">

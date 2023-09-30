@@ -6,9 +6,10 @@ import {
   Navigate,
   useNavigate
 } from "react-router-dom";
-import DashboardPage from "./components/dashboard/DashboardPage";
+import DashboardPage from "./DashboardPage";
 import DepositPage from "./components/Deposit/DepositPage";
 import InvestPage from "./components/Invest/InvestPage";
+import CaltexCompBrief from "./components/CaltexCompanyBrief/CaltexCompBrief";
 import WithdrawPage from "./components/Withdraw/WithdrawPage";
 import StarterplanForex from "./components/ForexDetails/StarterplanForex";
 import professionalplanForex from "./components/ForexDetails/professionalplanForex";
@@ -39,15 +40,10 @@ import { AiOutlineClose } from "react-icons/ai";
 import Redirect from "./components/Redirect";
 import Page404 from "./pages/Page404";
 import useAuth from "./hooks/useAuth";
-import Profile from "./components/dashboard/profile/Profile";
-import Investment from "./components/dashboard/investment/Investment";
-import LegalDocument from "./components/dashboard/legalDocument/LegalDocument";
-import Help from "./components/dashboard/help/Help";
 import http, { createRelativeUrl } from "./api/http";
 import InvestTab from "./components/InvestTab";
 import backarrow from "./images/backArrow.png";
 import { HTTP_CODE_ACCOUNT_VERIFICATION_ERROR } from "./config/constants";
-import CaltexCompBrief from "./components/CaltexCompanyBrief/CaltexCompBrief";
 
 // WORKED ON THE INVEST AND PAYMENT SCREEN SOME COMPONENT ARE
 // HAD TO BREAKDOWN UI INTO BIT OF COMPONENT BECAUSE OF THE CODE IS
@@ -110,7 +106,6 @@ const App = () => {
               message: snackbar
             })
       };
-
       if (withDelay) {
         const taskId = setTimeout(() => {
           setSnackBar(config);
@@ -209,74 +204,40 @@ const App = () => {
                 <Route path="*" element={<Page404 />} />
               </>
             ) : (
-              <Route path="*" element={<Redirect to="/auth/login" />} />
+              <Route path="*" Component={Redirect} />
             )}
           </Route>
-
-          <Route
-            path="/profile/Profile"
-            Component={isLoggedIn ? Profile : Redirect}
-          />
-
-          <Route
-            path="/investment/Investment"
-            Component={isLoggedIn ? Investment : Redirect}
-          />
-
-          <Route
-            path="/legalDocument/LegalDocument"
-            Component={isLoggedIn ? LegalDocument : Redirect}
-          />
-
-          <Route path="/help/Help" Component={isLoggedIn ? Help : Redirect} />
-
-          <Route
-            path="/CryptoDetails/masterplanCrypto"
-            Component={isLoggedIn ? masterplanCrypto : Redirect}
-          />
-
-          <Route
-            path="/CryptoDetails/professionalplanCrypto"
-            Component={isLoggedIn ? professionalplanCrypto : Redirect}
-          />
-
-          <Route
-            path="/CryptoDetails/starterplanCrypto"
-            Component={isLoggedIn ? starterplanCrypto : Redirect}
-          />
-
-          <Route
-            path="/ForexDetails/masterplanForex"
-            Component={isLoggedIn ? masterplanForex : Redirect}
-          />
-
-          <Route
-            path="/ForexDetails/professionalplanForex"
-            Component={isLoggedIn ? professionalplanForex : Redirect}
-          />
-
-          <Route
-            path="/ForexDetails/StarterplanForex"
-            Component={isLoggedIn ? StarterplanForex : Redirect}
-          />
-
-          <Route
-            path="/Withdraw/WithdrawPage"
-            Component={isLoggedIn ? WithdrawPage : Redirect}
-          />
-
           <Route
             path="/Deposit/DepositPage"
             Component={isLoggedIn ? DepositPage : Redirect}
           />
 
           <Route
-            path="/DepositForm/DepositsForm"
-            exact
-            Component={isLoggedIn ? DepositsForm : Redirect}
+            path="/CryptoDetails/masterplanCrypto"
+            Component={masterplanCrypto}
           />
-
           <Route
+            path="/CryptoDetails/professionalplanCrypto"
+            Component={professionalplanCrypto}
+          />
+          <Route
+            path="/CryptoDetails/starterplanCrypto"
+            Component={starterplanCrypto}
+          />
+          <Route
+            path="/ForexDetails/masterplanForex"
+            Component={masterplanForex}
+          />
+          <Route
+            path="/ForexDetails/professionalplanForex"
+            Component={professionalplanForex}
+          />
+          <Route
+            path="/ForexDetails/StarterplanForex"
+            Component={StarterplanForex}
+          />
+          <Route
+            path="/CryptoInvestForms/MasterPlanInvC"
             element={
               isLoggedIn ? (
                 <InvestTab
@@ -389,14 +350,8 @@ const App = () => {
           />
           <Route path="/" element={<Navigate to="/u/dashboard" />} />
         </Routes>
-
         <Snackbar
           open={snackbar.open}
-          autoHideDuration={
-            snackbar.autoHideDuration ||
-            (snackbar.severity === "success" ? 5000 : 10000)
-          }
-          onClose={snackbar.close ? closeSnackBar : undefined}
           autoHideDuration={snackbar.autoHideDuration || 8000}
           onClose={
             snackbar.closeSnackBar === undefined ? closeSnackBar : undefined

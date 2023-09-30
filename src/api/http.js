@@ -28,7 +28,6 @@ export const createRelativeUrl = () => {
       (window.location.hash || "")
   );
 };
-
 export const handleRefreshToken = requestConfig => {
   console.log("refreshing...");
 

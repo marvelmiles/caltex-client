@@ -20,7 +20,7 @@ import cryptovec from "../../images/cryptovector.png";
 import btc from "../../images/Bitcoin.png";
 import wallet from "../../images/wallet.png";
 import creditcard from "../../images/creditcard.png";
-
+import dashboard from "../../images/dashboard (1).png";
 import { BiSolidDashboard } from "react-icons/bi";
 
 import useAuth from "../../hooks/useAuth";
@@ -171,44 +171,49 @@ const DepositPage = () => {
   return (
     <div>
       <div className="mySidenav" id="sidenav">
-        <Link to="" className="closebtn" id="close-btn" onClick={closeNav}>
+        <Link to=" " class="closebtn" id="close-btn" onClick={closeNav}>
           &times;
         </Link>
-        <Link to="/" className=" ">
+        <Link to="/" class=" ">
           <BiSolidDashboard id="other-icon" className="dashboard-icon" />
           Dashboard
         </Link>
-        <Link to="/" className="linkss">
+        <Link to="/profile/Profile" class="linkss">
           <img src={profile} id="other-icon" alt="profile-icon" />
           Profile
         </Link>
-        <Link to="/Deposit/DepositPage" className="linkss">
+        <Link to="/Deposit/DepositPage" class="linkss">
           <img src={deposit} id="other-icon" alt="deposit-icon" />
           Deposit
         </Link>
-        <Link to="/Withdraw/withdrawPage" className="linkss">
+
+        <Link to="/Invest/InvestPage?tradeType=forex" class="linkss">
+          <img src={deposit} id="other-icon" alt="deposit-icon" />
+          Invest
+        </Link>
+        <Link to="/Withdraw/withdrawPage" class="linkss">
           <img src={withdraw} id="other-icon" alt="withdraw-icon" />
           Withdraw
         </Link>
-        <Link to="/Invest/InvestPage" className="linkss">
+        <Link to="/Invest/InvestPage?tradeType=crypto" class="linkss">
           <img src={crypto} id="other-icon" alt="crypto-icon" />
           Crypto
         </Link>
-        <Link to="/Invest/InvestPage" className="linkss">
+        <Link to="/Invest/InvestPage?tradeType=forex" class="linkss">
           <img src={forex} id="other-icon" alt="forex-icon" />
           Forex
         </Link>
-        <Link to="/" className="linkss">
+        <Link to="/help/Help" class="linkss">
           <img src={help} id="other-icon" alt="help-icon" />
           HELP
         </Link>
-        <Link to="/" className="linkss">
+        <Link to="/legalDocument/LegalDocument" class="linkss">
           <img src={legal} id="other-icon" alt="legal-icon" />
           Legal Documents
         </Link>
-        <Link to="/" className="linkss">
+        <Link to="/auth/login" class="linkss">
           <img src={logout} id="other-icon" alt="logout-icon" />
-          LogOut
+          Logout
         </Link>
       </div>
 
@@ -225,17 +230,14 @@ const DepositPage = () => {
                 </span>
               </div>
               <div className="panel-control">
-                <Link to="/" className="controld" id="dashboard">
-                  <BiSolidDashboard
-                    id="other-icon"
-                    className="dashboard-icon"
-                  />
+              <Link to="/" class="controld" id="dashboard" onclick=" ">
+                <img src={dashboard} id="other-icon" alt="profile-icon" />
                   Dashboard
                 </Link>
-                <span className="control" id=" ">
+                <Link to="/profile/Profile" className="control" id=" ">
                   <img src={profile} id="other-icon" alt="profile-icon" />
                   Profile
-                </span>
+                </Link>
                 <Link
                   to="/Deposit/DepositPage"
                   className="control"
@@ -254,11 +256,11 @@ const DepositPage = () => {
                 <Link to="/Invest/InvestPage" className="control" id="trading">
                   <b>TRADING</b>
                 </Link>
-                <Link to="/Invest/InvestPage" className="control" id=" ">
+                <Link to="/Invest/InvestPage?tradeType=crypto" className="control" id=" ">
                   <img src={crypto} id="other-icon" alt="crypto-icon" />
                   Crypto
                 </Link>
-                <Link to="/Invest/InvestPage" className="control" id=" ">
+                <Link to="/Invest/InvestPage?tradeType=forex" className="control" id=" ">
                   <img src={forex} id="other-icon" alt="forex-icon" />
                   Forex
                 </Link>
@@ -268,18 +270,18 @@ const DepositPage = () => {
                 <span className="control" id="bam">
                   Become a Merchant
                 </span>
-                <span className="control" id="help">
+                <Link to='/help/Help' className="control" id="help">
                   <img src={help} id="other-icon" alt="help-icon" />
                   HELP
-                </span>
-                <span className="control" id=" ">
+                </Link>
+                <Link to='/legalDocument/LegalDocument' className="control" id=" ">
                   <img src={legal} id="other-icon" alt="legal-icon" />
                   Legal Documents
-                </span>
-                <span className="control" id=" ">
+                </Link>
+                <Link to='/auth/login' className="control" id=" ">
                   <img src={logout} id="other-icon" alt="logout-icon" />
                   LogOut
-                </span>
+                </Link>
               </div>
             </div>
           </div>

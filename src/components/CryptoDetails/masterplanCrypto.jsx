@@ -44,10 +44,10 @@ const MasterplanCrypto = () => {
                 <BiSolidDashboard id="other-icon" className="dashboard-icon" />
                 Dashboard
               </Link>
-              <span class="control" id=" " onclick=" ">
-                <img src={profile} id="other-icon" alt="profile-icon" />
-                Profile
-              </span>
+              <Link to="/profile/Profile" className="control" id=" ">
+                  <img src={profile} id="other-icon" alt="profile-icon" />
+                  Profile
+                </Link>
               <Link
                 to="/Deposit/DepositPage"
                 class="control"
@@ -82,14 +82,18 @@ const MasterplanCrypto = () => {
               >
                 <b>TRADING</b>
               </Link>
-              <Link to="/Invest/InvestPage" class="control" id=" " onclick=" ">
-                <img src={crypto} id="other-icon" alt="crypto-icon" />
-                Crypto
-              </Link>
-              <Link to="/Invest/InvestPage" class="control" id=" " onclick=" ">
-                <img src={forex} id="other-icon" alt="forex-icon" />
-                Forex
-              </Link>
+              <Link to='/help/Help' className="control" id="help">
+                  <img src={help} id="other-icon" alt="help-icon" />
+                  HELP
+                </Link>
+                <Link to='/legalDocument/LegalDocument' className="control" id=" ">
+                  <img src={legal} id="other-icon" alt="legal-icon" />
+                  Legal Documents
+                </Link>
+                <Link to='/auth/login' className="control" id=" ">
+                  <img src={logout} id="other-icon" alt="logout-icon" />
+                  LogOut
+                </Link>
               <span class="control" id="partners" onclick=" ">
                 <b> PARTNERS</b>
               </span>

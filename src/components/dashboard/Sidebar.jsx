@@ -76,11 +76,11 @@ const Sidebar = () => {
           >
             <b>TRADING</b>
           </Link>
-          <Link to="/Invest/InvestPage" class="control" id=" " onclick=" ">
+          <Link to="/Invest/InvestPage?tradeType=crypto" class="control" id=" " onclick=" ">
             <img src={crypto} id="other-icon" alt="crypto-icon" />
             Crypto
           </Link>
-          <Link to="/Invest/InvestPage" class="control" id=" " onclick=" ">
+          <Link to="/Invest/InvestPage?tradeType=forex" class="control" id=" " onclick=" ">
             <img src={forex} id="other-icon" alt="forex-icon" />
             Forex
           </Link>

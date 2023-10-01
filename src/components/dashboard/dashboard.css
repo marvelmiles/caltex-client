@@ -24,9 +24,10 @@ body {
   display: none;
 }
 
-.mySidenav {
+/* style for mobile-menu in reusable dashboard component */
+.MySidenav {
   height: 100%;
-  width: 0;
+  width: 300px;
   top: 0;
   right: 0;
   position: fixed;
@@ -35,6 +36,36 @@ body {
   z-index: 1;
   padding-top: 20px;
   transition: 0.5s;
+}
+
+.MySidenav a {
+  text-decoration: none;
+  display: block;
+  text-align: left;
+  font-size: 16px;
+  font-weight: 400;
+  padding: 8px 8px 8px 32px;
+  line-height: 24px;
+  color: white;
+  transition: 0.3s;
+}
+
+.MySidenav a:hover {
+  color: black;
+}
+
+/* Style for the other mobileMenu , non-reuseable */
+.mySidenav {
+  height: 100%;
+  width: 0px;
+  top: 0;
+  right: 0;
+  position: fixed;
+  background-color: rgba(18, 14, 251, 1);
+  opacity: 0.9;
+  z-index: 1;
+  padding-top: 20px;
+  transition: 0.5s!important;
 }
 
 .mySidenav a {
@@ -52,6 +83,8 @@ body {
 .mySidenav a:hover {
   color: black;
 }
+
+/* end of styling for non-reuseable mobileMenu */
 
 .menu-button:hover {
   cursor: pointer;

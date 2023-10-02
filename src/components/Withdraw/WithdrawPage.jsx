@@ -1,5 +1,5 @@
 import "../../components/Deposit/DepositPage.css";
-import "./WithdrawPage.css";
+import "./withdrawPage.css";
 import React from "react";
 import ReactDoM from "react-dom";
 import { useState } from "react";
@@ -92,45 +92,50 @@ const WithdrawPage = () => {
   return (
     <div>
     <div className="mySidenav" id="sidenav">
-      <Link to="" className="closebtn" id="close-btn" onClick={closeNav}>
-        &times;
-      </Link>
-      <Link to="/" className=" ">
-        <BiSolidDashboard id="other-icon" className="dashboard-icon" />
-        Dashboard
-      </Link>
-      <Link to="/" className="linkss">
-        <img src={profile} id="other-icon" alt="profile-icon" />
-        Profile
-      </Link>
-      <Link to="/Deposit/DepositPage" className="linkss">
-        <img src={deposit} id="other-icon" alt="deposit-icon" />
-        Deposit
-      </Link>
-      <Link to="/Withdraw/withdrawPage" className="linkss">
-        <img src={withdraw} id="other-icon" alt="withdraw-icon" />
-        Withdraw
-      </Link>
-      <Link to="/Invest/InvestPage" className="linkss">
-        <img src={crypto} id="other-icon" alt="crypto-icon" />
-        Crypto
-      </Link>
-      <Link to="/Invest/InvestPage" className="linkss">
-        <img src={forex} id="other-icon" alt="forex-icon" />
-        Forex
-      </Link>
-      <Link to="/" className="linkss">
-        <img src={help} id="other-icon" alt="help-icon" />
-        HELP
-      </Link>
-      <Link to="/" className="linkss">
-        <img src={legal} id="other-icon" alt="legal-icon" />
-        Legal Documents
-      </Link>
-      <Link to="/" className="linkss">
-        <img src={logout} id="other-icon" alt="logout-icon" />
-        LogOut
-      </Link>
+    <Link to=" " class="closebtn" id="close-btn" onClick={closeNav}>
+          &times;
+        </Link>
+        <Link to="/" class=" ">
+          <BiSolidDashboard id="other-icon" className="dashboard-icon" />
+          Dashboard
+        </Link>
+        <Link to="/profile/Profile" class="linkss">
+          <img src={profile} id="other-icon" alt="profile-icon" />
+          Profile
+        </Link>
+        <Link to="/Deposit/DepositPage" class="linkss">
+          <img src={deposit} id="other-icon" alt="deposit-icon" />
+          Deposit
+        </Link>
+
+        <Link to="/Invest/InvestPage?tradeType=forex" class="linkss">
+          <img src={deposit} id="other-icon" alt="deposit-icon" />
+          Invest
+        </Link>
+        <Link to="/Withdraw/withdrawPage" class="linkss">
+          <img src={withdraw} id="other-icon" alt="withdraw-icon" />
+          Withdraw
+        </Link>
+        <Link to="/Invest/InvestPage?tradeType=crypto" class="linkss">
+          <img src={crypto} id="other-icon" alt="crypto-icon" />
+          Crypto
+        </Link>
+        <Link to="/Invest/InvestPage?tradeType=forex" class="linkss">
+          <img src={forex} id="other-icon" alt="forex-icon" />
+          Forex
+        </Link>
+        <Link to="/help/Help" class="linkss">
+          <img src={help} id="other-icon" alt="help-icon" />
+          HELP
+        </Link>
+        <Link to="/legalDocument/LegalDocument" class="linkss">
+          <img src={legal} id="other-icon" alt="legal-icon" />
+          Legal Documents
+        </Link>
+        <Link to="/auth/login" class="linkss">
+          <img src={logout} id="other-icon" alt="logout-icon" />
+          Logout
+        </Link>
     </div>
 
 
@@ -152,10 +157,10 @@ const WithdrawPage = () => {
                 <img src={dashboard} id="other-icon" alt="profile-icon" />
                   Dashboard
                 </Link>
-              <span class="control" id=" " onclick=" ">
-                <img src={profile} id="other-icon" alt="profile-icon" />
-                Profile
-              </span>
+                <Link to="/profile/Profile" className="control" id=" ">
+                  <img src={profile} id="other-icon" alt="profile-icon" />
+                  Profile
+                </Link>
               <Link
                 to="/Deposit/DepositPage"
                 class="control"
@@ -190,11 +195,11 @@ const WithdrawPage = () => {
               >
                 <b>TRADING</b>
               </Link>
-              <Link to="/Invest/InvestPage" class="control" id=" " onclick=" ">
+              <Link to="/Invest/InvestPage?tradeType=crypto" class="control" id=" " onclick=" ">
                 <img src={crypto} id="other-icon" alt="crypto-icon" />
                 Crypto
               </Link>
-              <Link to="/Invest/InvestPage" class="control" id=" " onclick=" ">
+              <Link to="/Invest/InvestPage?tradeType=forex" class="control" id=" " onclick=" ">
                 <img src={forex} id="other-icon" alt="forex-icon" />
                 Forex
               </Link>
@@ -204,18 +209,18 @@ const WithdrawPage = () => {
               <span class="control" id="bam" onclick=" ">
                 Become a Merchant
               </span>
-              <span class="control" id="help" onclick=" ">
-                <img src={help} id="other-icon" alt="help-icon" />
-                HELP
-              </span>
-              <span class="control" id=" " onclick=" ">
-                <img src={legal} id="other-icon" alt="legal-icon" />
-                Legal Documents
-              </span>
-              <span class="control" id=" " onclick=" ">
-                <img src={logout} id="other-icon" alt="logout-icon" />
-                LogOut
-              </span>
+              <Link to='/help/Help' className="control" id="help">
+                  <img src={help} id="other-icon" alt="help-icon" />
+                  HELP
+                </Link>
+                <Link to='/legalDocument/LegalDocument' className="control" id=" ">
+                  <img src={legal} id="other-icon" alt="legal-icon" />
+                  Legal Documents
+                </Link>
+                <Link to='/auth/login' className="control" id=" ">
+                  <img src={logout} id="other-icon" alt="logout-icon" />
+                  LogOut
+                </Link>
             </div>
           </div>
         </div>

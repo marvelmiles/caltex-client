@@ -63,19 +63,17 @@ const CaltexCompBrief = () => {
 
   const searchParam = `tradeType=${type}`;
 
-  
-
   return (
     <>
       <div class="mySidenav" id="sidenav">
-        <Link to=" " class="closebtn" id="close-btn" onClick={closeNav}>
+      <Link to=" " class="closebtn" id="close-btn" onClick={closeNav}>
           &times;
         </Link>
         <Link to="/" class=" ">
           <BiSolidDashboard id="other-icon" className="dashboard-icon" />
           Dashboard
         </Link>
-        <Link to="/" class="linkss">
+        <Link to="/profile/Profile" class="linkss">
           <img src={profile} id="other-icon" alt="profile-icon" />
           Profile
         </Link>
@@ -83,29 +81,34 @@ const CaltexCompBrief = () => {
           <img src={deposit} id="other-icon" alt="deposit-icon" />
           Deposit
         </Link>
+
+        <Link to="/Invest/InvestPage?tradeType=forex" class="linkss">
+          <img src={deposit} id="other-icon" alt="deposit-icon" />
+          Invest
+        </Link>
         <Link to="/Withdraw/withdrawPage" class="linkss">
           <img src={withdraw} id="other-icon" alt="withdraw-icon" />
           Withdraw
         </Link>
-        <Link to="/Invest/InvestPage" class="linkss">
+        <Link to="/Invest/InvestPage?tradeType=crypto" class="linkss">
           <img src={crypto} id="other-icon" alt="crypto-icon" />
           Crypto
         </Link>
-        <Link to="/Invest/InvestPage" class="linkss">
+        <Link to="/Invest/InvestPage?tradeType=forex" class="linkss">
           <img src={forex} id="other-icon" alt="forex-icon" />
           Forex
         </Link>
-        <Link to="/" class="linkss">
+        <Link to="/help/Help" class="linkss">
           <img src={help} id="other-icon" alt="help-icon" />
           HELP
         </Link>
-        <Link to="/" class="linkss">
+        <Link to="/legalDocument/LegalDocument" class="linkss">
           <img src={legal} id="other-icon" alt="legal-icon" />
           Legal Documents
         </Link>
-        <Link to="/" class="linkss">
+        <Link to="/auth/login" class="linkss">
           <img src={logout} id="other-icon" alt="logout-icon" />
-          LogOut
+          Logout
         </Link>
       </div>
 
@@ -123,13 +126,13 @@ const CaltexCompBrief = () => {
               </div>
               <div class="panel-control">
                 <Link to="/" class="controld" id="dashboard" onclick=" ">
-                <img src={dashboard} id="other-icon" alt="profile-icon" />
+                  <img src={dashboard} id="other-icon" alt="profile-icon" />
                   Dashboard
                 </Link>
-                <span class="control" id=" " onclick=" ">
+                <Link to="/profile/Profile" className="control" id=" ">
                   <img src={profile} id="other-icon" alt="profile-icon" />
                   Profile
-                </span>
+                </Link>
                 <Link
                   to="/Deposit/DepositPage"
                   class="control"
@@ -188,18 +191,18 @@ const CaltexCompBrief = () => {
                 <span class="control" id="bam" onclick=" ">
                   Become a Merchant
                 </span>
-                <span class="control" id="help" onclick=" ">
+                <Link to='/help/Help' className="control" id="help">
                   <img src={help} id="other-icon" alt="help-icon" />
                   HELP
-                </span>
-                <span class="control" id=" " onclick=" ">
+                </Link>
+                <Link to='/legalDocument/LegalDocument' className="control" id=" ">
                   <img src={legal} id="other-icon" alt="legal-icon" />
                   Legal Documents
-                </span>
-                <span class="control" id=" " onclick=" ">
+                </Link>
+                <Link to='/auth/login' className="control" id=" ">
                   <img src={logout} id="other-icon" alt="logout-icon" />
                   LogOut
-                </span>
+                </Link>
               </div>
             </div>
           </div>
@@ -237,14 +240,10 @@ const CaltexCompBrief = () => {
                     <p class="plan-text">Plan Details</p>
                     <div class="forex-or-crypto">
                       <div class="forex-or-crypto-inner">
-                        <span class="forex" id="forex" onclick=''>
+                        <span class="forex" id="forex" onclick="">
                           Forex
                         </span>
-                        <span
-                          class="crypto"
-                          id="crypto"
-                          onclick=''
-                        >
+                        <span class="crypto" id="crypto" onclick="">
                           Crypto
                         </span>
                       </div>
@@ -258,16 +257,21 @@ const CaltexCompBrief = () => {
                         Choose from the options below the investment plan which
                         best suits you.
                       </p>
-      
-                        <div className="downloadPlan" id="downloadPlan">
-                          <span><img src={pdfIcon} id='pdfIcon'></img></span>
-                          <span id='download-text'>Download Caltex Company's Brief</span>
-                        </div>  
 
-                        <div className="downloadBtn">
-                            <Link to={companyBrief} id='downloadBtn' download>Download</Link>    
-                        </div>  
+                      <div className="downloadPlan" id="downloadPlan">
+                        <span>
+                          <img src={pdfIcon} id="pdfIcon"></img>
+                        </span>
+                        <span id="download-text">
+                          Download Caltex Company's Brief
+                        </span>
+                      </div>
 
+                      <div className="downloadBtn">
+                        <Link to={companyBrief} id="downloadBtn" download>
+                          Download
+                        </Link>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -282,7 +286,6 @@ const CaltexCompBrief = () => {
   function openNav() {
     document.getElementById("sidenav").style.width = "70%";
   }
-
 };
 
 export default CaltexCompBrief;

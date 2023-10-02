@@ -128,8 +128,8 @@ const DashboardPage = () => {
                 </span>
               </div>
               <div class="panel-control">
-              <Link to="/" class="controld" id="dashboard" onclick=" ">
-                <img src={dashboard} id="other-icon" alt="profile-icon" />
+                <Link to="/" class="controld" id="dashboard" onclick=" ">
+                  <img src={dashboard} id="other-icon" alt="profile-icon" />
                   Dashboard
                 </Link>
                 <span class="control" id=" " onclick=" ">
@@ -202,10 +202,7 @@ const DashboardPage = () => {
                   <img src={legal} id="other-icon" alt="legal-icon" />
                   Legal Documents
                 </span>
-                <Link
-                  to="/auth/login"
-                  class="control"
-                >
+                <Link to="/auth/login" class="control">
                   <img src={logout} id="other-icon" alt="logout-icon" />
                   Logout
                 </Link>

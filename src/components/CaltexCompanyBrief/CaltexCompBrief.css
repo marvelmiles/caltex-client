@@ -1,100 +1,87 @@
-#download-text{
-    font-size: 16px;
-    font-weight: 400;
-    color: rgba(30,30,30,1);
-    padding-left: 20px;
+#download-text {
+  font-size: 16px;
+  font-weight: 400;
+  color: rgba(30, 30, 30, 1);
+  padding-left: 20px;
 }
 
-.plan-text{
-    margin-left: -20px;
-    font-size: 23px;
+.plan-text {
+  margin-left: -20px;
+  font-size: 23px;
 }
 
-.downloadPlan{
-    background-color: rgba(18,14,251,0.05);
-    width: 90%;
-    padding: 10px 30px;
+.downloadPlan {
+  background-color: rgba(18, 14, 251, 0.05);
+  width: 90%;
+  padding: 10px 30px;
 }
 
-#pdfIcon{
-    margin-bottom: -7px;
+#pdfIcon {
+  margin-bottom: -7px;
 }
 
-#downloadBtn{
-    font-size: 16px;
-    font-weight: 400;
-    color: white;
-    background-color: blue;
-    padding: 24px 65px;
-    border-radius: 10px;
-    transition: 0.04s;
+#downloadBtn {
+  font-size: 16px;
+  font-weight: 400;
+  color: white;
+  background-color: blue;
+  padding: 24px 65px;
+  border-radius: 10px;
+  transition: 0.04s;
 }
 
-
-#downloadBtn:hover{
-    color: grey;
+#downloadBtn:hover {
+  color: grey;
 }
 
-.downloadBtn{
-    text-align: center;
-    margin-top: 60px;
+.downloadBtn {
+  text-align: center;
+  margin-top: 60px;
 }
-
 
 @media screen and (max-width: 1024px) {
-
-.downloadPlan{
-        width: 90%;
-    }
-
+  .downloadPlan {
+    width: 90%;
+  }
 }
 
-
-
-
-
-
-
 @media screen and (max-width: 600px) {
+  .downloadPlan {
+    width: 90%;
+    padding: 5px 15px 10px 15px;
+    margin-right: 80px;
+  }
 
-.downloadPlan{
-        width: 90%;
-        padding: 5px 15px 10px 15px;
-        margin-right:80px;
-    }
+  #download-text {
+    font-size: 10px;
+    font-weight: 300;
+    color: rgba(30, 30, 30, 1);
+    line-height: 10px;
+    padding-left: 5px;
+  }
 
-    #download-text{
-        font-size: 10px;
-        font-weight: 300;
-        color: rgba(30,30,30,1);
-        line-height: 10px;
-        padding-left: 5px;
-    }
+  .plan-text {
+    margin-left: -20px;
+    font-size: 18px;
+  }
 
+  .downloadBtn {
+    text-align: left;
+    margin-top: 60px;
+    margin-bottom: 50px;
+  }
 
-    .plan-text{
-        margin-left: -20px;
-        font-size: 18px;
-    }
+  #downloadBtn {
+    font-size: 12px;
+    font-weight: 300;
+    color: white;
+    background-color: blue;
+    padding: 14px 32.5px;
+    border-radius: 5px;
+    transition: 0.04s;
+  }
 
-    .downloadBtn{
-        text-align:left ;
-        margin-top: 60px;
-        margin-bottom: 50px;
-    }
-
-    #downloadBtn{
-        font-size: 12px;
-        font-weight: 300;
-        color: white;
-        background-color: blue;
-        padding: 14px 32.5px;
-        border-radius: 5px;
-        transition: 0.04s;
-    }
-
-    #pdfIcon{
-        margin-left: -15px;
-    }
-
-    }
+  #pdfIcon {
+    margin-left: -15px;
+  }
+}

@@ -17,7 +17,11 @@ const RecoverPwd = () => {
     handleChange,
     handleSubmit,
     resetForm
-  } = useForm();
+  } = useForm({
+    required: {
+      email: true
+    }
+  });
 
   const navigate = useNavigate();
 

@@ -26,6 +26,7 @@
     "react-router-dom": "^6.16.0",
     "react-scripts": "5.0.1",
     "redux-persist": "^6.0.0",
+    "sass": "^1.68.0",
     "stripe": "^13.7.0",
     "web-vitals": "^2.1.4"
   },
@@ -61,6 +62,7 @@
     ]
   },
   "devDependencies": {
+    "es-abstract": "^1.22.2",
     "eslint": "^8.49.0",
     "eslint-plugin-react-hooks": "^4.6.0"
   }

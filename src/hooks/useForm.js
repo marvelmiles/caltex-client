@@ -105,7 +105,7 @@ const useForm = (config = {}) => {
           err =
             required && typeof required[keyName] === "string"
               ? required[keyName]
-              : `Your ${keyName} is requiredssss`;
+              : `Your ${keyName} is required`;
 
         if (err) addError(err);
         else

@@ -22,6 +22,8 @@ import { BiSolidDashboard } from "react-icons/bi";
 
 import ArrowAndTab from "../ArrowAndTab";
 import useAuth from "../../hooks/useAuth";
+import DashboardPage from "../dashboard/DashboardPage";
+import DashboardNav from "../dashboard/DashboardNav";
 
 const ProfessionalplanCrypto = () => {
   const { currentUser } = useAuth();
@@ -29,111 +31,12 @@ const ProfessionalplanCrypto = () => {
   return (
     <div class="dashboard-container">
       <div class="board">
-        <div class="dashboard-panel">
-          <div class="panel">
-            <div class="logo">
-              <span>
-                <img src={logo} alt="logo" />
-              </span>
-              <span>
-                <img src={caltexTrader} alt="caltek-logo" />
-              </span>
-            </div>
-            <div class="panel-control">
-            <Link to="/" class="controld" id="dashboard" onclick=" ">
-                <img src={dashboard} id="other-icon" alt="profile-icon" />
-                  Dashboard
-                </Link>
-                <Link to="/profile/Profile" className="control" id=" ">
-                  <img src={profile} id="other-icon" alt="profile-icon" />
-                  Profile
-                </Link>
-              <Link
-                to="/Deposit/DepositPage"
-                class="control"
-                id="funding"
-                onclick=" "
-              >
-                <b>FUNDING</b>
-              </Link>
-              <Link
-                to="/Deposit/DepositPage"
-                class="control"
-                id=" "
-                onclick=" "
-              >
-                <img src={deposit} id="other-icon" alt="deposit-icon" />
-                Deposit
-              </Link>
-              <Link
-                to="/Withdraw/WithdrawPage"
-                class="control"
-                id=" "
-                onclick=" "
-              >
-                <img src={withdraw} id="other-icon" alt="withdraw-icon" />
-                Withdraw
-              </Link>
-              <Link
-                to="/Invest/InvestPage"
-                class="control"
-                id="trading"
-                onclick=" "
-              >
-                <b>TRADING</b>
-              </Link>
-              <Link to="/Invest/InvestPage?tradeType=crypto" className="control" id=" ">
-                  <img src={crypto} id="other-icon" alt="crypto-icon" />
-                  Crypto
-                </Link>
-                <Link to="/Invest/InvestPage?tradeType=forex" className="control" id=" ">
-                  <img src={forex} id="other-icon" alt="forex-icon" />
-                  Forex
-                </Link>
-              <span class="control" id="partners" onclick=" ">
-                <b> PARTNERS</b>
-              </span>
-              <span class="control" id="bam" onclick=" ">
-                Become a Merchant
-              </span>
-              <Link to='/help/Help' className="control" id="help">
-                  <img src={help} id="other-icon" alt="help-icon" />
-                  HELP
-                </Link>
-                <Link to='/legalDocument/LegalDocument' className="control" id=" ">
-                  <img src={legal} id="other-icon" alt="legal-icon" />
-                  Legal Documents
-                </Link>
-                <Link to='/auth/login' className="control" id=" ">
-                  <img src={logout} id="other-icon" alt="logout-icon" />
-                  LogOut
-                </Link>
-            </div>
-          </div>
-        </div>
+        <DashboardPage />
 
         <div class="dashboard-content">
           <div class="board-content">
-            <div class="welcome-user">
-              <div class="welcome">
-                <div class="welcome-text">
-                  <p>Welcome back, {currentUser.firstName}</p>
-                </div>
-                <div class="welcome-asset">
-                  <span>
-                    <img src={currentUser.photoUrl} alt="user-avatar" />
-                  </span>
-                  <span class="john">
-                    <p>
-                      {currentUser.firstName} {currentUser.lastName}
-                    </p>
-                  </span>
-                  <span class="bell-notification" id=" " onclick=" ">
-                    <i class="fa fa-bell"></i>
-                  </span>
-                </div>
-              </div>
-            </div>
+           
+            <DashboardNav />
 
             <ArrowAndTab />
 

@@ -48,6 +48,7 @@ import InvestTab from "./components/InvestTab";
 import backarrow from "./images/backArrow.png";
 import { HTTP_CODE_ACCOUNT_VERIFICATION_ERROR } from "./config/constants";
 import CaltexCompBrief from "./components/CaltexCompanyBrief/CaltexCompBrief";
+import ManageUsers from "./components/dashboard/adminDashboard/manageUsers/ManageUsers";
 
 // WORKED ON THE INVEST AND PAYMENT SCREEN SOME COMPONENT ARE
 // HAD TO BREAKDOWN UI INTO BIT OF COMPONENT BECAUSE OF THE CODE IS
@@ -159,8 +160,8 @@ const App = () => {
             backgroundColor: "transparent",
             transition: "background-color 5000s ease-in-out 0s",
             textFillColor: theme.palette.text.primary,
-            caretColor: theme.palette.text.primary
-          }
+            caretColor: theme.palette.text.primary,
+          },
         }}
       />
       <Provider
@@ -212,6 +213,9 @@ const App = () => {
               <Route path="*" element={<Redirect to="/auth/login" />} />
             )}
           </Route>
+
+          {/* admin routes starts*/}
+          <Route path="/manageUsers/ManageUsers" Component={isLoggedIn ? ManageUsers : Redirect } />
 
           <Route
             path="/profile/Profile"
@@ -286,7 +290,7 @@ const App = () => {
                     duration: 30,
                     tradeType: "crypto",
                     roiPct: 4.0,
-                    plan: "master"
+                    plan: "master",
                   }}
                 />
               ) : (
@@ -305,7 +309,7 @@ const App = () => {
                     duration: 20,
                     tradeType: "crypto",
                     roiPct: 3.5,
-                    plan: "professional"
+                    plan: "professional",
                   }}
                 />
               ) : (
@@ -323,7 +327,7 @@ const App = () => {
                     maxAmount: 15000,
                     duration: 10,
                     tradeType: "crypto",
-                    roiPct: 3.0
+                    roiPct: 3.0,
                   }}
                 />
               ) : (
@@ -340,7 +344,7 @@ const App = () => {
                     minAmount: 51000,
                     maxAmount: 100000,
                     duration: 21,
-                    plan: "master"
+                    plan: "master",
                   }}
                 />
               ) : (
@@ -357,7 +361,7 @@ const App = () => {
                     minAmount: 11000,
                     maxAmount: 50000,
                     duration: 14,
-                    plan: "professional"
+                    plan: "professional",
                   }}
                 />
               ) : (
@@ -404,8 +408,8 @@ const App = () => {
           sx={{
             maxWidth: snackbar.maxWidth || "400px",
             "&::first-letter": {
-              textTransform: "uppercase"
-            }
+              textTransform: "uppercase",
+            },
           }}
         >
           <Alert
@@ -416,7 +420,7 @@ const App = () => {
               </IconButton>
             }
             sx={{
-              whiteSpace: "pre-line"
+              whiteSpace: "pre-line",
             }}
           >
             {snackbar.message}

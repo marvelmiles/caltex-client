@@ -46,13 +46,13 @@ const Sidebar = () => {
           </span>
         </div>
 
-        {admin ? (
+        {!admin ? (
           <div class="panel-control" id={styles.admin}>
             <Link to="/" class="controld" id="dashboard" onclick=" ">
               <BiSolidDashboard id="other-icon" className="dashboard-icon" />
               Admin Dashboard
             </Link>
-            <Link to="/profile/Profile">
+            <Link to="/manageUsers/ManageUsers">
               {" "}
               <span class="control" id=" " onclick=" ">
                 <img src={profile} id="other-icon" alt="profile-icon" />

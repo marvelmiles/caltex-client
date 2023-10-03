@@ -28,6 +28,7 @@ body {
   margin-top: -8px;
   float: left;
   position: fixed;
+  height: 100%;
 }
 
 .panel-control {

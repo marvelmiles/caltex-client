@@ -59,14 +59,7 @@ const Sidebar = () => {
                 Manage Users
               </span>
             </Link>
-            {/* <Link
-              to="/Deposit/DepositPage"
-              class="control"
-              id="funding"
-              onclick=" "
-            >
-              <b>FUNDING</b>
-            </Link> */}
+           
             <Link to="/Deposit/DepositPage" class="control" id=" " onclick=" ">
               <img src={deposit} id="other-icon" alt="deposit-icon" />
               Manage Deposit
@@ -80,51 +73,7 @@ const Sidebar = () => {
               <img src={withdraw} id="other-icon" alt="withdraw-icon" />
               Manage Withdrawal
             </Link>
-            {/* <Link
-              to="/Invest/InvestPage"
-              class="control"
-              id="trading"
-              onclick=" "
-            >
-              <b>TRADING</b>
-            </Link> */}
-            {/* <Link
-              to="/Invest/InvestPage?tradeType=crypto"
-              class="control"
-              id=" "
-              onclick=" "
-            >
-              <img src={crypto} id="other-icon" alt="crypto-icon" />
-              Crypto
-            </Link> */}
-            {/* <Link
-              to="/Invest/InvestPage?tradeType=forex"
-              class="control"
-              id=" "
-              onclick=" "
-            >
-              <img src={forex} id="other-icon" alt="forex-icon" />
-              Forex
-            </Link> */}
-            {/* <span class="control" id="partners" onclick=" ">
-              <b> PARTNERS</b>
-            </span>
-            <span class="control" id="bam" onclick=" ">
-              Become a Merchant
-            </span>
-            <Link to="/help/Help">
-              <span class="control" id="help" onclick=" ">
-                <img src={help} id="other-icon" alt="help-icon" />
-                HELP
-              </span>
-            </Link>
-            <Link to="/legalDocument/LegalDocument">
-              {" "}
-              <span class="control" id=" " onclick=" ">
-                <img src={legal} id="other-icon" alt="legal-icon" />
-                Legal Documents
-              </span>
-            </Link> */}
+           
             <span class="control" id=" " onclick=" ">
               <img src={logout} id="other-icon" alt="logout-icon" />
               LogOut

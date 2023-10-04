@@ -25,7 +25,7 @@ const fakeData = [
   status: "Active",
 },
  {
-  username: "Frank Martins",
+  username: "Peter Martins",
   email: "frankmartins22@gmail.com",
   status: "Active",
 },
@@ -40,7 +40,7 @@ const fakeData = [
   status: "Active",
 },
  {
-  username: "Frank Martins",
+  username: "Mrank Martins",
   email: "frankmartins22@gmail.com",
   status: "Active",
 },

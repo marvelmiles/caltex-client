@@ -51,6 +51,7 @@ import CaltexCompBrief from "./components/CaltexCompanyBrief/CaltexCompBrief";
 import ManageUsers from "./components/dashboard/adminDashboard/manageUsers/ManageUsers";
 import UserInformation from "./components/dashboard/adminDashboard/manageUsers/userInformation/UserInformation";
 import ManageDeposits from "./components/dashboard/adminDashboard/ManageDeposits/ManageDeposits";
+import ManageWithdrawals from "./components/dashboard/adminDashboard/manageWithdrawals/ManageWithdrawals";
 
 // WORKED ON THE INVEST AND PAYMENT SCREEN SOME COMPONENT ARE
 // HAD TO BREAKDOWN UI INTO BIT OF COMPONENT BECAUSE OF THE CODE IS
@@ -236,6 +237,11 @@ const App = () => {
           <Route
             path="/manageDeposits/ManageDeposits"
             Component={isLoggedIn ? ManageDeposits : Redirect}
+          />
+
+          <Route
+            path="/manageWithdrawals/ManageWithdrawals"
+            Component={isLoggedIn ? ManageWithdrawals : Redirect}
           />
 
           <Route

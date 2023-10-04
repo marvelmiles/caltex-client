@@ -19,6 +19,9 @@ import useAuth from "../../hooks/useAuth";
 import { BiSolidDashboard } from "react-icons/bi";
 import { setFutureDate } from './../../utils/index';
 import  styles from './Sidebar.module.scss';
+
+import fakeUser from "../../config/fakeApi";
+
 const Sidebar = () => {
   /** Begininng Of script for menu **/
 
@@ -30,12 +33,16 @@ const Sidebar = () => {
     document.getElementById("sidenav").style.width = "0";
   }
 
-  const { currentUser } = useAuth();
+  // const { currentUser } = useAuth();
+  const { data } = fakeUser;
 
-  const [admin, setAdmin] = useState(false);
+  const { isAdmin } = data;
+
+  // console.log(currentUser);
+  // const [admin, setAdmin] = useState(false);
 
   return (
-    <div class="dashboard-panel" id="sidena">
+    <div class="dashboard-panel" id="sidenav">
       <div class="panel">
         <div class="logo">
           <span>
@@ -46,7 +53,7 @@ const Sidebar = () => {
           </span>
         </div>
 
-        {!admin ? (
+        {isAdmin ? (
           <div class="panel-control" id={styles.admin}>
             <Link to="/" class="controld" id="dashboard" onclick=" ">
               <BiSolidDashboard id="other-icon" className="dashboard-icon" />
@@ -70,7 +77,7 @@ const Sidebar = () => {
               Manage Deposit
             </Link>
             <Link
-              to="/Withdraw/WithdrawPage"
+              to="/manageWithdrawals/ManageWithdrawals"
               class="control"
               id=" "
               onclick=" "

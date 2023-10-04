@@ -302,8 +302,8 @@ import rightArrow from "../../../../../svgs/right-arrow.svg"
 import fakeData from "../fakeData";
 
 const UserTable = () => {
-  const { currentUser } = useAuth();
-  const { id } = currentUser;
+  // const { currentUser } = useAuth();
+  // const { id } = currentUser;
   const [data, setData] = useState([]);
   const [currentPage, setCurrentPage] = useState(0);
   const itemsPerPage = 5; // Adjust the number of items per page as needed

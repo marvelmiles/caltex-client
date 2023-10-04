@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from "react";
 import useAuth from "../../../../../hooks/useAuth";
-import styles from "./DepositTable.module.scss";
+import styles from "./WithdrawalTable.module.scss";
 import http from "../../../../../api/http";
 import { useNavigate } from "react-router-dom";
 import leftArrow from "../../../../../svgs/left-arrow.svg";
 import rightArrow from "../../../../../svgs/right-arrow.svg";
 import fakeData from "./fakeData";
 
-const DepositTable = () => {
+const WithdrawalTable = () => {
   const { currentUser } = useAuth();
   const { id } = currentUser;
   const [data, setData] = useState([]);
@@ -33,7 +33,7 @@ const DepositTable = () => {
     fetchData();
   }, []); // The empty dependency array ensures this effect runs only once on mount
 
-  const handleConfirmPayment = (userId) => {
+  const handleConfirmWithdrawal = (userId) => {
     // navigate(`/userInformation/UserInformation/${userId}`);
     // navigate("/userInformation/UserInformation");
   };
@@ -44,7 +44,7 @@ const DepositTable = () => {
         <tr>
           <th>User Full Name</th>
           <th>Email address</th>
-          <th>Amount</th>
+          <th>Amount Requested</th>
           <th>Payment Method</th>
           <th>Action</th>
         </tr>
@@ -68,7 +68,7 @@ const DepositTable = () => {
     //     <td>{item.email}</td>
     //     <td>{item.status}</td>
     //     <td>
-    //       <button type="button" onClick={() => handleConfirmPayment(item.id)}>
+    //       <button type="button" onClick={() => handleManageUser(item.id)}>
     //         Manage
     //       </button>
     //     </td>
@@ -82,8 +82,12 @@ const DepositTable = () => {
         <td>{item.amount}</td>
         <td>{item.paymentMethod}</td>
         <td>
-          <button type="button" id={styles.btn} onClick={handleConfirmPayment}>
-            Confirm Payment
+          <button
+            type="button"
+            id={styles.btn}
+            onClick={handleConfirmWithdrawal}
+          >
+            Confirm Withdrawal
           </button>
         </td>
       </tr>
@@ -122,4 +126,4 @@ const DepositTable = () => {
   );
 };
 
-export default DepositTable;
+export default WithdrawalTable;

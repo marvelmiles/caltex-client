@@ -49,6 +49,8 @@ import backarrow from "./images/backArrow.png";
 import { HTTP_CODE_ACCOUNT_VERIFICATION_ERROR } from "./config/constants";
 import CaltexCompBrief from "./components/CaltexCompanyBrief/CaltexCompBrief";
 import ManageUsers from "./components/dashboard/adminDashboard/manageUsers/ManageUsers";
+import UserInformation from "./components/dashboard/adminDashboard/manageUsers/userInformation/UserInformation";
+import ManageDeposits from "./components/dashboard/adminDashboard/ManageDeposits/ManageDeposits";
 
 // WORKED ON THE INVEST AND PAYMENT SCREEN SOME COMPONENT ARE
 // HAD TO BREAKDOWN UI INTO BIT OF COMPONENT BECAUSE OF THE CODE IS
@@ -215,7 +217,26 @@ const App = () => {
           </Route>
 
           {/* admin routes starts*/}
-          <Route path="/manageUsers/ManageUsers" Component={isLoggedIn ? ManageUsers : Redirect } />
+          <Route
+            path="/manageUsers/ManageUsers"
+            Component={isLoggedIn ? ManageUsers : Redirect}
+          />
+
+          <Route
+            path="/userInformation/UserInformation"
+            Component={isLoggedIn ? UserInformation : Redirect}
+          />
+          {/* api routes */}
+
+          {/* <Route
+            path="/userInformation/UserInformation/:id"
+            Component={isLoggedIn ? UserInformation : Redirect}
+          /> */}
+
+          <Route
+            path="/manageDeposits/ManageDeposits"
+            Component={isLoggedIn ? ManageDeposits : Redirect}
+          />
 
           <Route
             path="/profile/Profile"

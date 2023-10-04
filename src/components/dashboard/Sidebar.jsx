@@ -59,8 +59,13 @@ const Sidebar = () => {
                 Manage Users
               </span>
             </Link>
-           
-            <Link to="/Deposit/DepositPage" class="control" id=" " onclick=" ">
+
+            <Link
+              to="/manageDeposits/ManageDeposits"
+              class="control"
+              id=" "
+              onclick=" "
+            >
               <img src={deposit} id="other-icon" alt="deposit-icon" />
               Manage Deposit
             </Link>
@@ -73,7 +78,7 @@ const Sidebar = () => {
               <img src={withdraw} id="other-icon" alt="withdraw-icon" />
               Manage Withdrawal
             </Link>
-           
+
             <span class="control" id=" " onclick=" ">
               <img src={logout} id="other-icon" alt="logout-icon" />
               LogOut

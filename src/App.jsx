@@ -392,11 +392,7 @@ const App = () => {
 
         <Snackbar
           open={snackbar.open}
-          autoHideDuration={
-            snackbar.autoHideDuration ||
-            (snackbar.severity === "success" ? 5000 : 10000)
-          }
-          onClose={snackbar.close ? closeSnackBar : undefined}
+          autoHideDuration={snackbar.autoHideDuration || 10000}
           autoHideDuration={snackbar.autoHideDuration || 8000}
           onClose={
             snackbar.closeSnackBar === undefined ? closeSnackBar : undefined

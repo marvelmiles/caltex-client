@@ -48,7 +48,7 @@ const useForm = (config = {}) => {
   const handleChange = useCallback(
     (e, validator) => {
       const node = e.currentTarget || e.target;
-      const { type, name: keyName, value } = node;
+      let { type, name: keyName, value } = node;
 
       let errMap = {};
 
@@ -62,6 +62,11 @@ const useForm = (config = {}) => {
         });
 
       const withValidator = typeof validator === "function";
+
+      if (type === "file") {
+        if (node.multiple) value = node.files;
+        else value = node.files[0];
+      }
 
       setFormdata((formData = stateRef.current.placeholders) => {
         let err;
@@ -138,7 +143,7 @@ const useForm = (config = {}) => {
 
       const { disableIsSubmitting = false } = config;
 
-      const data = { ...formData };
+      let data = { ...formData };
 
       let withErr;
       console.log(
@@ -166,8 +171,11 @@ const useForm = (config = {}) => {
         }
       }
 
-      withErr =
-        withErr || !!Object.keys(errs).length || Object.keys(errors).length;
+      withErr = !!(
+        withErr ||
+        Object.keys(errs).length ||
+        Object.keys(errors).length
+      );
 
       if (withErr) setErrors(errors => ({ ...errors, ...errs }));
 
@@ -184,6 +192,18 @@ const useForm = (config = {}) => {
         { ...data },
         "...errors...withErr...data...post handle submit"
       );
+
+      const _data = config.formData;
+
+      if (_data) {
+        if (_data.append) {
+          for (const key in data) {
+            _data.append(key, data[key]);
+          }
+          data = _data;
+        } else Object.assign(data, _data);
+      }
+
       return { formData: data, withErr, errors, setIsSubmitting };
     },
     [formData, errors, required, serializeData]

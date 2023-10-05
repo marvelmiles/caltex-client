@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 import leftArrow from "../../../../../svgs/left-arrow.svg";
 import rightArrow from "../../../../../svgs/right-arrow.svg";
 import fakeData from "./fakeData";
+import { pendingDeposit } from "../../../../../config/fakeApi";
 
 const DepositTable = () => {
   const { currentUser } = useAuth();
@@ -17,6 +18,7 @@ const DepositTable = () => {
 
   useEffect(() => {
     // Function to fetch data from the API
+    // This assumes that the users sent to this endpoint are those with pending deposits.
     const fetchData = async () => {
       try {
         const response = await http.get(
@@ -33,9 +35,17 @@ const DepositTable = () => {
     fetchData();
   }, []); // The empty dependency array ensures this effect runs only once on mount
 
-  const handleConfirmPayment = (userId) => {
-    // navigate(`/userInformation/UserInformation/${userId}`);
-    // navigate("/userInformation/UserInformation");
+  const handleConfirmPayment = async (userID) => {
+    //caltex-api.onrender.com/api/transactions/651f0079b69491be50723071/confirm.
+    try {
+      const req = await http.post(
+        `https://caltex-api.onrender.com/api/transactions/${userID}/confirm`,
+        { withCredentials: true }
+      );
+    } catch (error) {
+      
+    }
+
   };
 
   const renderTableHeader = () => {
@@ -61,33 +71,37 @@ const DepositTable = () => {
     setCurrentPage(newPage);
   };
 
+  console.log(data);
+
   const renderTableData = () => {
     // return data.slice(startIndex, endIndex).map((item) => (
-    //   <tr key={item.id}>
-    //     <td>{item.username}</td>
-    //     <td>{item.email}</td>
-    //     <td>{item.status}</td>
-    //     <td>
-    //       <button type="button" onClick={() => handleConfirmPayment(item.id)}>
-    //         Manage
-    //       </button>
-    //     </td>
-    //   </tr>
-    // ));
-
-    return fakeData.map((item) => (
-      <tr key={item.id}>
-        <td>{item.username}</td>
-        <td>{item.email}</td>
-        <td>{item.amount}</td>
-        <td>{item.paymentMethod}</td>
+    return pendingDeposit.slice(startIndex, endIndex).map(({data}) => (
+      <tr key={data?.id}>
+        <td>{data?.user?.username}</td>
+        <td>{data?.user?.email}</td>
+        <td>{data?.amount}</td>
+        <td>{data?.paymentType}</td>
         <td>
-          <button type="button" id={styles.btn} onClick={handleConfirmPayment}>
+          <button type="button" onClick={() => handleConfirmPayment(data?.id)}>
             Confirm Payment
           </button>
         </td>
       </tr>
     ));
+
+    // return fakeData.map((item) => (
+    //   <tr key={item.id}>
+    //     <td>{item.username}</td>
+    //     <td>{item.email}</td>
+    //     <td>{item.amount}</td>
+    //     <td>{item.paymentMethod}</td>
+    //     <td>
+    //       <button type="button" id={styles.btn} onClick={handleConfirmPayment}>
+    //         Confirm Payment
+    //       </button>
+    //     </td>
+    //   </tr>
+    // ));
   };
 
   return (

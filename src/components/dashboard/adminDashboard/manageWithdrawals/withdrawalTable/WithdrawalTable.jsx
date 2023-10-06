@@ -1,19 +1,15 @@
 import React, { useState, useEffect } from "react";
-import useAuth from "../../../../../hooks/useAuth";
 import styles from "./WithdrawalTable.module.scss";
 import http from "../../../../../api/http";
-import { useNavigate } from "react-router-dom";
 import leftArrow from "../../../../../svgs/left-arrow.svg";
 import rightArrow from "../../../../../svgs/right-arrow.svg";
-import fakeData from "./fakeData";
 
 const WithdrawalTable = () => {
-  const { currentUser } = useAuth();
-  const { id } = currentUser;
   const [data, setData] = useState([]);
   const [currentPage, setCurrentPage] = useState(0);
   const itemsPerPage = 5; // Adjust the number of items per page as needed
-  const navigate = useNavigate();
+  const url =
+    "https://caltex-api.onrender.com/api/transactions/request-withdrawal";
 
   useEffect(() => {
     // Function to fetch data from the API
@@ -33,9 +29,15 @@ const WithdrawalTable = () => {
     fetchData();
   }, []); // The empty dependency array ensures this effect runs only once on mount
 
-  const handleConfirmWithdrawal = (userId) => {
-    // navigate(`/userInformation/UserInformation/${userId}`);
-    // navigate("/userInformation/UserInformation");
+  const handleConfirmWithdrawal = async () => {
+    try {
+      const req = await http.post(url, { withCredentials: true });
+      if (req.status === 200) {
+        // Throw a success toast
+      }
+    } catch (error) {
+      // Throw a failure Toast
+    }
   };
 
   const renderTableHeader = () => {
@@ -46,7 +48,7 @@ const WithdrawalTable = () => {
           <th>Email address</th>
           <th>Amount Requested</th>
           <th>Payment Method</th>
-          <th>Action</th>
+          <th>Status</th>
         </tr>
       </thead>
     );
@@ -62,25 +64,13 @@ const WithdrawalTable = () => {
   };
 
   const renderTableData = () => {
-    // return data.slice(startIndex, endIndex).map((item) => (
-    //   <tr key={item.id}>
-    //     <td>{item.username}</td>
-    //     <td>{item.email}</td>
-    //     <td>{item.status}</td>
-    //     <td>
-    //       <button type="button" onClick={() => handleManageUser(item.id)}>
-    //         Manage
-    //       </button>
-    //     </td>
-    //   </tr>
-    // ));
-
-    return fakeData.map((item) => (
+    return data.slice(startIndex, endIndex).map((item) => (
       <tr key={item.id}>
         <td>{item.username}</td>
         <td>{item.email}</td>
         <td>{item.amount}</td>
-        <td>{item.paymentMethod}</td>
+        <td>{item.paymentType}</td>
+        <td>{item.status}</td>
         <td>
           <button
             type="button"

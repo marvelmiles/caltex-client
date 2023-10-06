@@ -151,6 +151,8 @@ const App = () => {
     );
   }, [locState, navigate, setSnackBar]);
 
+  console.log(isLoggedIn, "...isLoggedin...");
+
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
@@ -163,8 +165,8 @@ const App = () => {
             backgroundColor: "transparent",
             transition: "background-color 5000s ease-in-out 0s",
             textFillColor: theme.palette.text.primary,
-            caretColor: theme.palette.text.primary,
-          },
+            caretColor: theme.palette.text.primary
+          }
         }}
       />
       <Provider
@@ -317,7 +319,7 @@ const App = () => {
                     duration: 30,
                     tradeType: "crypto",
                     roiPct: 4.0,
-                    plan: "master",
+                    plan: "master"
                   }}
                 />
               ) : (
@@ -336,7 +338,7 @@ const App = () => {
                     duration: 20,
                     tradeType: "crypto",
                     roiPct: 3.5,
-                    plan: "professional",
+                    plan: "professional"
                   }}
                 />
               ) : (
@@ -354,7 +356,7 @@ const App = () => {
                     maxAmount: 15000,
                     duration: 10,
                     tradeType: "crypto",
-                    roiPct: 3.0,
+                    roiPct: 3.0
                   }}
                 />
               ) : (
@@ -371,7 +373,7 @@ const App = () => {
                     minAmount: 51000,
                     maxAmount: 100000,
                     duration: 21,
-                    plan: "master",
+                    plan: "master"
                   }}
                 />
               ) : (
@@ -388,7 +390,7 @@ const App = () => {
                     minAmount: 11000,
                     maxAmount: 50000,
                     duration: 14,
-                    plan: "professional",
+                    plan: "professional"
                   }}
                 />
               ) : (
@@ -423,11 +425,7 @@ const App = () => {
 
         <Snackbar
           open={snackbar.open}
-          autoHideDuration={
-            snackbar.autoHideDuration ||
-            (snackbar.severity === "success" ? 5000 : 10000)
-          }
-          onClose={snackbar.close ? closeSnackBar : undefined}
+          autoHideDuration={snackbar.autoHideDuration || 10000}
           autoHideDuration={snackbar.autoHideDuration || 8000}
           onClose={
             snackbar.closeSnackBar === undefined ? closeSnackBar : undefined
@@ -435,8 +433,8 @@ const App = () => {
           sx={{
             maxWidth: snackbar.maxWidth || "400px",
             "&::first-letter": {
-              textTransform: "uppercase",
-            },
+              textTransform: "uppercase"
+            }
           }}
         >
           <Alert
@@ -447,7 +445,7 @@ const App = () => {
               </IconButton>
             }
             sx={{
-              whiteSpace: "pre-line",
+              whiteSpace: "pre-line"
             }}
           >
             {snackbar.message}

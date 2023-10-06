@@ -7,7 +7,7 @@ import rightArrow from "../../../../../svgs/right-arrow.svg";
 const DepositTable = () => {
   const [data, setData] = useState([]);
   const [currentPage, setCurrentPage] = useState(0);
-  const [confirmed, setConfirmed] = useState(false);
+  const [confirmed, setConfirmed] = useState({});
   const itemsPerPage = 5; // Adjust the number of items per page as needed
 
   useEffect(() => {
@@ -16,10 +16,13 @@ const DepositTable = () => {
     const fetchData = async () => {
       try {
         const response = await http.get(
-          "https://caltex-api.onrender.com/api/users/",
+          "https://caltex-api.onrender.com/api/transactions?required[transactionType]=deposit&required[status]=awaiting",
           { withCredentials: true }
         );
-        setData(response.data);
+
+        console.log(response, "...res");
+
+        setData(response.data.data);
       } catch (error) {
         console.error("Error fetching data:", error);
       }
@@ -29,18 +32,24 @@ const DepositTable = () => {
     fetchData();
   }, []); // The empty dependency array ensures this effect runs only once on mount
 
-  const handleConfirmPayment = async (userID) => {
+  const handleConfirmPayment = async (transId, e) => {
     try {
-      const req = await http.post(
-        `https://caltex-api.onrender.com/api/transactions/${userID}/confirm`,
+      const req = await http.patch(
+        `https://caltex-api.onrender.com/api/transactions/${transId}/confirm`,
         { withCredentials: true }
       );
+
       if (req?.status === 200) {
         // Throw a success toast
-        setConfirmed(true);
+        setConfirmed(confirmed => ({
+          ...confirmed,
+          [transId]: true
+        }));
       }
     } catch (error) {
       // Throw an error toast
+    } finally {
+      (e.currentTarget || e.target).style.cursor = "default";
     }
   };
 
@@ -63,28 +72,41 @@ const DepositTable = () => {
   const endIndex = startIndex + itemsPerPage;
   const pageCount = Math.ceil(data.length / itemsPerPage);
 
-  const handlePageChange = (newPage) => {
+  const handlePageChange = newPage => {
     setCurrentPage(newPage);
   };
 
   const renderTableData = () => {
-    return data.slice(startIndex, endIndex).map(({ data }) => (
-      <tr key={data?.id}>
-        <td>{data?.user?.username}</td>
-        <td>{data?.user?.email}</td>
-        <td>{data?.amount}</td>
-        <td>{data?.paymentType}</td>
-        <td>
-          <button
-            type="button"
-            id={confirmed ? styles.successBtn : styles.btn}
-            onClick={() => handleConfirmPayment(data?.id)}
-          >
-            {confirmed ? "Successful" : "Confirm Payment"}
-          </button>
-        </td>
-      </tr>
-    ));
+    return data.slice(startIndex, endIndex).map(data => {
+      const bool = data.status === "confirmed" || confirmed[data.id];
+      return (
+        <tr key={data?.id}>
+          <td>{data?.user?.username}</td>
+          <td>{data?.user?.email}</td>
+          <td>{data?.amount}</td>
+          <td>{data?.paymentType}</td>
+          <td>
+            <button
+              type="button"
+              id={bool ? styles.successBtn : styles.btn}
+              style={{ cursor: bool ? "default" : "pointer" }}
+              onClick={
+                bool
+                  ? undefined
+                  : e => {
+                      e.currentTarget.disabled = true;
+                      e.currentTarget.style.cursor = "not-allowed";
+
+                      return handleConfirmPayment(data?.id, e);
+                    }
+              }
+            >
+              {bool ? "Successful" : "Confirm Payment"}
+            </button>
+          </td>
+        </tr>
+      );
+    });
   };
 
   return (

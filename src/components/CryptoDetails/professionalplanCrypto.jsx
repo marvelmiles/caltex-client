@@ -35,7 +35,6 @@ const ProfessionalplanCrypto = () => {
 
         <div class="dashboard-content">
           <div class="board-content">
-           
             <DashboardNav />
 
             <ArrowAndTab />

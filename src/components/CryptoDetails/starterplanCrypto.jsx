@@ -3,7 +3,7 @@ import ReactDoM from "react-dom";
 import { useState, useEffect } from "react";
 import Cookies from "js-cookie";
 import { Link } from "react-router-dom";
-import './starterplanCrypto.css';
+import "./starterplanCrypto.css";
 import caltexTrader from "../../images/caltexTrader.png";
 import logo from "../../images/logo (1).png";
 import john from "../../images/John.jpg";
@@ -38,7 +38,7 @@ const StarterplanCrypto = () => {
             {/*
          This is the Container that displays "Welome back John" 
         */}
-           
+
             <DashboardNav />
 
             <ArrowAndTab />

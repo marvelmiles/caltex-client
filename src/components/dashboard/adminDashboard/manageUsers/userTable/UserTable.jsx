@@ -8,7 +8,7 @@ import rightArrow from "../../../../../svgs/right-arrow.svg";
 const UserTable = () => {
   const [data, setData] = useState([]);
   const [currentPage, setCurrentPage] = useState(0);
-  const itemsPerPage = 5; // Adjust the number of items per page as needed
+  const itemsPerPage = 10; // Adjust the number of items per page as needed
   const navigate = useNavigate();
 
   useEffect(() => {

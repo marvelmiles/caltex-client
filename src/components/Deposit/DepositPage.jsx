@@ -33,7 +33,6 @@ import { BsCheck2 } from "react-icons/bs";
 import UploadProof from "../UploadProof";
 import DashboardNav from "../dashboard/DashboardNav";
 import Sidebar from "../dashboard/Sidebar";
-import UploadProof from "../UploadProof";
 
 const DepositPage = () => {
   const { setSnackBar } = useCtx();

@@ -29,6 +29,8 @@ import { Stack, Box } from "@mui/material";
 
 import useAuth from "../../hooks/useAuth";
 import { useCtx } from "../../context";
+import DashboardNav from "../dashboard/DashboardNav";
+import Sidebar from "../dashboard/Sidebar";
 
 const WithdrawPage = () => {
   const { setSnackBar } = useCtx();
@@ -91,165 +93,13 @@ const WithdrawPage = () => {
 
   return (
     <div>
-    <div className="mySidenav" id="sidenav">
-    <Link to=" " class="closebtn" id="close-btn" onClick={closeNav}>
-          &times;
-        </Link>
-        <Link to="/" class=" ">
-          <BiSolidDashboard id="other-icon" className="dashboard-icon" />
-          Dashboard
-        </Link>
-        <Link to="/profile/Profile" class="linkss">
-          <img src={profile} id="other-icon" alt="profile-icon" />
-          Profile
-        </Link>
-        <Link to="/Deposit/DepositPage" class="linkss">
-          <img src={deposit} id="other-icon" alt="deposit-icon" />
-          Deposit
-        </Link>
-
-        <Link to="/Invest/InvestPage?tradeType=forex" class="linkss">
-          <img src={deposit} id="other-icon" alt="deposit-icon" />
-          Invest
-        </Link>
-        <Link to="/Withdraw/withdrawPage" class="linkss">
-          <img src={withdraw} id="other-icon" alt="withdraw-icon" />
-          Withdraw
-        </Link>
-        <Link to="/Invest/InvestPage?tradeType=crypto" class="linkss">
-          <img src={crypto} id="other-icon" alt="crypto-icon" />
-          Crypto
-        </Link>
-        <Link to="/Invest/InvestPage?tradeType=forex" class="linkss">
-          <img src={forex} id="other-icon" alt="forex-icon" />
-          Forex
-        </Link>
-        <Link to="/help/Help" class="linkss">
-          <img src={help} id="other-icon" alt="help-icon" />
-          HELP
-        </Link>
-        <Link to="/legalDocument/LegalDocument" class="linkss">
-          <img src={legal} id="other-icon" alt="legal-icon" />
-          Legal Documents
-        </Link>
-        <Link to="/auth/login" class="linkss">
-          <img src={logout} id="other-icon" alt="logout-icon" />
-          Logout
-        </Link>
-    </div>
-
-
-
     <div class="dashboard-container">
       <div class="board">
-        <div class="dashboard-panel">
-          <div class="panels">
-            <div class="logo">
-              <span>
-                <img src={logo} alt="logo" />
-              </span>
-              <span>
-                <img src={caltexTrader} alt="caltek-logo" />
-              </span>
-            </div>
-            <div class="panel-control">
-             <Link to="/" class="controld" id="dashboard" onclick=" ">
-                <img src={dashboard} id="other-icon" alt="profile-icon" />
-                  Dashboard
-                </Link>
-                <Link to="/profile/Profile" className="control" id=" ">
-                  <img src={profile} id="other-icon" alt="profile-icon" />
-                  Profile
-                </Link>
-              <Link
-                to="/Deposit/DepositPage"
-                class="control"
-                id="funding"
-                onclick=" "
-              >
-                <b>FUNDING</b>
-              </Link>
-              <Link
-                to="/Deposit/DepositPage"
-                class="control"
-                id=" "
-                onclick=" "
-              >
-                <img src={deposit} id="other-icon" alt="deposit-icon" />
-                Deposit
-              </Link>
-              <Link
-                to="/Withdraw/WithdrawPage"
-                class="control"
-                id=" "
-                onclick=" "
-              >
-                <img src={withdraw} id="other-icon" alt="withdraw-icon" />
-                Withdraw
-              </Link>
-              <Link
-                to="/Invest/InvestPage"
-                class="control"
-                id="trading"
-                onclick=" "
-              >
-                <b>TRADING</b>
-              </Link>
-              <Link to="/Invest/InvestPage?tradeType=crypto" class="control" id=" " onclick=" ">
-                <img src={crypto} id="other-icon" alt="crypto-icon" />
-                Crypto
-              </Link>
-              <Link to="/Invest/InvestPage?tradeType=forex" class="control" id=" " onclick=" ">
-                <img src={forex} id="other-icon" alt="forex-icon" />
-                Forex
-              </Link>
-              <span class="control" id="partners" onclick=" ">
-                <b> PARTNERS</b>
-              </span>
-              <span class="control" id="bam" onclick=" ">
-                Become a Merchant
-              </span>
-              <Link to='/help/Help' className="control" id="help">
-                  <img src={help} id="other-icon" alt="help-icon" />
-                  HELP
-                </Link>
-                <Link to='/legalDocument/LegalDocument' className="control" id=" ">
-                  <img src={legal} id="other-icon" alt="legal-icon" />
-                  Legal Documents
-                </Link>
-                <Link to='/auth/login' className="control" id=" ">
-                  <img src={logout} id="other-icon" alt="logout-icon" />
-                  LogOut
-                </Link>
-            </div>
-          </div>
-        </div>
+        <Sidebar />
 
         <div class="dashboard-content">
           <div class="board-content">
-            <div class="welcome-user">
-              <div class="welcome">
-                <div class="welcome-text">
-                  <p>Welcome back, {currentUser.firstname}</p>
-                </div>
-                <div class="welcome-asset">
-                  <span>
-                    <img src={currentUser.photoUrl}  alt="user-avatar" />
-                  </span>
-                  <span class="john">
-                    <p>
-                      {currentUser.firstname} {currentUser.lastname}
-                    </p>
-                  </span>
-                  <span class="bell-notification" id=" " onclick=" ">
-                    <i class="fa fa-bell"></i>
-                  </span>
-                </div>
-                <div className="menu-button" onClick={openNav}>
-                    &#9776;
-                  </div>
-              </div>
-            </div>
+            <DashboardNav />
 
             <div class="withdraw-funds-container" id="withdraw-funds-container">
               <div class="withdraw-funds">

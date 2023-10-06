@@ -8,7 +8,7 @@ const DepositTable = () => {
   const [data, setData] = useState([]);
   const [currentPage, setCurrentPage] = useState(0);
   const [confirmed, setConfirmed] = useState({});
-  const itemsPerPage = 5; // Adjust the number of items per page as needed
+  const itemsPerPage = 10; // Adjust the number of items per page as needed
 
   useEffect(() => {
     // Function to fetch data from the API

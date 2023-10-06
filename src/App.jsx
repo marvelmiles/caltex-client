@@ -223,16 +223,16 @@ const App = () => {
             Component={isLoggedIn ? ManageUsers : Redirect}
           />
 
-          <Route
+          {/* <Route
             path="/userInformation/UserInformation"
             Component={isLoggedIn ? UserInformation : Redirect}
-          />
+          /> */}
           {/* api routes */}
 
-          {/* <Route
+          <Route
             path="/userInformation/UserInformation/:id"
             Component={isLoggedIn ? UserInformation : Redirect}
-          /> */}
+          />
 
           <Route
             path="/manageDeposits/ManageDeposits"

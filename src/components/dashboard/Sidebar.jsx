@@ -20,7 +20,7 @@ import { BiSolidDashboard } from "react-icons/bi";
 import { setFutureDate } from './../../utils/index';
 import  styles from './Sidebar.module.scss';
 
-import fakeUser from "../../config/fakeApi";
+// import fakeUser from "../../config/fakeApi";
 
 const Sidebar = () => {
   /** Begininng Of script for menu **/
@@ -33,13 +33,15 @@ const Sidebar = () => {
     document.getElementById("sidenav").style.width = "0";
   }
 
-  // const { currentUser } = useAuth();
-  const { data } = fakeUser;
+  const { currentUser } = useAuth();
 
-  const { isAdmin } = data;
+  const { isAdmin } = currentUser;
+  // this fake user was used for testing, should be deleted after
+  // const { data } = fakeUser;
 
-  // console.log(currentUser);
-  // const [admin, setAdmin] = useState(false);
+  // const { isAdmin } = data;
+
+  const [bgActive, setBgactive] = useState(false)
 
   return (
     <div class="dashboard-panel" id="sidenav">
@@ -53,7 +55,7 @@ const Sidebar = () => {
           </span>
         </div>
 
-        {isAdmin ? (
+        {!isAdmin ? (
           <div class="panel-control" id={styles.admin}>
             <Link to="/" class="controld" id="dashboard" onclick=" ">
               <BiSolidDashboard id="other-icon" className="dashboard-icon" />
@@ -61,7 +63,11 @@ const Sidebar = () => {
             </Link>
             <Link to="/manageUsers/ManageUsers">
               {" "}
-              <span class="control" id=" " onclick=" ">
+              <span
+                class="control"
+                id={bgActive ? styles.colorActive : ""}
+                onclick={() => setBgactive(!bgActive)}
+              >
                 <img src={profile} id="other-icon" alt="profile-icon" />
                 Manage Users
               </span>
@@ -70,8 +76,8 @@ const Sidebar = () => {
             <Link
               to="/manageDeposits/ManageDeposits"
               class="control"
-              id=" "
-              onclick=" "
+              id={bgActive ? styles.colorActive : ""}
+              onclick={() => setBgactive(!bgActive)}
             >
               <img src={deposit} id="other-icon" alt="deposit-icon" />
               Manage Deposit
@@ -79,8 +85,8 @@ const Sidebar = () => {
             <Link
               to="/manageWithdrawals/ManageWithdrawals"
               class="control"
-              id=" "
-              onclick=" "
+              id={bgActive ? styles.colorActive : ""}
+              onclick={() => setBgactive(!bgActive)}
             >
               <img src={withdraw} id="other-icon" alt="withdraw-icon" />
               Manage Withdrawal

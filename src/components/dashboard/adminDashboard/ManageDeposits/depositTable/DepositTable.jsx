@@ -1,20 +1,14 @@
 import React, { useState, useEffect } from "react";
-import useAuth from "../../../../../hooks/useAuth";
 import styles from "./DepositTable.module.scss";
 import http from "../../../../../api/http";
-import { useNavigate } from "react-router-dom";
 import leftArrow from "../../../../../svgs/left-arrow.svg";
 import rightArrow from "../../../../../svgs/right-arrow.svg";
-import fakeData from "./fakeData";
-import { pendingDeposit } from "../../../../../config/fakeApi";
 
 const DepositTable = () => {
-  const { currentUser } = useAuth();
-  const { id } = currentUser;
   const [data, setData] = useState([]);
   const [currentPage, setCurrentPage] = useState(0);
+  const [confirmed, setConfirmed] = useState(false);
   const itemsPerPage = 5; // Adjust the number of items per page as needed
-  const navigate = useNavigate();
 
   useEffect(() => {
     // Function to fetch data from the API
@@ -36,16 +30,18 @@ const DepositTable = () => {
   }, []); // The empty dependency array ensures this effect runs only once on mount
 
   const handleConfirmPayment = async (userID) => {
-    //caltex-api.onrender.com/api/transactions/651f0079b69491be50723071/confirm.
     try {
       const req = await http.post(
         `https://caltex-api.onrender.com/api/transactions/${userID}/confirm`,
         { withCredentials: true }
       );
+      if (req?.status === 200) {
+        // Throw a success toast
+        setConfirmed(true);
+      }
     } catch (error) {
-      
+      // Throw an error toast
     }
-
   };
 
   const renderTableHeader = () => {
@@ -71,37 +67,24 @@ const DepositTable = () => {
     setCurrentPage(newPage);
   };
 
-  console.log(data);
-
   const renderTableData = () => {
-    // return data.slice(startIndex, endIndex).map((item) => (
-    return pendingDeposit.slice(startIndex, endIndex).map(({data}) => (
+    return data.slice(startIndex, endIndex).map(({ data }) => (
       <tr key={data?.id}>
         <td>{data?.user?.username}</td>
         <td>{data?.user?.email}</td>
         <td>{data?.amount}</td>
         <td>{data?.paymentType}</td>
         <td>
-          <button type="button" onClick={() => handleConfirmPayment(data?.id)}>
-            Confirm Payment
+          <button
+            type="button"
+            id={confirmed ? styles.successBtn : styles.btn}
+            onClick={() => handleConfirmPayment(data?.id)}
+          >
+            {confirmed ? "Successful" : "Confirm Payment"}
           </button>
         </td>
       </tr>
     ));
-
-    // return fakeData.map((item) => (
-    //   <tr key={item.id}>
-    //     <td>{item.username}</td>
-    //     <td>{item.email}</td>
-    //     <td>{item.amount}</td>
-    //     <td>{item.paymentMethod}</td>
-    //     <td>
-    //       <button type="button" id={styles.btn} onClick={handleConfirmPayment}>
-    //         Confirm Payment
-    //       </button>
-    //     </td>
-    //   </tr>
-    // ));
   };
 
   return (

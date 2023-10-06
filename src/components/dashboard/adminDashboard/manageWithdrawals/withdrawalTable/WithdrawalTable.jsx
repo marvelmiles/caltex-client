@@ -3,23 +3,24 @@ import styles from "./WithdrawalTable.module.scss";
 import http from "../../../../../api/http";
 import leftArrow from "../../../../../svgs/left-arrow.svg";
 import rightArrow from "../../../../../svgs/right-arrow.svg";
+import { useCtx } from "../../../../../context";
 
 const WithdrawalTable = () => {
   const [data, setData] = useState([]);
   const [currentPage, setCurrentPage] = useState(0);
   const itemsPerPage = 5; // Adjust the number of items per page as needed
-  const url =
-    "https://caltex-api.onrender.com/api/transactions/request-withdrawal";
+
+  const { setSnackBar } = useCtx();
 
   useEffect(() => {
     // Function to fetch data from the API
     const fetchData = async () => {
       try {
         const response = await http.get(
-          "https://caltex-api.onrender.com/api/users/",
+          "https://caltex-api.onrender.com/api/transactions?required[transactionType]=withdrawal&required[status]=awaiting",
           { withCredentials: true }
         );
-        setData(response.data);
+        setData(response.data.data);
       } catch (error) {
         console.error("Error fetching data:", error);
       }
@@ -29,14 +30,27 @@ const WithdrawalTable = () => {
     fetchData();
   }, []); // The empty dependency array ensures this effect runs only once on mount
 
-  const handleConfirmWithdrawal = async () => {
+  const handleConfirmWithdrawal = async (transId, e) => {
+    const node = e.currentTarget || e.target;
     try {
-      const req = await http.post(url, { withCredentials: true });
+      node.disabled = true;
+      node.style.cursor = "not-allowed";
+
+      const req = await http.patch(
+        `https://caltex-api.onrender.com/api/transactions/${transId}/confirm`,
+        {},
+        { withCredentials: true }
+      );
       if (req.status === 200) {
-        // Throw a success toast
+        setData(data => data.filter(tran => tran.id !== transId));
+        setSnackBar(req.data.message);
       }
     } catch (error) {
       // Throw a failure Toast
+      node.disabled = false;
+      node.style.cursor = "pointer";
+      setSnackBar(error.message);
+    } finally {
     }
   };
 
@@ -59,15 +73,15 @@ const WithdrawalTable = () => {
   const endIndex = startIndex + itemsPerPage;
   const pageCount = Math.ceil(data.length / itemsPerPage);
 
-  const handlePageChange = (newPage) => {
+  const handlePageChange = newPage => {
     setCurrentPage(newPage);
   };
 
   const renderTableData = () => {
-    return data.slice(startIndex, endIndex).map((item) => (
+    return data.slice(startIndex, endIndex).map(item => (
       <tr key={item.id}>
-        <td>{item.username}</td>
-        <td>{item.email}</td>
+        <td>{item.user.username}</td>
+        <td>{item.user.email}</td>
         <td>{item.amount}</td>
         <td>{item.paymentType}</td>
         <td>{item.status}</td>
@@ -75,7 +89,9 @@ const WithdrawalTable = () => {
           <button
             type="button"
             id={styles.btn}
-            onClick={handleConfirmWithdrawal}
+            onClick={e => {
+              handleConfirmWithdrawal(item.id, e);
+            }}
           >
             Confirm Withdrawal
           </button>

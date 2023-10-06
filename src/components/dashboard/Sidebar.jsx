@@ -17,8 +17,8 @@ import logout from "./../../images/logout.png";
 import { Link } from "react-router-dom";
 import useAuth from "../../hooks/useAuth";
 import { BiSolidDashboard } from "react-icons/bi";
-import { setFutureDate } from './../../utils/index';
-import  styles from './Sidebar.module.scss';
+import { setFutureDate } from "./../../utils/index";
+import styles from "./Sidebar.module.scss";
 
 // import fakeUser from "../../config/fakeApi";
 
@@ -41,7 +41,7 @@ const Sidebar = () => {
 
   // const { isAdmin } = data;
 
-  const [bgActive, setBgactive] = useState(false)
+  const [bgActive, setBgactive] = useState(false);
 
   return (
     <div class="dashboard-panel" id="sidenav">

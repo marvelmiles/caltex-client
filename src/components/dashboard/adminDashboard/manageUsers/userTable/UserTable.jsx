@@ -2,8 +2,8 @@ import React, { useState, useEffect } from "react";
 import styles from "./UserTable.module.scss";
 import http from "../../../../../api/http";
 import { useNavigate } from "react-router-dom";
-import leftArrow from "../../../../../svgs/left-arrow.svg"
-import rightArrow from "../../../../../svgs/right-arrow.svg"
+import leftArrow from "../../../../../svgs/left-arrow.svg";
+import rightArrow from "../../../../../svgs/right-arrow.svg";
 
 const UserTable = () => {
   const [data, setData] = useState([]);
@@ -19,18 +19,17 @@ const UserTable = () => {
           "https://caltex-api.onrender.com/api/users/",
           { withCredentials: true }
         );
-        setData(response.data);
+        setData(response.data.data);
       } catch (error) {
         console.error("Error fetching data:", error);
       }
-
     };
 
     // Call the fetchData function when the component mounts
     fetchData();
   }, []); // The empty dependency array ensures this effect runs only once on mount
 
-  const handleManageUser = (userId) => {
+  const handleManageUser = userId => {
     navigate(`/userInformation/UserInformation/${userId}`);
   };
 
@@ -52,12 +51,12 @@ const UserTable = () => {
   const endIndex = startIndex + itemsPerPage;
   const pageCount = Math.ceil(data.length / itemsPerPage);
 
-  const handlePageChange = (newPage) => {
+  const handlePageChange = newPage => {
     setCurrentPage(newPage);
   };
 
   const renderTableData = () => {
-    return data.slice(startIndex, endIndex).map((item) => (
+    return data.slice(startIndex, endIndex).map(item => (
       <tr key={item.id}>
         <td>{item.username}</td>
         <td>{item.email}</td>
@@ -90,7 +89,7 @@ const UserTable = () => {
         </button>
 
         <p>{currentPage + 1}</p>
-        
+
         <button
           type="button"
           onClick={() => handlePageChange(currentPage + 1)}

@@ -66,14 +66,14 @@ const CaltexCompBrief = () => {
   return (
     <>
       <div class="mySidenav" id="sidenav">
-        <Link to=" " class="closebtn" id="close-btn" onClick={closeNav}>
+      <Link to=" " class="closebtn" id="close-btn" onClick={closeNav}>
           &times;
         </Link>
         <Link to="/" class=" ">
           <BiSolidDashboard id="other-icon" className="dashboard-icon" />
           Dashboard
         </Link>
-        <Link to="/" class="linkss">
+        <Link to="/profile/Profile" class="linkss">
           <img src={profile} id="other-icon" alt="profile-icon" />
           Profile
         </Link>
@@ -81,29 +81,34 @@ const CaltexCompBrief = () => {
           <img src={deposit} id="other-icon" alt="deposit-icon" />
           Deposit
         </Link>
+
+        <Link to="/Invest/InvestPage?tradeType=forex" class="linkss">
+          <img src={deposit} id="other-icon" alt="deposit-icon" />
+          Invest
+        </Link>
         <Link to="/Withdraw/withdrawPage" class="linkss">
           <img src={withdraw} id="other-icon" alt="withdraw-icon" />
           Withdraw
         </Link>
-        <Link to="/Invest/InvestPage" class="linkss">
+        <Link to="/Invest/InvestPage?tradeType=crypto" class="linkss">
           <img src={crypto} id="other-icon" alt="crypto-icon" />
           Crypto
         </Link>
-        <Link to="/Invest/InvestPage" class="linkss">
+        <Link to="/Invest/InvestPage?tradeType=forex" class="linkss">
           <img src={forex} id="other-icon" alt="forex-icon" />
           Forex
         </Link>
-        <Link to="/" class="linkss">
+        <Link to="/help/Help" class="linkss">
           <img src={help} id="other-icon" alt="help-icon" />
           HELP
         </Link>
-        <Link to="/" class="linkss">
+        <Link to="/legalDocument/LegalDocument" class="linkss">
           <img src={legal} id="other-icon" alt="legal-icon" />
           Legal Documents
         </Link>
-        <Link to="/" class="linkss">
+        <Link to="/auth/login" class="linkss">
           <img src={logout} id="other-icon" alt="logout-icon" />
-          LogOut
+          Logout
         </Link>
       </div>
 
@@ -124,10 +129,10 @@ const CaltexCompBrief = () => {
                   <img src={dashboard} id="other-icon" alt="profile-icon" />
                   Dashboard
                 </Link>
-                <span class="control" id=" " onclick=" ">
+                <Link to="/profile/Profile" className="control" id=" ">
                   <img src={profile} id="other-icon" alt="profile-icon" />
                   Profile
-                </span>
+                </Link>
                 <Link
                   to="/Deposit/DepositPage"
                   class="control"
@@ -186,18 +191,18 @@ const CaltexCompBrief = () => {
                 <span class="control" id="bam" onclick=" ">
                   Become a Merchant
                 </span>
-                <span class="control" id="help" onclick=" ">
+                <Link to='/help/Help' className="control" id="help">
                   <img src={help} id="other-icon" alt="help-icon" />
                   HELP
-                </span>
-                <span class="control" id=" " onclick=" ">
+                </Link>
+                <Link to='/legalDocument/LegalDocument' className="control" id=" ">
                   <img src={legal} id="other-icon" alt="legal-icon" />
                   Legal Documents
-                </span>
-                <span class="control" id=" " onclick=" ">
+                </Link>
+                <Link to='/auth/login' className="control" id=" ">
                   <img src={logout} id="other-icon" alt="logout-icon" />
                   LogOut
-                </span>
+                </Link>
               </div>
             </div>
           </div>

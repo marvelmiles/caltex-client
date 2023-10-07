@@ -163,7 +163,7 @@ const Profile = () => {
                         </div>
                         <div>
                           <CustomInput
-                            label="lastname"
+                            label="Surname"
                             name="lastname"
                             type="text"
                             sx={{ width: "430px", height: "50px" }}

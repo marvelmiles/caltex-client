@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from "react";
-import styles from "./UserTable.module.scss";
-import http from "../../../../../api/http";
+import styles from "./AdminTable.module.scss";
+import http from "../../../../../../api/http";
 import { useNavigate } from "react-router-dom";
-import leftArrow from "../../../../../svgs/left-arrow.svg";
-import rightArrow from "../../../../../svgs/right-arrow.svg";
+import leftArrow from "../../../../../../svgs/left-arrow.svg";
+import rightArrow from "../../../../../../svgs/right-arrow.svg";
+// import fakeData from "./fakeData";
 
-const UserTable = () => {
+const AdminTable = () => {
   const [data, setData] = useState([]);
   const [currentPage, setCurrentPage] = useState(0);
   const itemsPerPage = 10; // Adjust the number of items per page as needed
@@ -16,7 +17,7 @@ const UserTable = () => {
     const fetchData = async () => {
       try {
         const response = await http.get(
-          "https://caltex-api.onrender.com/api/users/",
+          "https://caltex-api.onrender.com/api/admins/",
           { withCredentials: true }
         );
         setData(response.data.data);
@@ -29,16 +30,16 @@ const UserTable = () => {
     fetchData();
   }, []); // The empty dependency array ensures this effect runs only once on mount
 
-  const handleManageUser = userId => {
-    navigate(`/userInformation/UserInformation/${userId}`);
-    // navigate("/userInformation/UserInformation");
+  const handleManageUser = (userId) => {
+    // navigate(`/userInformation/UserInformation/${userId}`);
+    navigate("/userInformation/UserInformation");
   };
 
   const renderTableHeader = () => {
     return (
       <thead className={styles.table_head}>
         <tr>
-          <th>User Full Name</th>
+          <th>Admin Full Name</th>
           <th>Email address</th>
           <th>Status</th>
           <th>Manage</th>
@@ -52,7 +53,7 @@ const UserTable = () => {
   const endIndex = startIndex + itemsPerPage;
   const pageCount = Math.ceil(data.length / itemsPerPage);
 
-  const handlePageChange = newPage => {
+  const handlePageChange = (newPage) => {
     setCurrentPage(newPage);
   };
 
@@ -64,7 +65,7 @@ const UserTable = () => {
         <td>{item.status}</td>
         <td>
           <button type="button" onClick={() => handleManageUser(item.id)}>
-            Manage
+            Remove Admin
           </button>
         </td>
       </tr>
@@ -103,4 +104,4 @@ const UserTable = () => {
   );
 };
 
-export default UserTable;
+export default AdminTable;

@@ -10,6 +10,7 @@ import crypto from "./../../images/crypto.png";
 import withdraw from "./../../images/withdraw.png";
 import help from "./../../images/help.png";
 import profile from "./../../images/profile.png";
+import admin from "./../../svgs/admin.svg";
 import deposit from "./../../images/deposit.png";
 import legal from "./../../images/legal.png";
 import logout from "./../../images/logout.png";
@@ -35,7 +36,8 @@ const Sidebar = () => {
 
   const { currentUser } = useAuth();
 
-  const { isAdmin } = currentUser;
+  // const { isAdmin } = currentUser;
+  const { isSuperAdmin } = currentUser;
   // this fake user was used for testing, should be deleted after
   // const { data } = fakeUser;
 
@@ -55,7 +57,7 @@ const Sidebar = () => {
           </span>
         </div>
 
-        {isAdmin ? (
+        {!isSuperAdmin ? (
           <div class="panel-control" id={styles.admin}>
             <Link to="/" class="controld" id="dashboard" onclick=" ">
               <BiSolidDashboard id="other-icon" className="dashboard-icon" />
@@ -91,11 +93,22 @@ const Sidebar = () => {
               <img src={withdraw} id="other-icon" alt="withdraw-icon" />
               Manage Withdrawal
             </Link>
+            <Link
+              to="/addAdmin/AddAdmin"
+              class="control"
+              id={bgActive ? styles.colorActive : ""}
+              onclick={() => setBgactive(!bgActive)}
+            >
+              <img src={admin} id="other-icon" alt="withdraw-icon" />
+              Add Admin
+            </Link>
 
-            <span class="control" id=" " onclick=" ">
-              <img src={logout} id="other-icon" alt="logout-icon" />
-              LogOut
-            </span>
+            <Link to="/auth/login">
+              <span class="control" id=" " onclick=" ">
+                <img src={logout} id="other-icon" alt="logout-icon" />
+                LogOut
+              </span>
+            </Link>
           </div>
         ) : (
           <div class="panel-control">
@@ -176,7 +189,7 @@ const Sidebar = () => {
                 Legal Documents
               </span>
             </Link>
-            <Link to="/auth/login" >
+            <Link to="/auth/login">
               <span class="control" id=" " onclick=" ">
                 <img src={logout} id="other-icon" alt="logout-icon" />
                 LogOut

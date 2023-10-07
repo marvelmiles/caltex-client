@@ -43,7 +43,7 @@ export const handleRefreshToken = requestConfig => {
 
       processQueue(null);
 
-      return requestConfig ? http.request(requestConfig) : res;
+      return Promise.resolve(requestConfig ? http.request(requestConfig) : res);
     })
     .catch(err => {
       processQueue(err);

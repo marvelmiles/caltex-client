@@ -27,6 +27,8 @@ body {
   background-color: rgba(18, 14, 251, 0.05) !important;
   margin-top: -8px;
   float: left;
+  position: fixed;
+  height: 100%;
 }
 
 .panel-control {
@@ -69,6 +71,7 @@ body {
 .board-content {
   width: 75%;
   float: left;
+  margin-left: 25%;
 }
 
 .welcome-asset img {
@@ -167,13 +170,18 @@ body {
 .investments:hover {
   background-color: rgba(18, 14, 251, 1);
   color: white;
+  font-size: 16px;
+  font-weight: 700;
 }
+
 .invests:hover,
 .deposits:hover,
 .withdraws:hover,
 .investments:hover {
   background-color: rgba(18, 14, 251, 1);
   color: white;
+  font-size: 16px;
+  font-weight: 700;
 }
 
 .ct-forex {

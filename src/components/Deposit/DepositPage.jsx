@@ -1,5 +1,5 @@
 import http from "../../api/http";
-import React, { useRef } from "react";
+import React, { useRef, useMemo } from "react";
 import ReactDoM from "react-dom";
 import { useState } from "react";
 import "../../components/Deposit/DepositPage.css";
@@ -30,6 +30,9 @@ import { Stack, Box } from "@mui/material";
 import Typography from "@mui/material/Typography";
 import { GoCopy } from "react-icons/go";
 import { BsCheck2 } from "react-icons/bs";
+import UploadProof from "../UploadProof";
+import DashboardNav from "../dashboard/DashboardNav";
+import Sidebar from "../dashboard/Sidebar";
 
 const DepositPage = () => {
   const { setSnackBar } = useCtx();
@@ -101,44 +104,22 @@ const DepositPage = () => {
   }
 
   const [currency, setCurrency] = useState("USD");
-  const [cryptoNetwork, setCryptoNetwork] = useState("bitcoin");
+  const [cryptoNetwork, setCryptoNetwork] = useState("btc");
   const [amount, setAmount] = useState("");
   const [paymentDetails, setPaymentDetails] = useState(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [copied, setCopied] = useState(false);
-  const [address, setAddress] = useState("");
+  const [address, setAddress] = useState(
+    "bc1q6p3yppgffw08dkeau0cnnpxhemkadnr07p3jq0"
+  );
+  const [showNext, setShowNext] = useState(false);
 
   const addressRef = useRef();
 
   const handleCryptoDeposit = async e => {
-    try {
-      e.preventDefault();
+    e.preventDefault();
 
-      const paymentData = {
-        amount,
-        cryptoNetwork
-      };
-
-      console.log(paymentData);
-
-      setIsSubmitting(true);
-
-      const response = await http.post(
-        "/transactions/process-crypto-payment",
-        paymentData
-      );
-
-      if (!response.success) throw response;
-
-      console.log(response.data.addresses, cryptoNetwork);
-      setAddress(response.data.addresses[cryptoNetwork]);
-    } catch (error) {
-      console.log("Error:", error);
-
-      setSnackBar(`Error processing request. ${error.message}`);
-    } finally {
-      setIsSubmitting(false);
-    }
+    setShowNext(true);
   };
 
   const [userData, setUserData] = useState({
@@ -168,149 +149,25 @@ const DepositPage = () => {
     }, 1000);
   };
 
+  const uploadProofPlaceholders = useMemo(
+    () => ({
+      amount,
+      paymentType: cryptoNetwork ? "crypto" : "fiat",
+      currency: cryptoNetwork,
+      localCurrency: currency
+    }),
+    [cryptoNetwork, amount, currency]
+  );
+
   return (
     <div>
-      <div className="mySidenav" id="sidenav">
-        <Link to=" " class="closebtn" id="close-btn" onClick={closeNav}>
-          &times;
-        </Link>
-        <Link to="/" class=" ">
-          <BiSolidDashboard id="other-icon" className="dashboard-icon" />
-          Dashboard
-        </Link>
-        <Link to="/profile/Profile" class="linkss">
-          <img src={profile} id="other-icon" alt="profile-icon" />
-          Profile
-        </Link>
-        <Link to="/Deposit/DepositPage" class="linkss">
-          <img src={deposit} id="other-icon" alt="deposit-icon" />
-          Deposit
-        </Link>
-
-        <Link to="/Invest/InvestPage?tradeType=forex" class="linkss">
-          <img src={deposit} id="other-icon" alt="deposit-icon" />
-          Invest
-        </Link>
-        <Link to="/Withdraw/withdrawPage" class="linkss">
-          <img src={withdraw} id="other-icon" alt="withdraw-icon" />
-          Withdraw
-        </Link>
-        <Link to="/Invest/InvestPage?tradeType=crypto" class="linkss">
-          <img src={crypto} id="other-icon" alt="crypto-icon" />
-          Crypto
-        </Link>
-        <Link to="/Invest/InvestPage?tradeType=forex" class="linkss">
-          <img src={forex} id="other-icon" alt="forex-icon" />
-          Forex
-        </Link>
-        <Link to="/help/Help" class="linkss">
-          <img src={help} id="other-icon" alt="help-icon" />
-          HELP
-        </Link>
-        <Link to="/legalDocument/LegalDocument" class="linkss">
-          <img src={legal} id="other-icon" alt="legal-icon" />
-          Legal Documents
-        </Link>
-        <Link to="/auth/login" class="linkss">
-          <img src={logout} id="other-icon" alt="logout-icon" />
-          Logout
-        </Link>
-      </div>
-
       <div className="dashboard-container">
         <div className="board">
-          <div className="dashboard-panel">
-            <div className="panels">
-              <div className="logo">
-                <span>
-                  <img src={logo} alt="logo" />
-                </span>
-                <span>
-                  <img src={caltexTrader} alt="caltek-logo" />
-                </span>
-              </div>
-              <div className="panel-control">
-              <Link to="/" class="controld" id="dashboard" onclick=" ">
-                <img src={dashboard} id="other-icon" alt="profile-icon" />
-                  Dashboard
-                </Link>
-                <Link to="/profile/Profile" className="control" id=" ">
-                  <img src={profile} id="other-icon" alt="profile-icon" />
-                  Profile
-                </Link>
-                <Link
-                  to="/Deposit/DepositPage"
-                  className="control"
-                  id="funding"
-                >
-                  <b>FUNDING</b>
-                </Link>
-                <Link to="/Deposit/DepositPage" className="control" id=" ">
-                  <img src={deposit} id="other-icon" alt="deposit-icon" />
-                  Deposit
-                </Link>
-                <Link to="/Withdraw/WithdrawPage" className="control" id=" ">
-                  <img src={withdraw} id="other-icon" alt="withdraw-icon" />
-                  Withdraw
-                </Link>
-                <Link to="/Invest/InvestPage" className="control" id="trading">
-                  <b>TRADING</b>
-                </Link>
-                <Link to="/Invest/InvestPage?tradeType=crypto" className="control" id=" ">
-                  <img src={crypto} id="other-icon" alt="crypto-icon" />
-                  Crypto
-                </Link>
-                <Link to="/Invest/InvestPage?tradeType=forex" className="control" id=" ">
-                  <img src={forex} id="other-icon" alt="forex-icon" />
-                  Forex
-                </Link>
-                <span className="control" id="partners">
-                  <b> PARTNERS</b>
-                </span>
-                <span className="control" id="bam">
-                  Become a Merchant
-                </span>
-                <Link to='/help/Help' className="control" id="help">
-                  <img src={help} id="other-icon" alt="help-icon" />
-                  HELP
-                </Link>
-                <Link to='/legalDocument/LegalDocument' className="control" id=" ">
-                  <img src={legal} id="other-icon" alt="legal-icon" />
-                  Legal Documents
-                </Link>
-                <Link to='/auth/login' className="control" id=" ">
-                  <img src={logout} id="other-icon" alt="logout-icon" />
-                  LogOut
-                </Link>
-              </div>
-            </div>
-          </div>
+          <Sidebar />
 
           <div className="dashboard-content">
             <div className="board-content">
-              <div className="welcome-user">
-                <div className="welcome">
-                  <div className="welcome-text">
-                    <p>Welcome back, {currentUser.firstname}</p>
-                  </div>
-                  <div className="welcome-asset">
-                    <span>
-                      <img src={currentUser.photoUrl} alt="user-avatar" />
-                    </span>
-                    <span className="john">
-                      <p>
-                        {currentUser.firstname} {currentUser.lastname}
-                      </p>
-                    </span>
-                    <span className="bell-notification" id=" ">
-                      <i className="fa fa-bell"></i>
-                    </span>
-                  </div>
-                  <div className="menu-button" onClick={openNav}>
-                    &#9776;
-                  </div>
-                </div>
-              </div>
+              <DashboardNav />
 
               <div className="deposit-funds-container">
                 <div className="deposit-funds">
@@ -470,9 +327,9 @@ const DepositPage = () => {
                           <form
                             onSubmit={handleCryptoDeposit}
                             id="crypto-form-deposit"
-                            style={{ display: address ? "none" : "block" }}
+                            style={{ display: showNext ? "none" : "block" }}
                           >
-                            <div className="enter-amount" id="enter-amount">
+                            {/* <div className="enter-amount" id="enter-amount">
                               <h4>Enter amount</h4>
                               <select
                                 disabled={isSubmitting}
@@ -480,7 +337,10 @@ const DepositPage = () => {
                                 name="currency"
                                 size="1"
                                 value={currency}
-                                onChange={e => setCurrency(e.target.value)}
+                                onChange={e => {
+                                  const v = e.target.value;
+                                  setCurrency(v);
+                                }}
                               >
                                 <option value="USD" id="usd">
                                   USD
@@ -498,7 +358,7 @@ const DepositPage = () => {
                                 placeholder=" "
                                 onChange={e => setAmount(e.target.value)}
                               />
-                            </div>
+                            </div> */}
 
                             <div
                               className="withdrawal-network"
@@ -510,26 +370,40 @@ const DepositPage = () => {
                                 name="Cryptocurrency-Network"
                                 size="1"
                                 value={cryptoNetwork}
-                                onChange={e => setCryptoNetwork(e.target.value)}
+                                onChange={e => {
+                                  const v = e.target.value;
+                                  setCryptoNetwork(v);
+                                  setAddress(
+                                    {
+                                      btc:
+                                        "bc1q6p3yppgffw08dkeau0cnnpxhemkadnr07p3jq0",
+                                      ltc:
+                                        "ltc1qkkvf7vjwaxggdhh4nsnuclmfqfkrt9pv4dnrp2",
+                                      eth:
+                                        "0xeD89AeaD1fF477311D27cDb87d411acCf07E17e1",
+                                      ustderc20:
+                                        "0xeD89AeaD1fF477311D27cDb87d411acCf07E17e1",
+                                      usdttrc20:
+                                        "TUUUgN9yTnm3g3BfzW59N9cv2ZTooeE9kK"
+                                    }[v]
+                                  );
+                                }}
                                 disabled={isSubmitting}
                               >
-                                <option value="bitcoin" id="btc">
+                                <option value="btc" id="btc">
                                   BTC - Bitcoin
                                 </option>
-                                <option value="ethereum" id="eth">
+                                <option value="eth" id="eth">
                                   ETH - Ethereum
                                 </option>
-                                <option value="litecoin" id="ltc">
+                                <option value="ltc" id="ltc">
                                   LTC - Litecoin
                                 </option>
-                                <option value="tether" id="usdtErc20">
-                                  USDT - Tether
+                                <option value="usdterc20" id="usdtErc20">
+                                  USDT - USDT ERC20
                                 </option>
-                                <option value="bitcoincash" id="usdtTrc20">
-                                  BCH - Bitcoin Cash
-                                </option>
-                                <option value="doigecoin" id="usdtBep20">
-                                  DOGE - Doigecoin
+                                <option value="usdttrc20" id="usdtTrc20">
+                                  USDT - USDT TRC20
                                 </option>
                               </select>
                             </div>
@@ -540,7 +414,7 @@ const DepositPage = () => {
                               disabled={isSubmitting}
                               sx={{ ml: "20px", mt: "20px" }}
                             >
-                              Deposit
+                              Continue
                             </Button>
                           </form>
 
@@ -550,11 +424,11 @@ const DepositPage = () => {
                               ml: "20px",
                               mt: 3,
                               width: "57%",
-                              display: address ? "block" : "none"
+                              display: showNext ? "block" : "none"
                             }}
                           >
                             <Typography variant="h4" sx={{ mb: 3 }}>
-                              Address
+                              Payment address
                             </Typography>
 
                             <Stack
@@ -595,6 +469,7 @@ const DepositPage = () => {
                                 )}
                               </div>
                             </Stack>
+                            <UploadProof formData={uploadProofPlaceholders} />
                           </Box>
                         </div>
                       </div>

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 // import Cookies from "js-cookie";
 // import { useEffect, useState } from "react";
 import "./dashboard.css";
@@ -15,8 +15,12 @@ import legal from "./../../images/legal.png";
 import logout from "./../../images/logout.png";
 
 import { Link } from "react-router-dom";
-
+import useAuth from "../../hooks/useAuth";
 import { BiSolidDashboard } from "react-icons/bi";
+import { setFutureDate } from "./../../utils/index";
+import styles from "./Sidebar.module.scss";
+
+// import fakeUser from "../../config/fakeApi";
 
 const Sidebar = () => {
   /** Begininng Of script for menu **/
@@ -29,6 +33,16 @@ const Sidebar = () => {
     document.getElementById("sidenav").style.width = "0";
   }
 
+  const { currentUser } = useAuth();
+
+  const { isAdmin } = currentUser;
+  // this fake user was used for testing, should be deleted after
+  // const { data } = fakeUser;
+
+  // const { isAdmin } = data;
+
+  const [bgActive, setBgactive] = useState(false);
+
   return (
     <div class="dashboard-panel" id="sidenav">
       <div class="panel">
@@ -40,74 +54,134 @@ const Sidebar = () => {
             <img src={caltexTrader} alt="caltek-logo" />
           </span>
         </div>
-        <div class="panel-control">
-          <Link to="/" class="controld" id="dashboard" onclick=" ">
-            <BiSolidDashboard id="other-icon" className="dashboard-icon" />
-            Dashboard
-          </Link>
-          <Link to="/profile/Profile">
-            {" "}
+
+        {isAdmin ? (
+          <div class="panel-control" id={styles.admin}>
+            <Link to="/" class="controld" id="dashboard" onclick=" ">
+              <BiSolidDashboard id="other-icon" className="dashboard-icon" />
+              Admin Dashboard
+            </Link>
+            <Link to="/manageUsers/ManageUsers">
+              {" "}
+              <span
+                class="control"
+                id={bgActive ? styles.colorActive : ""}
+                onclick={() => setBgactive(!bgActive)}
+              >
+                <img src={profile} id="other-icon" alt="profile-icon" />
+                Manage Users
+              </span>
+            </Link>
+
+            <Link
+              to="/manageDeposits/ManageDeposits"
+              class="control"
+              id={bgActive ? styles.colorActive : ""}
+              onclick={() => setBgactive(!bgActive)}
+            >
+              <img src={deposit} id="other-icon" alt="deposit-icon" />
+              Manage Deposit
+            </Link>
+            <Link
+              to="/manageWithdrawals/ManageWithdrawals"
+              class="control"
+              id={bgActive ? styles.colorActive : ""}
+              onclick={() => setBgactive(!bgActive)}
+            >
+              <img src={withdraw} id="other-icon" alt="withdraw-icon" />
+              Manage Withdrawal
+            </Link>
+
             <span class="control" id=" " onclick=" ">
-              <img src={profile} id="other-icon" alt="profile-icon" />
-              Profile
+              <img src={logout} id="other-icon" alt="logout-icon" />
+              LogOut
             </span>
-          </Link>
-          <Link
-            to="/Deposit/DepositPage"
-            class="control"
-            id="funding"
-            onclick=" "
-          >
-            <b>FUNDING</b>
-          </Link>
-          <Link to="/Deposit/DepositPage" class="control" id=" " onclick=" ">
-            <img src={deposit} id="other-icon" alt="deposit-icon" />
-            Deposit
-          </Link>
-          <Link to="/Withdraw/WithdrawPage" class="control" id=" " onclick=" ">
-            <img src={withdraw} id="other-icon" alt="withdraw-icon" />
-            Withdraw
-          </Link>
-          <Link
-            to="/Invest/InvestPage"
-            class="control"
-            id="trading"
-            onclick=" "
-          >
-            <b>TRADING</b>
-          </Link>
-          <Link to="/Invest/InvestPage?tradeType=crypto" class="control" id=" " onclick=" ">
-            <img src={crypto} id="other-icon" alt="crypto-icon" />
-            Crypto
-          </Link>
-          <Link to="/Invest/InvestPage?tradeType=forex" class="control" id=" " onclick=" ">
-            <img src={forex} id="other-icon" alt="forex-icon" />
-            Forex
-          </Link>
-          <span class="control" id="partners" onclick=" ">
-            <b> PARTNERS</b>
-          </span>
-          <span class="control" id="bam" onclick=" ">
-            Become a Merchant
-          </span>
-          <Link to="/help/Help">
-            <span class="control" id="help" onclick=" ">
-              <img src={help} id="other-icon" alt="help-icon" />
-              HELP
+          </div>
+        ) : (
+          <div class="panel-control">
+            <Link to="/" class="controld" id="dashboard" onclick=" ">
+              <BiSolidDashboard id="other-icon" className="dashboard-icon" />
+              Dashboard
+            </Link>
+            <Link to="/profile/Profile">
+              {" "}
+              <span class="control" id=" " onclick=" ">
+                <img src={profile} id="other-icon" alt="profile-icon" />
+                Profile
+              </span>
+            </Link>
+            <Link
+              to="/Deposit/DepositPage"
+              class="control"
+              id="funding"
+              onclick=" "
+            >
+              <b>FUNDING</b>
+            </Link>
+            <Link to="/Deposit/DepositPage" class="control" id=" " onclick=" ">
+              <img src={deposit} id="other-icon" alt="deposit-icon" />
+              Deposit
+            </Link>
+            <Link
+              to="/Withdraw/WithdrawPage"
+              class="control"
+              id=" "
+              onclick=" "
+            >
+              <img src={withdraw} id="other-icon" alt="withdraw-icon" />
+              Withdraw
+            </Link>
+            <Link
+              to="/Invest/InvestPage"
+              class="control"
+              id="trading"
+              onclick=" "
+            >
+              <b>TRADING</b>
+            </Link>
+            <Link
+              to="/Invest/InvestPage?tradeType=crypto"
+              class="control"
+              id=" "
+              onclick=" "
+            >
+              <img src={crypto} id="other-icon" alt="crypto-icon" />
+              Crypto
+            </Link>
+            <Link
+              to="/Invest/InvestPage?tradeType=forex"
+              class="control"
+              id=" "
+              onclick=" "
+            >
+              <img src={forex} id="other-icon" alt="forex-icon" />
+              Forex
+            </Link>
+            <span class="control" id="partners" onclick=" ">
+              <b> PARTNERS</b>
             </span>
-          </Link>
-          <Link to="/legalDocument/LegalDocument">
-            {" "}
+            <span class="control" id="bam" onclick=" ">
+              Become a Merchant
+            </span>
+            <Link to="/help/Help">
+              <span class="control" id="help" onclick=" ">
+                <img src={help} id="other-icon" alt="help-icon" />
+                HELP
+              </span>
+            </Link>
+            <Link to="/legalDocument/LegalDocument">
+              {" "}
+              <span class="control" id=" " onclick=" ">
+                <img src={legal} id="other-icon" alt="legal-icon" />
+                Legal Documents
+              </span>
+            </Link>
             <span class="control" id=" " onclick=" ">
-              <img src={legal} id="other-icon" alt="legal-icon" />
-              Legal Documents
+              <img src={logout} id="other-icon" alt="logout-icon" />
+              LogOut
             </span>
-          </Link>
-          <span class="control" id=" " onclick=" ">
-            <img src={logout} id="other-icon" alt="logout-icon" />
-            LogOut
-          </span>
-        </div>
+          </div>
+        )}
       </div>
     </div>
   );

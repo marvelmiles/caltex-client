@@ -48,6 +48,10 @@ import InvestTab from "./components/InvestTab";
 import backarrow from "./images/backArrow.png";
 import { HTTP_CODE_ACCOUNT_VERIFICATION_ERROR } from "./config/constants";
 import CaltexCompBrief from "./components/CaltexCompanyBrief/CaltexCompBrief";
+import ManageUsers from "./components/dashboard/adminDashboard/manageUsers/ManageUsers";
+import UserInformation from "./components/dashboard/adminDashboard/manageUsers/userInformation/UserInformation";
+import ManageDeposits from "./components/dashboard/adminDashboard/ManageDeposits/ManageDeposits";
+import ManageWithdrawals from "./components/dashboard/adminDashboard/manageWithdrawals/ManageWithdrawals";
 
 // WORKED ON THE INVEST AND PAYMENT SCREEN SOME COMPONENT ARE
 // HAD TO BREAKDOWN UI INTO BIT OF COMPONENT BECAUSE OF THE CODE IS
@@ -147,6 +151,8 @@ const App = () => {
     );
   }, [locState, navigate, setSnackBar]);
 
+  console.log(isLoggedIn, "...isLoggedin...");
+
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
@@ -212,6 +218,33 @@ const App = () => {
               <Route path="*" element={<Redirect to="/auth/login" />} />
             )}
           </Route>
+
+          {/* admin routes starts*/}
+          <Route
+            path="/manageUsers/ManageUsers"
+            Component={isLoggedIn ? ManageUsers : Redirect}
+          />
+
+          {/* <Route
+            path="/userInformation/UserInformation"
+            Component={isLoggedIn ? UserInformation : Redirect}
+          /> */}
+          {/* api routes */}
+
+          <Route
+            path="/userInformation/UserInformation/:id"
+            Component={isLoggedIn ? UserInformation : Redirect}
+          />
+
+          <Route
+            path="/manageDeposits/ManageDeposits"
+            Component={isLoggedIn ? ManageDeposits : Redirect}
+          />
+
+          <Route
+            path="/manageWithdrawals/ManageWithdrawals"
+            Component={isLoggedIn ? ManageWithdrawals : Redirect}
+          />
 
           <Route
             path="/profile/Profile"
@@ -392,11 +425,7 @@ const App = () => {
 
         <Snackbar
           open={snackbar.open}
-          autoHideDuration={
-            snackbar.autoHideDuration ||
-            (snackbar.severity === "success" ? 5000 : 10000)
-          }
-          onClose={snackbar.close ? closeSnackBar : undefined}
+          autoHideDuration={snackbar.autoHideDuration || 10000}
           autoHideDuration={snackbar.autoHideDuration || 8000}
           onClose={
             snackbar.closeSnackBar === undefined ? closeSnackBar : undefined

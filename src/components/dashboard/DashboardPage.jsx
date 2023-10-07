@@ -39,7 +39,7 @@ const DashboardPage = () => {
         const res = await http.get(
           `https://caltex-api.onrender.com/api/users/${id}/transaction-metrics`,
           {
-            withCredentials: true,
+            withCredentials: true
           }
         );
 
@@ -67,12 +67,10 @@ const DashboardPage = () => {
                     <h5>Total Balance</h5>
                     {!openEye && (
                       <h3>
-                        {`${
-                          formatToDecimalPlace(
-                            transMetrics.availBalance,
-                            true
-                          ) + " USD"
-                        }`}
+                        {`${formatToDecimalPlace(
+                          transMetrics.availBalance,
+                          true
+                        ) + " USD"}`}
                         <span class="bell-notification" id=" " onclick=" ">
                           <img
                             src={closedeye}

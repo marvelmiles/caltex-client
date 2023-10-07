@@ -22,8 +22,8 @@ import { BiSolidDashboard } from "react-icons/bi";
 
 import ArrowAndTab from "../ArrowAndTab";
 import useAuth from "../../hooks/useAuth";
-import DashboardPage from "../dashboard/DashboardPage";
 import DashboardNav from "../dashboard/DashboardNav";
+import Sidebar from "../dashboard/Sidebar";
 
 const ProfessionalplanCrypto = () => {
   const { currentUser } = useAuth();
@@ -31,7 +31,7 @@ const ProfessionalplanCrypto = () => {
   return (
     <div class="dashboard-container">
       <div class="board">
-        <DashboardPage />
+        <Sidebar />
 
         <div class="dashboard-content">
           <div class="board-content">

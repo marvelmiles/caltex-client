@@ -276,32 +276,32 @@ const App = () => {
 
           <Route
             path="/CryptoDetails/masterplanCrypto"
-            Component={isLoggedIn ? masterplanCrypto : Redirect}
+            Component={!isLoggedIn ? masterplanCrypto : Redirect}
           />
 
           <Route
             path="/CryptoDetails/professionalplanCrypto"
-            Component={isLoggedIn ? professionalplanCrypto : Redirect}
+            Component={!isLoggedIn ? professionalplanCrypto : Redirect}
           />
 
           <Route
             path="/CryptoDetails/starterplanCrypto"
-            Component={isLoggedIn ? starterplanCrypto : Redirect}
+            Component={!isLoggedIn ? starterplanCrypto : Redirect}
           />
 
           <Route
             path="/ForexDetails/masterplanForex"
-            Component={isLoggedIn ? masterplanForex : Redirect}
+            Component={!isLoggedIn ? masterplanForex : Redirect}
           />
 
           <Route
             path="/ForexDetails/professionalplanForex"
-            Component={isLoggedIn ? professionalplanForex : Redirect}
+            Component={!isLoggedIn ? professionalplanForex : Redirect}
           />
 
           <Route
             path="/ForexDetails/StarterplanForex"
-            Component={isLoggedIn ? StarterplanForex : Redirect}
+            Component={!isLoggedIn ? StarterplanForex : Redirect}
           />
 
           <Route
@@ -311,13 +311,13 @@ const App = () => {
 
           <Route
             path="/Deposit/DepositPage"
-            Component={isLoggedIn ? DepositPage : Redirect}
+            Component={!isLoggedIn ? DepositPage : Redirect}
           />
 
           <Route
             path="/DepositForm/DepositsForm"
             exact
-            Component={isLoggedIn ? DepositsForm : Redirect}
+            Component={!isLoggedIn ? DepositsForm : Redirect}
           />
 
           <Route
@@ -378,7 +378,7 @@ const App = () => {
           <Route
             path="/ForexInvestForms/MasterPlanInvF"
             element={
-              isLoggedIn ? (
+              !isLoggedIn ? (
                 <InvestTab
                   investFormProps={{
                     minAmount: 51000,
@@ -395,7 +395,7 @@ const App = () => {
           <Route
             path="/ForexInvestForms/ProfessionalPlanInvF"
             element={
-              isLoggedIn ? (
+              !isLoggedIn ? (
                 <InvestTab
                   investFormProps={{
                     minAmount: 11000,
@@ -411,25 +411,25 @@ const App = () => {
           />
           <Route
             path="/ForexInvestForms/StarterPlanInvF"
-            element={isLoggedIn ? <InvestTab /> : <Redirect />}
+            element={!isLoggedIn ? <InvestTab /> : <Redirect />}
           />
           <Route path="/Withdraw/WithdrawPage" Component={WithdrawPage} />
           <Route
             path="/Invest/InvestPage"
-            Component={isLoggedIn ? InvestPage : Redirect}
+            Component={!isLoggedIn ? InvestPage : Redirect}
           />
           <Route
             path="/CaltexCompanyBrief/CaltexCompBrief"
-            Component={isLoggedIn ? CaltexCompBrief : Redirect}
+            Component={!isLoggedIn ? CaltexCompBrief : Redirect}
           />
           <Route
             path="/Deposit/DepositPage"
-            Component={isLoggedIn ? DepositPage : Redirect}
+            Component={!isLoggedIn ? DepositPage : Redirect}
           />
           <Route
             path="/DepositForm/DepositsForm"
             exact
-            Component={isLoggedIn ? DepositsForm : Redirect}
+            Component={!isLoggedIn ? DepositsForm : Redirect}
           />
           <Route path="/" element={<Navigate to="/u/dashboard" />} />
         </Routes>

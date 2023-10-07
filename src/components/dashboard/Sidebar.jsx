@@ -57,7 +57,7 @@ const Sidebar = () => {
           </span>
         </div>
 
-        {!isSuperAdmin ? (
+        {isSuperAdmin ? (
           <div class="panel-control" id={styles.admin}>
             <Link to="/" class="controld" id="dashboard" onclick=" ">
               <BiSolidDashboard id="other-icon" className="dashboard-icon" />

@@ -18,12 +18,11 @@ import logout from "../../images/logout.png";
 import closedeye from "../../images/closedeye.png";
 import backarrow from "../../images/backArrow.png";
 import { BrowserRouter as Router, Route } from "react-router-dom";
-
 import { BiSolidDashboard } from "react-icons/bi";
 import ArrowAndTab from "../ArrowAndTab";
 import useAuth from "../../hooks/useAuth";
-import DashboardPage from "../dashboard/DashboardPage";
 import DashboardNav from "../dashboard/DashboardNav";
+import Sidebar from "../dashboard/Sidebar";
 
 const StarterplanCrypto = () => {
   const { currentUser } = useAuth();
@@ -31,7 +30,7 @@ const StarterplanCrypto = () => {
   return (
     <div class="dashboard-container">
       <div class="board">
-        <DashboardPage />
+        <Sidebar />
 
         <div class="dashboard-content">
           <div class="board-content">

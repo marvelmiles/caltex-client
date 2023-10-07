@@ -9,12 +9,11 @@ import Toast from "../../profile/toast/Toast";
 import { Link } from "react-router-dom";
 
 const AddAdmin = () => {
-
   const [isSuccessModalOpen, setIsSuccessModalOpen] = useState(false);
 
   const [apiError, setApiError] = useState(null);
 
-  const apiEndpoint = "https://caltex-api.onrender.com/api//auth/create-admin";
+  const apiEndpoint = "https://caltex-api.onrender.com/api/auth/create-admin";
 
   const [formData, setFormData] = useState({
     username: "",
@@ -31,56 +30,56 @@ const AddAdmin = () => {
     });
   };
 
-   const handleSubmit = async (e) => {
-     e.preventDefault();
-     try {
-       const response = await http.post(apiEndpoint, formData, {
-         withCredentials: true,
-       });
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const response = await http.post(apiEndpoint, formData, {
+        withCredentials: true,
+      });
 
-       if (response.status === 200) {
-         console.log("Data sent successfully", response);
-         handleSuccess();
-       } else {
-         const errorMessage = await response.text();
-         console.error("Error sending data to the API:", errorMessage);
-         setApiError(errorMessage);
-       }
-     } catch (error) {
-       console.error("An error occurred:", error.message);
-       setApiError("An error occurred. Please try again later.");
-     }
-   };
+      if (response.status === 200) {
+        console.log("Data sent successfully", response);
+        handleSuccess();
+      } else {
+        const errorMessage = await response.text();
+        console.error("Error sending data to the API:", errorMessage);
+        setApiError(errorMessage);
+      }
+    } catch (error) {
+      console.error("An error occurred:", error.message);
+      setApiError("An error occurred. Please try again later.");
+    }
+  };
 
-   const [swap, setSwap] = useState(false);
+  const [swap, setSwap] = useState(false);
 
-   const handleSwap = () => {
-     // setSwap(swap);
-     // setSwap1(!swap1);
-     // setIsSuccessModalOpen(false);
-     navigate("/u/dashboard");
-   };
+  const handleSwap = () => {
+    // setSwap(swap);
+    // setSwap1(!swap1);
+    // setIsSuccessModalOpen(false);
+    navigate("/u/dashboard");
+  };
 
-   const handleSuccess = () => {
-     setSwap(!swap);
-     setIsSuccessModalOpen(!isSuccessModalOpen);
-   };
+  const handleSuccess = () => {
+    setSwap(!swap);
+    setIsSuccessModalOpen(!isSuccessModalOpen);
+  };
 
-   const navigate = useNavigate();
+  const navigate = useNavigate();
 
-   const handleProceed = () => {
-     navigate("/u/dashboard");
-   };
+  const handleProceed = () => {
+    navigate("/u/dashboard");
+  };
 
   return (
     <div>
-      {!swap && (
-        <div class="dashboard-container">
-          <div class="board">
-            <Sidebar />
-            <div class="dashboard-content">
-              <div class="board-content">
-                <DashboardNav />
+      <div class="dashboard-container">
+        <div class="board">
+          <Sidebar />
+          <div class="dashboard-content">
+            <div class="board-content">
+              <DashboardNav />
+              {!swap && (
                 <div class={styles.main_cont}>
                   <ul className={styles.ul}>
                     <li>
@@ -130,20 +129,20 @@ const AddAdmin = () => {
                     </Link>
                   </div>
                 </div>
-              </div>
+              )}
+              {isSuccessModalOpen && (
+                <Toast
+                  message={`${formData.username} has been added as admin at Caltex`}
+                  btnText="Go back"
+                  closeModal={handleSwap}
+                  Styles={styles.success_btn}
+                />
+              )}
+              {apiError && <p className={styles.errorMessage}>{apiError}</p>}
             </div>
           </div>
         </div>
-      )}
-      {isSuccessModalOpen && (
-        <Toast
-          message={`${formData.username} has been added as admin at Caltex`}
-          btnText="Go back"
-          closeModal={handleSwap}
-          Styles={styles.success_btn}
-        />
-      )}
-      {apiError && <p className={styles.errorMessage}>{apiError}</p>}
+      </div>
     </div>
   );
 };

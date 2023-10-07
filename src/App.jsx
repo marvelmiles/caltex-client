@@ -211,7 +211,7 @@ const App = () => {
             <Route path="*" element={<Page404 />} />
           </Route>
           <Route path="/u/*">
-            {isLoggedIn ? (
+            {!isLoggedIn ? (
               <>
                 <Route path="dashboard" element={<DashboardPage />} />
                 <Route path="*" element={<Page404 />} />
@@ -224,7 +224,7 @@ const App = () => {
           {/* admin routes starts*/}
           <Route
             path="/manageUsers/ManageUsers"
-            Component={isLoggedIn ? ManageUsers : Redirect}
+            Component={!isLoggedIn ? ManageUsers : Redirect}
           />
 
           {/* <Route
@@ -233,33 +233,33 @@ const App = () => {
           /> */}
           <Route
             path="/manageAdmin/ManageAdmin"
-            Component={isLoggedIn ? ManageAdmin : Redirect}
+            Component={!isLoggedIn ? ManageAdmin : Redirect}
           />
           {/* api routes */}
 
           <Route
             path="/userInformation/UserInformation/:id"
-            Component={isLoggedIn ? UserInformation : Redirect}
+            Component={!isLoggedIn ? UserInformation : Redirect}
           />
 
           <Route
             path="/manageDeposits/ManageDeposits"
-            Component={isLoggedIn ? ManageDeposits : Redirect}
+            Component={!isLoggedIn ? ManageDeposits : Redirect}
           />
 
           <Route
             path="/manageWithdrawals/ManageWithdrawals"
-            Component={isLoggedIn ? ManageWithdrawals : Redirect}
+            Component={!isLoggedIn ? ManageWithdrawals : Redirect}
           />
 
           <Route
             path="/addAdmin/AddAdmin"
-            Component={isLoggedIn ? AddAdmin : Redirect}
+            Component={!isLoggedIn ? AddAdmin : Redirect}
           />
 
           <Route
             path="/profile/Profile"
-            Component={isLoggedIn ? Profile : Redirect}
+            Component={!isLoggedIn ? Profile : Redirect}
           />
 
           <Route
@@ -322,7 +322,7 @@ const App = () => {
 
           <Route
             element={
-              isLoggedIn ? (
+              !isLoggedIn ? (
                 <InvestTab
                   investFormProps={{
                     maxAmount: Infinity,
@@ -341,7 +341,7 @@ const App = () => {
           <Route
             path="/CryptoInvestForms/ProfessionalPlanInvC"
             element={
-              isLoggedIn ? (
+              !isLoggedIn ? (
                 <InvestTab
                   investFormProps={{
                     minAmount: 16000,
@@ -360,7 +360,7 @@ const App = () => {
           <Route
             path="/CryptoInvestForms/StarterPlanInvC"
             element={
-              isLoggedIn ? (
+              !isLoggedIn ? (
                 <InvestTab
                   investFormProps={{
                     minAmount: 300,

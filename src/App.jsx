@@ -209,7 +209,7 @@ const App = () => {
             <Route path="*" element={<Page404 />} />
           </Route>
           <Route path="/u/*">
-            {isLoggedIn ? (
+            {!isLoggedIn ? (
               <>
                 <Route path="dashboard" element={<DashboardPage />} />
                 <Route path="*" element={<Page404 />} />
@@ -222,7 +222,7 @@ const App = () => {
           {/* admin routes starts*/}
           <Route
             path="/manageUsers/ManageUsers"
-            Component={isLoggedIn ? ManageUsers : Redirect}
+            Component={!isLoggedIn ? ManageUsers : Redirect}
           />
 
           {/* <Route
@@ -233,35 +233,35 @@ const App = () => {
 
           <Route
             path="/userInformation/UserInformation/:id"
-            Component={isLoggedIn ? UserInformation : Redirect}
+            Component={!isLoggedIn ? UserInformation : Redirect}
           />
 
           <Route
             path="/manageDeposits/ManageDeposits"
-            Component={isLoggedIn ? ManageDeposits : Redirect}
+            Component={!isLoggedIn ? ManageDeposits : Redirect}
           />
 
           <Route
             path="/manageWithdrawals/ManageWithdrawals"
-            Component={isLoggedIn ? ManageWithdrawals : Redirect}
+            Component={!isLoggedIn ? ManageWithdrawals : Redirect}
           />
 
           <Route
             path="/profile/Profile"
-            Component={isLoggedIn ? Profile : Redirect}
+            Component={!isLoggedIn ? Profile : Redirect}
           />
 
           <Route
             path="/investment/Investment"
-            Component={isLoggedIn ? Investment : Redirect}
+            Component={!isLoggedIn ? Investment : Redirect}
           />
 
           <Route
             path="/legalDocument/LegalDocument"
-            Component={isLoggedIn ? LegalDocument : Redirect}
+            Component={!isLoggedIn ? LegalDocument : Redirect}
           />
 
-          <Route path="/help/Help" Component={isLoggedIn ? Help : Redirect} />
+          <Route path="/help/Help" Component={!isLoggedIn ? Help : Redirect} />
 
           <Route
             path="/CryptoDetails/masterplanCrypto"

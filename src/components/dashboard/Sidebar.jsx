@@ -176,10 +176,12 @@ const Sidebar = () => {
                 Legal Documents
               </span>
             </Link>
-            <span class="control" id=" " onclick=" ">
-              <img src={logout} id="other-icon" alt="logout-icon" />
-              LogOut
-            </span>
+            <Link to="/auth/login" >
+              <span class="control" id=" " onclick=" ">
+                <img src={logout} id="other-icon" alt="logout-icon" />
+                LogOut
+              </span>
+            </Link>
           </div>
         )}
       </div>

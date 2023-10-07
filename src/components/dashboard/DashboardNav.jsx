@@ -7,7 +7,7 @@ import wallet from "../../../src/svgs/profile-wallet.svg";
 import profile from "../../../src/svgs/profile-profile.svg";
 import http from "../../api/http";
 import useAuth from "../../hooks/useAuth";
-import styles from "./Sidebar.module.scss";
+import styles from './Sidebar.module.scss';
 import MenuBar from "./MenuBar";
 
 const DashboardNav = () => {
@@ -41,7 +41,7 @@ const DashboardNav = () => {
     document.getElementById("sidenav").style.width = "0";
   }
 
-  const [isMenuBarVisible, setMenuBarVisibility] = useState(false);
+ const [isMenuBarVisible, setMenuBarVisibility] = useState(false);
 
   const openMenuBar = () => {
     setMenuBarVisibility(true);
@@ -51,11 +51,12 @@ const DashboardNav = () => {
     setMenuBarVisibility(false);
   };
 
-  const [profileMenu, setProfileMenu] = useState(false);
+
+ const [profileMenu, setProfileMenu] = useState(false);
 
   return (
     <div>
-      <MenuBar isVisible={isMenuBarVisible} onClose={closeMenuBar} />
+       <MenuBar isVisible={isMenuBarVisible} onClose={closeMenuBar} />
       <div class="welcome-user">
         <div class="welcome">
           <div class="welcome-text">

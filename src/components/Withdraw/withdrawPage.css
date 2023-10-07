@@ -1,16 +1,16 @@
-#cryptoWithdrawal {
+#cryptoWithdrawal{
   display: none;
 }
 
-.crypto-pay1 {
-  display: flex;
-  justify-content: space-between;
-  width: 43%;
-  padding: 16px 20px !important;
-  border: 2px solid #d7d7d7;
-  margin-left: 25px !important;
-  border-radius: 7px;
-  margin-bottom: 40px;
+.crypto-pay1{
+display: flex;
+justify-content: space-between;
+width: 43%;
+padding: 16px 20px !important;
+border: 2px solid #d7d7d7;
+margin-left: 25px !important;
+border-radius: 7px;
+margin-bottom: 40px;
 }
 
 .crypto-pay1:hover {

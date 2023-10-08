@@ -3,6 +3,7 @@ import styles from "./DepositTable.module.scss";
 import http from "../../../../../api/http";
 import leftArrow from "../../../../../svgs/left-arrow.svg";
 import rightArrow from "../../../../../svgs/right-arrow.svg";
+import imageIcon from "../../../../../svgs/image-icon.svg";
 import SuccessModal from "../../../../successModal/SuccessModal";
 
 const DepositTable = () => {
@@ -99,9 +100,7 @@ const DepositTable = () => {
           <td>{data?.amount}</td>
           <td id={styles.td}>
             <img
-              src={data?.paymentProofUrl}
-              height={30}
-              width={30}
+              src={imageIcon}
               alt="Payment Proof"
               style={{ cursor: "pointer" , borderRadius: "5px"}}
             />

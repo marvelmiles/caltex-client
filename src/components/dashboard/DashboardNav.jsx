@@ -2,7 +2,7 @@ import React from "react";
 import { useEffect, useState } from "react";
 // import Cookies from "js-cookie";
 import "./dashboard.css";
-// import johnSmith from '../../src/svgs/john-smith.svg';
+import { Link } from "react-router-dom";
 import wallet from "../../../src/svgs/profile-wallet.svg";
 import profile from "../../../src/svgs/profile-profile.svg";
 import http from "../../api/http";
@@ -56,7 +56,7 @@ const DashboardNav = () => {
 
   return (
     <div>
-       <MenuBar isVisible={isMenuBarVisible} onClose={closeMenuBar} />
+      <MenuBar isVisible={isMenuBarVisible} onClose={closeMenuBar} />
       <div class="welcome-user">
         <div class="welcome">
           <div class="welcome-text">
@@ -99,7 +99,9 @@ const DashboardNav = () => {
                   </span>
                 </li>
                 <li>
-                  <button type="button">Sign Out</button>
+                  <Link to="/auth/login">
+                    <button type="button">Sign Out</button>
+                  </Link>
                 </li>
               </ul>
             )}

@@ -14,7 +14,6 @@ import admin from "./../../svgs/admin.svg";
 import deposit from "./../../images/deposit.png";
 import legal from "./../../images/legal.png";
 import logout from "./../../images/logout.png";
-
 import { Link } from "react-router-dom";
 import useAuth from "../../hooks/useAuth";
 import { BiSolidDashboard } from "react-icons/bi";

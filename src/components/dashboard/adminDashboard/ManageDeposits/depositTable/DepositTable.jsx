@@ -103,7 +103,7 @@ const DepositTable = () => {
               height={30}
               width={30}
               alt="Payment Proof"
-              style={{ cursor: "pointer" }}
+              style={{ cursor: "pointer" , borderRadius: "5px"}}
             />
             <span onClick={() => handleViewProof(data?.paymentProofUrl)}>
               View
@@ -161,9 +161,15 @@ const DepositTable = () => {
           <img src={rightArrow} height={22} width={22} alt="arrow" />
         </button>
       </center>
-      {/* Modal */}
+      
       {modalIsOpen && (
-        <SuccessModal closeModal={handleCloseModal} icon={modalImageUrl} Styles={styles.modal_btn} btnText="No Image to display" />
+        <SuccessModal
+          closeModal={handleCloseModal}
+          icon={modalImageUrl}
+          Styles={styles.modal_btn}
+          message={modalImageUrl ? "" : "No Image to display"}
+          btnText="X"
+        />
       )}
     </div>
   );

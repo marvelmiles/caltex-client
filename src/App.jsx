@@ -7,6 +7,7 @@ import {
   useNavigate
 } from "react-router-dom";
 import DashboardPage from "./components/dashboard/DashboardPage";
+import Congratulations from "./components/CongratulatoryMessage/Congratulations";
 import DepositPage from "./components/Deposit/DepositPage";
 import InvestPage from "./components/Invest/InvestPage";
 import WithdrawPage from "./components/Withdraw/WithdrawPage";
@@ -262,6 +263,8 @@ const App = () => {
           />
 
           <Route path="/help/Help" Component={isLoggedIn ? Help : Redirect} />
+
+          <Route path="/CongratulatoryMessage/Congratulations" Component={isLoggedIn ? Congratulations : Redirect} />
 
           <Route
             path="/CryptoDetails/masterplanCrypto"

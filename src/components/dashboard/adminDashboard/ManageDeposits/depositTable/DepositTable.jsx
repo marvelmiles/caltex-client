@@ -97,13 +97,17 @@ const DepositTable = () => {
           <td>{data?.user?.username}</td>
           <td>{data?.user?.email}</td>
           <td>{data?.amount}</td>
-          <td>
+          <td id={styles.td}>
             <img
               src={data?.paymentProofUrl}
+              height={30}
+              width={30}
               alt="Payment Proof"
-              onClick={() => handleViewProof(data?.paymentProofUrl)}
               style={{ cursor: "pointer" }}
             />
+            <span onClick={() => handleViewProof(data?.paymentProofUrl)}>
+              View
+            </span>
           </td>
           <td>
             <button
@@ -159,7 +163,7 @@ const DepositTable = () => {
       </center>
       {/* Modal */}
       {modalIsOpen && (
-        <SuccessModal closeModal={handleCloseModal} icon={modalImageUrl} />
+        <SuccessModal closeModal={handleCloseModal} icon={modalImageUrl} Styles={styles.modal_btn} btnText="No Image to display" />
       )}
     </div>
   );

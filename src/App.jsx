@@ -53,6 +53,8 @@ import ManageUsers from "./components/dashboard/adminDashboard/manageUsers/Manag
 import UserInformation from "./components/dashboard/adminDashboard/manageUsers/userInformation/UserInformation";
 import ManageDeposits from "./components/dashboard/adminDashboard/ManageDeposits/ManageDeposits";
 import ManageWithdrawals from "./components/dashboard/adminDashboard/manageWithdrawals/ManageWithdrawals";
+import AddAdmin from "./components/dashboard/adminDashboard/addAdmin/AddAdmin";
+import ManageAdmin from "./components/dashboard/adminDashboard/addAdmin/manageAdmin/ManageAdmin";
 
 // WORKED ON THE INVEST AND PAYMENT SCREEN SOME COMPONENT ARE
 // HAD TO BREAKDOWN UI INTO BIT OF COMPONENT BECAUSE OF THE CODE IS
@@ -228,8 +230,12 @@ const App = () => {
 
           {/* <Route
             path="/userInformation/UserInformation"
-            Component={isLoggedIn ? UserInformation : Redirect}
+            Component={!isLoggedIn ? UserInformation : Redirect}
           /> */}
+          <Route
+            path="/manageAdmin/ManageAdmin"
+            Component={isLoggedIn ? ManageAdmin : Redirect}
+          />
           {/* api routes */}
 
           <Route
@@ -245,6 +251,11 @@ const App = () => {
           <Route
             path="/manageWithdrawals/ManageWithdrawals"
             Component={isLoggedIn ? ManageWithdrawals : Redirect}
+          />
+
+          <Route
+            path="/addAdmin/AddAdmin"
+            Component={isLoggedIn ? AddAdmin : Redirect}
           />
 
           <Route

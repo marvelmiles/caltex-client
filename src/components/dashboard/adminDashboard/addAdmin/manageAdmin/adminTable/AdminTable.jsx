@@ -1,22 +1,19 @@
 import React, { useState, useEffect } from "react";
-import styles from "./UserTable.module.scss";
-import http from "../../../../../api/http";
-import { useNavigate } from "react-router-dom";
-import leftArrow from "../../../../../svgs/left-arrow.svg";
-import rightArrow from "../../../../../svgs/right-arrow.svg";
+import styles from "./AdminTable.module.scss";
+import http from "../../../../../../api/http";
+import leftArrow from "../../../../../../svgs/left-arrow.svg";
+import rightArrow from "../../../../../../svgs/right-arrow.svg";
 
-const UserTable = () => {
+const AdminTable = () => {
   const [data, setData] = useState([]);
   const [currentPage, setCurrentPage] = useState(0);
-  const itemsPerPage = 10; // Adjust the number of items per page as needed
-  const navigate = useNavigate();
+  const itemsPerPage = 10;
 
   useEffect(() => {
-    // Function to fetch data from the API
     const fetchData = async () => {
       try {
         const response = await http.get(
-          "https://caltex-api.onrender.com/api/users/",
+          "https://caltex-api.onrender.com/api/users?admin=true",
           { withCredentials: true }
         );
         setData(response.data.data);
@@ -25,20 +22,23 @@ const UserTable = () => {
       }
     };
 
-    // Call the fetchData function when the component mounts
     fetchData();
-  }, []); // The empty dependency array ensures this effect runs only once on mount
+  }, []);
 
-  const handleManageUser = userId => {
-    navigate(`/userInformation/UserInformation/${userId}`);
-    // navigate("/userInformation/UserInformation");
+  const handleRemoveAdmin = async (userId) => {
+    try {
+      await http.delete(`/api/users/${userId}`, { withCredentials: true });
+      setData((prevData) => prevData.filter((item) => item.id !== userId));
+    } catch (error) {
+      console.error("Error removing admin:", error);
+    }
   };
 
   const renderTableHeader = () => {
     return (
       <thead className={styles.table_head}>
         <tr>
-          <th>User Full Name</th>
+          <th>Admin Full Name</th>
           <th>Email address</th>
           <th>Status</th>
           <th>Manage</th>
@@ -47,24 +47,23 @@ const UserTable = () => {
     );
   };
 
-  // Calculate the start and end index based on the current page
   const startIndex = currentPage * itemsPerPage;
   const endIndex = startIndex + itemsPerPage;
   const pageCount = Math.ceil(data.length / itemsPerPage);
 
-  const handlePageChange = newPage => {
+  const handlePageChange = (newPage) => {
     setCurrentPage(newPage);
   };
 
   const renderTableData = () => {
-    return data.slice(startIndex, endIndex).map(item => (
+    return data.slice(startIndex, endIndex).map((item) => (
       <tr key={item.id}>
         <td>{item.username}</td>
         <td>{item.email}</td>
         <td>{item.status}</td>
         <td>
-          <button type="button" onClick={() => handleManageUser(item.id)}>
-            Manage
+          <button type="button" onClick={() => handleRemoveAdmin(item.id)}>
+            Remove Admin
           </button>
         </td>
       </tr>
@@ -86,7 +85,7 @@ const UserTable = () => {
           onClick={() => handlePageChange(currentPage - 1)}
           disabled={currentPage === 0}
         >
-          <img src={leftArrow} height={32} width={32} alt="arrow" />{" "}
+          <img src={leftArrow} height={32} width={32} alt="arrow" />
         </button>
 
         <p>{currentPage + 1}</p>
@@ -103,4 +102,4 @@ const UserTable = () => {
   );
 };
 
-export default UserTable;
+export default AdminTable;

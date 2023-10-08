@@ -30,41 +30,49 @@ const UserInformation = () => {
                   <li>USER INFORMATION</li>
                   <li onClick={handleProceed}>Go Back</li>
                 </ul>
-                <table>
-                  <tr>
-                    <td id={styles.table_d}>Full Name</td>
-                    <td id={styles.table_d}>
-                      {firstname} {lastname}
-                    </td>
-                  </tr>
-                  <tr>
-                    <td id={styles.table_d}>Email address </td>
-                    <td id={styles.table_d}>{email}</td>
-                  </tr>
-                  <tr>
-                    <td id={styles.table_d}>Mobile Numbers</td>
-                    <td id={styles.table_d}>
-                      <ul>
-                        {phone.map((phoneNumber, index) => (
-                          <li key={index}>{phoneNumber}</li>
-                        ))}
-                      </ul>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td id={styles.table_d}>Address</td>
-                    <td id={styles.table_d}>
-                      <p>{address.street}</p>
-                      <p>{address.city}</p>
-                      <p>{address.state}</p>
-                      <p>{address.zipCode}</p>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td id={styles.table_d}>Country Of Residence </td>
-                    <td id={styles.table_d}>{country}</td>
-                  </tr>
-                </table>
+                <div className={styles.details_cont}>
+                  <ul>
+                    <li>
+                      <span>Full Name</span>
+                      <span>|</span>
+                      <span>
+                        {" "}
+                        {firstname} {lastname}
+                      </span>
+                    </li>
+                    <li>
+                      <span>Email address</span>
+                      <span>|</span>
+                      <span>{email}</span>
+                    </li>
+                    <li>
+                      <span>Mobile Numbers</span>
+                      <span>|</span>
+                      <span>
+                        <ul>
+                          {phone.map((phoneNumber, index) => (
+                            <li key={index}>{phoneNumber}</li>
+                          ))}
+                        </ul>
+                      </span>
+                    </li>
+                    <li>
+                      <span>Address</span>
+                      <span>|</span>
+                      <span>
+                        <p>{address.street}</p>
+                        <p>{address.city}</p>
+                        <p>{address.state}</p>
+                        <p>{address.zipCode}</p>
+                      </span>
+                    </li>
+                    <li>
+                      <span>Country Of Residence</span>
+                      <span>|</span>
+                      <span>{country}</span>
+                    </li>
+                  </ul>
+                </div>
               </div>
             </div>
           </div>

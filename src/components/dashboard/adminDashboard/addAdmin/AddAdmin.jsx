@@ -54,9 +54,6 @@ const AddAdmin = () => {
   const [swap, setSwap] = useState(false);
 
   const handleSwap = () => {
-    // setSwap(swap);
-    // setSwap1(!swap1);
-    // setIsSuccessModalOpen(false);
     navigate("/u/dashboard");
   };
 

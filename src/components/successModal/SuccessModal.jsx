@@ -12,7 +12,7 @@ const SuccessModal = (props) => {
   return (
     <div className={styles.modalOverlay}>
       <div className={styles.modal}>
-        <img src={icon} alt="modal icon" />
+        <img src={icon} height={800} width={800} alt="modal icon" />
         <p>{message}</p>
 
         <button type="button" onClick={() => closeModal()} className={Styles}>

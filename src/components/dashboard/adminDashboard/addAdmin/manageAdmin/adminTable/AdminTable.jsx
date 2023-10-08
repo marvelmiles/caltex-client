@@ -27,7 +27,10 @@ const AdminTable = () => {
 
   const handleRemoveAdmin = async (userId) => {
     try {
-      await http.delete(`/api/users/${userId}`, { withCredentials: true });
+      await http.delete(
+        `https://caltex-api.onrender.com/api/users/${userId}`,
+        { withCredentials: true }
+      );
       setData((prevData) => prevData.filter((item) => item.id !== userId));
     } catch (error) {
       console.error("Error removing admin:", error);

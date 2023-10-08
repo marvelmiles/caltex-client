@@ -39,4 +39,4 @@ const ManageAdmin = () => {
   );
 }
 
-export default ManageAdmin
+export default ManageAdmin;

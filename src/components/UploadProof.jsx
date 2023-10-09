@@ -8,6 +8,7 @@ import { BsFileEarmark } from "react-icons/bs";
 import useForm from "../hooks/useForm";
 import { useCtx } from "../context";
 import http from "../api/http";
+import { StyledLink } from "../styled";
 
 const UploadProof = ({
   id = "payment-proof",
@@ -52,7 +53,12 @@ const UploadProof = ({
 
         resetForm();
         setSnackBar({
-          message: res.message,
+          message: (
+            <Typography>
+              Transaction details have been received. Please await confirmation
+              or <StyledLink to="/u/dashboard">check your balance</StyledLink>.
+            </Typography>
+          ),
           severity: "success"
         });
       } catch (err) {

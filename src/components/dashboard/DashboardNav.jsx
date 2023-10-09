@@ -65,8 +65,7 @@ const DashboardNav = () => {
           <div class="welcome-asset">
             <span>
               <img
-                // src={johnSmith}
-                src={photoUrl}
+                src={photoUrl ? photoUrl : profile}
                 height={50}
                 width={50}
                 alt="user-avatar"

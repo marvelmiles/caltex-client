@@ -22,6 +22,7 @@ const ManualVerification = () => {
       setUploadedFile(null);
     }
   };
+  
   const handleFileChange2 = (event) => {
     const file = event.target.files[0];
     if (file) {

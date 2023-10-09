@@ -2,25 +2,25 @@ import React from "react";
 import { useEffect, useState } from "react";
 // import Cookies from "js-cookie";
 import "./dashboard.css";
-// import johnSmith from '../../src/svgs/john-smith.svg';
+import { Link } from "react-router-dom";
 import wallet from "../../../src/svgs/profile-wallet.svg";
 import profile from "../../../src/svgs/profile-profile.svg";
 import http from "../../api/http";
 import useAuth from "../../hooks/useAuth";
-import styles from "./Sidebar.module.scss";
+import styles from './Sidebar.module.scss';
 import MenuBar from "./MenuBar";
 
 const DashboardNav = () => {
   const { currentUser } = useAuth();
 
   //  console.log(currentUser, " user object...");
-  const { firstname, photoUrl, lastname } = currentUser;
+  const { firstname, photoUrl, lastname, id } = currentUser;
 
   useEffect(() => {
     (async () => {
       try {
         const res = await http.get(
-          `https://caltex-api.onrender.com/api/users/${currentUser.id}`,
+          `https://caltex-api.onrender.com/api/users/${id}`,
           {
             withCredentials: true
           }
@@ -31,7 +31,7 @@ const DashboardNav = () => {
         console.log(err.message);
       }
     })();
-  }, [currentUser.id]);
+  }, [id]);
 
   function openNav() {
     document.getElementById("sidenav").style.width = "70%";
@@ -41,7 +41,7 @@ const DashboardNav = () => {
     document.getElementById("sidenav").style.width = "0";
   }
 
-  const [isMenuBarVisible, setMenuBarVisibility] = useState(false);
+ const [isMenuBarVisible, setMenuBarVisibility] = useState(false);
 
   const openMenuBar = () => {
     setMenuBarVisibility(true);
@@ -51,7 +51,8 @@ const DashboardNav = () => {
     setMenuBarVisibility(false);
   };
 
-  const [profileMenu, setProfileMenu] = useState(false);
+
+ const [profileMenu, setProfileMenu] = useState(false);
 
   return (
     <div>
@@ -64,8 +65,7 @@ const DashboardNav = () => {
           <div class="welcome-asset">
             <span>
               <img
-                // src={johnSmith}
-                src={photoUrl}
+                src={photoUrl ? photoUrl : profile}
                 height={50}
                 width={50}
                 alt="user-avatar"
@@ -98,7 +98,9 @@ const DashboardNav = () => {
                   </span>
                 </li>
                 <li>
-                  <button type="button">Sign Out</button>
+                  <Link to="/auth/login">
+                    <button type="button">Sign Out</button>
+                  </Link>
                 </li>
               </ul>
             )}

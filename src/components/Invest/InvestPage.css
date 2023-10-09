@@ -22,6 +22,7 @@ body {
 
   padding-top: 25px;
 }
+
 .panel {
   width: 25%;
   background-color: rgba(18, 14, 251, 0.05) !important;
@@ -44,7 +45,7 @@ body {
 }
 
 .control {
-  margin-top: 26px;
+  /* margin-top: 26px; */
   font-size: 16px;
   transition: ease 0.2s;
 }

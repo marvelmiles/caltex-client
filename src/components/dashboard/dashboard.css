@@ -126,7 +126,7 @@ body {
 }
 
 .control {
-  margin-top: 26px;
+  /* margin-top: 26px; */
   font-size: 16px;
   transition: ease 0.2s;
   line-height: 24px !important;

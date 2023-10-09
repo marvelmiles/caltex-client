@@ -3,11 +3,15 @@ import styles from "./DepositTable.module.scss";
 import http from "../../../../../api/http";
 import leftArrow from "../../../../../svgs/left-arrow.svg";
 import rightArrow from "../../../../../svgs/right-arrow.svg";
+import imageIcon from "../../../../../svgs/image-icon.svg";
+import SuccessModal from "../../../../successModal/SuccessModal";
 
 const DepositTable = () => {
   const [data, setData] = useState([]);
   const [currentPage, setCurrentPage] = useState(0);
   const [confirmed, setConfirmed] = useState({});
+  const [modalIsOpen, setModalIsOpen] = useState(false);
+  const [modalImageUrl, setModalImageUrl] = useState("");
   const itemsPerPage = 10; // Adjust the number of items per page as needed
 
   useEffect(() => {
@@ -41,9 +45,9 @@ const DepositTable = () => {
 
       if (req?.status === 200) {
         // Throw a success toast
-        setConfirmed(confirmed => ({
+        setConfirmed((confirmed) => ({
           ...confirmed,
-          [transId]: true
+          [transId]: true,
         }));
       }
     } catch (error) {
@@ -53,6 +57,16 @@ const DepositTable = () => {
     }
   };
 
+  const handleViewProof = (imageUrl) => {
+    setModalImageUrl(imageUrl);
+    setModalIsOpen(true);
+  };
+
+  const handleCloseModal = () => {
+    setModalIsOpen(false);
+    setModalImageUrl("");
+  };
+
   const renderTableHeader = () => {
     return (
       <thead className={styles.table_head}>
@@ -60,7 +74,7 @@ const DepositTable = () => {
           <th>User Full Name</th>
           <th>Email address</th>
           <th>Amount</th>
-          <th>Payment Method</th>
+          <th>Payment Proof</th>
           <th>Action</th>
         </tr>
       </thead>
@@ -72,19 +86,28 @@ const DepositTable = () => {
   const endIndex = startIndex + itemsPerPage;
   const pageCount = Math.ceil(data.length / itemsPerPage);
 
-  const handlePageChange = newPage => {
+  const handlePageChange = (newPage) => {
     setCurrentPage(newPage);
   };
 
   const renderTableData = () => {
-    return data.slice(startIndex, endIndex).map(data => {
+    return data.slice(startIndex, endIndex).map((data) => {
       const bool = data.status === "confirmed" || confirmed[data.id];
       return (
         <tr key={data?.id}>
           <td>{data?.user?.username}</td>
           <td>{data?.user?.email}</td>
           <td>{data?.amount}</td>
-          <td>{data?.paymentType}</td>
+          <td id={styles.td}>
+            <img
+              src={imageIcon}
+              alt="Payment Proof"
+              style={{ cursor: "pointer" , borderRadius: "5px"}}
+            />
+            <span onClick={() => handleViewProof(data?.paymentProofUrl)}>
+              View
+            </span>
+          </td>
           <td>
             <button
               type="button"
@@ -93,7 +116,7 @@ const DepositTable = () => {
               onClick={
                 bool
                   ? undefined
-                  : e => {
+                  : (e) => {
                       e.currentTarget.disabled = true;
                       e.currentTarget.style.cursor = "not-allowed";
 
@@ -137,6 +160,16 @@ const DepositTable = () => {
           <img src={rightArrow} height={22} width={22} alt="arrow" />
         </button>
       </center>
+      
+      {modalIsOpen && (
+        <SuccessModal
+          closeModal={handleCloseModal}
+          icon={modalImageUrl}
+          Styles={styles.modal_btn}
+          message={modalImageUrl ? "" : "No Image to display"}
+          btnText="X"
+        />
+      )}
     </div>
   );
 };

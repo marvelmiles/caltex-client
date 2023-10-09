@@ -7,7 +7,6 @@ th {
  width: 200px;
  line-height: normal;
  border: none;
- padding: 0;
 }
 
 td {
@@ -19,33 +18,28 @@ td {
  line-height: normal;
  border: none;
 
+ button {
+  border-radius: 5px;
+  background: #F0A617;
+  display: inline-flex;
+  padding: 19px 5px;
+  width: 200px;
+  justify-content: center;
+  align-items: center;
+  color: #FFF;
+  font-family: 'Poppins', sans-serif;
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  border: none;
+  outline: none;
+  cursor: pointer;
+ }
 }
 
 td:nth-child(3) {
  color: #036901;
-}
-
-#btn {
- border-radius: 5px;
- background: #F0A617;
- display: inline-flex;
- padding: 19px 10px;
- width: 200px;
- justify-content: center;
- align-items: center;
- color: #FFF;
- font-family: 'Poppins', sans-serif;
- font-size: 18px;
- font-style: normal;
- font-weight: 400;
- line-height: normal;
- border: none;
- cursor: pointer;
-}
-
-#successBtn {
- background: #fff;
- color: #1E1E1E;
 }
 
 .pagination {
@@ -63,22 +57,5 @@ td:nth-child(3) {
   font-size: 16px;
   font-weight: 500;
   font-family: 'Poppins', sans-serif;
- }
-}
-
-.modal_btn {
- background: none !important;
-}
-
-#td {
- display: flex;
- align-items: center;
- justify-content: center;
- margin-left: 20px;
- color: #000 !important;
- gap: 5px;
-
- span {
-  cursor: pointer;
  }
 }

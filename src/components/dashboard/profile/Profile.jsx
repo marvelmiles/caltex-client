@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Sidebar from "../Sidebar";
 import DashboardNav from "../DashboardNav";
 import styles from "./Profile.module.scss";
@@ -7,19 +7,33 @@ import IdVerificationMethod from "./idVerificationMethod/IdVerificationMethod";
 import Toast from "./toast/Toast";
 import http from "../../../api/http";
 import useAuth from "../../../hooks/useAuth";
+import user from "../../../svgs/user2.svg";
 
 const Profile = () => {
   const { currentUser } = useAuth();
 
   const { firstname, lastname } = currentUser;
+
+  const [fileValue, setFileValue] = useState("");
+  const [uploadedFile, setUploadedFile] = useState(null);
+
   const [formData, setFormData] = useState({
     firstname,
     lastname,
     address: "",
     address2: "",
     zipCode: "",
-    country: ""
+    country: "",
+    uploadedFile: null, // Initialize it as null
   });
+
+  useEffect(() => {
+    setFormData((prevFormData) => ({
+      ...prevFormData,
+      uploadedFile,
+    }));
+  }, [uploadedFile]);
+
 
   const [isSuccessModalOpen, setIsSuccessModalOpen] = useState(false);
   const [apiError, setApiError] = useState(null);
@@ -28,19 +42,30 @@ const Profile = () => {
 
   const apiEndpoint = `https://caltex-api.onrender.com/api/users/${id}`;
 
-  const handleInputChange = event => {
+  const handleInputChange = (event) => {
     const { name, value } = event.target;
     setFormData({
       ...formData,
-      [name]: value
+      [name]: value,
     });
   };
 
-  const handleSubmit = async e => {
+  const handleFileChange = (event) => {
+    const file = event.target.files[0];
+    if (file) {
+      setFileValue(file.name);
+      setUploadedFile(file);
+    } else {
+      setFileValue("");
+      setUploadedFile(null);
+    }
+  };
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
     try {
       const response = await http.put(apiEndpoint, formData, {
-        withCredentials: true
+        withCredentials: true,
       });
 
       if (response.status === 200) {
@@ -73,20 +98,57 @@ const Profile = () => {
 
   return (
     <div>
-      <div class="dashboard-container">
-        <div class="board">
+      <div className="dashboard-container">
+        <div className="board">
           <Sidebar />
-          <div class="dashboard-content">
-            <div class="board-content">
+          <div className="dashboard-content">
+            <div className="board-content">
               <DashboardNav />
 
               {!swap && (
-                <div class="ct" id="ct">
+                <div className={`ct ${styles.main_cont}`} id="ct">
                   <div className={styles.personal_cont}>
                     <p>Investor Profile and information</p>
                   </div>
                   <form action="" onSubmit={handleSubmit}>
                     <div className={styles.personal_info_cont}>
+                      <div className={styles.profile_cont}>
+                        <ul>
+                          <li>Profile Picture</li>
+                          <li>
+                            <span>
+                              <img
+                                src={user}
+                                height={32}
+                                width={32}
+                                alt="user"
+                              />
+                            </span>
+                            <span id={styles.up_span}>Upload Profile Picture</span>
+                          </li>
+                          <li>
+                            <label
+                              htmlFor="upload_file"
+                              className={styles.custom_file_input}
+                            >
+                              <span id={styles.input_label}>Choose file</span>
+                            {fileValue ? fileValue : "No file chosen"}
+                            </label>
+                            <input
+                              type="file"
+                              id="upload_file"
+                              name={fileValue}
+                              className={styles.hidden_file_input}
+                              onChange={handleFileChange}
+                              accept=".jpg, .jpeg, .png, .gif, .pdf"
+                            />
+                          </li>
+                          
+                          <li>
+                            <button type="submit">Upload</button>
+                          </li>
+                        </ul>
+                      </div>
                       <span>Personal Information</span>
                       <div className={styles.input_cont}>
                         <div>
@@ -101,7 +163,7 @@ const Profile = () => {
                         </div>
                         <div>
                           <CustomInput
-                            label="lastname"
+                            label="Surname"
                             name="lastname"
                             type="text"
                             sx={{ width: "430px", height: "50px" }}
@@ -128,7 +190,7 @@ const Profile = () => {
                             name="address2"
                             type="text"
                             sx={{ width: "430px", height: "50px" }}
-                            value={formData.address}
+                            value={formData.address2}
                             onChange={handleInputChange}
                           />
                         </div>
@@ -165,7 +227,7 @@ const Profile = () => {
               )}
               {isSuccessModalOpen && (
                 <Toast
-                  message="Congratulations, your profile have been saved"
+                  message="Congratulations, your profile has been saved"
                   btnText="Proceed to KYC"
                   closeModal={handleSwap}
                 />

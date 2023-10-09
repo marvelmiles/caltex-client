@@ -14,13 +14,13 @@ const DashboardNav = () => {
   const { currentUser } = useAuth();
 
   //  console.log(currentUser, " user object...");
-  const { firstname, photoUrl, lastname } = currentUser;
+  const { firstname, photoUrl, lastname, id } = currentUser;
 
   useEffect(() => {
     (async () => {
       try {
         const res = await http.get(
-          `https://caltex-api.onrender.com/api/users/${currentUser.id}`,
+          `https://caltex-api.onrender.com/api/users/${id}`,
           {
             withCredentials: true
           }
@@ -31,7 +31,7 @@ const DashboardNav = () => {
         console.log(err.message);
       }
     })();
-  }, [currentUser.id]);
+  }, [id]);
 
   function openNav() {
     document.getElementById("sidenav").style.width = "70%";

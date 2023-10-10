@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import fakeData from "./fakeData";
 import useAuth from "../../../../hooks/useAuth";
 import styles from "./HistoryTable.module.scss";
 import http from "../../../../api/http";
@@ -56,27 +55,27 @@ const HistoryTable = () => {
   };
   // replace fakeData with data from the API
   const renderTableData = () => {
-    return fakeData.slice(0, 1).map((item) => (
-      <tr key={item.id}>
-        <td>{item.column1}</td>
-        <td>{item.column2}</td>
-        <td>{item.column3}</td>
-        <td>{item.column4}</td>
-        <td>{item.column5}</td>
-        <td>{item.column6}</td>
+    return data.slice(0, 1).map((item) => (
+      <tr key={item?.data?.id}>
+        <td>{item?.data?.plan}</td>
+        <td>{item?.data?.amount}</td>
+        <td>{item?.data?.roi}</td>
+        <td>{item?.data?.roiPct}</td>
+        <td>{item?.data?.startDate}</td>
+        <td>{item?.data?.endDate}</td>
       </tr>
     ));
   };
   // replace fakeData with data from the API
   const renderTableData2 = () => {
-    return fakeData.map((item) => (
-      <tr key={item.id}>
-        <td>{item.column1}</td>
-        <td>{item.column2}</td>
-        <td>{item.column3}</td>
-        <td>{item.column4}</td>
-        <td>{item.column5}</td>
-        <td>{item.column6}</td>
+    return data.map((item) => (
+      <tr key={item?.data?.id}>
+        <td>{item?.data?.plan}</td>
+        <td>{item?.data?.amount}</td>
+        <td>{item?.data?.roi}</td>
+        <td>{item?.data?.roiPct}</td>
+        <td>{item?.data?.startDate}</td>
+        <td>{item?.data?.endDate}</td>
       </tr>
     ));
   };

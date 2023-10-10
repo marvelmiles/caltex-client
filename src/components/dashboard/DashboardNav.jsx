@@ -14,7 +14,7 @@ const DashboardNav = () => {
   const { currentUser } = useAuth();
 
   //  console.log(currentUser, " user object...");
-  const { firstname, photoUrl, lastname, id } = currentUser;
+  const { firstname, photoUrl, lastname, id, } = currentUser;
 
   useEffect(() => {
     (async () => {
@@ -25,12 +25,12 @@ const DashboardNav = () => {
             withCredentials: true
           }
         );
-
         if (!res.success) throw res;
       } catch (err) {
         console.log(err.message);
       }
     })();
+    
   }, [id]);
 
   function openNav() {
@@ -98,7 +98,7 @@ const DashboardNav = () => {
                   </span>
                 </li>
                 <li>
-                  <Link to="/auth/login">
+                  <Link to="https://www.caltextrader.com">
                     <button type="button">Sign Out</button>
                   </Link>
                 </li>
@@ -107,7 +107,6 @@ const DashboardNav = () => {
             <span class="john">
               <p>
                 {firstname} {lastname}
-                {/* John Doe */}
               </p>
             </span>
             <span class="bell-notification" id=" " onclick=" ">

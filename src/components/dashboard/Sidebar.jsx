@@ -36,7 +36,7 @@ const Sidebar = () => {
   const { currentUser } = useAuth();
 
   // const { isAdmin } = currentUser;
-  const { isSuperAdmin } = currentUser;
+  const { isSuperAdmin, isAdmin } = currentUser;
   // this fake user was used for testing, should be deleted after
   // const { data } = fakeUser;
 
@@ -56,7 +56,7 @@ const Sidebar = () => {
           </span>
         </div>
 
-        {isSuperAdmin ? (
+        {isSuperAdmin || isAdmin ? (
           <div class="panel-control" id={styles.admin}>
             <Link to="/" class="controld" id="dashboard" onclick=" ">
               <BiSolidDashboard id="other-icon" className="dashboard-icon" />
@@ -92,17 +92,19 @@ const Sidebar = () => {
               <img src={withdraw} id="other-icon" alt="withdraw-icon" />
               Manage Withdrawal
             </Link>
-            <Link
-              to="/addAdmin/AddAdmin"
-              class="control"
-              id={bgActive ? styles.colorActive : ""}
-              onclick={() => setBgactive(!bgActive)}
-            >
-              <img src={admin} id="other-icon" alt="withdraw-icon" />
-              Add Admin
-            </Link>
+            {isSuperAdmin && (
+              <Link
+                to="/addAdmin/AddAdmin"
+                class="control"
+                id={bgActive ? styles.colorActive : ""}
+                onclick={() => setBgactive(!bgActive)}
+              >
+                <img src={admin} id="other-icon" alt="withdraw-icon" />
+                Add Admin
+              </Link>
+            )}
 
-            <Link to="/auth/login">
+            <Link to="https://www.caltextrader.com">
               <span class="control" id=" " onclick=" ">
                 <img src={logout} id="other-icon" alt="logout-icon" />
                 LogOut
@@ -188,7 +190,7 @@ const Sidebar = () => {
                 Legal Documents
               </span>
             </Link>
-            <Link to="/auth/login">
+            <Link to="https://www.caltextrader.com">
               <span class="control" id=" " onclick=" ">
                 <img src={logout} id="other-icon" alt="logout-icon" />
                 LogOut

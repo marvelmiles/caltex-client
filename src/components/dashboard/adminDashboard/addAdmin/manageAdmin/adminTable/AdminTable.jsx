@@ -41,10 +41,10 @@ const AdminTable = () => {
     return (
       <thead className={styles.table_head}>
         <tr>
-          <th>Admin Full Name</th>
-          <th>Email address</th>
-          <th>Status</th>
-          <th>Manage</th>
+          <th id={styles.tableH}>Admin Full Name</th>
+          <th id={styles.tableH}>Email address</th>
+          <th id={styles.tableH}>Status</th>
+          <th id={styles.tableH}>Manage</th>
         </tr>
       </thead>
     );

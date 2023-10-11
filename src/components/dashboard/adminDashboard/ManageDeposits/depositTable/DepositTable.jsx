@@ -71,11 +71,11 @@ const DepositTable = () => {
     return (
       <thead className={styles.table_head}>
         <tr>
-          <th>User Full Name</th>
-          <th>Email address</th>
-          <th>Amount</th>
-          <th>Payment Proof</th>
-          <th>Action</th>
+          <th id={styles.tableD}>User Full Name</th>
+          <th id={styles.tableD}>Email address</th>
+          <th id={styles.tableD}>Amount</th>
+          <th id={styles.tableD}>Payment Proof</th>
+          <th id={styles.tableD}>Action</th>
         </tr>
       </thead>
     );

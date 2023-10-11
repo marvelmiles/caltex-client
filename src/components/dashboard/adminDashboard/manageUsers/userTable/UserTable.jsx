@@ -38,10 +38,10 @@ const UserTable = () => {
     return (
       <thead className={styles.table_head}>
         <tr>
-          <th>User Full Name</th>
-          <th>Email address</th>
-          <th>Status</th>
-          <th>Manage</th>
+          <th id={styles.tableU}>User Full Name</th>
+          <th id={styles.tableU}>Email address</th>
+          <th id={styles.tableU}>Status</th>
+          <th id={styles.tableU}>Manage</th>
         </tr>
       </thead>
     );

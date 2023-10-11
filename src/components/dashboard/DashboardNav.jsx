@@ -1,5 +1,6 @@
 import React from "react";
 import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { connect } from "react-redux";
 // import Cookies from "js-cookie";
 import "./dashboard.css";
@@ -7,33 +8,40 @@ import { Link } from "react-router-dom";
 import wallet from "../../../src/svgs/profile-wallet.svg";
 import profile from "../../../src/svgs/profile-profile.svg";
 import http from "../../api/http";
-import useAuth from "../../hooks/useAuth";
 import styles from './Sidebar.module.scss';
 import MenuBar from "./MenuBar";
 import { updateUser } from "../../context/reducers/userReducer";
 
-// const DashboardNav = ({ currentUser, updateUser }) => {
-const DashboardNav = ({ currentUser }) => {
-  // const { currentUser } = useAuth();
-
-  //  console.log(currentUser, " user object...");
+const DashboardNav = () => {
+ const { currentUser } = useSelector((state) => state.user); // Access user data from Redux state
+ const dispatch = useDispatch();
   const { firstname, photoUrl, lastname, id } = currentUser;
 
   useEffect(() => {
-    (async () => {
+
+    const fetchUserData = async () => {
       try {
-        const res = await http.get(
+        const response = await http.get(
           `https://caltex-api.onrender.com/api/users/${id}`,
           {
             withCredentials: true,
           }
         );
-        if (!res.success) throw res;
-      } catch (err) {
-        console.log(err.message);
+
+        if (response.status === 200) {
+          // Assuming the response.data contains the updated user data
+           const updatedUserData = response.data;
+         dispatch(updateUser(updatedUserData));
+        } else {
+          console.error("Error fetching user data:", response.data.error);
+        }
+      } catch (error) {
+        console.error("Error fetching user data:", error.message);
       }
-    })();
-  }, [id]);
+    };
+
+    fetchUserData();
+  }, [id, dispatch]);
 
   function openNav() {
     document.getElementById("sidenav").style.width = "70%";
@@ -123,14 +131,4 @@ const DashboardNav = ({ currentUser }) => {
   );
 };
 
-const mapStateToProps = (state) => ({
-  currentUser: state.user.currentUser, // Map currentUser from Redux state to props
-});
-
-const mapDispatchToProps = {
-  updateUser, // Map updateUser action to props
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(DashboardNav);
-
-// export default DashboardNav;
+export default DashboardNav;

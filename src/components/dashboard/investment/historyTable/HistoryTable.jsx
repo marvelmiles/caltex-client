@@ -43,12 +43,12 @@ const HistoryTable = () => {
     return (
       <thead className={styles.table_head}>
         <tr>
-          <th>PLAN</th>
-          <th>Amount Invested</th>
-          <th>Return Of Investment</th>
-          <th>ROI+Capital</th>
-          <th>Date Of Investment</th>
-          <th>Matured Date</th>
+          <th id={styles.tableI}>PLAN</th>
+          <th id={styles.tableI}>Amount Invested</th>
+          <th id={styles.tableI}>Return Of Investment</th>
+          <th id={styles.tableI}>ROI+Capital</th>
+          <th id={styles.tableI}>Date Of Investment</th>
+          <th id={styles.tableI}>Matured Date</th>
         </tr>
       </thead>
     );

@@ -58,11 +58,11 @@ const WithdrawalTable = () => {
     return (
       <thead className={styles.table_head}>
         <tr>
-          <th>User Full Name</th>
-          <th>Email address</th>
-          <th>Amount Requested</th>
-          <th>Payment Method</th>
-          <th>Status</th>
+          <th id={styles.tableW}>User Full Name</th>
+          <th id={styles.tableW}>Email address</th>
+          <th id={styles.tableW}>Amount Requested</th>
+          <th id={styles.tableW}>Payment Method</th>
+          <th id={styles.tableW}>Status</th>
         </tr>
       </thead>
     );

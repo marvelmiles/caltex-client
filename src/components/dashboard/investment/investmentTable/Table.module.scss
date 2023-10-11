@@ -11,12 +11,16 @@ table {
  height: 76px;
  padding: 0 40px;
  background: #120EFB;
- color: #FFF;
+ color: #FFF !important;
  text-align: center;
  font-size: 16px;
  font-style: normal;
  font-weight: 700;
  line-height: normal;
+
+ tr {
+  color: #fff !important;
+ }
 }
 
 td {

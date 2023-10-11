@@ -8,6 +8,7 @@ import Toast from "./toast/Toast";
 import http from "../../../api/http";
 import useAuth from "../../../hooks/useAuth";
 import user from "../../../svgs/user2.svg";
+import { updateUser } from "../../../context/reducers/userReducer";
 
 const Profile = () => {
   const { currentUser } = useAuth();
@@ -55,6 +56,12 @@ const Profile = () => {
     if (file) {
       setFileValue(file.name);
       setUploadedFile(file);
+
+       const updatedUserData = {
+         profilePhoto: fileValue, // Use fileValue as the URL or data of the uploaded photo
+       };
+
+        updateUser(updatedUserData);
     } else {
       setFileValue("");
       setUploadedFile(null);

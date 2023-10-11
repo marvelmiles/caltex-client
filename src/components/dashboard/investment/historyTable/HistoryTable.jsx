@@ -26,7 +26,7 @@ const HistoryTable = () => {
     const fetchData = async () => {
       try {
         const response = await http.get(
-          `https://caltex-api.onrender.com/api/users/${id}:/investments`,
+          `https://caltex-api.onrender.com/api/users/${id}/investments`,
           { withCredentials: true }
         ); // Replace with your API endpoint
         setData(response.data); // Assuming the API returns an array of data
@@ -55,27 +55,43 @@ const HistoryTable = () => {
   };
   // replace fakeData with data from the API
   const renderTableData = () => {
+    if (!Array.isArray(data)) {
+      // Handle the case when data is not an array
+      return (
+        <tr>
+          <td colSpan="6">No data available</td>
+        </tr>
+      );
+    }
     return data.slice(0, 1).map((item) => (
-      <tr key={item?.data?.id}>
-        <td>{item?.data?.plan}</td>
-        <td>{item?.data?.amount}</td>
-        <td>{item?.data?.roi}</td>
-        <td>{item?.data?.roiPct}</td>
-        <td>{item?.data?.startDate}</td>
-        <td>{item?.data?.endDate}</td>
+      <tr key={item?.id}>
+        <td>{item?.plan}</td>
+        <td>{item?.amount}</td>
+        <td>{item?.roi}</td>
+        <td>{item?.roiPct}</td>
+        <td>{item?.startDate}</td>
+        <td>{item?.endDate}</td>
       </tr>
     ));
   };
   // replace fakeData with data from the API
   const renderTableData2 = () => {
+    if (!Array.isArray(data)) {
+    // Handle the case when data is not an array
+    return (
+      <tr>
+        <td colSpan="6">No data available</td>
+      </tr>
+    );
+  }
     return data.map((item) => (
-      <tr key={item?.data?.id}>
-        <td>{item?.data?.plan}</td>
-        <td>{item?.data?.amount}</td>
-        <td>{item?.data?.roi}</td>
-        <td>{item?.data?.roiPct}</td>
-        <td>{item?.data?.startDate}</td>
-        <td>{item?.data?.endDate}</td>
+      <tr key={item?.id}>
+        <td>{item?.plan}</td>
+        <td>{item?.amount}</td>
+        <td>{item?.roi}</td>
+        <td>{item?.roiPct}</td>
+        <td>{item?.startDate}</td>
+        <td>{item?.endDate}</td>
       </tr>
     ));
   };

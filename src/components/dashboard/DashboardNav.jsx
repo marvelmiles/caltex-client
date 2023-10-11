@@ -1,5 +1,6 @@
 import React from "react";
 import { useEffect, useState } from "react";
+import { connect } from "react-redux";
 // import Cookies from "js-cookie";
 import "./dashboard.css";
 import { Link } from "react-router-dom";
@@ -9,12 +10,14 @@ import http from "../../api/http";
 import useAuth from "../../hooks/useAuth";
 import styles from './Sidebar.module.scss';
 import MenuBar from "./MenuBar";
+import { updateUser } from "../../context/reducers/userReducer";
 
-const DashboardNav = () => {
-  const { currentUser } = useAuth();
+// const DashboardNav = ({ currentUser, updateUser }) => {
+const DashboardNav = ({ currentUser }) => {
+  // const { currentUser } = useAuth();
 
   //  console.log(currentUser, " user object...");
-  const { firstname, photoUrl, lastname, id, } = currentUser;
+  const { firstname, photoUrl, lastname, id } = currentUser;
 
   useEffect(() => {
     (async () => {
@@ -22,7 +25,7 @@ const DashboardNav = () => {
         const res = await http.get(
           `https://caltex-api.onrender.com/api/users/${id}`,
           {
-            withCredentials: true
+            withCredentials: true,
           }
         );
         if (!res.success) throw res;
@@ -30,7 +33,6 @@ const DashboardNav = () => {
         console.log(err.message);
       }
     })();
-    
   }, [id]);
 
   function openNav() {
@@ -41,7 +43,7 @@ const DashboardNav = () => {
     document.getElementById("sidenav").style.width = "0";
   }
 
- const [isMenuBarVisible, setMenuBarVisibility] = useState(false);
+  const [isMenuBarVisible, setMenuBarVisibility] = useState(false);
 
   const openMenuBar = () => {
     setMenuBarVisibility(true);
@@ -51,8 +53,7 @@ const DashboardNav = () => {
     setMenuBarVisibility(false);
   };
 
-
- const [profileMenu, setProfileMenu] = useState(false);
+  const [profileMenu, setProfileMenu] = useState(false);
 
   return (
     <div>
@@ -122,4 +123,14 @@ const DashboardNav = () => {
   );
 };
 
-export default DashboardNav;
+const mapStateToProps = (state) => ({
+  currentUser: state.user.currentUser, // Map currentUser from Redux state to props
+});
+
+const mapDispatchToProps = {
+  updateUser, // Map updateUser action to props
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(DashboardNav);
+
+// export default DashboardNav;

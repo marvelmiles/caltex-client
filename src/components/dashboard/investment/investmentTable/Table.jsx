@@ -42,14 +42,22 @@ const FixedHeaderTable = () => {
   };
   // replace fakeData with data from the API
   const renderTableData = () => {
+    if (!Array.isArray(data)) {
+      // Handle the case when data is not an array
+      return (
+        <tr>
+          <td colSpan="6">No data available</td>
+        </tr>
+      );
+    }
     return data.map((item) => (
-      <tr key={item?.data?.id}>
-        <td>{item?.data?.plan}</td>
-        <td>{item?.data?.amount}</td>
-        <td>{item?.data?.roi}</td>
-        <td>{item?.data?.roiPct}</td>
-        <td>{item?.data?.startDate}</td>
-        <td>{item?.data?.endDate}</td>
+      <tr key={item?.id}>
+        <td>{item?.plan}</td>
+        <td>{item?.amount}</td>
+        <td>{item?.roi}</td>
+        <td>{item?.roiPct}</td>
+        <td>{item?.startDate}</td>
+        <td>{item?.endDate}</td>
       </tr>
     ));
   };

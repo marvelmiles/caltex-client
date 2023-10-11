@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import fakeData from "../fakeData";
 import useAuth from "../../../../hooks/useAuth";
 import styles from "./Table.module.scss";
 import http from "../../../../api/http";
@@ -43,14 +42,22 @@ const FixedHeaderTable = () => {
   };
   // replace fakeData with data from the API
   const renderTableData = () => {
-    return fakeData.map((item) => (
-      <tr key={item.id}>
-        <td>{item.column1}</td>
-        <td>{item.column2}</td>
-        <td>{item.column3}</td>
-        <td>{item.column4}</td>
-        <td>{item.column5}</td>
-        <td>{item.column6}</td>
+    if (!Array.isArray(data)) {
+      // Handle the case when data is not an array
+      return (
+        <tr>
+          <td colSpan="6">No data available</td>
+        </tr>
+      );
+    }
+    return data.map((item) => (
+      <tr key={item?.id}>
+        <td>{item?.plan}</td>
+        <td>{item?.amount}</td>
+        <td>{item?.roi}</td>
+        <td>{item?.roiPct}</td>
+        <td>{item?.startDate}</td>
+        <td>{item?.endDate}</td>
       </tr>
     ));
   };

@@ -1,37 +1,47 @@
 import React from "react";
 import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { connect } from "react-redux";
 // import Cookies from "js-cookie";
 import "./dashboard.css";
 import { Link } from "react-router-dom";
 import wallet from "../../../src/svgs/profile-wallet.svg";
 import profile from "../../../src/svgs/profile-profile.svg";
 import http from "../../api/http";
-import useAuth from "../../hooks/useAuth";
 import styles from './Sidebar.module.scss';
 import MenuBar from "./MenuBar";
+import { updateUser } from "../../context/reducers/userReducer";
 
 const DashboardNav = () => {
-  const { currentUser } = useAuth();
-
-  //  console.log(currentUser, " user object...");
+ const { currentUser } = useSelector((state) => state.user); // Access user data from Redux state
+ const dispatch = useDispatch();
   const { firstname, photoUrl, lastname, id } = currentUser;
 
   useEffect(() => {
-    (async () => {
+
+    const fetchUserData = async () => {
       try {
-        const res = await http.get(
+        const response = await http.get(
           `https://caltex-api.onrender.com/api/users/${id}`,
           {
-            withCredentials: true
+            withCredentials: true,
           }
         );
 
-        if (!res.success) throw res;
-      } catch (err) {
-        console.log(err.message);
+        if (response.status === 200) {
+          // Assuming the response.data contains the updated user data
+           const updatedUserData = response.data;
+         dispatch(updateUser(updatedUserData));
+        } else {
+          console.error("Error fetching user data:", response.data.error);
+        }
+      } catch (error) {
+        console.error("Error fetching user data:", error.message);
       }
-    })();
-  }, [id]);
+    };
+
+    fetchUserData();
+  }, [id, dispatch]);
 
   function openNav() {
     document.getElementById("sidenav").style.width = "70%";
@@ -41,7 +51,7 @@ const DashboardNav = () => {
     document.getElementById("sidenav").style.width = "0";
   }
 
- const [isMenuBarVisible, setMenuBarVisibility] = useState(false);
+  const [isMenuBarVisible, setMenuBarVisibility] = useState(false);
 
   const openMenuBar = () => {
     setMenuBarVisibility(true);
@@ -51,8 +61,7 @@ const DashboardNav = () => {
     setMenuBarVisibility(false);
   };
 
-
- const [profileMenu, setProfileMenu] = useState(false);
+  const [profileMenu, setProfileMenu] = useState(false);
 
   return (
     <div>
@@ -98,7 +107,7 @@ const DashboardNav = () => {
                   </span>
                 </li>
                 <li>
-                  <Link to="/auth/login">
+                  <Link to="https://www.caltextrader.com">
                     <button type="button">Sign Out</button>
                   </Link>
                 </li>
@@ -107,7 +116,6 @@ const DashboardNav = () => {
             <span class="john">
               <p>
                 {firstname} {lastname}
-                {/* John Doe */}
               </p>
             </span>
             <span class="bell-notification" id=" " onclick=" ">

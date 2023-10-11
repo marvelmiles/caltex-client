@@ -8,6 +8,7 @@ import Toast from "./toast/Toast";
 import http from "../../../api/http";
 import useAuth from "../../../hooks/useAuth";
 import user from "../../../svgs/user2.svg";
+import { updateUser } from "../../../context/reducers/userReducer";
 
 const Profile = () => {
   const { currentUser } = useAuth();
@@ -20,8 +21,8 @@ const Profile = () => {
   const [formData, setFormData] = useState({
     firstname,
     lastname,
-    address: "",
-    address2: "",
+    line1: "",
+    line2: "",
     zipCode: "",
     country: "",
     uploadedFile: null, // Initialize it as null
@@ -50,11 +51,28 @@ const Profile = () => {
     });
   };
 
-  const handleFileChange = (event) => {
+  const handleFileChange = async (event) => {
     const file = event.target.files[0];
     if (file) {
       setFileValue(file.name);
       setUploadedFile(file);
+
+      const updatedUserData = {
+        profilePhoto: fileValue, // Use fileValue as the URL or data of the uploaded photo
+      };
+
+      updateUser(updatedUserData);
+      try {
+        const formData = new FormData();
+        formData.append('avatar', file);
+
+        await http.put(apiEndpoint, formData, {
+          withCredentials: true,
+        });
+      } catch (error) {
+        console.error("Error updating user photo in the API:", error.message);
+        // Handle the error as needed
+      }
     } else {
       setFileValue("");
       setUploadedFile(null);
@@ -177,20 +195,20 @@ const Profile = () => {
                           {" "}
                           <CustomInput
                             label="Address Line 1:"
-                            name="address"
+                            name="line1"
                             type="text"
                             sx={{ width: "430px", height: "50px" }}
-                            value={formData.address}
+                            value={formData.line1}
                             onChange={handleInputChange}
                           />
                         </div>
                         <div>
                           <CustomInput
                             label="Address Line 2:"
-                            name="address2"
+                            name="line2"
                             type="text"
                             sx={{ width: "430px", height: "50px" }}
-                            value={formData.address2}
+                            value={formData.line2}
                             onChange={handleInputChange}
                           />
                         </div>

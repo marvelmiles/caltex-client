@@ -23,6 +23,8 @@ import { BrowserRouter as Router, Route } from "react-router-dom";
 import { BiSolidDashboard } from "react-icons/bi";
 import useAuth from "../../hooks/useAuth";
 import ArrowAndTab from "../ArrowAndTab";
+import Sidebar from "../dashboard/Sidebar";
+import DashboardNav from "../dashboard/DashboardNav";
 
 const StarterplanForex = () => {
   const { currentUser } = useAuth();
@@ -31,7 +33,7 @@ const StarterplanForex = () => {
     <div class="dashboard-container">
       <div class="board">
         <div class="dashboard-panel">
-          <div class="panel">
+          {/* <div class="panel">
             <div class="logo">
               <span>
                 <img src={logo} alt="logo" />
@@ -110,12 +112,13 @@ const StarterplanForex = () => {
                   LogOut
                 </Link>
             </div>
-          </div>
+          </div> */}
+          <Sidebar />
         </div>
 
         <div class="dashboard-content">
           <div class="board-content">
-            <div class="welcome-user">
+            {/* <div class="welcome-user">
               <div class="welcome">
                 <div class="welcome-text">
                   <p>Welcome back, {currentUser.firstname}</p>
@@ -134,7 +137,8 @@ const StarterplanForex = () => {
                   </span>
                 </div>
               </div>
-            </div>
+            </div> */}
+            <DashboardNav />
             <ArrowAndTab />
 
             <div class="starter-planForex">

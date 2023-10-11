@@ -24,10 +24,17 @@ const userSlice = createSlice({
       state.currentUser = {
         accountExpires: state.currentUser.accountExpires
       };
-    }
+    },
+     updateUser(state, { payload }) {
+      // Update the user's profile properties here based on payload.
+      state.currentUser = {
+        ...state.currentUser,
+        ...payload,
+      };
   }
+}
 });
 
-export const { signinUser, signoutUser } = userSlice.actions;
+export const { signinUser, signoutUser,  updateUser } = userSlice.actions;
 
 export default userSlice.reducer;

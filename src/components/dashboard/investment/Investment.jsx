@@ -4,11 +4,34 @@ import arrow from "../../../svgs/arrow-drop.svg";
 import FixedHeaderTable from "./investmentTable/Table";
 import HistoryTable from "./historyTable/HistoryTable";
 import Layout from "../../Layout";
+import { Box } from "@mui/material";
 
 const Investment = () => {
   const [trans, setTrans] = useState(false);
   const [trans1, setTrans1] = useState(false);
   const [trans2, setTrans2] = useState(false);
+  const [transType, setTransType] = useState("");
+  const [status, setStatus] = useState("");
+  const [tradeType, setTradeType] = useState("");
+
+  const handleTransType = e => {
+    const { type, status, tradeType } = e.target.dataset;
+
+    if (typeof type === "string") {
+      setTransType(type);
+      setTrans(false);
+    }
+
+    if (typeof status === "string") {
+      setStatus(status);
+      setTrans1(false);
+    }
+
+    if (typeof tradeType === "string") {
+      setTradeType({ crypto: "CryptoCurrency" }[tradeType] || tradeType);
+      setTrans2(false);
+    }
+  };
 
   return (
     <Layout>
@@ -27,19 +50,46 @@ const Investment = () => {
             <input type="date" className={styles.date_input} />
 
             <li onClick={() => setTrans(!trans)}>
-              <span>All transaction type</span>
+              <Box
+                component="span"
+                sx={{
+                  "&::first-letter": {
+                    textTransform: "uppercase"
+                  }
+                }}
+              >
+                {transType || "All"} type
+              </Box>
               <span>
                 <img src={arrow} height={10} width={10} alt="arrow" />
               </span>
             </li>
             <li onClick={() => setTrans1(!trans1)}>
-              <span>All status</span>
+              <Box
+                component="span"
+                sx={{
+                  "&::first-letter": {
+                    textTransform: "uppercase"
+                  }
+                }}
+              >
+                {status || "All"} status
+              </Box>
               <span>
                 <img src={arrow} height={10} width={10} alt="arrow" />
               </span>
             </li>
             <li onClick={() => setTrans2(!trans2)}>
-              <span>All accounts</span>
+              <Box
+                component="span"
+                sx={{
+                  "&::first-letter": {
+                    textTransform: "uppercase"
+                  }
+                }}
+              >
+                {tradeType || "All"} accounts
+              </Box>
               <span>
                 <img src={arrow} height={10} width={10} alt="arrow" />
               </span>
@@ -50,9 +100,15 @@ const Investment = () => {
               className={styles.tans_ul}
               onMouseLeave={() => setTrans(!trans)}
             >
-              <li>All transaction</li>
-              <li>Deposit</li>
-              <li>Withdrawal</li>
+              <li data-type="" onClick={handleTransType}>
+                All transaction
+              </li>
+              <li data-type="deposit" onClick={handleTransType}>
+                Deposit
+              </li>
+              <li data-type="withdrawal" onClick={handleTransType}>
+                Withdrawal
+              </li>
             </ul>
           )}
           {trans1 && (
@@ -61,10 +117,18 @@ const Investment = () => {
               id={styles.tans_ul2}
               onMouseLeave={() => setTrans1(!trans1)}
             >
-              <li>All status</li>
-              <li>Processing</li>
-              <li>Approved</li>
-              <li>Rejected</li>
+              <li data-status="" onClick={handleTransType}>
+                All status
+              </li>
+              <li data-status="awaiting" onClick={handleTransType}>
+                Awaiting
+              </li>
+              <li data-status="confirmed" onClick={handleTransType}>
+                Confirmed
+              </li>
+              <li data-status="rejected" onClick={handleTransType}>
+                Rejected
+              </li>
             </ul>
           )}
           {trans2 && (
@@ -73,12 +137,22 @@ const Investment = () => {
               id={styles.tans_ul3}
               onMouseLeave={() => setTrans2(!trans2)}
             >
-              <li>Account</li>
-              <li>Cryptocurrency</li>
-              <li>Forex</li>
+              <li data-trade-type="" onClick={handleTransType}>
+                Account
+              </li>
+              <li data-trade-type="crypto" onClick={handleTransType}>
+                Cryptocurrency
+              </li>
+              <li data-trade-type="forex" onClick={handleTransType}>
+                Forex
+              </li>
             </ul>
           )}
-          <HistoryTable />
+          <HistoryTable
+            status={status}
+            tradeType={tradeType}
+            transactionType={transType}
+          />
         </div>
       </div>
     </Layout>

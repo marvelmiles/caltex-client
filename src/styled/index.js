@@ -2,7 +2,7 @@ import { styled, css } from "@mui/system";
 import { Link } from "react-router-dom";
 import Box from "@mui/material/Box";
 import { fontFamily } from "./theme";
-import Switch, { SwitchProps } from "@mui/material/Switch";
+import Switch from "@mui/material/Switch";
 
 export const INPUT_AUTOFILL_SELECTOR = `
             input:-webkit-autofill,

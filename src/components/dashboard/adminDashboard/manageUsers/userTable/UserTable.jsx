@@ -4,34 +4,41 @@ import http from "../../../../../api/http";
 import { useNavigate } from "react-router-dom";
 import leftArrow from "../../../../../svgs/left-arrow.svg";
 import rightArrow from "../../../../../svgs/right-arrow.svg";
+import { MSG_DEFAULT_ERR } from "../../../../../config/constants";
+import { useCtx } from "../../../../../context";
+import Loading from "../../../../../components/Loading";
 
 const UserTable = () => {
   const [data, setData] = useState([]);
   const [currentPage, setCurrentPage] = useState(0);
+  const [loading, setLoading] = useState(true);
   const itemsPerPage = 10; // Adjust the number of items per page as needed
   const navigate = useNavigate();
+
+  const { setSnackBar } = useCtx();
 
   useEffect(() => {
     // Function to fetch data from the API
     const fetchData = async () => {
       try {
-        const response = await http.get(
-          "https://caltex-api.onrender.com/api/users/",
-          { withCredentials: true }
-        );
+        const response = await http.get("/users/", { withCredentials: true });
         setData(response.data.data);
       } catch (error) {
         console.error("Error fetching data:", error);
+        setSnackBar(MSG_DEFAULT_ERR);
+      } finally {
+        setLoading(false);
       }
     };
 
     // Call the fetchData function when the component mounts
     fetchData();
-  }, []); // The empty dependency array ensures this effect runs only once on mount
+  }, [setSnackBar]); // The empty dependency array ensures this effect runs only once on mount
 
-  const handleManageUser = userId => {
-    navigate(`/userInformation/UserInformation/${userId}`);
-    // navigate("/userInformation/UserInformation");
+  const handleManageUser = previewUser => {
+    navigate(`/userInformation/UserInformation/${previewUser.id}`, {
+      state: { previewUser }
+    });
   };
 
   const renderTableHeader = () => {
@@ -57,18 +64,32 @@ const UserTable = () => {
   };
 
   const renderTableData = () => {
-    return data.slice(startIndex, endIndex).map(item => (
-      <tr key={item.id}>
-        <td>{item.username}</td>
-        <td>{item.email}</td>
-        <td>{item.status}</td>
-        <td>
-          <button type="button" onClick={() => handleManageUser(item.id)}>
-            Manage
-          </button>
+    return loading ? (
+      <tr>
+        <td colspan={4}>
+          <Loading />
         </td>
       </tr>
-    ));
+    ) : (
+      data.slice(startIndex, endIndex).map(item => (
+        <tr key={item.id}>
+          <td>{item.username}</td>
+          <td>{item.email}</td>
+          <td>
+            {item.isLogin ? (
+              <span style={{ color: "green" }}>Active</span>
+            ) : (
+              <span style={{ color: "red" }}>Offline</span>
+            )}
+          </td>
+          <td>
+            <button type="button" onClick={() => handleManageUser(item)}>
+              Manage
+            </button>
+          </td>
+        </tr>
+      ))
+    );
   };
 
   return (

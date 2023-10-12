@@ -55,6 +55,8 @@ export const handleRefreshToken = requestConfig => {
     });
 };
 
+console.log("baseURL ", API_ENDPOINT);
+
 const http = rootAxios.create({
   baseURL: API_ENDPOINT
 });

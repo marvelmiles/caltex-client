@@ -5,6 +5,9 @@ import leftArrow from "../../../../../svgs/left-arrow.svg";
 import rightArrow from "../../../../../svgs/right-arrow.svg";
 import imageIcon from "../../../../../svgs/image-icon.svg";
 import SuccessModal from "../../../../successModal/SuccessModal";
+import { useCtx } from "../../../../../context";
+import { MSG_DEFAULT_ERR } from "../../../../../config/constants";
+import Loading from "../../../../Loading";
 
 const DepositTable = () => {
   const [data, setData] = useState([]);
@@ -14,50 +17,55 @@ const DepositTable = () => {
   const [modalImageUrl, setModalImageUrl] = useState("");
   const itemsPerPage = 10; // Adjust the number of items per page as needed
 
+  const [loading, setLoading] = useState(true);
+
+  const { setSnackBar } = useCtx();
+
   useEffect(() => {
     // Function to fetch data from the API
     // This assumes that the users sent to this endpoint are those with pending deposits.
     const fetchData = async () => {
       try {
         const response = await http.get(
-          "https://caltex-api.onrender.com/api/transactions?required[transactionType]=deposit&required[status]=awaiting",
+          "/transactions?required[transactionType]=deposit&required[status]=awaiting",
           { withCredentials: true }
         );
-
-        console.log(response, "...res");
 
         setData(response.data.data);
       } catch (error) {
         console.error("Error fetching data:", error);
+        setSnackBar(MSG_DEFAULT_ERR);
+      } finally {
+        setLoading(false);
       }
     };
 
     // Call the fetchData function when the component mounts
     fetchData();
-  }, []); // The empty dependency array ensures this effect runs only once on mount
+  }, [setSnackBar]); // The empty dependency array ensures this effect runs only once on mount
 
   const handleConfirmPayment = async (transId, e) => {
     try {
-      const req = await http.patch(
-        `https://caltex-api.onrender.com/api/transactions/${transId}/confirm`,
-        { withCredentials: true }
-      );
+      const req = await http.patch(`/transactions/${transId}/confirm`, {
+        withCredentials: true
+      });
 
       if (req?.status === 200) {
         // Throw a success toast
-        setConfirmed((confirmed) => ({
+        setConfirmed(confirmed => ({
           ...confirmed,
-          [transId]: true,
+          [transId]: true
         }));
       }
     } catch (error) {
       // Throw an error toast
+      setSnackBar("Failed to confirm deposit");
     } finally {
       (e.currentTarget || e.target).style.cursor = "default";
     }
   };
 
-  const handleViewProof = (imageUrl) => {
+  const handleViewProof = imageUrl => {
     setModalImageUrl(imageUrl);
     setModalIsOpen(true);
   };
@@ -86,50 +94,58 @@ const DepositTable = () => {
   const endIndex = startIndex + itemsPerPage;
   const pageCount = Math.ceil(data.length / itemsPerPage);
 
-  const handlePageChange = (newPage) => {
+  const handlePageChange = newPage => {
     setCurrentPage(newPage);
   };
 
   const renderTableData = () => {
-    return data.slice(startIndex, endIndex).map((data) => {
-      const bool = data.status === "confirmed" || confirmed[data.id];
-      return (
-        <tr key={data?.id}>
-          <td>{data?.user?.username}</td>
-          <td>{data?.user?.email}</td>
-          <td>{data?.amount}</td>
-          <td id={styles.td}>
-            <img
-              src={imageIcon}
-              alt="Payment Proof"
-              style={{ cursor: "pointer" , borderRadius: "5px"}}
-            />
-            <span onClick={() => handleViewProof(data?.paymentProofUrl)}>
-              View
-            </span>
-          </td>
-          <td>
-            <button
-              type="button"
-              id={bool ? styles.successBtn : styles.btn}
-              style={{ cursor: bool ? "default" : "pointer" }}
-              onClick={
-                bool
-                  ? undefined
-                  : (e) => {
-                      e.currentTarget.disabled = true;
-                      e.currentTarget.style.cursor = "not-allowed";
+    return loading ? (
+      <tr>
+        <td colspan={5}>
+          <Loading />
+        </td>
+      </tr>
+    ) : (
+      data.slice(startIndex, endIndex).map(data => {
+        const bool = data.status === "confirmed" || confirmed[data.id];
+        return (
+          <tr key={data?.id}>
+            <td>{data?.user?.username}</td>
+            <td>{data?.user?.email}</td>
+            <td>{data?.amount}</td>
+            <td id={styles.td}>
+              <img
+                src={imageIcon}
+                alt="Payment Proof"
+                style={{ cursor: "pointer", borderRadius: "5px" }}
+              />
+              <span onClick={() => handleViewProof(data?.paymentProofUrl)}>
+                View
+              </span>
+            </td>
+            <td>
+              <button
+                type="button"
+                id={bool ? styles.successBtn : styles.btn}
+                style={{ cursor: bool ? "default" : "pointer" }}
+                onClick={
+                  bool
+                    ? undefined
+                    : e => {
+                        e.currentTarget.disabled = true;
+                        e.currentTarget.style.cursor = "not-allowed";
 
-                      return handleConfirmPayment(data?.id, e);
-                    }
-              }
-            >
-              {bool ? "Successful" : "Confirm Payment"}
-            </button>
-          </td>
-        </tr>
-      );
-    });
+                        return handleConfirmPayment(data?.id, e);
+                      }
+                }
+              >
+                {bool ? "Successful" : "Confirm Payment"}
+              </button>
+            </td>
+          </tr>
+        );
+      })
+    );
   };
 
   return (
@@ -160,7 +176,7 @@ const DepositTable = () => {
           <img src={rightArrow} height={22} width={22} alt="arrow" />
         </button>
       </center>
-      
+
       {modalIsOpen && (
         <SuccessModal
           closeModal={handleCloseModal}

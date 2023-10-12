@@ -12,10 +12,9 @@ const FixedHeaderTable = () => {
     // Function to fetch data from the API
     const fetchData = async () => {
       try {
-        const response = await http.get(
-          `https://caltex-api.onrender.com/api/users/${id}/investments`,
-          { withCredentials: true }
-        ); // Replace with your API endpoint
+        const response = await http.get(`/users/${id}/investments`, {
+          withCredentials: true
+        }); // Replace with your API endpoint
         setData(response.data); // Assuming the API returns an array of data
       } catch (error) {
         console.error("Error fetching data:", error);
@@ -50,7 +49,7 @@ const FixedHeaderTable = () => {
         </tr>
       );
     }
-    return data.map((item) => (
+    return data.map(item => (
       <tr key={item?.id}>
         <td>{item?.plan}</td>
         <td>{item?.amount}</td>

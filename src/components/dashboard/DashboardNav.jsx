@@ -1,55 +1,17 @@
 import React from "react";
-import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { connect } from "react-redux";
-// import Cookies from "js-cookie";
+import { useState } from "react";
+import { useSelector } from "react-redux";
 import "./dashboard.css";
 import { Link } from "react-router-dom";
 import wallet from "../../../src/svgs/profile-wallet.svg";
 import profile from "../../../src/svgs/profile-profile.svg";
-import http from "../../api/http";
-import styles from './Sidebar.module.scss';
+import styles from "./Sidebar.module.scss";
 import MenuBar from "./MenuBar";
-import { updateUser } from "../../context/reducers/userReducer";
 
 const DashboardNav = () => {
- const { currentUser } = useSelector((state) => state.user); // Access user data from Redux state
- const dispatch = useDispatch();
+  const { currentUser } = useSelector(state => state.user); // Access user data from Redux state
+
   const { firstname, photoUrl, lastname, id } = currentUser;
-
-  useEffect(() => {
-
-    const fetchUserData = async () => {
-      try {
-        const response = await http.get(
-          `https://caltex-api.onrender.com/api/users/${id}`,
-          {
-            withCredentials: true,
-          }
-        );
-
-        if (response.status === 200) {
-          // Assuming the response.data contains the updated user data
-           const updatedUserData = response.data;
-         dispatch(updateUser(updatedUserData));
-        } else {
-          console.error("Error fetching user data:", response.data.error);
-        }
-      } catch (error) {
-        console.error("Error fetching user data:", error.message);
-      }
-    };
-
-    fetchUserData();
-  }, [id, dispatch]);
-
-  function openNav() {
-    document.getElementById("sidenav").style.width = "70%";
-  }
-
-  function closeNav() {
-    document.getElementById("sidenav").style.width = "0";
-  }
 
   const [isMenuBarVisible, setMenuBarVisibility] = useState(false);
 
@@ -107,7 +69,7 @@ const DashboardNav = () => {
                   </span>
                 </li>
                 <li>
-                  <Link to="https://www.caltextrader.com">
+                  <Link to="/auth/login">
                     <button type="button">Sign Out</button>
                   </Link>
                 </li>

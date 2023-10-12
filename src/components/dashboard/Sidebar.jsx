@@ -1,6 +1,4 @@
 import React, { useState } from "react";
-// import Cookies from "js-cookie";
-// import { useEffect, useState } from "react";
 import "./dashboard.css";
 import caltexTrader from "./../../images/caltexTrader.png";
 import logo from "./../../images/logo (1).png";
@@ -17,25 +15,11 @@ import logout from "./../../images/logout.png";
 import { Link } from "react-router-dom";
 import useAuth from "../../hooks/useAuth";
 import { BiSolidDashboard } from "react-icons/bi";
-import { setFutureDate } from "./../../utils/index";
 import styles from "./Sidebar.module.scss";
 
-// import fakeUser from "../../config/fakeApi";
-
 const Sidebar = () => {
-  /** Begininng Of script for menu **/
-
-  function openNav() {
-    document.getElementById("sidenav").style.width = "70%";
-  }
-
-  function closeNav() {
-    document.getElementById("sidenav").style.width = "0";
-  }
-
   const { currentUser } = useAuth();
 
-  // const { isAdmin } = currentUser;
   const { isSuperAdmin, isAdmin } = currentUser;
   // this fake user was used for testing, should be deleted after
   // const { data } = fakeUser;
@@ -46,7 +30,7 @@ const Sidebar = () => {
 
   return (
     <div class="dashboard-panel" id="sidenav">
-      <div class="panel">
+      <div class="panel panels">
         <div class="logo">
           <span>
             <img src={logo} alt="logo" />
@@ -58,7 +42,7 @@ const Sidebar = () => {
 
         {isSuperAdmin || isAdmin ? (
           <div class="panel-control" id={styles.admin}>
-            <Link to="/" class="controld" id="dashboard" onclick=" ">
+            <Link to="/u/dashboard" class="controld" id="dashboard" onclick=" ">
               <BiSolidDashboard id="other-icon" className="dashboard-icon" />
               Admin Dashboard
             </Link>
@@ -104,7 +88,7 @@ const Sidebar = () => {
               </Link>
             )}
 
-            <Link to="https://www.caltextrader.com">
+            <Link to="/auth/login">
               <span class="control" id=" " onclick=" ">
                 <img src={logout} id="other-icon" alt="logout-icon" />
                 LogOut
@@ -113,7 +97,7 @@ const Sidebar = () => {
           </div>
         ) : (
           <div class="panel-control">
-            <Link to="/" class="controld" id="dashboard" onclick=" ">
+            <Link to="/u/dashboard" class="controld" id="dashboard" onclick=" ">
               <BiSolidDashboard id="other-icon" className="dashboard-icon" />
               Dashboard
             </Link>
@@ -190,7 +174,7 @@ const Sidebar = () => {
                 Legal Documents
               </span>
             </Link>
-            <Link to="https://www.caltextrader.com">
+            <Link to="/auth/login">
               <span class="control" id=" " onclick=" ">
                 <img src={logout} id="other-icon" alt="logout-icon" />
                 LogOut

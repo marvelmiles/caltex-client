@@ -55,6 +55,7 @@ import ManageDeposits from "./components/dashboard/adminDashboard/ManageDeposits
 import ManageWithdrawals from "./components/dashboard/adminDashboard/manageWithdrawals/ManageWithdrawals";
 import AddAdmin from "./components/dashboard/adminDashboard/addAdmin/AddAdmin";
 import ManageAdmin from "./components/dashboard/adminDashboard/addAdmin/manageAdmin/ManageAdmin";
+import { defaultUser } from "./context/reducers/userReducer";
 
 // WORKED ON THE INVEST AND PAYMENT SCREEN SOME COMPONENT ARE
 // HAD TO BREAKDOWN UI INTO BIT OF COMPONENT BECAUSE OF THE CODE IS
@@ -65,8 +66,21 @@ const App = () => {
   const [theme] = useState(createTheme());
   const [snackbar, setSnackbar] = useState({});
 
-  let { state: locState = {}, pathname } = useLocation();
-  locState = locState || {};
+  const [appCtx, setAppCtx] = useState({
+    transactionMetrics: {
+      availBalance: 0,
+      balance: {
+        confirmedTransactions: 0,
+        awaitingTransactions: 0,
+        rejectedTransactions: 0
+      }
+    }
+  });
+
+  let { state: locState, pathname } = useLocation();
+  locState = locState || {
+    previewUser: defaultUser
+  };
 
   const { isLoggedIn } = useAuth(locState.user);
 
@@ -82,9 +96,9 @@ const App = () => {
   const renderBackArrow = () => (
     <IconButton
       onClick={() => handleGoBack({ replace: true })}
-      sx={{ ml: -6, mt: 2 }}
+      sx={{ ml: -4, mt: 2 }}
     >
-      <img src={backarrow} alt="backarrow" id="backArrow" />
+      <img src={backarrow} alt="backarrow" />
     </IconButton>
   );
 
@@ -168,12 +182,19 @@ const App = () => {
             backgroundColor: "transparent",
             transition: "background-color 5000s ease-in-out 0s",
             textFillColor: theme.palette.text.primary,
-            caretColor: theme.palette.text.primary,
-          },
+            caretColor: theme.palette.text.primary
+          }
         }}
       />
       <Provider
-        value={{ setSnackBar, locState, handleGoBack, renderBackArrow }}
+        value={{
+          setSnackBar,
+          locState,
+          handleGoBack,
+          renderBackArrow,
+          appCtx,
+          setAppCtx
+        }}
       >
         <Routes>
           <Route path="/auth">
@@ -336,7 +357,7 @@ const App = () => {
                     duration: 30,
                     tradeType: "crypto",
                     roiPct: 4.0,
-                    plan: "master",
+                    plan: "master"
                   }}
                 />
               ) : (
@@ -355,7 +376,7 @@ const App = () => {
                     duration: 20,
                     tradeType: "crypto",
                     roiPct: 3.5,
-                    plan: "professional",
+                    plan: "professional"
                   }}
                 />
               ) : (
@@ -373,7 +394,7 @@ const App = () => {
                     maxAmount: 15000,
                     duration: 10,
                     tradeType: "crypto",
-                    roiPct: 3.0,
+                    roiPct: 3.0
                   }}
                 />
               ) : (
@@ -391,7 +412,7 @@ const App = () => {
                     maxAmount: 15000,
                     duration: 10,
                     tradeType: "crypto",
-                    roiPct: 3.0,
+                    roiPct: 3.0
                   }}
                 />
               ) : (
@@ -408,7 +429,7 @@ const App = () => {
                     minAmount: 51000,
                     maxAmount: 100000,
                     duration: 21,
-                    plan: "master",
+                    plan: "master"
                   }}
                 />
               ) : (
@@ -425,7 +446,7 @@ const App = () => {
                     minAmount: 11000,
                     maxAmount: 50000,
                     duration: 14,
-                    plan: "professional",
+                    plan: "professional"
                   }}
                 />
               ) : (
@@ -468,8 +489,8 @@ const App = () => {
           sx={{
             maxWidth: snackbar.maxWidth || "400px",
             "&::first-letter": {
-              textTransform: "uppercase",
-            },
+              textTransform: "uppercase"
+            }
           }}
         >
           <Alert
@@ -480,7 +501,7 @@ const App = () => {
               </IconButton>
             }
             sx={{
-              whiteSpace: "pre-line",
+              whiteSpace: "pre-line"
             }}
           >
             {snackbar.message}

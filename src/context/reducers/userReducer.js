@@ -1,7 +1,14 @@
 import { createSlice } from "@reduxjs/toolkit";
 import http from "../../api/http";
 
-export const defaultUser = {};
+export const defaultUser = {
+  firstname: "",
+  lastname: "",
+  email: "",
+  username: "",
+  phone: [],
+  address: { city: "", zipCode: "" }
+};
 
 const initialState = {
   currentUser: defaultUser
@@ -25,16 +32,16 @@ const userSlice = createSlice({
         accountExpires: state.currentUser.accountExpires
       };
     },
-     updateUser(state, { payload }) {
+    updateUser(state, { payload }) {
       // Update the user's profile properties here based on payload.
       state.currentUser = {
         ...state.currentUser,
-        ...payload,
+        ...payload
       };
+    }
   }
-}
 });
 
-export const { signinUser, signoutUser,  updateUser } = userSlice.actions;
+export const { signinUser, signoutUser, updateUser } = userSlice.actions;
 
 export default userSlice.reducer;

@@ -25,10 +25,9 @@ const HistoryTable = () => {
     // Function to fetch data from the API
     const fetchData = async () => {
       try {
-        const response = await http.get(
-          `https://caltex-api.onrender.com/api/users/${id}/investments`,
-          { withCredentials: true }
-        ); // Replace with your API endpoint
+        const response = await http.get(`/users/${id}/investments`, {
+          withCredentials: true
+        }); // Replace with your API endpoint
         setData(response.data); // Assuming the API returns an array of data
       } catch (error) {
         console.error("Error fetching data:", error);
@@ -63,7 +62,7 @@ const HistoryTable = () => {
         </tr>
       );
     }
-    return data.slice(0, 1).map((item) => (
+    return data.slice(0, 1).map(item => (
       <tr key={item?.id}>
         <td>{item?.plan}</td>
         <td>{item?.amount}</td>
@@ -77,14 +76,14 @@ const HistoryTable = () => {
   // replace fakeData with data from the API
   const renderTableData2 = () => {
     if (!Array.isArray(data)) {
-    // Handle the case when data is not an array
-    return (
-      <tr>
-        <td colSpan="6">No data available</td>
-      </tr>
-    );
-  }
-    return data.map((item) => (
+      // Handle the case when data is not an array
+      return (
+        <tr>
+          <td colSpan="6">No data available</td>
+        </tr>
+      );
+    }
+    return data.map(item => (
       <tr key={item?.id}>
         <td>{item?.plan}</td>
         <td>{item?.amount}</td>

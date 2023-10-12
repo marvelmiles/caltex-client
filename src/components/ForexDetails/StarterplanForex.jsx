@@ -43,6 +43,7 @@ const StarterplanForex = () => {
             Invest
           </Link>
           <Link
+            replace
             to="/Invest/InvestPage?tradeType=forex"
             class="change-starterForex"
           >

@@ -1,90 +1,56 @@
 import "./professionalplanForex.css";
-import React from "react";
-import ReactDoM from "react-dom";
-import { useState, useEffect } from "react";
-import Cookies from "js-cookie";
 import { Link } from "react-router-dom";
-import caltexTrader from "../../images/caltexTrader.png";
-import logo from "../../images/logo (1).png";
-import john from "../../images/John.jpg";
-import forex from "../../images/forex.png";
-import crypto from "../../images/crypto.png";
-import withdraw from "../../images/withdraw.png";
-import help from "../../images/help.png";
-import profile from "../../images/profile.png";
-import deposit from "../../images/deposit.png";
-import legal from "../../images/legal.png";
-import logout from "../../images/logout.png";
-import closedeye from "../../images/closedeye.png";
-import dashboard from "../../images/dashboard (1).png";
 import ArrowAndTab from "../ArrowAndTab";
-import useAuth from "../../hooks/useAuth";
-
-import { BiSolidDashboard } from "react-icons/bi";
-import Sidebar from "../dashboard/Sidebar";
-import DashboardNav from "../dashboard/DashboardNav";
+import Layout from "../Layout";
 
 const ProfessionalplanForex = () => {
   return (
-    <div class="dashboard-container">
-      <div class="board">
-        <Sidebar />
-        <div class="dashboard-content">
-          <div class="board-content">
-            <DashboardNav />
-            <ArrowAndTab />
+    <Layout>
+      <ArrowAndTab />
 
-            <div class="professional-planForex">
-              <div class="professional-planF">
-                <h4>Professional Plan</h4>
-                <p>
-                  <i class="fa fa-check" id="check"></i>Minimum
-                  Investment:$11,000
-                </p>
-                <p>
-                  <i class="fa fa-check" id="check"></i>Maximum
-                  Investment:$50,000
-                </p>
-                <p>
-                  <i class="fa fa-check" id="check"></i>Withdrawal fee:7%
-                  withdrawal charges
-                </p>
-                <p>
-                  <i class="fa fa-check" id="check"></i>3 stages referral
-                  commission
-                </p>
-                <p>
-                  <i class="fa fa-check" id="check"></i>15% referral for first
-                  person
-                </p>
-                <p>
-                  <i class="fa fa-check" id="check"></i>10% referral for second
-                  person
-                </p>
-                <p>
-                  <i class="fa fa-check" id="check"></i>7% referral for third
-                  person
-                </p>
-              </div>
-              <div class="investment-buttons">
-                <Link
-                  to="/ForexInvestForms/professionalPlanInvF"
-                  class="invest-professionalForex"
-                >
-                  Invest
-                </Link>
-                <Link
-                  to="/Invest/InvestPage?tradeType=forex"
-                  class="change-professionalForex"
-                >
-                  Change Plan
-                </Link>
-              </div>
-            </div>
-          </div>
+      <div class="professional-planForex">
+        <div class="professional-planF">
+          <h4>Professional Plan</h4>
+          <p>
+            <i class="fa fa-check" id="check"></i>Minimum Investment:$11,000
+          </p>
+          <p>
+            <i class="fa fa-check" id="check"></i>Maximum Investment:$50,000
+          </p>
+          <p>
+            <i class="fa fa-check" id="check"></i>Withdrawal fee:7% withdrawal
+            charges
+          </p>
+          <p>
+            <i class="fa fa-check" id="check"></i>3 stages referral commission
+          </p>
+          <p>
+            <i class="fa fa-check" id="check"></i>15% referral for first person
+          </p>
+          <p>
+            <i class="fa fa-check" id="check"></i>10% referral for second person
+          </p>
+          <p>
+            <i class="fa fa-check" id="check"></i>7% referral for third person
+          </p>
+        </div>
+        <div class="investment-buttons">
+          <Link
+            to="/ForexInvestForms/professionalPlanInvF"
+            class="invest-professionalForex"
+          >
+            Invest
+          </Link>
+          <Link
+            replace
+            to="/Invest/InvestPage?tradeType=forex"
+            class="change-professionalForex"
+          >
+            Change Plan
+          </Link>
         </div>
       </div>
-    </div>
+    </Layout>
   );
 };
 

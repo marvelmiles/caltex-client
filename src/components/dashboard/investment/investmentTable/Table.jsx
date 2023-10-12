@@ -2,11 +2,16 @@ import React, { useState, useEffect } from "react";
 import useAuth from "../../../../hooks/useAuth";
 import styles from "./Table.module.scss";
 import http from "../../../../api/http";
+import { useCtx } from "../../../../context";
+import { MSG_DEFAULT_ERR } from "../../../../config/constants";
+import Loading from "../../../Loading";
 
 const FixedHeaderTable = () => {
+  const { setSnackBar } = useCtx();
   const { currentUser } = useAuth();
   const { id } = currentUser;
   const [data, setData] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     // Function to fetch data from the API
@@ -15,15 +20,19 @@ const FixedHeaderTable = () => {
         const response = await http.get(`/users/${id}/investments`, {
           withCredentials: true
         }); // Replace with your API endpoint
-        setData(response.data); // Assuming the API returns an array of data
+
+        setData(response.data.data); // Assuming the API returns an array of data
       } catch (error) {
         console.error("Error fetching data:", error);
+        setSnackBar(MSG_DEFAULT_ERR);
+      } finally {
+        setLoading(false);
       }
     };
 
     // Call the fetchData function when the component mounts
     fetchData();
-  }, [data, id]); // The empty dependency array ensures this effect runs only once on mount
+  }, [id, setSnackBar]); // The empty dependency array ensures this effect runs only once on mount
 
   const renderTableHeader = () => {
     return (
@@ -41,7 +50,16 @@ const FixedHeaderTable = () => {
   };
   // replace fakeData with data from the API
   const renderTableData = () => {
-    if (!Array.isArray(data)) {
+    if (loading)
+      return (
+        <tr>
+          <td colspan={6}>
+            <Loading />
+          </td>
+        </tr>
+      );
+
+    if (!data.length) {
       // Handle the case when data is not an array
       return (
         <tr>

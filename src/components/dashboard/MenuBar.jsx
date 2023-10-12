@@ -11,10 +11,11 @@ import legal from "../../images/legal.png";
 import logout from "../../images/logout.png";
 import { BiSolidDashboard } from "react-icons/bi";
 import useAuth from "../../hooks/useAuth";
+import admin from "./../../svgs/admin.svg";
 
 const MenuBar = ({ isVisible, onClose }) => {
   const {
-    currentUser: { isAdmin }
+    currentUser: { isAdmin, isSuperAdmin }
   } = useAuth();
 
   return (
@@ -63,12 +64,36 @@ const MenuBar = ({ isVisible, onClose }) => {
           </Link>
           {isAdmin ? (
             <>
-              {[{ to: "" }].map((l, i) => (
-                <Link to="/legalDocument/LegalDocument" class="linkss">
-                  <img src={legal} id="other-icon" alt="legal-icon" />
-                  Legal Documents
-                </Link>
-              ))}
+              {[
+                {
+                  to: "/manageUsers/ManageUsers",
+                  label: "Manage Users",
+                  icon: profile
+                },
+                {
+                  to: "/manageDeposits/ManageDeposits",
+                  label: "Manage Deposit",
+                  icon: deposit
+                },
+                {
+                  to: "/manageWithdrawals/ManageWithdrawals",
+                  label: "Manage Withdrawal",
+                  icon: withdraw
+                },
+                {
+                  nullify: !isSuperAdmin,
+                  to: "/manageAdmin/ManageAdmin",
+                  label: "Manage Admins",
+                  icon: admin
+                }
+              ].map((l, i) =>
+                l.nullify ? null : (
+                  <Link key={i} to={l.to} class="linkss">
+                    <img src={l.icon} id="other-icon" alt="legal-icon" />
+                    {l.label}
+                  </Link>
+                )
+              )}
             </>
           ) : null}
           <Link to="/auth/login" class="linkss">

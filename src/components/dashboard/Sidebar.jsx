@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import "./dashboard.css";
 import caltexTrader from "./../../images/caltexTrader.png";
 import logo from "./../../images/logo (1).png";
-// import john from "./../images/John.jpg";
 import forex from "./../../images/forex.png";
 import crypto from "./../../images/crypto.png";
 import withdraw from "./../../images/withdraw.png";
@@ -43,7 +42,6 @@ const Sidebar = () => {
               Admin Dashboard
             </Link>
             <Link to="/manageUsers/ManageUsers">
-              {" "}
               <span
                 class="control"
                 id={bgActive ? styles.colorActive : ""}

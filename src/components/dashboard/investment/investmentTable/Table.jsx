@@ -42,7 +42,7 @@ const FixedHeaderTable = () => {
   };
   // replace fakeData with data from the API
   const renderTableData = () => {
-    if (!Array.isArray(data)) {
+    if (!Array.isArray(data.data)) {
       // Handle the case when data is not an array
       return (
         <tr>
@@ -50,7 +50,7 @@ const FixedHeaderTable = () => {
         </tr>
       );
     }
-    return data.map((item) => (
+    return data.data.slice(0, 1).map((item) => (
       <tr key={item?.id}>
         <td>{item?.plan}</td>
         <td>{item?.amount}</td>

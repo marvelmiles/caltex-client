@@ -80,10 +80,17 @@ const useForm = (config = {}) => {
           prevData: { ...formData }
         };
 
+        // console.log(
+        //   !!value,
+        //   withValidator,
+        //   (rules && rules[keyName]?.type) || keyName || type,
+        //   "value,withVal,switch-key"
+        // );
+
         if (value) {
           if (withValidator) err = validator(props);
           else
-            switch ((rules && rules[keyName]?.type) || type || keyName) {
+            switch ((rules && rules[keyName]?.type) || keyName || type) {
               case "email":
                 if (!isEmail(value)) err = "Invalid email address";
                 break;
@@ -96,6 +103,8 @@ const useForm = (config = {}) => {
                   const alt = formData.confirmPassword;
 
                   if (status !== "Strong") err = status;
+
+                  console.log(keyName, "in pwd", value, alt);
 
                   if (alt && value !== alt) {
                     err = "err";
@@ -111,6 +120,8 @@ const useForm = (config = {}) => {
             required && typeof required[keyName] === "string"
               ? required[keyName]
               : `Your ${keyName} is required`;
+
+        console.log(err, errMap, "in err,errMap, onChange");
 
         if (err) addError(err);
         else
@@ -190,7 +201,9 @@ const useForm = (config = {}) => {
         { ...errs },
         withErr,
         { ...data },
-        "...errors...withErr...data...post handle submit"
+        { ...errors },
+        { ...required },
+        "...errors...withErr...data...errors...required...post handle submit"
       );
 
       const _data = config.formData;

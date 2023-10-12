@@ -11,6 +11,8 @@ import wallet from "../../images/wallet.png";
 import creditcard from "../../images/creditcard.png";
 import Button from "@mui/material/Button";
 import Layout from "../Layout";
+import { useCtx } from "../../context";
+import http from "../../api/http";
 
 const WithdrawPage = () => {
   function revealTransDetails() {
@@ -43,29 +45,42 @@ const WithdrawPage = () => {
     document.getElementById("cryptoWithdrawal").style.display = "none";
   }
 
-  function congratOnWithdraw() {
-    document.getElementById("cryptoWithdrawal").style.display = "none";
-    document.getElementById("withraw-limit-text").style.display = "none";
-    document.getElementById("withdraw-options").style.display = "none";
-    document.getElementById("transactionPro1").style.display = "none";
-    document.getElementById("transactionPro2").style.display = "none";
-    document.getElementById("trans-pro-del").style.display = "none";
-    document.getElementById("congratulations").style.display = "block";
-  }
+  const { setSnackBar } = useCtx();
 
-  function openNav() {
-    document.getElementById("sidenav").style.width = "70%";
-  }
-
-  function closeNav() {
-    document.getElementById("sidenav").style.width = "0";
-  }
-
-  const [name, setName] = useState("");
-  const [currency, setCurrency] = useState("");
-  const [cryptoNetwork, setCryptoNetwork] = useState("");
+  const [currency, setCurrency] = useState("USD");
+  const [cryptoNetwork, setCryptoNetwork] = useState("BTC");
   const [amount, setAmount] = useState("");
   const [walletAddress, setWalletAddress] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const handleRequestWithdrawal = async e => {
+    try {
+      e.preventDefault();
+      setIsSubmitting(true);
+      const res = await http.post("/transactions/request-withdrawal", {
+        amount,
+        walletAddress,
+        currency: cryptoNetwork,
+        localPayment: {
+          currency
+        },
+        paymentType: "crypto"
+      });
+
+      setSnackBar({
+        message: res.message,
+        severity: "success"
+      });
+      setAmount("");
+      setWalletAddress("");
+      setCurrency("USD");
+      setCryptoNetwork("BTC");
+    } catch (err) {
+      setSnackBar(err.message);
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
 
   return (
     <Layout>
@@ -178,75 +193,84 @@ const WithdrawPage = () => {
                       assist you.
                     </p>
                   </div>
+                  <form onSubmit={handleRequestWithdrawal}>
+                    <div class="enter-amount">
+                      <h4>Enter amount</h4>
+                      <select
+                        id="currency"
+                        name="currency"
+                        size="1"
+                        value={currency}
+                        onChange={e => setCurrency(e.target.value)}
+                      >
+                        <option value="USD" id="usd">
+                          USD
+                        </option>
+                        <option value="EURO" id="euro">
+                          EURO
+                        </option>
+                      </select>
+                      <input
+                        type="number"
+                        id="number"
+                        name=""
+                        placeholder=""
+                        value={amount}
+                        onChange={e => setAmount(e.currentTarget.value)}
+                      />
+                    </div>
 
-                  <div class="enter-amount">
-                    <h4>Enter amount</h4>
-                    <select
-                      id="currency"
-                      name="currency"
-                      size="1"
-                      value={currency}
-                      onChange={e => setCurrency(e.target.value)}
+                    <div class="withdrawal-network">
+                      <h4>Withdrawal Network</h4>
+                      <select
+                        id="withdraw-net"
+                        name="withdraw-net"
+                        size="1"
+                        value={cryptoNetwork}
+                        onChange={e => setCryptoNetwork(e.target.value)}
+                      >
+                        <option value="BTC" id="btc">
+                          BTC - Bitcoin
+                        </option>
+                        <option value="ETH" id="eth">
+                          ETH - Ethereum
+                        </option>
+                        <option value="LTC" id="ltc">
+                          LTC - Litecoin
+                        </option>
+                        <option value="USDTERC20" id="usdtErc20">
+                          USDT - ERC20
+                        </option>
+                        <option value="USDTTRC20" id="usdtTrc20">
+                          USDT - TRC20
+                        </option>
+                        <option value="USDTBEP20" id="usdtBep20">
+                          USDT - BEP20
+                        </option>
+                      </select>
+                    </div>
+
+                    <div class="wallet-address">
+                      <h4>Wallet Address</h4>
+                      <input
+                        type="text"
+                        id="wallet-addr"
+                        name="wallet-address "
+                        value={walletAddress}
+                        placeholder=" "
+                        onChange={e => setWalletAddress(e.target.value)}
+                      />
+                    </div>
+
+                    <Button
+                      variant="contained"
+                      type="submit"
+                      sx={{ ml: "20px", mt: "20px" }}
+                      disabled={isSubmitting}
                     >
-                      <option value="USD" id="usd">
-                        USD
-                      </option>
-                      <option value="EURO" id="euro">
-                        EURO
-                      </option>
-                    </select>
-                    <input type="number" id="number" name=" " placeholder=" " />
-                  </div>
-
-                  <div class="withdrawal-network">
-                    <h4>Withdrawal Network</h4>
-                    <select
-                      id="withdraw-net"
-                      name="withdraw-net"
-                      size="1"
-                      value={cryptoNetwork}
-                      onChange={e => setCryptoNetwork(e.target.value)}
-                    >
-                      <option value="BTC - Bitcoin" id="btc">
-                        BTC - Bitcoin
-                      </option>
-                      <option value="ETH - Ethereum" id="eth">
-                        ETH - Ethereum
-                      </option>
-                      <option value="LTC - Litecoin" id="ltc">
-                        LTC - Litecoin
-                      </option>
-                      <option value="USDT - ERC20" id="usdtErc20">
-                        USDT - ERC20
-                      </option>
-                      <option value="USDT - TRC20" id="usdtTrc20">
-                        USDT - TRC20
-                      </option>
-                      <option value="USDT - BEP20" id="usdtBep20">
-                        USDT - BEP20
-                      </option>
-                    </select>
-                  </div>
-
-                  <div class="wallet-address">
-                    <h4>Wallet Address</h4>
-                    <input
-                      type="text"
-                      id="wallet-addr"
-                      name="wallet-address "
-                      value={walletAddress}
-                      placeholder=" "
-                      onChange={e => setWalletAddress(e.target.value)}
-                    />
-                  </div>
-
-                  <Button
-                    variant="contained"
-                    type="submit"
-                    sx={{ ml: "20px", mt: "20px" }}
-                  >
-                    Withdraw
-                  </Button>
+                      Withdraw
+                    </Button>
+                  </form>
 
                   <div class="depositFee-processingTime">
                     <div class="depoFeeProTime">

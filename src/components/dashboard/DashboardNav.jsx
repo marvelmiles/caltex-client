@@ -52,16 +52,18 @@ const DashboardNav = () => {
                 <li>{firstname}</li>
                 <li>
                   <span>
-                    <img src={wallet} height={16} width={8} alt="wallet" />
+                    <img src={profile} height={16} width={16} alt="profile" />
                   </span>
                   <span>
-                    <p>My Profile</p>
+                    <p>
+                      <Link to="/profile/Profile">My Profile</Link>
+                    </p>
                     <p>Account Information and security</p>
                   </span>
                 </li>
                 <li>
                   <span>
-                    <img src={profile} height={16} width={16} alt="profile" />
+                    <img src={wallet} height={16} width={8} alt="wallet" />
                   </span>
                   <span>
                     <p>My wallet</p>

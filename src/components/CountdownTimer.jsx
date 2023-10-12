@@ -1,8 +1,13 @@
 import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
+import { VERIFIC_TOKEN_TIMER } from "../config/constants";
 
-const CountdownTimer = ({ onTimeUp, delay = 60 }) => {
-  const [seconds, setSeconds] = useState(delay);
+const CountdownTimer = ({ onTimeUp, delay = 300 }) => {
+  const sec = Number(localStorage.getItem(VERIFIC_TOKEN_TIMER));
+
+  const [seconds, setSeconds] = useState(
+    sec ? (sec > delay ? sec - delay : delay - sec) : delay
+  );
 
   useEffect(() => {
     let timer;
@@ -10,7 +15,11 @@ const CountdownTimer = ({ onTimeUp, delay = 60 }) => {
     if (seconds === 0) onTimeUp && onTimeUp();
     else {
       timer = setInterval(() => {
-        setSeconds(seconds - 1);
+        const sec = seconds - 1;
+
+        localStorage.setItem(VERIFIC_TOKEN_TIMER, sec + "");
+
+        setSeconds(sec);
       }, 1000);
     }
 

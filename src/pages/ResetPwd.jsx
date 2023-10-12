@@ -9,6 +9,7 @@ import Typography from "@mui/material/Typography";
 import { StyledLink } from "../styled";
 import Stack from "@mui/material/Stack";
 import { useNavigate } from "react-router-dom";
+import { VERIFIC_TOKEN_TIMER } from "../config/constants";
 
 const ResetPwd = () => {
   const {
@@ -53,6 +54,8 @@ const ResetPwd = () => {
         await http.post("/auth/reset-password", formData, {
           withCredentials: false
         });
+
+        localStorage.removeItem(VERIFIC_TOKEN_TIMER);
 
         navigate("/auth/reset-password-success", { state: { user: formData } });
       } catch ({ message }) {

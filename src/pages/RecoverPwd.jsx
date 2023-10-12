@@ -6,9 +6,13 @@ import useForm from "../hooks/useForm";
 import { useCtx } from "../context";
 import http from "../api/http";
 import { useNavigate } from "react-router-dom";
+import { VERIFIC_TOKEN_TIMER } from "../config/constants";
 
 const RecoverPwd = () => {
-  const { setSnackBar } = useCtx();
+  const {
+    setSnackBar,
+    locState: { user = {} }
+  } = useCtx();
 
   const {
     formData,
@@ -18,6 +22,7 @@ const RecoverPwd = () => {
     handleSubmit,
     resetForm
   } = useForm({
+    placeholders: user,
     required: {
       email: true
     }
@@ -35,6 +40,8 @@ const RecoverPwd = () => {
         await http.post("/auth/recover-password", formData, {
           withCredentials: false
         });
+
+        localStorage.removeItem(VERIFIC_TOKEN_TIMER);
 
         navigate("/auth/token-verification/password", {
           state: { user: formData }

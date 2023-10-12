@@ -47,7 +47,10 @@ import Help from "./components/dashboard/help/Help";
 import http, { createRelativeUrl } from "./api/http";
 import InvestTab from "./components/InvestTab";
 import backarrow from "./images/backArrow.png";
-import { HTTP_CODE_ACCOUNT_VERIFICATION_ERROR } from "./config/constants";
+import {
+  HTTP_CODE_ACCOUNT_VERIFICATION_ERROR,
+  VERIFIC_TOKEN_TIMER
+} from "./config/constants";
 import CaltexCompBrief from "./components/CaltexCompanyBrief/CaltexCompBrief";
 import ManageUsers from "./components/dashboard/adminDashboard/manageUsers/ManageUsers";
 import UserInformation from "./components/dashboard/adminDashboard/manageUsers/userInformation/UserInformation";
@@ -176,6 +179,8 @@ const App = () => {
   }, [locState, navigate, setSnackBar]);
 
   console.log(isLoggedIn, "...isLoggedin...");
+
+  if (isLoggedIn) localStorage.removeItem(VERIFIC_TOKEN_TIMER);
 
   return (
     <ThemeProvider theme={theme}>

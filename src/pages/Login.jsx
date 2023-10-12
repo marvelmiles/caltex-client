@@ -134,7 +134,10 @@ const Login = props => {
                   label="Remember Me"
                 />
               </FormGroup>
-              <StyledLink to="/auth/recover-password">
+              <StyledLink
+                to="/auth/recover-password"
+                state={{ user: { email: formData.email } }}
+              >
                 Forgot password?
               </StyledLink>
             </Stack>

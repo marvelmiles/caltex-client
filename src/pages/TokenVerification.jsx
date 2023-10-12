@@ -12,6 +12,7 @@ import CountdownTimer from "../components/CountdownTimer";
 import { signinUser, signoutUser } from "../context/reducers/userReducer";
 import { useDispatch } from "react-redux";
 import useAuth from "../hooks/useAuth";
+import { VERIFIC_TOKEN_TIMER } from "../config/constants";
 
 const TokenVerification = ({}) => {
   let { reason = "" } = useParams();
@@ -59,6 +60,8 @@ const TokenVerification = ({}) => {
   const onTimeUp = useCallback(() => {
     if (isPwd) resetForm({});
 
+    localStorage.removeItem(VERIFIC_TOKEN_TIMER);
+
     setTimeUp(true);
   }, [isPwd, resetForm]);
 
@@ -69,6 +72,11 @@ const TokenVerification = ({}) => {
       e.preventDefault();
 
       let { formData, withErr } = handleSubmit(e);
+
+      formData = {
+        ...user,
+        ...formData
+      };
 
       if (withErr) return;
 

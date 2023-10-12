@@ -9,6 +9,8 @@ import http from "../../api/http";
 import { formatToDecimalPlace } from "../../utils/normalizers";
 import Layout from "../Layout";
 import "./dashboard.css";
+import { Stack, Typography } from "@mui/material";
+import StatCard from "../StatCard";
 
 const DashboardPage = () => {
   const { currentUser } = useAuth();
@@ -89,6 +91,28 @@ const DashboardPage = () => {
                 </span>
               </h3>
             )}
+          </div>
+          <div
+            className="total-balance"
+            style={{ marginBottom: "24px !important" }}
+          >
+            <Typography variant="h3" sx={{ mb: 5 }}>
+              Transaction summary
+            </Typography>
+            <Stack justifyContent="normal" gap={8} flexWrap="wrap">
+              {[
+                {
+                  value: balance.confirmedTransactions,
+                  label: "Confirmed Transactions"
+                },
+                {
+                  value: balance.awaitingTransactions,
+                  label: "Awaiting Transactions"
+                }
+              ].map((s, i) => (
+                <StatCard key={i} {...s} />
+              ))}
+            </Stack>
           </div>
           <div class="monetary-options">
             <Link to="/Invest/InvestPage" className="invests">

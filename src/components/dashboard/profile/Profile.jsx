@@ -26,9 +26,9 @@ const Profile = () => {
 
   const { currentUser } = useAuth();
 
-  const { firstname, lastname } = currentUser;
-
   const [formData, setFormData] = useState(defaultFormData);
+
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const [photoUrl, setPhotoUrl] = useState(currentUser.photoUrl);
 
@@ -62,6 +62,7 @@ const Profile = () => {
   const handleSubmit = async e => {
     e.preventDefault();
     try {
+      setIsSubmitting(true);
       const _formData = new FormData();
 
       for (const key in formData) {
@@ -92,6 +93,8 @@ const Profile = () => {
     } catch (error) {
       console.error("An error occurred:", error.message);
       setSnackBar(error.message);
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -172,7 +175,8 @@ const Profile = () => {
                           backgroundColor: "grey.200",
                           "&:hover": {
                             backgroundColor: "grey.300"
-                          }
+                          },
+                          cursor: isSubmitting ? "not-allowed" : "cursor"
                         }}
                         component="label"
                         htmlFor={fileId}
@@ -182,6 +186,7 @@ const Profile = () => {
                     </div>
                     {formData.avatar ? (
                       <Button
+                        disabled={isSubmitting}
                         variant="outlined"
                         sx={{ display: "block", mt: 2, mx: "auto" }}
                         onClick={resetPhotoUrl}
@@ -192,6 +197,7 @@ const Profile = () => {
 
                     <input
                       multiple={false}
+                      readOnly={isSubmitting}
                       type="file"
                       accept=".jpg,.jpeg,.png,.svg"
                       id={fileId}
@@ -209,6 +215,7 @@ const Profile = () => {
                 <div className={styles.input_cont}>
                   <div>
                     <CustomInput
+                      readOnly={isSubmitting}
                       label="First Name"
                       name="firstname"
                       type="text"
@@ -219,6 +226,7 @@ const Profile = () => {
                   </div>
                   <div>
                     <CustomInput
+                      readOnly={isSubmitting}
                       label="Surname"
                       name="lastname"
                       type="text"
@@ -231,6 +239,7 @@ const Profile = () => {
                 <div className={styles.input_cont}>
                   <div>
                     <CustomInput
+                      readOnly={isSubmitting}
                       label="Username"
                       name="username"
                       type="text"
@@ -241,6 +250,7 @@ const Profile = () => {
                   </div>
                   <div>
                     <CustomInput
+                      readOnly={isSubmitting}
                       label="Phone"
                       name="phone"
                       type="text"
@@ -255,6 +265,7 @@ const Profile = () => {
                   <div>
                     {" "}
                     <CustomInput
+                      readOnly={isSubmitting}
                       label="Address Line 1:"
                       name="line1"
                       type="text"
@@ -265,6 +276,7 @@ const Profile = () => {
                   </div>
                   <div>
                     <CustomInput
+                      readOnly={isSubmitting}
                       label="Address Line 2:"
                       name="line2"
                       type="text"
@@ -277,6 +289,7 @@ const Profile = () => {
                 <div className={styles.input_cont}>
                   <div>
                     <CustomInput
+                      readOnly={isSubmitting}
                       label="Postal Code/Zip code:"
                       name="zipCode"
                       type="text"
@@ -288,6 +301,7 @@ const Profile = () => {
                   <div>
                     {" "}
                     <CustomInput
+                      readOnly={isSubmitting}
                       label="Country Of Residence"
                       name="country"
                       type="text"
@@ -303,7 +317,12 @@ const Profile = () => {
                 </div>
               </div>
 
-              <button type="submit" className={styles.btn}>
+              <button
+                type="submit"
+                disabled={isSubmitting}
+                style={{ cursor: isSubmitting ? "not-allowed" : "pointer" }}
+                className={styles.btn}
+              >
                 Save
               </button>
             </div>

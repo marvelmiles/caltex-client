@@ -5,6 +5,7 @@ import http from "../../../../api/http";
 import { useCtx } from "../../../../context";
 import { MSG_DEFAULT_ERR } from "../../../../config/constants";
 import Loading from "../../../Loading";
+import moment from "moment";
 
 const FixedHeaderTable = () => {
   const { setSnackBar } = useCtx();
@@ -50,6 +51,8 @@ const FixedHeaderTable = () => {
   };
   // replace fakeData with data from the API
   const renderTableData = () => {
+    const dateFormat = "MMM D, YYYY";
+
     if (loading)
       return (
         <tr>
@@ -73,8 +76,8 @@ const FixedHeaderTable = () => {
         <td>{item?.amount}</td>
         <td>{item?.roi}</td>
         <td>{item?.roiPct}</td>
-        <td>{item?.startDate}</td>
-        <td>{item?.endDate}</td>
+        <td>{moment(item?.startDate).format(dateFormat)}</td>
+        <td>{moment(item?.endDate).format(dateFormat)}</td>
       </tr>
     ));
   };

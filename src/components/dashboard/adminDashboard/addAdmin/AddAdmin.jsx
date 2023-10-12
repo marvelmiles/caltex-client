@@ -52,7 +52,6 @@ const AddAdmin = () => {
 
       console.log("Data sent successfully", response);
 
-      setFormData({});
       handleSuccess();
     } catch (error) {
       console.error("An error occurred:", error.message);
@@ -65,6 +64,7 @@ const AddAdmin = () => {
   const [swap, setSwap] = useState(false);
 
   const closeToast = () => {
+    setFormData({});
     setSwap(false);
     setIsSuccessModalOpen(false);
   };

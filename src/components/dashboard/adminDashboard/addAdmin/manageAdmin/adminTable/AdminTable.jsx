@@ -10,6 +10,7 @@ import Loading from "../../../../../../components/Loading";
 const AdminTable = () => {
   const { setSnackBar } = useCtx();
   const [data, setData] = useState([]);
+  const [ids, setIds] = useState({});
   const [currentPage, setCurrentPage] = useState(0);
 
   const [loading, setLoading] = useState(true);
@@ -35,6 +36,8 @@ const AdminTable = () => {
 
   const handleRemoveAdmin = async userId => {
     try {
+      setIds(ids => ({ ...ids, [userId]: true }));
+
       await http.delete(`/users/${userId}`, {
         withCredentials: true
       });
@@ -43,6 +46,11 @@ const AdminTable = () => {
     } catch (error) {
       console.error("Error removing admin:", error);
       setSnackBar("Sorry delete operation failed!");
+    } finally {
+      setIds(ids => {
+        delete ids[userId];
+        return { ...ids };
+      });
     }
   };
 
@@ -87,7 +95,12 @@ const AdminTable = () => {
             )}
           </td>
           <td>
-            <button type="button" onClick={() => handleRemoveAdmin(item.id)}>
+            <button
+              disbaled={!!ids[item.id]}
+              style={{ cursor: ids[item.id] ? "not-allowed" : "pointer" }}
+              type="button"
+              onClick={() => handleRemoveAdmin(item.id)}
+            >
               Remove Admin
             </button>
           </td>

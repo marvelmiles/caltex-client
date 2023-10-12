@@ -5,41 +5,46 @@ import IdVerificationMethod from "./idVerificationMethod/IdVerificationMethod";
 import Toast from "./toast/Toast";
 import http from "../../../api/http";
 import useAuth from "../../../hooks/useAuth";
-import user from "../../../svgs/user2.svg";
 import { updateUser } from "../../../context/reducers/userReducer";
 import Layout from "../../Layout";
+import { Avatar, Box, Stack, IconButton, Button } from "@mui/material";
+import { AiOutlineCamera } from "react-icons/ai";
+import { useCtx } from "../../../context";
+import { useDispatch } from "react-redux";
+
+const defaultFormData = {
+  firstname: "",
+  lastname: "",
+  line1: "",
+  line2: "",
+  zipCode: "",
+  country: ""
+};
 
 const Profile = () => {
+  const { setSnackBar } = useCtx();
+
   const { currentUser } = useAuth();
 
   const { firstname, lastname } = currentUser;
 
-  const [fileValue, setFileValue] = useState("");
-  const [uploadedFile, setUploadedFile] = useState(null);
+  const [formData, setFormData] = useState(defaultFormData);
 
-  const [formData, setFormData] = useState({
-    firstname,
-    lastname,
-    line1: "",
-    line2: "",
-    zipCode: "",
-    country: "",
-    uploadedFile: null // Initialize it as null
-  });
+  const [photoUrl, setPhotoUrl] = useState(currentUser.photoUrl);
+
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    setFormData(prevFormData => ({
-      ...prevFormData,
-      uploadedFile
-    }));
-  }, [uploadedFile]);
+    if (formData.avatar) {
+      const url = URL.createObjectURL(formData.avatar);
+      setPhotoUrl(url);
+      return () => URL.revokeObjectURL(url);
+    }
+  }, [formData]);
 
   const [isSuccessModalOpen, setIsSuccessModalOpen] = useState(false);
-  const [apiError, setApiError] = useState(null);
 
   const { id } = currentUser;
-
-  const apiEndpoint = `https://caltex-api.onrender.com/api/users/${id}`;
 
   const handleInputChange = event => {
     const { name, value } = event.target;
@@ -51,50 +56,42 @@ const Profile = () => {
 
   const handleFileChange = async event => {
     const file = event.target.files[0];
-    if (file) {
-      setFileValue(file.name);
-      setUploadedFile(file);
-
-      const updatedUserData = {
-        profilePhoto: fileValue // Use fileValue as the URL or data of the uploaded photo
-      };
-
-      updateUser(updatedUserData);
-      try {
-        const formData = new FormData();
-        formData.append("avatar", file);
-
-        await http.put(apiEndpoint, formData, {
-          withCredentials: true
-        });
-      } catch (error) {
-        console.error("Error updating user photo in the API:", error.message);
-        // Handle the error as needed
-      }
-    } else {
-      setFileValue("");
-      setUploadedFile(null);
-    }
+    if (file) setFormData(data => ({ ...data, avatar: file }));
   };
 
   const handleSubmit = async e => {
     e.preventDefault();
     try {
-      const response = await http.put(apiEndpoint, formData, {
+      const _formData = new FormData();
+
+      for (const key in formData) {
+        const v = formData[key];
+
+        if (!v) continue;
+
+        switch (key) {
+          case "line1":
+          case "line2":
+          case "zipCode":
+            _formData.set(`address[${key}]`, v);
+            break;
+          default:
+            _formData.set(key, v);
+            break;
+        }
+      }
+
+      const response = await http.put(`/users/${id}`, _formData, {
         withCredentials: true
       });
 
-      if (response.status === 200) {
-        console.log("Data sent successfully", response);
-        handleSuccess();
-      } else {
-        const errorMessage = await response.text();
-        console.error("Error sending data to the API:", errorMessage);
-        setApiError(errorMessage);
-      }
+      if (!response.success) throw response;
+
+      console.log("Data sent successfully", response);
+      handleSuccess(response.data);
     } catch (error) {
       console.error("An error occurred:", error.message);
-      setApiError("An error occurred. Please try again later.");
+      setSnackBar(error.message);
     }
   };
 
@@ -107,10 +104,24 @@ const Profile = () => {
     setIsSuccessModalOpen(false);
   };
 
-  const handleSuccess = () => {
+  const handleSuccess = user => {
+    setFormData(defaultFormData);
+    dispatch(updateUser(user));
     setSwap(!swap);
     setIsSuccessModalOpen(!isSuccessModalOpen);
   };
+
+  const resetPhotoUrl = () => {
+    setPhotoUrl(currentUser.photoUrl);
+    setFormData(data => {
+      delete data.avatar;
+      return { ...data };
+    });
+  };
+
+  const avatarSize = "150px";
+
+  const fileId = "avatar-id";
 
   return (
     <Layout>
@@ -119,114 +130,184 @@ const Profile = () => {
           <div className={styles.personal_cont}>
             <p>Investor Profile and information</p>
           </div>
-          <form action="" onSubmit={handleSubmit}>
-            <div className={styles.personal_info_cont}>
-              <div className={styles.profile_cont}>
-                <ul>
-                  <li>Profile Picture</li>
-                  <li>
-                    <span>
-                      <img src={user} height={32} width={32} alt="user" />
-                    </span>
-                    <span id={styles.up_span}>Upload Profile Picture</span>
-                  </li>
-                  <li>
-                    <label
-                      htmlFor="upload_file"
-                      className={styles.custom_file_input}
+          <Stack
+            component="form"
+            justifyContent="center"
+            onSubmit={handleSubmit}
+          >
+            <div>
+              <div className={styles.personal_info_cont}>
+                <Stack
+                  justifyContent="center"
+                  sx={{
+                    my: 3,
+                    maxWidth: avatarSize,
+                    mx: "auto",
+                    div: {
+                      maxWidth: "inherit"
+                    }
+                  }}
+                >
+                  <div>
+                    <div
+                      style={{
+                        position: "relative"
+                      }}
                     >
-                      <span id={styles.input_label}>Choose file</span>
-                      {fileValue ? fileValue : "No file chosen"}
-                    </label>
-                    <input
-                      type="file"
-                      id="upload_file"
-                      name={fileValue}
-                      className={styles.hidden_file_input}
-                      onChange={handleFileChange}
-                      accept=".jpg, .jpeg, .png, .gif, .pdf"
-                    />
-                  </li>
+                      <Avatar
+                        sx={{
+                          width: avatarSize,
+                          height: avatarSize,
+                          border: "2px solid currentColor",
+                          borderColor: "divider"
+                        }}
+                        src={photoUrl}
+                      />
+                      <IconButton
+                        sx={{
+                          position: "absolute",
+                          bottom: 0,
+                          right: "0px",
+                          zIndex: 1,
+                          backgroundColor: "grey.200",
+                          "&:hover": {
+                            backgroundColor: "grey.300"
+                          }
+                        }}
+                        component="label"
+                        htmlFor={fileId}
+                      >
+                        <AiOutlineCamera />
+                      </IconButton>
+                    </div>
+                    {formData.avatar ? (
+                      <Button
+                        variant="outlined"
+                        sx={{ display: "block", mt: 2, mx: "auto" }}
+                        onClick={resetPhotoUrl}
+                      >
+                        Reset
+                      </Button>
+                    ) : null}
 
-                  <li>
-                    <button type="submit">Upload</button>
-                  </li>
-                </ul>
+                    <input
+                      multiple={false}
+                      type="file"
+                      accept=".jpg,.jpeg,.png,.svg"
+                      id={fileId}
+                      onChange={handleFileChange}
+                      style={{ display: "none" }}
+                    />
+                  </div>
+                </Stack>
+
+                <span
+                  style={{ borderBottom: "3px solid rgba(240, 166, 23, 0.5)" }}
+                >
+                  Personal Information
+                </span>
+                <div className={styles.input_cont}>
+                  <div>
+                    <CustomInput
+                      label="First Name"
+                      name="firstname"
+                      type="text"
+                      sx={{ width: "430px", height: "50px" }}
+                      value={formData.firstname || currentUser.firstname}
+                      onChange={handleInputChange}
+                    />
+                  </div>
+                  <div>
+                    <CustomInput
+                      label="Surname"
+                      name="lastname"
+                      type="text"
+                      sx={{ width: "430px", height: "50px" }}
+                      defaultValue={formData.lastname || currentUser.lastname}
+                      onChange={handleInputChange}
+                    />
+                  </div>
+                </div>
+                <div className={styles.input_cont}>
+                  <div>
+                    <CustomInput
+                      label="Username"
+                      name="username"
+                      type="text"
+                      sx={{ width: "430px", height: "50px" }}
+                      value={formData.username || currentUser.username}
+                      onChange={handleInputChange}
+                    />
+                  </div>
+                  <div>
+                    <CustomInput
+                      label="Phone"
+                      name="phone"
+                      type="text"
+                      sx={{ width: "430px", height: "50px" }}
+                      defaultValue={formData.phone || currentUser.phone[0]}
+                      onChange={handleInputChange}
+                    />
+                  </div>
+                </div>
+
+                <div className={styles.input_cont}>
+                  <div>
+                    {" "}
+                    <CustomInput
+                      label="Address Line 1:"
+                      name="line1"
+                      type="text"
+                      sx={{ width: "430px", height: "50px" }}
+                      value={formData.line1 || currentUser.address.line1}
+                      onChange={handleInputChange}
+                    />
+                  </div>
+                  <div>
+                    <CustomInput
+                      label="Address Line 2:"
+                      name="line2"
+                      type="text"
+                      sx={{ width: "430px", height: "50px" }}
+                      value={formData.line2 || currentUser.address.line2}
+                      onChange={handleInputChange}
+                    />
+                  </div>
+                </div>
+                <div className={styles.input_cont}>
+                  <div>
+                    <CustomInput
+                      label="Postal Code/Zip code:"
+                      name="zipCode"
+                      type="text"
+                      sx={{ width: "430px", height: "50px" }}
+                      value={formData.zipCode || currentUser.address.zipCode}
+                      onChange={handleInputChange}
+                    />
+                  </div>
+                  <div>
+                    {" "}
+                    <CustomInput
+                      label="Country Of Residence"
+                      name="country"
+                      type="text"
+                      sx={{ width: "430px", height: "50px" }}
+                      value={
+                        formData.country ||
+                        currentUser.country ||
+                        currentUser.address.country
+                      }
+                      onChange={handleInputChange}
+                    />
+                  </div>
+                </div>
               </div>
-              <span>Personal Information</span>
-              <div className={styles.input_cont}>
-                <div>
-                  <CustomInput
-                    label="First Name"
-                    name="firstname"
-                    type="text"
-                    sx={{ width: "430px", height: "50px" }}
-                    defaultValue={firstname}
-                    onChange={handleInputChange}
-                  />
-                </div>
-                <div>
-                  <CustomInput
-                    label="Surname"
-                    name="lastname"
-                    type="text"
-                    sx={{ width: "430px", height: "50px" }}
-                    defaultValue={lastname}
-                    onChange={handleInputChange}
-                  />
-                </div>
-              </div>
-              <div className={styles.input_cont}>
-                <div>
-                  {" "}
-                  <CustomInput
-                    label="Address Line 1:"
-                    name="line1"
-                    type="text"
-                    sx={{ width: "430px", height: "50px" }}
-                    value={formData.line1}
-                    onChange={handleInputChange}
-                  />
-                </div>
-                <div>
-                  <CustomInput
-                    label="Address Line 2:"
-                    name="line2"
-                    type="text"
-                    sx={{ width: "430px", height: "50px" }}
-                    value={formData.line2}
-                    onChange={handleInputChange}
-                  />
-                </div>
-              </div>
-              <div className={styles.input_cont}>
-                <div>
-                  <CustomInput
-                    label="Postal Code/Zip code:"
-                    name="zipCode"
-                    type="text"
-                    sx={{ width: "430px", height: "50px" }}
-                    value={formData.zipCode}
-                    onChange={handleInputChange}
-                  />
-                </div>
-                <div>
-                  {" "}
-                  <CustomInput
-                    label="Country Of Residence"
-                    name="country"
-                    type="text"
-                    sx={{ width: "430px", height: "50px" }}
-                    value={formData.country}
-                    onChange={handleInputChange}
-                  />
-                </div>
-              </div>
+
+              <button type="submit" className={styles.btn}>
+                Save
+              </button>
             </div>
-            <button type="submit" className={styles.btn}>
-              Save
-            </button>
-          </form>
+          </Stack>
         </div>
       )}
       {isSuccessModalOpen && (
@@ -237,7 +318,6 @@ const Profile = () => {
         />
       )}
       {swap1 && <IdVerificationMethod />}
-      {apiError && <p className={styles.errorMessage}>{apiError}</p>}
     </Layout>
   );
 };

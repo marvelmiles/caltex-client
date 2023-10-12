@@ -8,6 +8,7 @@ import SuccessModal from "../../../../successModal/SuccessModal";
 import { useCtx } from "../../../../../context";
 import { MSG_DEFAULT_ERR } from "../../../../../config/constants";
 import Loading from "../../../../Loading";
+import { formatToDecimalPlace } from "../../../../../utils/normalizers";
 
 const DepositTable = () => {
   const [data, setData] = useState([]);
@@ -112,7 +113,14 @@ const DepositTable = () => {
           <tr key={data?.id}>
             <td>{data?.user?.username}</td>
             <td>{data?.user?.email}</td>
-            <td>{data?.amount}</td>
+            <td>
+              {
+                { usd: "$", eur: "€" }[
+                  data.localPayment?.currency?.toLowerCase?.()
+                ]
+              }
+              {formatToDecimalPlace(data?.amount, true)}
+            </td>
             <td id={styles.td}>
               <img
                 src={imageIcon}

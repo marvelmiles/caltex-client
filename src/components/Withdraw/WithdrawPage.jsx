@@ -206,7 +206,7 @@ const WithdrawPage = () => {
                         <option value="USD" id="usd">
                           USD
                         </option>
-                        <option value="EURO" id="euro">
+                        <option value="EUR" id="euro">
                           EURO
                         </option>
                       </select>

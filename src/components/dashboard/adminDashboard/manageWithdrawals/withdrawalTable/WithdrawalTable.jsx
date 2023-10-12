@@ -6,6 +6,7 @@ import rightArrow from "../../../../../svgs/right-arrow.svg";
 import { useCtx } from "../../../../../context";
 import Loading from "../../../../Loading";
 import { MSG_DEFAULT_ERR } from "../../../../../config/constants";
+import { formatToDecimalPlace } from "../../../../../utils/normalizers";
 
 const WithdrawalTable = () => {
   const [data, setData] = useState([]);
@@ -101,7 +102,7 @@ const WithdrawalTable = () => {
         <tr key={item.id}>
           <td>{item.user.username}</td>
           <td>{item.user.email}</td>
-          <td>{item.amount}</td>
+          <td>{formatToDecimalPlace(item.amount, true)}</td>
           <td>{item.paymentType}</td>
           <td>{item.status}</td>
           <td>

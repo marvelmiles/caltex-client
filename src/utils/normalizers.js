@@ -1,4 +1,4 @@
-export const formatToDecimalPlace = (number, toLocale) => {
+export const formatToDecimalPlace = (number = 0, toLocale) => {
   number = Number(number) || 0;
 
   if (number === 0) return "00.00";

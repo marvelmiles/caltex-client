@@ -1,98 +1,58 @@
 import React from "react";
-import ReactDoM from "react-dom";
-import { useState, useEffect } from "react";
-import Cookies from "js-cookie";
-import { Link } from "react-router-dom";
 import "./starterplanCrypto.css";
-import caltexTrader from "../../images/caltexTrader.png";
-import logo from "../../images/logo (1).png";
-import john from "../../images/John.jpg";
-import forex from "../../images/forex.jpg";
-import crypto from "../../images/crypto.png";
-import withdraw from "../../images/withdraw.jpg";
-import help from "../../images/help.png";
-import profile from "../../images/profile.png";
-import deposit from "../../images/deposit.png";
-import legal from "../../images/legal.png";
-import logout from "../../images/logout.png";
-import closedeye from "../../images/closedeye.png";
-import backarrow from "../../images/backArrow.png";
-import { BrowserRouter as Router, Route } from "react-router-dom";
-import { BiSolidDashboard } from "react-icons/bi";
+import Layout from "../Layout";
+import { Link } from "react-router-dom";
 import ArrowAndTab from "../ArrowAndTab";
-import useAuth from "../../hooks/useAuth";
-import DashboardNav from "../dashboard/DashboardNav";
-import Sidebar from "../dashboard/Sidebar";
 
 const StarterplanCrypto = () => {
-  const { currentUser } = useAuth();
-
   return (
-    <div class="dashboard-container">
-      <div class="board">
-        <Sidebar />
+    <Layout>
+      <ArrowAndTab />
 
-        <div class="dashboard-content">
-          <div class="board-content">
-            {/*
-         This is the Container that displays "Welome back John" 
-        */}
-
-            <DashboardNav />
-
-            <ArrowAndTab />
-
-            {/* <!--Starter Plan Crypto--> */}
-            <div class="starter-planCrypto">
-              <div class="starter-planC">
-                <h4>Starter Plan</h4>
-                <p>
-                  <i class="fa fa-check" id="check"></i>Minimum Investment:$300
-                </p>
-                <p>
-                  <i class="fa fa-check" id="check"></i>Maximum
-                  Investment:$15,000
-                </p>
-                <p>
-                  <i class="fa fa-check" id="check"></i>Withdrawal fee:5%
-                  withdrawal charges
-                </p>
-                <p>
-                  <i class="fa fa-check" id="check"></i>3 stages referral
-                  commission
-                </p>
-                <p>
-                  <i class="fa fa-check" id="check"></i>10% referral for first
-                  person
-                </p>
-                <p>
-                  <i class="fa fa-check" id="check"></i>7% referral for second
-                  person
-                </p>
-                <p>
-                  <i class="fa fa-check" id="check"></i>3% referral for third
-                  person
-                </p>
-              </div>
-              <div class="investment-buttons">
-                <Link
-                  to="/CryptoInvestForms/starterPlanInvC"
-                  class="invest-starterCrypto"
-                >
-                  Invest
-                </Link>
-                <Link
-                  to="/Invest/InvestPage?tradeType=forex"
-                  class="change-starterCrypto"
-                >
-                  Change Plan
-                </Link>
-              </div>
-            </div>
-          </div>
+      {/* <!--Starter Plan Crypto--> */}
+      <div class="starter-planCrypto">
+        <div class="starter-planC">
+          <h4>Starter Plan</h4>
+          <p>
+            <i class="fa fa-check" id="check"></i>Minimum Investment:$300
+          </p>
+          <p>
+            <i class="fa fa-check" id="check"></i>Maximum Investment:$15,000
+          </p>
+          <p>
+            <i class="fa fa-check" id="check"></i>Withdrawal fee:5% withdrawal
+            charges
+          </p>
+          <p>
+            <i class="fa fa-check" id="check"></i>3 stages referral commission
+          </p>
+          <p>
+            <i class="fa fa-check" id="check"></i>10% referral for first person
+          </p>
+          <p>
+            <i class="fa fa-check" id="check"></i>7% referral for second person
+          </p>
+          <p>
+            <i class="fa fa-check" id="check"></i>3% referral for third person
+          </p>
+        </div>
+        <div class="investment-buttons">
+          <Link
+            to="/CryptoInvestForms/starterPlanInvC"
+            class="invest-starterCrypto"
+          >
+            Invest
+          </Link>
+          <Link
+            replace
+            to="/Invest/InvestPage?tradeType=forex"
+            class="change-starterCrypto"
+          >
+            Change Plan
+          </Link>
         </div>
       </div>
-    </div>
+    </Layout>
   );
 };
 

@@ -42,6 +42,7 @@ const MasterplanCrypto = () => {
             Invest
           </Link>
           <Link
+            replace
             to="/Invest/InvestPage?tradeType=forex"
             class="change-masterCrypto"
           >

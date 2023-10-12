@@ -42,6 +42,7 @@ const ProfessionalplanCrypto = () => {
             Invest
           </Link>
           <Link
+            replace
             to="/Invest/InvestPage?tradeType=forex"
             class="change-professionalCrypto"
           >

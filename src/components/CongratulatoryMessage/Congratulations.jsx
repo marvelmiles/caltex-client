@@ -2,8 +2,14 @@ import React from "react";
 import "./Congratulations.css";
 import { Link } from "react-router-dom";
 import Layout from "../Layout";
+import { useLocation } from "react-router-dom";
+import Redirect from "../Redirect";
 
 const Congratulations = () => {
+  const { state = {} } = useLocation();
+
+  if (!state?.invested) return <Redirect to="/Deposit/DepositPage" />;
+
   return (
     <Layout>
       <div className="centerCongratMsg">

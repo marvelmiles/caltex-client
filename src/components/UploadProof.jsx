@@ -8,7 +8,7 @@ import { BsFileEarmark } from "react-icons/bs";
 import useForm from "../hooks/useForm";
 import { useCtx } from "../context";
 import http from "../api/http";
-import { StyledLink } from "../styled";
+import { useNavigate } from "react-router-dom";
 
 const UploadProof = ({
   id = "payment-proof",
@@ -29,6 +29,8 @@ const UploadProof = ({
   });
 
   const { setSnackBar } = useCtx();
+
+  const navigate = useNavigate();
 
   const onSubmit = useCallback(
     async e => {
@@ -52,23 +54,16 @@ const UploadProof = ({
         if (!res.success) throw res;
 
         resetForm();
-        setSnackBar({
-          message: (
-            <Typography>
-              Transaction details have been received. Please await confirmation
-              or <StyledLink to="/u/dashboard">check your balance</StyledLink>.
-            </Typography>
-          ),
-          severity: "success"
+        navigate("/CongratulatoryMessage/Congratulations", {
+          state: { invested: true }
         });
       } catch (err) {
         console.log(err);
-        console.log(err.message);
         setSnackBar(err.message);
         resetForm(true);
       }
     },
-    [handleSubmit, setSnackBar, resetForm, placeholders]
+    [handleSubmit, setSnackBar, resetForm, placeholders, navigate]
   );
 
   return (

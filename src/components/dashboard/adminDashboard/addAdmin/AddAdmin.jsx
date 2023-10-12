@@ -6,13 +6,21 @@ import http from "../../../../api/http";
 import Toast from "../../profile/toast/Toast";
 import { Link } from "react-router-dom";
 import Layout from "../../../Layout";
+import { Button } from "@mui/material";
+import { useCtx } from "../../../../context";
+
+// changed handleSwap -> closeToast
+// by default you want to goback not dashboard...
+
+// replacing setAddError -> setSnackBar. using a text doesn't feel
+// to good
 
 const AddAdmin = () => {
   const [isSuccessModalOpen, setIsSuccessModalOpen] = useState(false);
 
-  const [apiError, setApiError] = useState(null);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const apiEndpoint = "https://caltex-api.onrender.com/api/auth/create-admin";
+  const { setSnackBar } = useCtx();
 
   const [formData, setFormData] = useState({
     username: "",
@@ -32,28 +40,33 @@ const AddAdmin = () => {
   const handleSubmit = async e => {
     e.preventDefault();
     try {
-      const response = await http.post(apiEndpoint, formData, {
+      console.log("submitting...");
+
+      setIsSubmitting(true);
+
+      const response = await http.post("/auth/create-admin", formData, {
         withCredentials: true
       });
 
-      if (response.status === 200) {
-        console.log("Data sent successfully", response);
-        handleSuccess();
-      } else {
-        const errorMessage = await response.text();
-        console.error("Error sending data to the API:", errorMessage);
-        setApiError(errorMessage);
-      }
+      if (!response.success) throw response;
+
+      console.log("Data sent successfully", response);
+
+      setFormData({});
+      handleSuccess();
     } catch (error) {
       console.error("An error occurred:", error.message);
-      setApiError("An error occurred. Please try again later.");
+      setSnackBar(error.message);
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
   const [swap, setSwap] = useState(false);
 
-  const handleSwap = () => {
-    navigate("/u/dashboard");
+  const closeToast = () => {
+    setSwap(false);
+    setIsSuccessModalOpen(false);
   };
 
   const handleSuccess = () => {
@@ -64,7 +77,7 @@ const AddAdmin = () => {
   const navigate = useNavigate();
 
   const handleProceed = () => {
-    navigate("/u/dashboard");
+    navigate(-1);
   };
 
   return (
@@ -82,7 +95,7 @@ const AddAdmin = () => {
             <form action="" onSubmit={handleSubmit}>
               <div className={styles.custom_input_cont}>
                 <CustomInput
-                  label="Full Name"
+                  label="Username"
                   name="username"
                   type="text"
                   sx={{ width: "623px", height: "65px" }}
@@ -105,13 +118,33 @@ const AddAdmin = () => {
                 <CustomInput
                   label="Confirm Password"
                   name="confirmPassword"
-                  type="text"
+                  type="password"
                   sx={{ width: "623px", height: "65px" }}
                   onChange={handleInputChange}
                 />
-                <button type="submit" className={styles.btn}>
+
+                {/*updated the button comp because i needed to style
+                button on disabled... which the normal css for me would
+                be... if you can style it with normal css you can 
+                change it if you like..
+                */}
+
+                {/* <button type="submit" className={styles.btn}>
                   Add Admin
-                </button>
+                </button> */}
+
+                <Button
+                  type="submit"
+                  variant="contained"
+                  disabled={isSubmitting}
+                  style={{
+                    cursor: isSubmitting ? "not-allowed" : "pointer",
+                    width: "623px",
+                    padding: "16px"
+                  }}
+                >
+                  Add Admin
+                </Button>
               </div>
             </form>
             <Link to="/manageAdmin/ManageAdmin">
@@ -124,11 +157,10 @@ const AddAdmin = () => {
         <Toast
           message={`${formData.username} has been added as admin at Caltex`}
           btnText="Go back"
-          closeModal={handleSwap}
+          closeModal={closeToast}
           Styles={styles.success_btn}
         />
       )}
-      {apiError && <p className={styles.errorMessage}>{apiError}</p>}
     </Layout>
   );
 };

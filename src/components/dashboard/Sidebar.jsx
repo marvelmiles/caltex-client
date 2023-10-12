@@ -21,10 +21,6 @@ const Sidebar = () => {
   const { currentUser } = useAuth();
 
   const { isSuperAdmin, isAdmin } = currentUser;
-  // this fake user was used for testing, should be deleted after
-  // const { data } = fakeUser;
-
-  // const { isAdmin } = data;
 
   const [bgActive, setBgactive] = useState(false);
 
@@ -77,15 +73,26 @@ const Sidebar = () => {
               Manage Withdrawal
             </Link>
             {isSuperAdmin && (
-              <Link
-                to="/addAdmin/AddAdmin"
-                class="control"
-                id={bgActive ? styles.colorActive : ""}
-                onclick={() => setBgactive(!bgActive)}
-              >
-                <img src={admin} id="other-icon" alt="withdraw-icon" />
-                Add Admin
-              </Link>
+              <>
+                <Link
+                  to="/manageAdmin/ManageAdmin"
+                  class="control"
+                  id={bgActive ? styles.colorActive : ""}
+                  onclick={() => setBgactive(!bgActive)}
+                >
+                  <img src={admin} id="other-icon" alt="withdraw-icon" />
+                  Manage Admins
+                </Link>
+                <Link
+                  to="/addAdmin/AddAdmin"
+                  class="control"
+                  id={bgActive ? styles.colorActive : ""}
+                  onclick={() => setBgactive(!bgActive)}
+                >
+                  <img src={admin} id="other-icon" alt="withdraw-icon" />
+                  Add Admin
+                </Link>
+              </>
             )}
 
             <Link to="/auth/login">

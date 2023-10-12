@@ -4,10 +4,14 @@ import http from "../../../../../api/http";
 import leftArrow from "../../../../../svgs/left-arrow.svg";
 import rightArrow from "../../../../../svgs/right-arrow.svg";
 import { useCtx } from "../../../../../context";
+import Loading from "../../../../Loading";
+import { MSG_DEFAULT_ERR } from "../../../../../config/constants";
 
 const WithdrawalTable = () => {
   const [data, setData] = useState([]);
   const [currentPage, setCurrentPage] = useState(0);
+  const [loading, setLoading] = useState(true);
+
   const itemsPerPage = 10; // Adjust the number of items per page as needed
 
   const { setSnackBar } = useCtx();
@@ -17,12 +21,15 @@ const WithdrawalTable = () => {
     const fetchData = async () => {
       try {
         const response = await http.get(
-          "https://caltex-api.onrender.com/api/transactions?required[transactionType]=withdrawal&required[status]=awaiting",
+          "/transactions?required[transactionType]=withdrawal&required[status]=awaiting",
           { withCredentials: true }
         );
         setData(response.data.data);
       } catch (error) {
         console.error("Error fetching data:", error);
+        setLoading(MSG_DEFAULT_ERR);
+      } finally {
+        setLoading(false);
       }
     };
 
@@ -37,13 +44,18 @@ const WithdrawalTable = () => {
       node.style.cursor = "not-allowed";
 
       const req = await http.patch(
-        `https://caltex-api.onrender.com/api/transactions/${transId}/confirm`,
+        `/transactions/${transId}/confirm`,
         {},
         { withCredentials: true }
       );
+
       if (req.status === 200) {
         setData(data => data.filter(tran => tran.id !== transId));
-        setSnackBar(req.data.message);
+
+        setSnackBar({
+          message: req.message,
+          severity: "success"
+        });
       }
     } catch (error) {
       // Throw a failure Toast
@@ -78,26 +90,34 @@ const WithdrawalTable = () => {
   };
 
   const renderTableData = () => {
-    return data.slice(startIndex, endIndex).map(item => (
-      <tr key={item.id}>
-        <td>{item.user.username}</td>
-        <td>{item.user.email}</td>
-        <td>{item.amount}</td>
-        <td>{item.paymentType}</td>
-        <td>{item.status}</td>
-        <td>
-          <button
-            type="button"
-            id={styles.btn}
-            onClick={e => {
-              handleConfirmWithdrawal(item.id, e);
-            }}
-          >
-            Confirm Withdrawal
-          </button>
+    return loading ? (
+      <tr>
+        <td colspan={5}>
+          <Loading />
         </td>
       </tr>
-    ));
+    ) : (
+      data.slice(startIndex, endIndex).map(item => (
+        <tr key={item.id}>
+          <td>{item.user.username}</td>
+          <td>{item.user.email}</td>
+          <td>{item.amount}</td>
+          <td>{item.paymentType}</td>
+          <td>{item.status}</td>
+          <td>
+            <button
+              type="button"
+              id={styles.btn}
+              onClick={e => {
+                handleConfirmWithdrawal(item.id, e);
+              }}
+            >
+              Confirm Withdrawal
+            </button>
+          </td>
+        </tr>
+      ))
+    );
   };
 
   return (

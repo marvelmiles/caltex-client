@@ -57,10 +57,17 @@ import AddAdmin from "./components/dashboard/adminDashboard/addAdmin/AddAdmin";
 import ManageAdmin from "./components/dashboard/adminDashboard/addAdmin/manageAdmin/ManageAdmin";
 import { defaultUser } from "./context/reducers/userReducer";
 
-// WORKED ON THE INVEST AND PAYMENT SCREEN SOME COMPONENT ARE
-// HAD TO BREAKDOWN UI INTO BIT OF COMPONENT BECAUSE OF THE CODE IS
-// DIRTY AND REPITITIVE. MAJORLY THE INVESTMENT DASHBOARD AND PAYMENT
-// SCREEN IS MEANT TO BE A REUSABLE UI OF FEW COMPONENT.
+// Added Layout component to give more layout structure
+// All api to backend should be called with the http module and
+// you don't have to directly call the https... the baseUrl is set
+
+// by default. The only thing is you have to change the === to !== in
+// devlopment within you computer and change it back to === when about
+// to push to keep consitency and avoid recurring issues...
+
+// added admin navigation to menubar
+// it is important not to put error message in paragraph text...
+// rather the setSnackBar fxn is their to give more better view
 
 const App = () => {
   const [theme] = useState(createTheme());
@@ -183,6 +190,9 @@ const App = () => {
             transition: "background-color 5000s ease-in-out 0s",
             textFillColor: theme.palette.text.primary,
             caretColor: theme.palette.text.primary
+          },
+          button: {
+            cursor: "pointer"
           }
         }}
       />

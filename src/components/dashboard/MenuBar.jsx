@@ -10,8 +10,13 @@ import deposit from "../../images/deposit.png";
 import legal from "../../images/legal.png";
 import logout from "../../images/logout.png";
 import { BiSolidDashboard } from "react-icons/bi";
+import useAuth from "../../hooks/useAuth";
 
 const MenuBar = ({ isVisible, onClose }) => {
+  const {
+    currentUser: { isAdmin }
+  } = useAuth();
+
   return (
     <div>
       {isVisible && (
@@ -56,6 +61,16 @@ const MenuBar = ({ isVisible, onClose }) => {
             <img src={legal} id="other-icon" alt="legal-icon" />
             Legal Documents
           </Link>
+          {isAdmin ? (
+            <>
+              {[{ to: "" }].map((l, i) => (
+                <Link to="/legalDocument/LegalDocument" class="linkss">
+                  <img src={legal} id="other-icon" alt="legal-icon" />
+                  Legal Documents
+                </Link>
+              ))}
+            </>
+          ) : null}
           <Link to="/auth/login" class="linkss">
             <img src={logout} id="other-icon" alt="logout-icon" />
             Logout

@@ -83,73 +83,81 @@ const AddAdmin = () => {
   return (
     <Layout>
       {!swap && (
-        <div class={styles.main_cont}>
-          <ul className={styles.ul}>
-            <li>
-              <span>Add Admin</span>
-              <span>Allow multiple admin to manage users!</span>
-            </li>
-            <li onClick={handleProceed}>Go Back</li>
-          </ul>
-          <div className={styles.form_div}>
-            <form action="" onSubmit={handleSubmit}>
-              <div className={styles.custom_input_cont}>
-                <CustomInput
-                  label="Username"
-                  name="username"
-                  type="text"
-                  sx={{ width: "623px", height: "65px" }}
-                  onChange={handleInputChange}
-                />
-                <CustomInput
-                  label="Email Address"
-                  name="email"
-                  type="text"
-                  sx={{ width: "623px", height: "65px" }}
-                  onChange={handleInputChange}
-                />
-                <CustomInput
-                  label="Password"
-                  name="password"
-                  type="password"
-                  sx={{ width: "623px", height: "65px" }}
-                  onChange={handleInputChange}
-                />
-                <CustomInput
-                  label="Confirm Password"
-                  name="confirmPassword"
-                  type="password"
-                  sx={{ width: "623px", height: "65px" }}
-                  onChange={handleInputChange}
-                />
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center"
+          }}
+        >
+          <div class={styles.main_cont}>
+            <ul className={styles.ul}>
+              <li>
+                <span>Add Admin</span>
+                <span>Allow multiple admin to manage users!</span>
+              </li>
+              <li onClick={handleProceed}>Go Back</li>
+            </ul>
+            <div className={styles.form_div}>
+              <form action="" onSubmit={handleSubmit}>
+                <div className={styles.custom_input_cont}>
+                  <CustomInput
+                    label="Username"
+                    name="username"
+                    type="text"
+                    sx={{ width: "623px", height: "65px" }}
+                    onChange={handleInputChange}
+                  />
+                  <CustomInput
+                    label="Email Address"
+                    name="email"
+                    type="text"
+                    sx={{ width: "623px", height: "65px" }}
+                    onChange={handleInputChange}
+                  />
+                  <CustomInput
+                    label="Password"
+                    name="password"
+                    type="password"
+                    sx={{ width: "623px", height: "65px" }}
+                    onChange={handleInputChange}
+                  />
+                  <CustomInput
+                    label="Confirm Password"
+                    name="confirmPassword"
+                    type="password"
+                    sx={{ width: "623px", height: "65px" }}
+                    onChange={handleInputChange}
+                  />
 
-                {/*updated the button comp because i needed to style
+                  {/*updated the button comp because i needed to style
                 button on disabled... which the normal css for me would
                 be... if you can style it with normal css you can 
                 change it if you like..
                 */}
 
-                {/* <button type="submit" className={styles.btn}>
+                  {/* <button type="submit" className={styles.btn}>
                   Add Admin
                 </button> */}
 
-                <Button
-                  type="submit"
-                  variant="contained"
-                  disabled={isSubmitting}
-                  style={{
-                    cursor: isSubmitting ? "not-allowed" : "pointer",
-                    width: "623px",
-                    padding: "16px"
-                  }}
-                >
-                  Add Admin
-                </Button>
-              </div>
-            </form>
-            <Link to="/manageAdmin/ManageAdmin">
-              <span id={styles.click}>Click here to Manage Admin</span>
-            </Link>
+                  <Button
+                    type="submit"
+                    variant="contained"
+                    disabled={isSubmitting}
+                    style={{
+                      cursor: isSubmitting ? "not-allowed" : "pointer",
+                      width: "623px",
+                      padding: "16px"
+                    }}
+                  >
+                    Add Admin
+                  </Button>
+                </div>
+              </form>
+              <Link to="/manageAdmin/ManageAdmin">
+                <span id={styles.click}>Click here to Manage Admin</span>
+              </Link>
+            </div>
           </div>
         </div>
       )}

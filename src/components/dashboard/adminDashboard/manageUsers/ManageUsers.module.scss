@@ -9,6 +9,7 @@
   display: flex;
   justify-content: space-between;
   padding: 0 40px;
+  align-items: center;
 
   li {
     color: #120efb;
@@ -40,7 +41,7 @@
       line-height: normal;
 
       img {
-       margin: 8px 0 0 0;
+        margin: 8px 0 0 0;
       }
     }
 

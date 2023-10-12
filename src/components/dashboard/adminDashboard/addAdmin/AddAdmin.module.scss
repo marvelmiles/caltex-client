@@ -1,82 +1,82 @@
 .main_cont {
- padding: 50px 100px;
- font-family: 'Poppins', sans-serif;
+  padding: 50px 100px;
+  font-family: "Poppins", sans-serif;
 }
 
 .ul {
- list-style-type: none;
- display: flex;
- justify-content: space-between;
- align-items: center;
- padding: 0;
-
- li {
-  color: #1E1E1E;
-  font-size: 16px;
-  font-style: normal;
-  font-weight: 600;
-  line-height: normal;
-
+  list-style-type: none;
   display: flex;
-  flex-direction: column;
-  gap: 10px;
-
-  span:nth-child(2) {
-   font-weight: 400;
-  }
- }
-
- li:nth-child(2) {
-  border-radius: 5px;
-  border: 1px solid #1E1E1E;
-  background: #FFF;
-  display: inline-flex;
-  padding: 13px 48px 13px 49px;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
-  cursor: pointer;
- }
+  padding: 0;
+
+  li {
+    color: #1e1e1e;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+
+    span:nth-child(2) {
+      font-weight: 400;
+    }
+  }
+
+  li:nth-child(2) {
+    border-radius: 5px;
+    border: 1px solid #1e1e1e;
+    background: #fff;
+    display: inline-flex;
+    padding: 13px 48px 13px 49px;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+  }
 }
 
 .custom_input_cont {
- display: flex;
- flex-direction: column;
- gap: 40px;
- margin: 50px 0 5px 0;
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+  margin: 50px 0 5px 0;
 }
 
 .btn {
- display: flex;
- width: 623px;
- padding: 24px 0px 20px 0px;
- justify-content: center;
- align-items: center;
- border-radius: 5px;
- background: #120EFB;
- color: #fff;
- font-family: 'Poppins', sans-serif;
- font-size: 16px;
- font-style: normal;
- font-weight: 700;
- line-height: normal;
- margin: 40px 0 0 0;
- border: none;
- outline: none;
+  display: flex;
+  width: 623px;
+  padding: 24px 0px 20px 0px;
+  justify-content: center;
+  align-items: center;
+  border-radius: 5px;
+  background: #120efb;
+  color: #fff;
+  font-family: "Poppins", sans-serif;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+  margin: 40px 0 0 0;
+  border: none;
+  outline: none;
 }
 
 .success_btn {
- background: none !important;
- color: #000 !important;
- border: 1px solid #1E1E1E !important;
+  background: none !important;
+  color: #000 !important;
+  border: 1px solid #1e1e1e !important;
 }
 
 #click {
- margin: 10px 0 50px 495px;
- color: #000;
- font-family: 'Poppins', sans-serif;
- font-size: 10px;
- font-style: normal;
- font-weight: 300;
- line-height: normal;
- cursor: pointer;
+  margin: 10px 0 50px 495px;
+  color: #000;
+  font-family: "Poppins", sans-serif;
+  font-size: 10px;
+  font-style: normal;
+  font-weight: 300;
+  line-height: normal;
+  cursor: pointer;
 }

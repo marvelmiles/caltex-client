@@ -70,14 +70,18 @@ const FixedHeaderTable = () => {
         </tr>
       );
     }
-    return data.map(item => (
+    return data.slice(0, 1).map((item) => (
       <tr key={item?.id}>
-        <td>{item?.plan}</td>
-        <td>{item?.amount}</td>
-        <td>{item?.roi}</td>
-        <td>{item?.roiPct}</td>
-        <td>{moment(item?.startDate).format(dateFormat)}</td>
-        <td>{moment(item?.endDate).format(dateFormat)}</td>
+        <td id={styles.table_data}>{item?.plan}</td>
+        <td id={styles.table_data}>{item?.amount}</td>
+        <td id={styles.table_data}>{item?.roi}</td>
+        <td id={styles.table_data}>{item?.roiPct}</td>
+        <td id={styles.table_data}>
+          {moment(item?.startDate).format(dateFormat)}
+        </td>
+        <td id={styles.table_data}>
+          {moment(item?.endDate).format(dateFormat)}
+        </td>
       </tr>
     ));
   };

@@ -80,14 +80,14 @@ const HistoryTable = ({ transactionType, status, tradeType }) => {
 
       return (
         <tr key={i}>
-          <td>{item.currency}</td>
-          <td>{item.amount}</td>
-          <td>{item.paymentType}</td>
-          <td>{item.transactionType || sep}</td>
-          <td>{item.walletAddress || sep}</td>
-          <td>{item.localPayment?.currency || sep}</td>
-          <td>{item.status}</td>
-          <td>
+          <td id={styles.table_data}>{item.currency}</td>
+          <td id={styles.table_data}>{item.amount}</td>
+          <td id={styles.table_data}>{item.paymentType}</td>
+          <td id={styles.table_data}>{item.transactionType || sep}</td>
+          <td id={styles.table_data}>{item.walletAddress || sep}</td>
+          <td id={styles.table_data}>{item.localPayment?.currency || sep}</td>
+          <td id={styles.table_data}>{item.status}</td>
+          <td id={styles.table_data}>
             {item.paymentProofUrl ? (
               <Link
                 to={item.paymentProofUrl}

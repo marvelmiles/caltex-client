@@ -83,7 +83,7 @@ const UserTable = () => {
             )}
           </td>
           <td>
-            <button type="button" onClick={() => handleManageUser(item)}>
+            <button id={styles.user_btn} type="button" onClick={() => handleManageUser(item)}>
               Manage
             </button>
           </td>

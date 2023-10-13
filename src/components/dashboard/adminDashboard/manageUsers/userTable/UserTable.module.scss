@@ -19,23 +19,24 @@ td {
   border: none;
   text-align: center;
   padding: 10px 0;
+}
 
-  button {
-    border-radius: 5px;
-    background: #F0A617;
-    display: inline-flex;
-    padding: 19px 46px 19px 47px;
-    justify-content: center;
-    align-items: center;
-    color: #FFF;
-    font-family: 'Poppins', sans-serif;
-    font-size: 18px;
-    font-style: normal;
-    font-weight: 400;
-    line-height: normal;
-    border: none;
-    cursor: pointer;
-  }
+#user_btn {
+  border-radius: 5px;
+  background: #F0A617;
+  display: inline-flex;
+  width: 170px;
+  justify-content: center;
+  align-items: center;
+  color: #FFF;
+  font-family: 'Poppins', sans-serif;
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  border: none;
+  cursor: pointer;
+
 }
 
 td:nth-child(3) {

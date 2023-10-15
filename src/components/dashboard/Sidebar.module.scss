@@ -2,9 +2,10 @@
   border-radius: 5px;
   background: #fff;
   width: 387px;
-  height: 358px;
+  height: auto;
   font-family: "Poppins", sans-serif;
   padding: 0;
+  padding-bottom: 20px;
   border: 1px solid rgba(215, 210, 210, 0.75);
   position: absolute;
   margin: 80px 0 0 -180px;
@@ -16,7 +17,7 @@
     font-style: normal;
     font-weight: 400;
     line-height: normal;
-    padding: 0 0 0 80px;
+    padding: 0 0 10px 20px;
     list-style-type: none;
     display: flex;
     gap: 3px;
@@ -63,10 +64,10 @@
   }
 
   li:nth-child(4) {
-    margin-top: 40px;
+    margin-top: 0px;
     width: 407px;
     border-top: 1px solid rgba(30, 30, 30, 0.05);
-    padding: 30px 0 0 80px;
+    padding: 20px 0 10px 20px;
   }
 }
 

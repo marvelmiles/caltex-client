@@ -15,9 +15,12 @@ import { Link } from "react-router-dom";
 import useAuth from "../../hooks/useAuth";
 import { BiSolidDashboard } from "react-icons/bi";
 import styles from "./Sidebar.module.scss";
+import { HOME_ORIGIN } from "../../config/constants";
+import { FiTrendingUp } from "react-icons/fi";
+import "./sidebar.css";
 
 const Sidebar = () => {
-  const { currentUser } = useAuth();
+  const { currentUser, handleSignout } = useAuth();
 
   const { isSuperAdmin, isAdmin } = currentUser;
 
@@ -93,10 +96,10 @@ const Sidebar = () => {
               </>
             )}
 
-            <Link to="/auth/login">
-              <span class="control" id=" " onclick=" ">
+            <Link to={HOME_ORIGIN} onClick={handleSignout}>
+              <span class="control">
                 <img src={logout} id="other-icon" alt="logout-icon" />
-                LogOut
+                Signout
               </span>
             </Link>
           </div>
@@ -160,6 +163,10 @@ const Sidebar = () => {
               <img src={forex} id="other-icon" alt="forex-icon" />
               Forex
             </Link>
+            <Link to="/investment/Investment" class="control">
+              <FiTrendingUp style={{ fontSize: "24px", marginRight: "10px" }} />
+              Investment
+            </Link>
             <span class="control" id="partners" onclick=" ">
               <b> PARTNERS</b>
             </span>
@@ -173,16 +180,15 @@ const Sidebar = () => {
               </span>
             </Link>
             <Link to="/legalDocument/LegalDocument">
-              {" "}
               <span class="control" id=" " onclick=" ">
                 <img src={legal} id="other-icon" alt="legal-icon" />
                 Legal Documents
               </span>
             </Link>
-            <Link to="/auth/login">
-              <span class="control" id=" " onclick=" ">
+            <Link to={HOME_ORIGIN} onClick={handleSignout}>
+              <span class="control">
                 <img src={logout} id="other-icon" alt="logout-icon" />
-                LogOut
+                Signout
               </span>
             </Link>
           </div>

@@ -9,7 +9,9 @@ export const createTheme = (theme = "light") =>
         main: "rgba(18, 14, 251, 1)"
       },
       secondary: {
-        main: "#140460"
+        main: "#f0a617",
+        contrastText: "#fff"
+        // main: "#140460"
       },
       grey: {
         main: "rgba(18, 14, 251, 0.05)"

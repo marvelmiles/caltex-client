@@ -49,8 +49,8 @@
 
 .all {
   margin-left: 25px !important;
-  border-radius: 5px ;
-  border: 0.3px solid grey!important ;
+  border-radius: 5px;
+  border: 0.3px solid grey !important ;
   justify-content: center;
   align-items: center;
   display: flex;
@@ -65,7 +65,7 @@
 }
 
 .all:hover {
-  border: 1px solid black!important;
+  border: 1px solid black !important;
   cursor: pointer;
 }
 
@@ -74,7 +74,7 @@
   gap: 19px;
   margin-right: 10px !important;
   border-radius: 5px;
-  border: 0.3px solid grey!important ;
+  border: 0.3px solid grey !important ;
   justify-content: center;
   align-items: center;
   display: flex;
@@ -89,7 +89,7 @@
 }
 
 .credit-cards:hover {
-  border: 1px solid black!important;
+  border: 1px solid black !important;
   cursor: pointer;
 }
 
@@ -97,7 +97,7 @@
   margin-left: 10px !important;
   gap: 19px;
   border-radius: 5px;
-  border: 0.3px solid grey!important ;
+  border: 0.3px solid grey !important ;
   justify-content: center;
   align-items: center;
   display: flex;
@@ -112,7 +112,7 @@
 }
 
 .cryptos:hover {
-  border: 1px solid black!important;
+  border: 1px solid black !important;
   cursor: pointer;
 }
 
@@ -134,7 +134,7 @@
 
 .cdm {
   border: 1px solid rgba(30, 30, 30, 0.3) !important;
-  width: 26%!important;
+  width: 26% !important;
   padding: 10px 12px;
   border-radius: 10px;
   margin-left: 25px;
@@ -766,7 +766,7 @@
   }
 
   .crypto-pay {
-    font-size: 11px!important;
+    font-size: 11px !important;
   }
 
   .trans-pro-del {

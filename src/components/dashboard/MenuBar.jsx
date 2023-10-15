@@ -12,10 +12,13 @@ import logout from "../../images/logout.png";
 import { BiSolidDashboard } from "react-icons/bi";
 import useAuth from "../../hooks/useAuth";
 import admin from "./../../svgs/admin.svg";
+import { HOME_ORIGIN } from "../../config/constants";
+import { FiTrendingUp } from "react-icons/fi";
 
 const MenuBar = ({ isVisible, onClose }) => {
   const {
-    currentUser: { isAdmin, isSuperAdmin }
+    currentUser: { isAdmin, isSuperAdmin },
+    handleSignout
   } = useAuth();
 
   return (
@@ -53,6 +56,10 @@ const MenuBar = ({ isVisible, onClose }) => {
           <Link to="/Invest/InvestPage?tradeType=forex" class="linkss">
             <img src={forex} id="other-icon" alt="forex-icon" />
             Forex
+          </Link>
+          <Link to="/investment/Investment" class="linkss">
+            <FiTrendingUp style={{ fontSize: "24px", marginRight: "10px" }} />
+            Investment
           </Link>
           <Link to="/help/Help" class="linkss">
             <img src={help} id="other-icon" alt="help-icon" />
@@ -96,9 +103,9 @@ const MenuBar = ({ isVisible, onClose }) => {
               )}
             </>
           ) : null}
-          <Link to="/auth/login" class="linkss">
+          <Link to={HOME_ORIGIN} onClick={handleSignout} class="linkss">
             <img src={logout} id="other-icon" alt="logout-icon" />
-            Logout
+            Signout
           </Link>
         </div>
       )}

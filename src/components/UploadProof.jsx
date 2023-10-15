@@ -5,7 +5,7 @@ import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Stack from "@mui/material/Stack";
 import { BsFileEarmark } from "react-icons/bs";
-import useForm from "../hooks/useForm";
+import useForm, { isObject } from "../hooks/useForm";
 import { useCtx } from "../context";
 import http from "../api/http";
 import { useNavigate } from "react-router-dom";
@@ -13,7 +13,8 @@ import { useNavigate } from "react-router-dom";
 const UploadProof = ({
   id = "payment-proof",
   name = id,
-  formData: placeholders
+  formData: placeholders,
+  message
 }) => {
   const {
     formData,
@@ -43,7 +44,16 @@ const UploadProof = ({
 
         if (placeholders)
           for (const key in placeholders) {
-            formData.set(key, placeholders[key]);
+            const v = placeholders[key];
+            if (isObject(v)) {
+              for (const _key in v) {
+                formData.set(`${key}[${_key}]`, v[_key]);
+              }
+            } else if (Array.isArray(v)) {
+              for (const _key of v) {
+                formData.append(key, _key);
+              }
+            } else formData.set(key, v);
           }
 
         const res = await http.post(
@@ -140,6 +150,10 @@ const UploadProof = ({
       >
         Upload
       </Button>
+
+      <Typography sx={{ mt: 1, color: "error.main", maxWidth: "400px" }}>
+        {message}
+      </Typography>
     </Box>
   );
 };

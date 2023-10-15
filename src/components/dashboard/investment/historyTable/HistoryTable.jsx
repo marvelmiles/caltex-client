@@ -3,9 +3,15 @@ import useAuth from "../../../../hooks/useAuth";
 import styles from "./HistoryTable.module.scss";
 import http from "../../../../api/http";
 import { useCtx } from "../../../../context";
-import { MSG_DEFAULT_ERR } from "../../../../config/constants";
+import {
+  MSG_DEFAULT_ERR,
+  currencySymbols,
+  DATE_FORMAT_TRANS_HIS
+} from "../../../../config/constants";
 import Loading from "../../../Loading";
 import { Link } from "react-router-dom";
+import { formatToDecimalPlace } from "../../../../utils/normalizers";
+import moment from "moment";
 
 const HistoryTable = ({ transactionType, status, tradeType }) => {
   const { setSnackBar } = useCtx();
@@ -66,7 +72,7 @@ const HistoryTable = ({ transactionType, status, tradeType }) => {
           <th id={styles.tableI}>Payment type</th>
           <th id={styles.tableI}>Transaction type</th>
           <th id={styles.tableI}>Wallet</th>
-          <th id={styles.tableI}>Local currency</th>
+          <th id={styles.tableI}>Transaction date</th>
           <th id={styles.tableI}>Status</th>
           <th id={styles.tableI}>File</th>
         </tr>
@@ -78,15 +84,22 @@ const HistoryTable = ({ transactionType, status, tradeType }) => {
     data.map((item, i) => {
       const sep = "----";
 
+      const cur = item.localPayment?.currency || "";
+
       return (
         <tr key={i}>
           <td id={styles.table_data}>{item.currency}</td>
-          <td id={styles.table_data}>{item.amount}</td>
+          <td id={styles.table_data}>
+            {currencySymbols[cur.toUpperCase()] +
+              formatToDecimalPlace(item.amount, true)}
+          </td>
           <td id={styles.table_data}>{item.paymentType}</td>
           <td id={styles.table_data}>{item.transactionType || sep}</td>
           <td id={styles.table_data}>{item.walletAddress || sep}</td>
-          <td id={styles.table_data}>{item.localPayment?.currency || sep}</td>
           <td id={styles.table_data}>{item.status}</td>
+          <td id={styles.table_data}>
+            {moment(item.createdAt).format(DATE_FORMAT_TRANS_HIS)}
+          </td>
           <td id={styles.table_data}>
             {item.paymentProofUrl ? (
               <Link

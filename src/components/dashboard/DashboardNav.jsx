@@ -84,7 +84,7 @@ const DashboardNav = () => {
                     <p>Account Information and security</p>
                   </span>
                 </li>
-                <li>
+                <li style={{ display: "none" }}>
                   <span>
                     <img src={wallet} height={16} width={16} alt="wallet" />
                   </span>

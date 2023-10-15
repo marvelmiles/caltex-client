@@ -229,7 +229,7 @@ const DepositPage = () => {
               sx={{
                 marginLeft: "0",
                 "#number": {
-                  width: "calc(100% - 85px)"
+                  width: "calc(100% - 90px)"
                 }
               }}
             >

@@ -1,17 +1,18 @@
 import React from "react";
 import { useState } from "react";
-import { useSelector } from "react-redux";
+import useAuth from "../../hooks/useAuth";
 import "./dashboard.css";
 import { Link } from "react-router-dom";
 import wallet from "../../../src/svgs/profile-wallet.svg";
-import profile from "../../../src/svgs/profile-profile.svg";
 import styles from "./Sidebar.module.scss";
 import MenuBar from "./MenuBar";
+import Avatar from "@mui/material/Avatar";
+import { HOME_ORIGIN } from "../../config/constants";
 
 const DashboardNav = () => {
-  const { currentUser } = useSelector(state => state.user); // Access user data from Redux state
+  const { currentUser, handleSignout } = useAuth();
 
-  const { firstname, photoUrl, lastname, id } = currentUser;
+  const { firstname, photoUrl, lastname } = currentUser;
 
   const [isMenuBarVisible, setMenuBarVisibility] = useState(false);
 
@@ -35,13 +36,22 @@ const DashboardNav = () => {
           </div>
           <div class="welcome-asset">
             <span>
-              <img
-                src={photoUrl ? photoUrl : profile}
+              <Avatar
+                src={photoUrl}
                 height={50}
                 width={50}
-                alt="user-avatar"
                 onClick={() => setProfileMenu(!profileMenu)}
                 onMouseEnter={() => setProfileMenu(!profileMenu)}
+                sx={{
+                  position: "relative",
+                  mt: "26px",
+                  mx: "15px",
+                  border: "1px solid currentColor",
+                  borderColor: "divider",
+                  img: {
+                    m: 0
+                  }
+                }}
               />
             </span>
             {profileMenu && (
@@ -52,7 +62,20 @@ const DashboardNav = () => {
                 <li>{firstname}</li>
                 <li>
                   <span>
-                    <img src={profile} height={16} width={16} alt="profile" />
+                    <Avatar
+                      src={photoUrl}
+                      sx={{
+                        height: 20,
+                        width: 20,
+                        mt: "20px",
+                        mr: "15px",
+                        border: "1px solid currentColor",
+                        borderColor: "divider",
+                        img: {
+                          m: 0
+                        }
+                      }}
+                    />
                   </span>
                   <span>
                     <p>
@@ -61,9 +84,9 @@ const DashboardNav = () => {
                     <p>Account Information and security</p>
                   </span>
                 </li>
-                <li>
+                <li style={{ display: "none" }}>
                   <span>
-                    <img src={wallet} height={16} width={8} alt="wallet" />
+                    <img src={wallet} height={16} width={16} alt="wallet" />
                   </span>
                   <span>
                     <p>My wallet</p>
@@ -71,7 +94,7 @@ const DashboardNav = () => {
                   </span>
                 </li>
                 <li>
-                  <Link to="/auth/login">
+                  <Link to={HOME_ORIGIN} onClick={handleSignout}>
                     <button type="button">Sign Out</button>
                   </Link>
                 </li>
@@ -82,7 +105,12 @@ const DashboardNav = () => {
                 {firstname} {lastname}
               </p>
             </span>
-            <span class="bell-notification" id=" " onclick=" ">
+            <span
+              class="bell-notification"
+              id=" "
+              onclick=" "
+              style={{ display: "none" }}
+            >
               <i class="fa fa-bell" style={{ fontSize: "22px" }}></i>
             </span>
           </div>

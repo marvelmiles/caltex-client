@@ -169,7 +169,7 @@ const InvestForm = ({
       resetForm();
 
       setSnackBar({
-        message: "Investment setup was successfully!",
+        message: response.message,
         severity: "success"
       });
     } catch (error) {

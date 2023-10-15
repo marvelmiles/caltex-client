@@ -11,6 +11,8 @@ import { Avatar, Box, Stack, IconButton, Button } from "@mui/material";
 import { AiOutlineCamera } from "react-icons/ai";
 import { useCtx } from "../../../context";
 import { useDispatch } from "react-redux";
+import { BsLink45Deg } from "react-icons/bs";
+import { CLIENT_ORIGIN } from "../../../config/constants";
 
 const defaultFormData = {
   firstname: "",
@@ -126,6 +128,17 @@ const Profile = () => {
 
   const fileId = "avatar-id";
 
+  const handleCopyReferralLink = () => {
+    navigator.clipboard.writeText(
+      `${CLIENT_ORIGIN}/auth/signup?ref=${currentUser.referralCode}`
+    );
+    setSnackBar({
+      message: "Refferal link copied to clipboard",
+      severity: "success",
+      autoHideDuration: 2000
+    });
+  };
+
   return (
     <Layout>
       {!swap && (
@@ -169,9 +182,8 @@ const Profile = () => {
                       <IconButton
                         sx={{
                           position: "absolute",
-                          bottom: 0,
-                          right: "0px",
-                          zIndex: 1,
+                          bottom: "1px",
+                          right: "10px",
                           backgroundColor: "grey.200",
                           "&:hover": {
                             backgroundColor: "grey.300"
@@ -207,11 +219,34 @@ const Profile = () => {
                   </div>
                 </Stack>
 
-                <span
-                  style={{ borderBottom: "3px solid rgba(240, 166, 23, 0.5)" }}
-                >
-                  Personal Information
-                </span>
+                <Stack flexWrap="wrap-reverse">
+                  <span
+                    style={{
+                      borderBottom: "3px solid rgba(240, 166, 23, 0.5)"
+                    }}
+                  >
+                    Personal Information
+                  </span>
+
+                  <span
+                    onClick={handleCopyReferralLink}
+                    style={{
+                      borderBottom: "3px solid rgba(240, 166, 23, 0.5)",
+                      cursor: "pointer"
+                    }}
+                  >
+                    Referral link
+                    <BsLink45Deg
+                      style={{
+                        fontSize: "18px",
+                        position: "relative",
+                        top: "4px",
+                        marginLeft: "5px"
+                      }}
+                    />
+                  </span>
+                </Stack>
+
                 <div className={styles.input_cont}>
                   <div>
                     <CustomInput

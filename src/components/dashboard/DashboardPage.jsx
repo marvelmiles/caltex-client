@@ -108,6 +108,10 @@ const DashboardPage = () => {
                 {
                   value: balance.awaitingTransactions,
                   label: "Awaiting Transactions"
+                },
+                {
+                  value: balance.rejectedTransactions,
+                  label: "Rejected Transactions"
                 }
               ].map((s, i) => (
                 <StatCard key={i} {...s} />

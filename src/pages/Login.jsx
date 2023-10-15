@@ -13,7 +13,10 @@ import { useNavigate } from "react-router-dom";
 import { useCtx } from "../context";
 import useAuth from "../hooks/useAuth";
 import Typography from "@mui/material/Typography";
-import { HTTP_CODE_ACCOUNT_VERIFICATION_ERROR } from "../config/constants.js";
+import {
+  HTTP_CODE_ACCOUNT_VERIFICATION_ERROR,
+  VERIFIC_TOKEN_TIMER
+} from "../config/constants.js";
 
 const Login = props => {
   const { setSnackBar } = useCtx();
@@ -65,6 +68,8 @@ const Login = props => {
         const { data } = await http.post("/auth/signin", formData, {
           withCredentials: true
         });
+
+        localStorage.removeItem(VERIFIC_TOKEN_TIMER);
 
         dispatch(signinUser(data));
 

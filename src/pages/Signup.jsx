@@ -9,7 +9,8 @@ import { StyledLink } from "../styled";
 import Typography from "@mui/material/Typography";
 import http from "../api/http";
 import { useNavigate } from "react-router-dom";
-import { HTTP_CODE_MAIL_ERROR } from "../config/constants";
+import { HTTP_CODE_MAIL_ERROR, VERIFIC_TOKEN_TIMER } from "../config/constants";
+import { useSearchParams } from "react-router-dom";
 
 export const pwdRequirementEl = (
   <ul style={{ marginLeft: "-24px" }}>
@@ -20,6 +21,10 @@ export const pwdRequirementEl = (
 );
 
 const Signup = props => {
+  const [searchParams] = useSearchParams();
+
+  const referralCode = searchParams.get("ref") || "";
+
   const agreeCheckErr = "You haven't agreed to the terms and conditions above!";
 
   const {
@@ -32,6 +37,7 @@ const Signup = props => {
   } = useForm(
     useMemo(
       () => ({
+        placeholders: { referralCode },
         rules: {
           password: {
             type: "password"
@@ -47,7 +53,7 @@ const Signup = props => {
           agreed: agreeCheckErr
         }
       }),
-      []
+      [referralCode]
     )
   );
 
@@ -67,6 +73,8 @@ const Signup = props => {
         delete formData.agreed;
 
         const { message } = await http.post("/auth/signup", formData);
+
+        localStorage.removeItem(VERIFIC_TOKEN_TIMER);
 
         setSnackBar({ message, severity: "success" });
 
@@ -175,6 +183,7 @@ const Signup = props => {
           hidePwdEye: true
         },
         {
+          readOnly: true,
           label: "Referral Code (Optional)",
           name: "referralCode",
           sx: { mb: 0 }

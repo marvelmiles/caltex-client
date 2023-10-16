@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import useAuth from "../../../../hooks/useAuth";
-import styles from "./Table.module.scss";
 import http from "../../../../api/http";
 import { useCtx } from "../../../../context";
 import {
@@ -9,6 +8,7 @@ import {
 } from "../../../../config/constants";
 import Loading from "../../../Loading";
 import moment from "moment";
+import styles from "./Table.module.scss";
 
 const FixedHeaderTable = () => {
   const { setSnackBar } = useCtx();
@@ -18,14 +18,36 @@ const FixedHeaderTable = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // Function to fetch data from the API
     const fetchData = async () => {
       try {
         const response = await http.get(`/users/${id}/investments`, {
-          withCredentials: true
-        }); // Replace with your API endpoint
+          withCredentials: true,
+        });
 
-        setData(response.data.data); // Assuming the API returns an array of data
+        const updatedData = response.data.data.map((item) => {
+          const referrals = item.user.referrals
+            ? item.user.referrals.length
+            : 0;
+
+          const baseROI = item.amount * 0.025; 
+
+          let referralBonus = 0;
+          if (referrals >= 1) {
+            referralBonus += item.amount * 0.15; // 15% for the first person
+          }
+          if (referrals >= 2) {
+            referralBonus += item.amount * 0.1; // 10% for the second person
+          }
+          if (referrals >= 3) {
+            referralBonus += item.amount * 0.07; // 7% for the third person
+          }
+
+          const updatedROI = baseROI + referralBonus;
+
+          return { ...item, roi: updatedROI };
+        });
+
+        setData(updatedData);
       } catch (error) {
         console.error("Error fetching data:", error);
         setSnackBar(MSG_DEFAULT_ERR);
@@ -34,9 +56,8 @@ const FixedHeaderTable = () => {
       }
     };
 
-    // Call the fetchData function when the component mounts
     fetchData();
-  }, [id, setSnackBar]); // The empty dependency array ensures this effect runs only once on mount
+  }, [id, setSnackBar]);
 
   const renderTableHeader = () => {
     return (
@@ -52,19 +73,18 @@ const FixedHeaderTable = () => {
       </thead>
     );
   };
-  // replace fakeData with data from the API
+
   const renderTableData = () => {
     if (loading)
       return (
         <tr>
-          <td colspan={6}>
+          <td colSpan={6}>
             <Loading />
           </td>
         </tr>
       );
 
     if (!data.length) {
-      // Handle the case when data is not an array
       return (
         <tr>
           <td colSpan="6">No data available</td>

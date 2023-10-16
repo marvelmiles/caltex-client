@@ -237,7 +237,7 @@ const InvestForm = ({
           id="doi"
           name="duration"
           placeholder="7 DAYS"
-          value={`${formData.duration} DAYS`}
+          value={`${formData.duration} Days Investment`}
           readOnly
         />
       </div>

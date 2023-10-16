@@ -7,9 +7,14 @@ import useForm from "../hooks/useForm";
 import { useCtx } from "../context";
 import { StyledLink } from "../styled";
 import Typography from "@mui/material/Typography";
+import Stack from "@mui/material/Stack";
 import http from "../api/http";
 import { useNavigate } from "react-router-dom";
-import { HTTP_CODE_MAIL_ERROR, VERIFIC_TOKEN_TIMER } from "../config/constants";
+import {
+  HTTP_CODE_MAIL_ERROR,
+  VERIFIC_TOKEN_TIMER,
+  HOME_ORIGIN
+} from "../config/constants";
 import { useSearchParams } from "react-router-dom";
 
 export const pwdRequirementEl = (
@@ -118,6 +123,19 @@ const Signup = props => {
       errors={errors}
       formData={formData}
       handleChange={handleChange}
+      postFormEl={
+        <Stack sx={{ mt: 1 }}>
+          <StyledLink to={HOME_ORIGIN}>
+            @Caltex {new Date().getFullYear()}
+          </StyledLink>
+          <StyledLink
+            state={{ user: formData }}
+            to="/auth/token-verification/account"
+          >
+            Verify token
+          </StyledLink>
+        </Stack>
+      }
       postInputsEl={
         <FormGroup sx={{ mb: 3 }}>
           <FormControlLabel

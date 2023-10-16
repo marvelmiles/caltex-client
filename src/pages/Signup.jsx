@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo } from "react";
+import React, { useCallback, useMemo, useState } from "react";
 import AuthLayout from "../components/AuthLayout";
 import FormGroup from "@mui/material/FormGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
@@ -8,18 +8,18 @@ import { useCtx } from "../context";
 import { StyledLink } from "../styled";
 import Typography from "@mui/material/Typography";
 import http from "../api/http";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { HTTP_CODE_MAIL_ERROR } from "../config/constants";
 
-export const pwdRequirementEl = (
+const pwdRequirementEl = (
   <ul style={{ marginLeft: "-24px" }}>
-    <li>Use minimum of 8 characters</li>
-    <li>Use both uppercase and lowercase</li>
-    <li>Use combination of Numbers and Alphabetical letters</li>
+    <li>Use a minimum of 8 characters</li>
+    <li>Use both uppercase and lowercase letters</li>
+    <li>Use a combination of numbers and alphabetical letters</li>
   </ul>
 );
 
-const Signup = props => {
+const Signup = (props) => {
   const agreeCheckErr = "You haven't agreed to the terms and conditions above!";
 
   const {
@@ -28,14 +28,14 @@ const Signup = props => {
     isSubmitting,
     handleChange,
     handleSubmit,
-    resetForm
+    resetForm,
   } = useForm(
     useMemo(
       () => ({
         rules: {
           password: {
-            type: "password"
-          }
+            type: "password",
+          },
         },
         required: {
           firstname: true,
@@ -44,19 +44,26 @@ const Signup = props => {
           email: true,
           password: true,
           confirmPassword: "Confirm Password is required",
-          agreed: agreeCheckErr
-        }
+          agreed: agreeCheckErr,
+        },
       }),
       []
     )
   );
 
   const { setSnackBar } = useCtx();
-
   const navigate = useNavigate();
+  const location = useLocation();
+
+  // Extract referral code from URL parameter
+  const searchParams = new URLSearchParams(location.search);
+  const referralCode = searchParams.get("referralCode");
+
+  // State to track the number of referred users
+  const [referredUsersCount, setReferredUsersCount] = useState(0);
 
   const onSubmit = useCallback(
-    async e => {
+    async (e) => {
       const { formData, withErr } = handleSubmit(e);
 
       if (!formData.agreed) return setSnackBar(agreeCheckErr);
@@ -66,21 +73,28 @@ const Signup = props => {
       try {
         delete formData.agreed;
 
+        // referral code in the registration data
+        formData.referralCode = referralCode;
+
+        // API call to register the user with the referral code and ROI
         const { message } = await http.post("/auth/signup", formData);
+
+        // Increment the referred user count on successful sign-up
+        setReferredUsersCount(referredUsersCount + 1);
 
         setSnackBar({ message, severity: "success" });
 
         navigate("/auth/token-verification/account", {
           state: {
-            user: formData
-          }
+            user: formData,
+          },
         });
 
         resetForm();
       } catch ({ message, code }) {
         resetForm({
           ...formData,
-          confirmPassword: formData.password
+          confirmPassword: formData.password,
         });
         setSnackBar(
           code === HTTP_CODE_MAIL_ERROR ? (
@@ -99,7 +113,14 @@ const Signup = props => {
         );
       }
     },
-    [handleSubmit, navigate, resetForm, setSnackBar]
+    [
+      handleSubmit,
+      navigate,
+      resetForm,
+      setSnackBar,
+      referralCode,
+      referredUsersCount,
+    ]
   );
 
   return (
@@ -122,12 +143,11 @@ const Signup = props => {
                   resetForm(
                     { ...formData, agreed: bool },
                     {
-                      errors: errors => {
+                      errors: (errors) => {
                         if (bool) delete errors.agreed;
                         else errors.agreed = agreeCheckErr;
-
                         return { ...errors };
-                      }
+                      },
                     }
                   )
                 }
@@ -136,7 +156,7 @@ const Signup = props => {
             }
             label={
               <Typography>
-                I Declare that i agree with the{" "}
+                I Declare that I agree with the{" "}
                 <StyledLink>terms and conditions</StyledLink> of operation of
                 Caltex Investment
               </Typography>
@@ -148,37 +168,38 @@ const Signup = props => {
       forms={[
         {
           label: "Firstname",
-          name: "firstname"
+          name: "firstname",
         },
         {
           label: "Lastname",
-          name: "lastname"
+          name: "lastname",
         },
         {
           label: "Username",
-          name: "username"
+          name: "username",
         },
         {
           label: "Email",
-          type: "email"
+          type: "email",
         },
         {
           label: "Password",
           type: "password",
           name: "password",
-          info: pwdRequirementEl
+          info: pwdRequirementEl,
         },
         {
           label: "Confirm Password",
           type: "password",
           name: "confirmPassword",
-          hidePwdEye: true
+          hidePwdEye: true,
         },
         {
           label: "Referral Code (Optional)",
+          value: referralCode,
           name: "referralCode",
-          sx: { mb: 0 }
-        }
+          sx: { mb: 0 },
+        },
       ]}
     />
   );

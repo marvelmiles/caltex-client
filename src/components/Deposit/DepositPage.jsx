@@ -231,7 +231,7 @@ const DepositPage = () => {
                       {" "}
                       <i className="fa fa-circle" id="circle"></i> Payments with
                       this method may at our request be subject to enhanced due
-                      dilligence and security checks to ensure that they are not
+                      diligence and security checks to ensure that they are not
                       fraudulent.
                     </p>
                     <p>
@@ -250,7 +250,7 @@ const DepositPage = () => {
                       {" "}
                       <i className="fa fa-circle" id="circle"></i> Please make
                       sure you always use the updated payment details that will
-                      be presented to you after you click Deposit. HFM will bear
+                      be presented to you after you click Deposit. Caltex will bear
                       no responsibility for crediting and returning funds if you
                       use invalid payment details.
                     </p>
@@ -267,7 +267,7 @@ const DepositPage = () => {
                     id="crypto-form-deposit"
                     style={{ display: showNext ? "none" : "block" }}
                   >
-                    {/* <div className="enter-amount" id="enter-amount">
+                    <div className="enter-amount" id="enter-amount">
                               <h4>Enter amount</h4>
                               <select
                                 disabled={isSubmitting}
@@ -296,7 +296,7 @@ const DepositPage = () => {
                                 placeholder=" "
                                 onChange={e => setAmount(e.target.value)}
                               />
-                            </div> */}
+                            </div>
 
                     <div className="withdrawal-network" id="withdrawal-network">
                       <h4>Accepted Cryptocurrencies</h4>
@@ -507,7 +507,7 @@ const DepositPage = () => {
                     our independent international payment processors.
                   </p>
                   <p>
-                    <i className="fa fa-circle" id="circle"></i> CALTEX ahall
+                    <i className="fa fa-circle" id="circle"></i> CALTEX shall
                     not accept any deposits from any third-party to the
                     customer's account.
                   </p>

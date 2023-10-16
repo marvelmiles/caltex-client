@@ -14,6 +14,8 @@ import logout from "./../../images/logout.png";
 import { Link } from "react-router-dom";
 import useAuth from "../../hooks/useAuth";
 import { BiSolidDashboard } from "react-icons/bi";
+import { useDispatch } from "react-redux";
+import { signoutUser } from "../../context/reducers/userReducer";
 import styles from "./Sidebar.module.scss";
 
 const Sidebar = () => {
@@ -22,6 +24,13 @@ const Sidebar = () => {
   const { isSuperAdmin, isAdmin } = currentUser;
 
   const [bgActive, setBgactive] = useState(false);
+
+  const dispatch = useDispatch();
+
+  const handleLogout = () => {
+    dispatch(signoutUser());
+    window.location.href = "https://www.caltextrader.com/";
+  };
 
   return (
     <div class="dashboard-panel" id="sidenav">
@@ -93,7 +102,7 @@ const Sidebar = () => {
               </>
             )}
 
-            <Link to="/auth/login">
+            <Link to="" onClick={handleLogout}>
               <span class="control" id=" " onclick=" ">
                 <img src={logout} id="other-icon" alt="logout-icon" />
                 LogOut
@@ -179,7 +188,7 @@ const Sidebar = () => {
                 Legal Documents
               </span>
             </Link>
-            <Link to="/auth/login">
+            <Link to="" onClick={handleLogout}>
               <span class="control" id=" " onclick=" ">
                 <img src={logout} id="other-icon" alt="logout-icon" />
                 LogOut

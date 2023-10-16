@@ -37,7 +37,7 @@ const DepositPage = () => {
   const [address, setAddress] = useState(
     "bc1q6p3yppgffw08dkeau0cnnpxhemkadnr07p3jq0"
   );
-  const [showNext, setShowNext] = useState(true);
+  const [showNext, setShowNext] = useState(false);
 
   const addressRef = useRef();
 
@@ -101,8 +101,9 @@ const DepositPage = () => {
               {" "}
               <i className="fa fa-circle" id="circle"></i> Please make sure you
               always use the updated payment details that will be presented to
-              you after you click Deposit. Caltex will bear no responsibility for
-              crediting and returning funds if you use invalid payment details.
+              you after you click Deposit. Caltex will bear no responsibility
+              for crediting and returning funds if you use invalid payment
+              details.
             </p>
             <p>
               {" "}

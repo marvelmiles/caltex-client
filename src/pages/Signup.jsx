@@ -66,10 +66,6 @@ const Signup = props => {
   const navigate = useNavigate();
   const location = useLocation();
 
-  // // Extract referral code from URL parameter
-  // const searchParams = new URLSearchParams(location.search);
-  // const referralCode = searchParams.get("referralCode");
-
   // State to track the number of referred users
   const [referredUsersCount, setReferredUsersCount] = useState(0);
 

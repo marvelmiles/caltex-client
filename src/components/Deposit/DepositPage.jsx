@@ -101,7 +101,7 @@ const DepositPage = () => {
               {" "}
               <i className="fa fa-circle" id="circle"></i> Please make sure you
               always use the updated payment details that will be presented to
-              you after you click Deposit. HFM will bear no responsibility for
+              you after you click Deposit. Caltex will bear no responsibility for
               crediting and returning funds if you use invalid payment details.
             </p>
             <p>
@@ -311,7 +311,7 @@ const DepositPage = () => {
             independent international payment processors.
           </p>
           <p>
-            <i className="fa fa-circle" id="circle"></i> CALTEX ahall not accept
+            <i className="fa fa-circle" id="circle"></i> CALTEX shall not accept
             any deposits from any third-party to the customer's account.
           </p>
           <p>

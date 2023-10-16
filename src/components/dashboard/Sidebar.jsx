@@ -14,8 +14,6 @@ import logout from "./../../images/logout.png";
 import { Link } from "react-router-dom";
 import useAuth from "../../hooks/useAuth";
 import { BiSolidDashboard } from "react-icons/bi";
-// import { useDispatch } from "react-redux";
-// import { signoutUser } from "../../context/reducers/userReducer";
 import styles from "./Sidebar.module.scss";
 import { HOME_ORIGIN } from "../../config/constants";
 import { FiTrendingUp } from "react-icons/fi";
@@ -27,13 +25,6 @@ const Sidebar = () => {
   const { isSuperAdmin, isAdmin } = currentUser;
 
   const [bgActive, setBgactive] = useState(false);
-
-  // const dispatch = useDispatch();
-
-  // const handleLogout = () => {
-  //   dispatch(signoutUser());
-  //   window.location.href = "https://www.caltextrader.com/";
-  // };
 
   return (
     <div class="dashboard-panel" id="sidenav">

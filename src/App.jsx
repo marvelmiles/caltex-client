@@ -49,7 +49,8 @@ import InvestTab from "./components/InvestTab";
 import backarrow from "./images/backArrow.png";
 import {
   HTTP_CODE_ACCOUNT_VERIFICATION_ERROR,
-  VERIFIC_TOKEN_TIMER
+  VERIFIC_TOKEN_TIMER,
+  HOME_ORIGIN
 } from "./config/constants";
 import CaltexCompBrief from "./components/CaltexCompanyBrief/CaltexCompBrief";
 import ManageUsers from "./components/dashboard/adminDashboard/manageUsers/ManageUsers";
@@ -59,6 +60,7 @@ import ManageWithdrawals from "./components/dashboard/adminDashboard/manageWithd
 import AddAdmin from "./components/dashboard/adminDashboard/addAdmin/AddAdmin";
 import ManageAdmin from "./components/dashboard/adminDashboard/addAdmin/manageAdmin/ManageAdmin";
 import { defaultUser } from "./context/reducers/userReducer";
+import Loading from "./components/Loading";
 
 // Added Layout component to give more layout structure
 // All api to backend should be called with the http module and
@@ -178,9 +180,11 @@ const App = () => {
     );
   }, [locState, navigate, setSnackBar]);
 
-  console.log(isLoggedIn, "...isLoggedin...");
-
   if (isLoggedIn) localStorage.removeItem(VERIFIC_TOKEN_TIMER);
+  else if (pathname.toLowerCase().indexOf("auth") === -1) {
+    window.location.href = HOME_ORIGIN;
+    return <Loading fullSize />;
+  }
 
   return (
     <ThemeProvider theme={theme}>
@@ -193,8 +197,7 @@ const App = () => {
           [INPUT_AUTOFILL_SELECTOR]: {
             backgroundColor: "transparent",
             transition: "background-color 5000s ease-in-out 0s",
-            textFillColor: theme.palette.text.primary,
-            caretColor: theme.palette.text.primary
+            textFillColor: theme.palette.text.primary
           },
           button: {
             cursor: "pointer"
@@ -254,7 +257,7 @@ const App = () => {
                 <Route path="*" element={<Page404 />} />
               </>
             ) : (
-              <Route path="*" element={<Redirect to="/auth/login" />} />
+              <Route path="*" element={<Redirect message="" />} />
             )}
           </Route>
 
@@ -496,7 +499,6 @@ const App = () => {
 
         <Snackbar
           open={snackbar.open}
-          autoHideDuration={snackbar.autoHideDuration || 10000}
           autoHideDuration={snackbar.autoHideDuration || 8000}
           onClose={
             snackbar.closeSnackBar === undefined ? closeSnackBar : undefined

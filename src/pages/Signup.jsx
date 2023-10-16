@@ -7,9 +7,15 @@ import useForm from "../hooks/useForm";
 import { useCtx } from "../context";
 import { StyledLink } from "../styled";
 import Typography from "@mui/material/Typography";
+import Stack from "@mui/material/Stack";
 import http from "../api/http";
 import { useNavigate, useLocation } from "react-router-dom";
-import { HTTP_CODE_MAIL_ERROR } from "../config/constants";
+import {
+  HTTP_CODE_MAIL_ERROR,
+  VERIFIC_TOKEN_TIMER,
+  HOME_ORIGIN
+} from "../config/constants";
+import { useSearchParams } from "react-router-dom";
 
 const pwdRequirementEl = (
   <ul style={{ marginLeft: "-24px" }}>
@@ -19,7 +25,11 @@ const pwdRequirementEl = (
   </ul>
 );
 
-const Signup = (props) => {
+const Signup = props => {
+  const [searchParams] = useSearchParams();
+
+  const referralCode = searchParams.get("ref") || "";
+
   const agreeCheckErr = "You haven't agreed to the terms and conditions above!";
 
   const {
@@ -32,6 +42,7 @@ const Signup = (props) => {
   } = useForm(
     useMemo(
       () => ({
+        placeholders: { referralCode },
         rules: {
           password: {
             type: "password",
@@ -47,7 +58,7 @@ const Signup = (props) => {
           agreed: agreeCheckErr,
         },
       }),
-      []
+      [referralCode]
     )
   );
 
@@ -55,9 +66,9 @@ const Signup = (props) => {
   const navigate = useNavigate();
   const location = useLocation();
 
-  // Extract referral code from URL parameter
-  const searchParams = new URLSearchParams(location.search);
-  const referralCode = searchParams.get("referralCode");
+  // // Extract referral code from URL parameter
+  // const searchParams = new URLSearchParams(location.search);
+  // const referralCode = searchParams.get("referralCode");
 
   // State to track the number of referred users
   const [referredUsersCount, setReferredUsersCount] = useState(0);
@@ -81,6 +92,7 @@ const Signup = (props) => {
 
         // Increment the referred user count on successful sign-up
         setReferredUsersCount(referredUsersCount + 1);
+        localStorage.removeItem(VERIFIC_TOKEN_TIMER);
 
         setSnackBar({ message, severity: "success" });
 
@@ -131,6 +143,19 @@ const Signup = (props) => {
       errors={errors}
       formData={formData}
       handleChange={handleChange}
+      postFormEl={
+        <Stack sx={{ mt: 1 }}>
+          <StyledLink to={HOME_ORIGIN}>
+            @Caltex {new Date().getFullYear()}
+          </StyledLink>
+          <StyledLink
+            state={{ user: formData }}
+            to="/auth/token-verification/account"
+          >
+            Verify token
+          </StyledLink>
+        </Stack>
+      }
       postInputsEl={
         <FormGroup sx={{ mb: 3 }}>
           <FormControlLabel
@@ -195,6 +220,7 @@ const Signup = (props) => {
           hidePwdEye: true,
         },
         {
+          readOnly: true,
           label: "Referral Code (Optional)",
           value: referralCode,
           name: "referralCode",

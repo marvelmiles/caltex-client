@@ -80,12 +80,9 @@ const TokenVerification = ({}) => {
 
       if (withErr) return;
 
-      const resendToken = async (
-        type = "verification",
-        withCredentials = false
-      ) => {
+      const resendToken = async (type, withCredentials = false) => {
         const { message } = await http.post(
-          `/auth/generate-new-token/${reason}-${type}`,
+          `/auth/generate-new-token/${type ? `${reason}-${type}` : reason}`,
           formData,
           {
             withCredentials

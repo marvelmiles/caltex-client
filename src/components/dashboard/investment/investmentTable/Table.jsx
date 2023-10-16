@@ -2,7 +2,10 @@ import React, { useState, useEffect } from "react";
 import useAuth from "../../../../hooks/useAuth";
 import http from "../../../../api/http";
 import { useCtx } from "../../../../context";
-import { MSG_DEFAULT_ERR } from "../../../../config/constants";
+import {
+  MSG_DEFAULT_ERR,
+  DATE_FORMAT_TRANS_HIS
+} from "../../../../config/constants";
 import Loading from "../../../Loading";
 import moment from "moment";
 import styles from "./Table.module.scss";
@@ -72,8 +75,6 @@ const FixedHeaderTable = () => {
   };
 
   const renderTableData = () => {
-    const dateFormat = "MMM D, YYYY";
-
     if (loading)
       return (
         <tr>
@@ -90,18 +91,17 @@ const FixedHeaderTable = () => {
         </tr>
       );
     }
-
-    return data.slice(0,1).map((item) => (
+    return data.slice(0, 1).map(item => (
       <tr key={item?.id}>
         <td id={styles.table_data}>{item?.plan}</td>
         <td id={styles.table_data}>{item?.amount}</td>
         <td id={styles.table_data}>{item?.roi}</td>
         <td id={styles.table_data}>{item?.roiPct}</td>
         <td id={styles.table_data}>
-          {moment(item?.startDate).format(dateFormat)}
+          {moment(item?.startDate).format(DATE_FORMAT_TRANS_HIS)}
         </td>
         <td id={styles.table_data}>
-          {moment(item?.endDate).format(dateFormat)}
+          {moment(item?.endDate).format(DATE_FORMAT_TRANS_HIS)}
         </td>
       </tr>
     ));

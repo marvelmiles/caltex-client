@@ -9,11 +9,12 @@ import { useCtx } from "../../../../../context";
 import { MSG_DEFAULT_ERR } from "../../../../../config/constants";
 import Loading from "../../../../Loading";
 import { formatToDecimalPlace } from "../../../../../utils/normalizers";
+import { Stack, Button, Typography } from "@mui/material";
 
 const DepositTable = () => {
   const [data, setData] = useState([]);
   const [currentPage, setCurrentPage] = useState(0);
-  const [confirmed, setConfirmed] = useState({});
+  const [processing, setProcessing] = useState({});
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [modalImageUrl, setModalImageUrl] = useState("");
   const itemsPerPage = 10; // Adjust the number of items per page as needed
@@ -28,7 +29,7 @@ const DepositTable = () => {
     const fetchData = async () => {
       try {
         const response = await http.get(
-          "/transactions?required[transactionType]=deposit&required[status]=awaiting",
+          "/transactions?required[transactionType]=deposit",
           { withCredentials: true }
         );
 
@@ -45,24 +46,32 @@ const DepositTable = () => {
     fetchData();
   }, [setSnackBar]); // The empty dependency array ensures this effect runs only once on mount
 
-  const handleConfirmPayment = async (transId, e) => {
+  const updateTransStatus = async (transId, reason) => {
     try {
-      const req = await http.patch(`/transactions/${transId}/confirm`, {
+      setProcessing(processing => ({
+        ...processing,
+        [transId]: true
+      }));
+
+      const res = await http.patch(`/transactions/${transId}/${reason}`, {
         withCredentials: true
       });
 
-      if (req?.status === 200) {
-        // Throw a success toast
-        setConfirmed(confirmed => ({
-          ...confirmed,
-          [transId]: true
-        }));
-      }
+      if (!res.success) throw res;
+
+      setData(data =>
+        data.map(item => (item.id === transId ? res.data : item))
+      );
     } catch (error) {
-      // Throw an error toast
-      setSnackBar("Failed to confirm deposit");
+      setSnackBar(`Failed to ${reason} deposit`);
     } finally {
-      (e.currentTarget || e.target).style.cursor = "default";
+      setProcessing(processing => {
+        delete processing[transId];
+
+        return {
+          ...processing
+        };
+      });
     }
   };
 
@@ -108,12 +117,20 @@ const DepositTable = () => {
       </tr>
     ) : (
       data.slice(startIndex, endIndex).map(data => {
-        const bool = data.status === "confirmed" || confirmed[data.id];
+        const hasProced = data.status !== "awaiting";
+        const isProc = processing[data.id];
+
+        const actionSx = {
+          cursor: isProc ? "not-allowed" : hasProced ? "default" : "pointer",
+          padding: "8px 15px",
+          width: "auto"
+        };
+
         return (
           <tr key={data?.id}>
-            <td>{data?.user?.username}</td>
+            <td>{`${data.user?.firstname} ${data.user?.lastname}`}</td>
             <td>{data?.user?.email}</td>
-            <td>
+            <td style={{ color: "#000" }}>
               {
                 { usd: "$", eur: "€" }[
                   data.localPayment?.currency?.toLowerCase?.()
@@ -132,23 +149,43 @@ const DepositTable = () => {
               </span>
             </td>
             <td>
-              <button
-                type="button"
-                id={bool ? styles.successBtn : styles.btn}
-                style={{ cursor: bool ? "default" : "pointer" }}
-                onClick={
-                  bool
-                    ? undefined
-                    : e => {
-                        e.currentTarget.disabled = true;
-                        e.currentTarget.style.cursor = "not-allowed";
+              {hasProced ? (
+                <Typography
+                  sx={{
+                    "&::first-letter": {
+                      textTransform: "uppercase"
+                    }
+                  }}
+                >
+                  {data.status}
+                </Typography>
+              ) : (
+                <Stack justifyContent="normal">
+                  <Button
+                    type="button"
+                    color={"secondary"}
+                    variant={"contained"}
+                    sx={actionSx}
+                    disabled={isProc}
+                    onClick={() => updateTransStatus(data.id, "confirm")}
+                  >
+                    Confirm
+                  </Button>
 
-                        return handleConfirmPayment(data?.id, e);
-                      }
-                }
-              >
-                {bool ? "Successful" : "Confirm Payment"}
-              </button>
+                  {hasProced ? null : (
+                    <Button
+                      type="button"
+                      color="error"
+                      variant="contained"
+                      sx={actionSx}
+                      disabled={isProc}
+                      onClick={() => updateTransStatus(data.id, "reject")}
+                    >
+                      Reject
+                    </Button>
+                  )}
+                </Stack>
+              )}
             </td>
           </tr>
         );

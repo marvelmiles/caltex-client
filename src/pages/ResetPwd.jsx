@@ -1,6 +1,6 @@
 import React, { useCallback, useMemo } from "react";
 import AuthLayout from "../components/AuthLayout";
-import { pwdRequirementEl } from "./Signup";
+import  pwdRequirementEl  from "./Signup";
 import { useCtx } from "../context";
 import Redirect from "../components/Redirect";
 import useForm from "../hooks/useForm";

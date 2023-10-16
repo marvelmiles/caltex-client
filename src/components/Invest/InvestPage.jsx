@@ -53,7 +53,7 @@ const InvestPage = () => {
                   <div
                     class="plan-options-forex"
                     style={{
-                      display: openPlan && isForex ? "block" : "none"
+                      display: openPlan && isForex ? "block" : "none",
                     }}
                   >
                     <div class="plan">
@@ -61,20 +61,20 @@ const InvestPage = () => {
                         to={`/ForexDetails/StarterplanForex?${searchParam}`}
                         class="starter-plan"
                       >
-                        Starter Plan 2.5% ROI, 7 DAYS PACKAGE $100-$10000
+                        Starter Plan 1.0% ROI, 7 DAYS PACKAGE $100-$10000
                       </Link>
                       <Link
                         to={`/ForexDetails/professionalplanForex?${searchParam}`}
                         class="professional-plan"
                       >
-                        Professional Plan 2.5% ROI, 14 DAYS PACKAGE
+                        Professional Plan 1.5% ROI, 14 DAYS PACKAGE
                         $11000-$50000
                       </Link>
                       <Link
                         to={`/ForexDetails/masterplanForex?${searchParam}`}
                         class="master-plan"
                       >
-                        Master Plan 2.5% ROI, 21 DAYS PACKAGE $51000-$100000
+                        Master Plan 2.0% ROI 21 DAYS $50000-$100000
                       </Link>
                     </div>
                   </div>
@@ -82,7 +82,7 @@ const InvestPage = () => {
                   <div
                     class="plan-options-crypto"
                     style={{
-                      display: openPlan && !isForex ? "block" : "none"
+                      display: openPlan && !isForex ? "block" : "none",
                     }}
                   >
                     <div class="plan">
@@ -90,20 +90,20 @@ const InvestPage = () => {
                         to={`/CryptoDetails/starterplanCrypto?${searchParam}`}
                         class="starter-plan"
                       >
-                        Starter Plan 3.0% ROI, 10 DAYS PACKAGE $300-$15000
+                        Starter Plan 2.0% ROI, 10 DAYS PACKAGE $300-$15000
                       </Link>
                       <Link
                         to={`/CryptoDetails/professionalplanCrypto?${searchParam}`}
                         class="professional-plan"
                       >
-                        Professional Plan 3.5% ROI, 20 DAYS PACKAGE
+                        Professional Plan 2.5% ROI, 20 DAYS PACKAGE
                         $16000-$100000
                       </Link>
                       <Link
                         to={`/CryptoDetails/masterplanCrypto?${searchParam}`}
                         class="master-plan"
                       >
-                        Master Plan 4.0% ROI, 30 DAYS PACKAGE $101000-$UNLIMITED
+                        Master Plan 3.0% ROI 30 DAYS $101000-$UNLIMITED
                       </Link>
                     </div>
                   </div>

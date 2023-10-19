@@ -5,7 +5,7 @@ import Stack from "@mui/material/Stack";
 import Box from "@mui/material/Box";
 import CustomInput from "../components/CustomInput";
 import Button from "@mui/material/Button";
- 
+
 const AuthLayout = ({
   title,
   forms = [],

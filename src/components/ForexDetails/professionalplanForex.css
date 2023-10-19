@@ -1,0 +1,69 @@
+@import "font-awesome/css/font-awesome.min.css";
+
+:root {
+  --bc-pl: 40px;
+  --bc-pr: 35px;
+  --if-pl: 80px;
+  --if-pr: 50px;
+  --deposit-lp: 50px;
+}
+
+
+
+
+.professional-planForex {
+  margin-left: var(--bc-pl);
+}
+
+.invest-professionalForex {
+  margin-left: var(--if-pl);
+  margin-top: 58px;
+  background-color: rgba(18, 14, 251, 1);
+  padding: 18px 60px;
+  color: white;
+  border-radius: 10px;
+  transition: ease 0.4s;
+  width: 8%;
+  text-align: center;
+  text-decoration-line: none;
+}
+
+.change-professionalForex {
+  margin-left: var(--if-pl);
+  margin-top: 58px;
+  text-decoration-line: none;
+  padding: 18px 42px;
+  border: 1px solid black;
+  color: black;
+  border-radius: 10px;
+  transition: ease 0.4s;
+  width: 8%;
+  text-align: center;
+}
+
+.invest-professionalForex:hover,
+.change-professionalForex:hover {
+  color: grey;
+  cursor: pointer;
+}
+
+
+@media screen and (max-width: 600px) {
+  .invest-professionalForex {
+    margin-left: 10px !important;
+    margin-top: 23px !important;
+    padding: 12.53px 28px !important;
+  }
+
+  .change-professionalForex {
+    margin-left: 10px !important;
+    margin-top: 23px !important;
+    padding: 10px 16px !important;
+  }
+
+  .investment-buttons {
+    margin-top: 50px !important;
+    margin-bottom: 40px;
+    margin-left: 10px !important;
+  }
+}

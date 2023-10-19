@@ -1,0 +1,62 @@
+#tableU {
+  color: #1E1E1E;
+  font-family: 'Poppins', sans-serif;
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 600;
+  width: 200px;
+  line-height: normal;
+  border: none;
+}
+
+td {
+  color: #000;
+  font-family: 'Poppins', sans-serif;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 300;
+  line-height: normal;
+  border: none;
+  text-align: center;
+  padding: 10px 0;
+}
+
+#user_btn {
+  border-radius: 5px;
+  background: #F0A617;
+  display: inline-flex;
+  width: 170px;
+  justify-content: center;
+  align-items: center;
+  color: #FFF;
+  font-family: 'Poppins', sans-serif;
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  border: none;
+  cursor: pointer;
+
+}
+
+td:nth-child(3) {
+  color: #036901;
+}
+
+.pagination {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  button {
+    margin: 20px;
+    border: none;
+    background: #FFF;
+  }
+
+  p {
+    font-size: 16px;
+    font-weight: 500;
+    font-family: 'Poppins', sans-serif;
+  }
+}

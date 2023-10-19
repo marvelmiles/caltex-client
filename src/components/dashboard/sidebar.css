@@ -1,0 +1,10 @@
+html body .panels {
+  min-height: 100vh !important;
+  margin-top: 0px !important;
+}
+
+html body .panel-control {
+  overflow: auto;
+  max-height: 85%;
+  padding-bottom: 20px;
+}

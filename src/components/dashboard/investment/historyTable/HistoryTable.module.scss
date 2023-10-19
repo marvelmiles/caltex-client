@@ -1,0 +1,76 @@
+table {
+ width: 100%;
+ border: none;
+ border-collapse: collapse;
+ font-family: 'Poppins', sans-serif;
+}
+
+.table_head {
+ border-collapse: collapse;
+ width: 151px;
+ height: 76px;
+ padding: 0 40px;
+ background: rgb(138, 138, 141);
+ color: #FFF;
+ text-align: center;
+ font-size: 14px;
+ font-style: normal;
+ font-weight: 700;
+ line-height: normal;
+}
+
+#tableI {
+ color: #1E1E1E;
+  text-align: center;
+  font-family: 'Poppins', sans-serif;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+}
+
+#table_data {
+  width: 151px;
+  height: 100px;
+  padding: 0 26px;
+  color: rgba(30, 30, 17, 0.93);
+  text-align: center;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  border: 1px solid rgba(215, 215, 215, 0.50);
+}
+
+.fixed_header_table {
+ margin: 0 auto 50px auto;
+}
+
+#see_more {
+ color: #140460;
+ text-align: center;
+ font-size: 16px;
+ font-style: normal;
+ font-weight: 400;
+ line-height: normal;
+ cursor: pointer;
+ margin: 0 0 0 780px;
+ font-family: 'Poppins', sans-serif;
+}
+
+#see_less {
+ color: #140460;
+ text-align: center;
+ font-size: 16px;
+ font-style: normal;
+ font-weight: 400;
+ line-height: normal;
+ cursor: pointer;
+ margin: 0 0 0 780px;
+ font-family: 'Poppins', sans-serif;
+ // display: none;
+}
+
+.hide {
+ display: none;
+}

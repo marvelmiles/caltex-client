@@ -64,7 +64,8 @@ const DashboardPage = () => {
             <h5>Total Balance</h5>
             {!openEye && (
               <h3>
-                {`${formatToDecimalPlace(balance.availBalance, true) + " USD"}`}
+                {`${formatToDecimalPlace(balance.availableBalance, true) +
+                  " USD"}`}
                 <span class="bell-notification" id=" " onclick=" ">
                   <img
                     src={closedeye}

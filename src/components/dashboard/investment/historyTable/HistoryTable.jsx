@@ -13,7 +13,9 @@ import { Link } from "react-router-dom";
 import { formatToDecimalPlace } from "../../../../utils/normalizers";
 import moment from "moment";
 
-const HistoryTable = ({ transactionType, status, paymentType }) => {
+const HistoryTable = ({ transactionType, status, paymentType, date }) => {
+  console.log(date);
+
   const { setSnackBar } = useCtx();
 
   const { currentUser } = useAuth();
@@ -36,13 +38,18 @@ const HistoryTable = ({ transactionType, status, paymentType }) => {
 
   const fetchData = useCallback(
     async (config = {}) => {
-      const { transactionType = "", status = "", paymentType = "" } = config;
+      const {
+        transactionType = "",
+        status = "",
+        paymentType = "",
+        date
+      } = config;
 
       try {
         setLoading(true);
 
         const response = await http.get(
-          `/users/${id}/transactions?transactionType=${transactionType}&paymentType=${paymentType}&status=${status}`,
+          `/users/${id}/transactions?transactionType=${transactionType}&paymentType=${paymentType}&status=${status}&lteDate=${date}`,
           {
             withCredentials: true
           }
@@ -60,8 +67,8 @@ const HistoryTable = ({ transactionType, status, paymentType }) => {
   );
 
   useEffect(() => {
-    fetchData({ paymentType, status, transactionType });
-  }, [fetchData, paymentType, status, transactionType]);
+    fetchData({ paymentType, status, transactionType, date });
+  }, [fetchData, paymentType, status, transactionType, date]);
 
   const renderTableHeader = () => {
     return (

@@ -1,18 +1,39 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import styles from "./Investment.module.scss";
 import arrow from "../../../svgs/arrow-drop.svg";
 import FixedHeaderTable from "./investmentTable/Table";
 import HistoryTable from "./historyTable/HistoryTable";
 import Layout from "../../Layout";
-import { Box } from "@mui/material";
+import { Box, Stack, IconButton } from "@mui/material";
+import { AiOutlineSearch } from "react-icons/ai";
 
 const Investment = () => {
+  const today = new Date();
+
+  const yr = today.getFullYear();
+  const mth = today.getMonth();
+  const day = today.getDate();
+
   const [trans, setTrans] = useState(false);
   const [trans1, setTrans1] = useState(false);
   const [trans2, setTrans2] = useState(false);
   const [transType, setTransType] = useState("");
   const [status, setStatus] = useState("");
   const [paymentType, setPaymentType] = useState("");
+
+  const [date, setDate] = useState(
+    Date.UTC(
+      yr,
+      mth,
+      day,
+      today.getHours(),
+      today.getMinutes(),
+      today.getSeconds(),
+      today.getMilliseconds()
+    )
+  );
+
+  const dateRef = useRef();
 
   const handleTransType = e => {
     const { type, status, paymentType } = e.target.dataset;
@@ -33,8 +54,21 @@ const Investment = () => {
     }
   };
 
-  const handleDateSelection = (...e) => {
-    console.log(e);
+  const handleDateSelection = e => {
+    const [yr, mth, day] = dateRef.current.value.split("-");
+    const today = new Date();
+
+    const date = Date.UTC(
+      yr,
+      mth,
+      day,
+      today.getHours(),
+      today.getMinutes(),
+      today.getSeconds(),
+      today.getMilliseconds()
+    );
+
+    date && setDate(date);
   };
 
   return (
@@ -51,11 +85,30 @@ const Investment = () => {
         <div className={styles.trans_history_main}>
           <h2>Transaction History</h2>
           <ul className={styles.date_cont}>
-            <input
-              type="date"
-              className={styles.date_input}
-              onChange={handleDateSelection}
-            />
+            <Stack
+              sx={{
+                flexWrap: {
+                  xs: "wrap-reverse",
+                  sm: "nowrap"
+                }
+              }}
+            >
+              <input
+                type="date"
+                className={styles.date_input}
+                ref={dateRef}
+                defaultValue={`${yr}-${mth.toString().padStart(2, "0")}-${day}`}
+              />
+
+              <IconButton
+                onClick={handleDateSelection}
+                sx={{
+                  backgroundColor: "rgba(215, 215, 215, 0.2)"
+                }}
+              >
+                <AiOutlineSearch style={{ fontSize: "20px" }} />
+              </IconButton>
+            </Stack>
 
             <li onClick={() => setTrans(!trans)}>
               <Box
@@ -157,6 +210,7 @@ const Investment = () => {
             </ul>
           )}
           <HistoryTable
+            date={date}
             status={status}
             paymentType={paymentType}
             transactionType={transType}

@@ -58,17 +58,13 @@ const TokenVerification = ({}) => {
     )
   );
 
-  console.log(user);
-
   const navigate = useNavigate();
 
   const onTimeUp = useCallback(() => {
-    if (isPwd) resetForm({});
-
     localStorage.removeItem(VERIFIC_TOKEN_TIMER);
 
     setTimeUp(true);
-  }, [isPwd, resetForm]);
+  }, []);
 
   const dispatch = useDispatch();
 
@@ -77,6 +73,8 @@ const TokenVerification = ({}) => {
       const { formData, withErr } = handleSubmit(undefined, {
         blacklist: ["token"]
       });
+
+      console.log(formData);
 
       if (withErr) return;
 
@@ -147,7 +145,9 @@ const TokenVerification = ({}) => {
               ...formData
             };
 
-            navigate("/auth/reset-password", { state: { user: formData } });
+            localStorage.setItem("user", JSON.stringify(formData));
+
+            navigate("/auth/reset-password");
           } catch ({ message }) {
             setSnackBar(message);
           } finally {

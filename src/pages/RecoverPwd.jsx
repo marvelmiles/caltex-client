@@ -9,10 +9,10 @@ import { useNavigate } from "react-router-dom";
 import { VERIFIC_TOKEN_TIMER } from "../config/constants";
 
 const RecoverPwd = () => {
-  const {
-    setSnackBar,
-    locState: { user = {} }
-  } = useCtx();
+  const { setSnackBar } = useCtx();
+
+  let user = localStorage.getItem("user");
+  user = user ? JSON.parse(user) : {};
 
   const {
     formData,
@@ -43,9 +43,9 @@ const RecoverPwd = () => {
 
         localStorage.removeItem(VERIFIC_TOKEN_TIMER);
 
-        navigate("/auth/token-verification/password", {
-          state: { user: formData }
-        });
+        localStorage.setItem("user", JSON.stringify(formData));
+
+        navigate("/auth/token-verification/password");
       } catch ({ message }) {
         setSnackBar(message);
         resetForm(true);

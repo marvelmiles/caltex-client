@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import { VERIFIC_TOKEN_TIMER } from "../config/constants";
 
-const CountdownTimer = ({ onTimeUp, delay = 10 }) => {
+const CountdownTimer = ({ onTimeUp, delay = 30 }) => {
   const sec = Number(localStorage.getItem(VERIFIC_TOKEN_TIMER));
 
   const [seconds, setSeconds] = useState(

@@ -1,6 +1,6 @@
 import React, { useCallback, useMemo } from "react";
 import AuthLayout from "../components/AuthLayout";
-import  pwdRequirementEl  from "./Signup";
+import pwdRequirementEl from "./Signup";
 import { useCtx } from "../context";
 import Redirect from "../components/Redirect";
 import useForm from "../hooks/useForm";
@@ -12,10 +12,10 @@ import { useNavigate } from "react-router-dom";
 import { VERIFIC_TOKEN_TIMER } from "../config/constants";
 
 const ResetPwd = () => {
-  const {
-    locState: { user = {} },
-    setSnackBar
-  } = useCtx();
+  const { setSnackBar } = useCtx();
+
+  let _user = localStorage.getItem("user");
+  _user = _user ? JSON.parse(_user) : undefined;
 
   const {
     formData,
@@ -27,7 +27,7 @@ const ResetPwd = () => {
   } = useForm(
     useMemo(
       () => ({
-        placeholders: user,
+        placeholders: _user,
         rules: {
           password: {
             type: "password"
@@ -38,7 +38,7 @@ const ResetPwd = () => {
           confirmPassword: true
         }
       }),
-      [user]
+      [_user]
     )
   );
 
@@ -57,7 +57,11 @@ const ResetPwd = () => {
 
         localStorage.removeItem(VERIFIC_TOKEN_TIMER);
 
-        navigate("/auth/reset-password-success", { state: { user: formData } });
+        formData.hasReset = true;
+
+        localStorage.setItem("user", JSON.stringify(formData));
+
+        navigate("/auth/reset-password-success");
       } catch ({ message }) {
         setSnackBar(message);
         resetForm(true);
@@ -66,7 +70,7 @@ const ResetPwd = () => {
     [handleSubmit, resetForm, setSnackBar, navigate]
   );
 
-  if (!user.token)
+  if (!_user)
     return (
       <Redirect
         to="/auth/token-verification/password"

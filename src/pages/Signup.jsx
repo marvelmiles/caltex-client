@@ -91,8 +91,7 @@ const Signup = props => {
         resetForm();
 
         //temporary
-
-        localStorage.setItem("user", JSON.stringify(formData));
+        localStorage.removeItem("user");
 
         navigate("/auth/token-verification/account");
       } catch ({ message, code }) {
@@ -127,6 +126,11 @@ const Signup = props => {
     ]
   );
 
+  const storeTempUser = () => {
+    localStorage.setItem(VERIFIC_TOKEN_TIMER, "30");
+    localStorage.setItem("user", JSON.stringify(formData));
+  };
+
   return (
     <AuthLayout
       bgColor="transparent"
@@ -141,7 +145,7 @@ const Signup = props => {
             @Caltex {new Date().getFullYear()}
           </StyledLink>
           <StyledLink
-            state={{ user: {} }}
+            onClick={storeTempUser}
             to="/auth/token-verification/account"
           >
             Verify my account

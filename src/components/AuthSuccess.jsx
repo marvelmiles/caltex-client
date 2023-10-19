@@ -12,15 +12,16 @@ const AuthSuccess = ({ reason = "account", message = "" }) => {
     isPwd ? "password has been reset" : "account has been created"
   } successfully.`;
 
-  const {
-    accVerified,
-    locStateUser: { token }
-  } = useAuth();
+  const { accVerified } = useAuth();
 
   const navigate = useNavigate();
 
+  const _user = localStorage.getItem("user");
+
+  const hasReset = _user ? JSON.parse(_user)?.hasReset : false;
+
   const authProps = (isPwd
-  ? token
+  ? hasReset
   : accVerified)
     ? {
         title: isPwd ? "Password Reset" : "Account Creation",

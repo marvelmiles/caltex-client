@@ -1,6 +1,6 @@
 import React, { useEffect, useMemo } from "react";
 import PropTypes from "prop-types";
-import { Route, Routes, Navigate, useNavigate } from "react-router-dom";
+import { Navigate, useNavigate } from "react-router-dom";
 import { useCtx } from "../context";
 import Loading from "./Loading";
 import { HOME_ORIGIN } from "../config/constants";
@@ -20,12 +20,12 @@ const Redirect = ({
 
   const navigate = useNavigate();
 
+  const isHome = to === HOME_ORIGIN;
+
   const _options = useMemo(() => ({ replace: !isHome, ...options }), [
     options,
     isHome
   ]);
-
-  const isHome = to === HOME_ORIGIN;
 
   useEffect(() => {
     if (isNumber && to) navigate(to, _options);

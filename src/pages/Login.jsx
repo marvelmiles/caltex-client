@@ -59,9 +59,14 @@ const Login = props => {
     }
   }, [dispatch, setSnackBar]);
 
+  const storeTempUser = useCallback(() => {
+    localStorage.setItem(VERIFIC_TOKEN_TIMER, "30");
+    localStorage.setItem("user", JSON.stringify(formData));
+  }, [formData]);
+
   const onSubmit = useCallback(
     async e => {
-      const { formData, errors, withErr } = handleSubmit(e);
+      const { formData, withErr } = handleSubmit(e);
 
       if (withErr) return;
 
@@ -71,6 +76,7 @@ const Login = props => {
         });
 
         localStorage.removeItem(VERIFIC_TOKEN_TIMER);
+        localStorage.removeItem("user");
 
         dispatch(signinUser(data));
 
@@ -86,13 +92,7 @@ const Login = props => {
               {message}{" "}
               <StyledLink
                 to="/auth/token-verification/account"
-                state={{
-                  user: {
-                    ...locState.user,
-                    ...formData,
-                    resend: true
-                  }
-                }}
+                onClick={storeTempUser}
               >
                 Get a new code
               </StyledLink>{" "}
@@ -105,7 +105,15 @@ const Login = props => {
         resetForm(true);
       }
     },
-    [handleSubmit, resetForm, dispatch, navigate, setSnackBar, locState]
+    [
+      handleSubmit,
+      resetForm,
+      dispatch,
+      navigate,
+      setSnackBar,
+      locState,
+      storeTempUser
+    ]
   );
 
   return (
@@ -118,7 +126,7 @@ const Login = props => {
             @Caltex {new Date().getFullYear()}
           </StyledLink>
           <StyledLink
-            state={{ user: formData }}
+            onClick={storeTempUser}
             to="/auth/token-verification/account"
           >
             Verify my account
@@ -153,10 +161,7 @@ const Login = props => {
                   label="Remember Me"
                 />
               </FormGroup>
-              <StyledLink
-                to="/auth/recover-password"
-                state={{ user: { email: formData.email } }}
-              >
+              <StyledLink to="/auth/recover-password" onClick={storeTempUser}>
                 Forgot password?
               </StyledLink>
             </Stack>

@@ -400,7 +400,7 @@ const App = () => {
                     maxAmount: 100000,
                     duration: 20,
                     tradeType: "crypto",
-                    roiPct: 3.5,
+                    roiPct: 2.5,
                     plan: "professional"
                   }}
                 />
@@ -419,7 +419,7 @@ const App = () => {
                     maxAmount: 15000,
                     duration: 10,
                     tradeType: "crypto",
-                    roiPct: 3.0
+                    roiPct: 2.0
                   }}
                 />
               ) : (
@@ -454,7 +454,8 @@ const App = () => {
                     minAmount: 51000,
                     maxAmount: 100000,
                     duration: 21,
-                    plan: "master"
+                    plan: "master",
+                    roiPct: 2.0
                   }}
                 />
               ) : (
@@ -471,7 +472,8 @@ const App = () => {
                     minAmount: 11000,
                     maxAmount: 50000,
                     duration: 14,
-                    plan: "professional"
+                    plan: "professional",
+                    roiPct: 1.5
                   }}
                 />
               ) : (

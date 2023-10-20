@@ -134,7 +134,7 @@ const DepositPage = () => {
                       ltc: "ltc1qkkvf7vjwaxggdhh4nsnuclmfqfkrt9pv4dnrp2",
                       eth: "0xeD89AeaD1fF477311D27cDb87d411acCf07E17e1",
                       ustderc20: "0xeD89AeaD1fF477311D27cDb87d411acCf07E17e1",
-                      usdttrc20: "TUUUgN9yTnm3g3BfzW59N9cv2ZTooeE9kK"
+                      usdttrc20: "TUvKjhievHG5V6D4FhnY94NsKx6jhRVi9F"
                     }[v]
                   );
                 }}

@@ -7,6 +7,7 @@ import http from "../api/http";
 import { useCtx } from "../context";
 import Button from "@mui/material/Button";
 import { createUTCDate } from "../utils/serializers";
+import { formatToDecimalPlace } from "../utils/normalizers";
 
 const InvestForm = ({
   plan = "starter",
@@ -50,21 +51,26 @@ const InvestForm = ({
       startDay = Number(startDay);
 
       if (keyName === "amount") {
-        const inputValue = Number(formData[keyName]);
+        const amt = formData[keyName];
+
+        const inputValue = Number(amt);
 
         const err = "Input value is invalid.";
 
         if (inputValue > -1) {
-          if (minAmount < inputValue && inputValue > maxAmount && prevData)
+          if (!inputValue) {
+            formData.roi = "";
+            formData.amount = "";
+          } else if (
+            minAmount < inputValue &&
+            inputValue > maxAmount &&
+            prevData
+          )
             formData.amount = prevData.amount;
           else {
             const interest = inputValue * (roiPct / 100);
-            const total = inputValue + interest;
-
-            formData.roi = total.toLocaleString(undefined, {
-              minimumFractionDigits: 2,
-              maximumFractionDigits: 2
-            });
+            const total = inputValue + interest * defaultDuration;
+            formData.roi = formatToDecimalPlace(total, true);
           }
 
           setErrors(errors => {
@@ -175,6 +181,7 @@ const InvestForm = ({
     } catch (error) {
       console.log("Error submitting investment details:", error);
       setSnackBar(error.message);
+
       resetForm(true);
     }
   };

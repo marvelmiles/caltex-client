@@ -56,6 +56,7 @@ const Investment = () => {
 
   const handleDateSelection = e => {
     const [yr, mth, day] = dateRef.current.value.split("-");
+
     const today = new Date();
 
     const date = Date.UTC(

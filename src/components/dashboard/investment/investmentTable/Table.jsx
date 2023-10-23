@@ -16,6 +16,8 @@ const FixedHeaderTable = () => {
   const { id } = currentUser;
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [seemore, setSeemore] = useState(false);
+  const [seeless, setSeeless] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -58,6 +60,15 @@ const FixedHeaderTable = () => {
 
     fetchData();
   }, [id, setSnackBar]);
+
+  const handleSeemore = () => {
+    setSeemore(!seemore);
+  };
+
+  const handleSeeless = () => {
+    setSeeless(seeless);
+    setSeemore(!seemore);
+  };
 
   const renderTableHeader = () => {
     return (
@@ -107,13 +118,64 @@ const FixedHeaderTable = () => {
     ));
   };
 
+  const renderTableData2 = () => {
+    if (loading)
+      return (
+        <tr>
+          <td colSpan={6}>
+            <Loading />
+          </td>
+        </tr>
+      );
+
+    if (!data.length) {
+      return (
+        <tr>
+          <td colSpan="6">No data available</td>
+        </tr>
+      );
+    }
+    return data.map((item) => (
+      <tr key={item?.id}>
+        <td id={styles.table_data}>{item?.plan}</td>
+        <td id={styles.table_data}>{item?.amount}</td>
+        <td id={styles.table_data}>{item?.roi}</td>
+        <td id={styles.table_data}>{item?.roiPct}</td>
+        <td id={styles.table_data}>
+          {moment(item?.startDate).format(DATE_FORMAT_TRANS_HIS)}
+        </td>
+        <td id={styles.table_data}>
+          {moment(item?.endDate).format(DATE_FORMAT_TRANS_HIS)}
+        </td>
+      </tr>
+    ));
+  };
+
+
   return (
-    <div className="fixed-header-table">
-      <table>
-        {renderTableHeader()}
-        <tbody>{renderTableData()}</tbody>
-      </table>
-    </div>
+    <>
+      <div className={styles.fixed_header_table}>
+        <table>
+          {renderTableHeader()}
+          {!seeless && <tbody>{renderTableData()}</tbody>}
+          {seemore && <tbody>{renderTableData2()}</tbody>}
+        </table>
+      </div>
+      <span
+        id={styles.see_more}
+        className={seemore ? styles.hide : ""}
+        onClick={handleSeemore}
+      >
+        View More
+      </span>
+      <span
+        id={styles.see_less}
+        className={!seemore ? styles.hide : ""}
+        onClick={handleSeeless}
+      >
+        View less
+      </span>
+    </>
   );
 };
 

@@ -3,9 +3,11 @@ import PropTypes from "prop-types";
 import IconButton from "@mui/material/IconButton";
 import searchIcon from "../svgs/search-icon.svg";
 import CustomInput from "../components/CustomInput";
+import useMediaQuery from "../hooks/useMediaQuery";
 
 const SearchInput = ({ onSearch }) => {
   const [q, setQ] = useState("");
+  const isMobile = useMediaQuery("(max-width: 768px)");
 
   const handleChange = e => setQ(e.currentTarget.value);
 
@@ -22,7 +24,7 @@ const SearchInput = ({ onSearch }) => {
         "& .custom-input-container .adornment": {
           marginLeft: "5px"
         },
-        maxWidth: "250px",
+        maxWidth: isMobile ? "150px" : "250px",
         alignSelf: "center"
       }}
       startAdornment={

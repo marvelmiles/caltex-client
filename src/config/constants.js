@@ -13,7 +13,8 @@ export const VERIFIC_TOKEN_TIMER = "VERIFIC_TOKEN_TIMER";
 
 export const CLIENT_ORIGIN = isProdMode ? "http:" : "http://localhost:3000";
 
-export const HOME_ORIGIN = "http://www.caltextrader.com";
+// export const HOME_ORIGIN = "https://www.caltextrader.com";
+export const HOME_ORIGIN = "http://localhost:3000";
 
 export const currencySymbols = {
   USD: "$",

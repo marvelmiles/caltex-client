@@ -12,8 +12,11 @@ import Loading from "../../../Loading";
 import { Link } from "react-router-dom";
 import { formatToDecimalPlace } from "../../../../utils/normalizers";
 import moment from "moment";
+import useMediaQuery from "../../../../hooks/useMediaQuery";
 
 const HistoryTable = ({ transactionType, status, tradeType }) => {
+  const isMobile = useMediaQuery("(max-width: 768px)");
+
   const { setSnackBar } = useCtx();
 
   const { currentUser } = useAuth();
@@ -67,7 +70,7 @@ const HistoryTable = ({ transactionType, status, tradeType }) => {
     return (
       <thead className={styles.table_head}>
         <tr>
-          <th id={styles.tableI}>Currency/Network</th>
+          <th id={styles.tableI}>{isMobile ? "Currency /Network" : "Currency/Network"}</th>
           <th id={styles.tableI}>Amount Invested</th>
           <th id={styles.tableI}>Payment type</th>
           <th id={styles.tableI}>Transaction type</th>

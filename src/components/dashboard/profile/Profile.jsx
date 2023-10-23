@@ -163,14 +163,14 @@ const Profile = () => {
                     maxWidth: avatarSize,
                     mx: "auto",
                     div: {
-                      maxWidth: "inherit"
-                    }
+                      maxWidth: "inherit",
+                    },
                   }}
                 >
                   <div>
                     <div
                       style={{
-                        position: "relative"
+                        position: "relative",
                       }}
                     >
                       <Avatar
@@ -178,7 +178,7 @@ const Profile = () => {
                           width: avatarSize,
                           height: avatarSize,
                           border: "2px solid currentColor",
-                          borderColor: "divider"
+                          borderColor: "divider",
                         }}
                         src={photoUrl}
                       />
@@ -189,9 +189,9 @@ const Profile = () => {
                           right: "10px",
                           backgroundColor: "grey.200",
                           "&:hover": {
-                            backgroundColor: "grey.300"
+                            backgroundColor: "grey.300",
                           },
-                          cursor: isSubmitting ? "not-allowed" : "cursor"
+                          cursor: isSubmitting ? "not-allowed" : "cursor",
                         }}
                         component="label"
                         htmlFor={fileId}
@@ -222,10 +222,10 @@ const Profile = () => {
                   </div>
                 </Stack>
 
-                <Stack flexWrap="wrap-reverse">
+                <Stack flexWrap="wrap-reverse" className={styles.rev_cont}>
                   <span
                     style={{
-                      borderBottom: "3px solid rgba(240, 166, 23, 0.5)"
+                      borderBottom: "3px solid rgba(240, 166, 23, 0.5)",
                     }}
                   >
                     Personal Information
@@ -235,7 +235,7 @@ const Profile = () => {
                     onClick={handleCopyReferralLink}
                     style={{
                       borderBottom: "3px solid rgba(240, 166, 23, 0.5)",
-                      cursor: "pointer"
+                      cursor: "pointer",
                     }}
                   >
                     Referral link
@@ -244,7 +244,7 @@ const Profile = () => {
                         fontSize: "18px",
                         position: "relative",
                         top: "4px",
-                        marginLeft: "5px"
+                        marginLeft: "5px",
                       }}
                     />
                   </span>
@@ -257,7 +257,10 @@ const Profile = () => {
                       label="First Name"
                       name="firstname"
                       type="text"
-                      sx={{ width: "430px", height: "50px" }}
+                      sx={{
+                        width: isMobile ? "300px" : "430px",
+                        height: isMobile ? "30px" : "50px",
+                      }}
                       value={formData.firstname || currentUser.firstname}
                       onChange={handleInputChange}
                     />
@@ -268,7 +271,10 @@ const Profile = () => {
                       label="Surname"
                       name="lastname"
                       type="text"
-                      sx={{ width: "430px", height: "50px" }}
+                      sx={{
+                        width: isMobile ? "300px" : "430px",
+                        height: isMobile ? "30px" : "50px",
+                      }}
                       defaultValue={formData.lastname || currentUser.lastname}
                       onChange={handleInputChange}
                     />
@@ -281,7 +287,10 @@ const Profile = () => {
                       label="Username"
                       name="username"
                       type="text"
-                      sx={{ width: "430px", height: "50px" }}
+                      sx={{
+                        width: isMobile ? "300px" : "430px",
+                        height: isMobile ? "30px" : "50px",
+                      }}
                       value={formData.username || currentUser.username}
                       onChange={handleInputChange}
                     />
@@ -292,7 +301,10 @@ const Profile = () => {
                       label="Phone"
                       name="phone"
                       type="text"
-                      sx={{ width: "430px", height: "50px" }}
+                      sx={{
+                        width: isMobile ? "300px" : "430px",
+                        height: isMobile ? "30px" : "50px",
+                      }}
                       defaultValue={formData.phone || currentUser.phone[0]}
                       onChange={handleInputChange}
                     />
@@ -307,7 +319,10 @@ const Profile = () => {
                       label="Address Line 1:"
                       name="line1"
                       type="text"
-                      sx={{ width: "430px", height: "50px" }}
+                      sx={{
+                        width: isMobile ? "300px" : "430px",
+                        height: isMobile ? "30px" : "50px",
+                      }}
                       value={formData.line1 || currentUser.address.line1}
                       onChange={handleInputChange}
                     />
@@ -318,7 +333,10 @@ const Profile = () => {
                       label="Address Line 2:"
                       name="line2"
                       type="text"
-                      sx={{ width: "430px", height: "50px" }}
+                      sx={{
+                        width: isMobile ? "300px" : "430px",
+                        height: isMobile ? "30px" : "50px",
+                      }}
                       value={formData.line2 || currentUser.address.line2}
                       onChange={handleInputChange}
                     />
@@ -331,7 +349,10 @@ const Profile = () => {
                       label="Postal Code/Zip code:"
                       name="zipCode"
                       type="text"
-                      sx={{ width: "430px", height: "50px" }}
+                      sx={{
+                        width: isMobile ? "300px" : "430px",
+                        height: isMobile ? "30px" : "50px",
+                      }}
                       value={formData.zipCode || currentUser.address.zipCode}
                       onChange={handleInputChange}
                     />
@@ -343,7 +364,10 @@ const Profile = () => {
                       label="Country Of Residence"
                       name="country"
                       type="text"
-                      sx={{ width: "430px", height: "50px" }}
+                      sx={{
+                        width: isMobile ? "300px" : "430px",
+                        height: isMobile ? "30px" : "50px",
+                      }}
                       value={
                         formData.country ||
                         currentUser.country ||

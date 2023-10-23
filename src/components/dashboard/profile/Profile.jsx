@@ -13,6 +13,7 @@ import { useCtx } from "../../../context";
 import { useDispatch } from "react-redux";
 import { BsLink45Deg } from "react-icons/bs";
 import { CLIENT_ORIGIN } from "../../../config/constants";
+import useMediaQuery from "../../../hooks/useMediaQuery";
 
 const defaultFormData = {
   firstname: "",
@@ -24,6 +25,8 @@ const defaultFormData = {
 };
 
 const Profile = () => {
+  const isMobile = useMediaQuery("(max-width: 768px)");
+
   const { setSnackBar } = useCtx();
 
   const { currentUser } = useAuth();
@@ -124,7 +127,7 @@ const Profile = () => {
     });
   };
 
-  const avatarSize = "150px";
+  const avatarSize = isMobile ? "75px" : "150px";
 
   const fileId = "avatar-id";
 

@@ -8,6 +8,7 @@ import { Box, Stack, IconButton } from "@mui/material";
 import { AiOutlineSearch } from "react-icons/ai";
 
 const Investment = () => {
+  
   const today = new Date();
 
   const yr = today.getFullYear();
@@ -89,8 +90,8 @@ const Investment = () => {
             <Stack
               sx={{
                 flexWrap: {
-                  xs: "wrap-reverse",
-                  sm: "nowrap"
+                  // xs: "wrap-reverse",
+                  // sm: "nowrap"
                 }
               }}
             >

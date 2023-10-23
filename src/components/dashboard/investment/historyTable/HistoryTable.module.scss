@@ -17,6 +17,13 @@ table {
  font-style: normal;
  font-weight: 700;
  line-height: normal;
+
+@media (max-width: 768px) {
+    width: 40px;
+    font-size: 8px;
+    padding: 0 2px;
+    height: 40px;
+  }
 }
 
 #tableI {
@@ -27,6 +34,10 @@ table {
   font-style: normal;
   font-weight: 500;
   line-height: normal;
+
+  @media (max-width: 768px) {
+      font-size: 8px;
+    }
 }
 
 #table_data {
@@ -40,10 +51,21 @@ table {
   font-weight: 400;
   line-height: normal;
   border: 1px solid rgba(215, 215, 215, 0.50);
+
+  @media (max-width: 768px) {
+      width: 40px;
+      font-size: 8px;
+      padding: 0 2px;
+      height: 50px;
+    }
 }
 
 .fixed_header_table {
  margin: 0 auto 50px auto;
+
+ @media (max-width: 768px) {
+  margin: 0 auto 20px auto;
+ }
 }
 
 #see_more {
@@ -56,6 +78,11 @@ table {
  cursor: pointer;
  margin: 0 0 0 780px;
  font-family: 'Poppins', sans-serif;
+
+ @media (max-width: 768px) {
+  margin: 0 0 0 280px;
+  font-size: 10px;
+ }
 }
 
 #see_less {
@@ -68,7 +95,11 @@ table {
  cursor: pointer;
  margin: 0 0 0 780px;
  font-family: 'Poppins', sans-serif;
- // display: none;
+
+  @media (max-width: 768px) {
+      margin: 0 0 0 280px;
+      font-size: 10px;
+    }
 }
 
 .hide {

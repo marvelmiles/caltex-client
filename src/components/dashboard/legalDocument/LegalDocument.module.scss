@@ -2,6 +2,10 @@
  padding: 40px 80px;
  font-family: 'Poppins', sans-serif;
 
+ @media (max-width: 768px) {
+  padding: 20px 40px;
+ }
+
  h2 {
   color: #000;
   text-align: justify;
@@ -9,6 +13,10 @@
   font-style: normal;
   font-weight: 700;
   line-height: normal;
+
+  @media (max-width: 768px) {
+   font-size: 18px;
+  }
  }
 }
 
@@ -19,6 +27,10 @@
  font-style: normal;
  font-weight: 400;
  line-height: normal;
+
+ @media (max-width: 768px) {
+  font-size: 14px;
+ }
 }
 
 .ul_cont {
@@ -26,6 +38,10 @@
  display: flex;
  flex-direction: column;
  gap: 10px;
+
+ @media (max-width: 768px) {
+  padding: 0;
+ }
 
  li {
   display: grid;
@@ -35,5 +51,10 @@
   width: 732px;
   height: 59px;
   flex-shrink: 0;
+
+   @media (max-width: 768px) {
+     width: 330px;
+     height: 40px;
+    }
  }
 }

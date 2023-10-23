@@ -7,6 +7,12 @@
   width: 200px;
   line-height: normal;
   border: none;
+
+  @media (max-width: 768px) {
+      width: 100px;
+      font-size: 10px;
+      padding: 0 5px;
+    }
 }
 
 td {

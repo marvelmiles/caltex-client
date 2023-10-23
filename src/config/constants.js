@@ -11,7 +11,7 @@ export const MSG_DEFAULT_ERR = "Something went wrong while fetching!";
 
 export const VERIFIC_TOKEN_TIMER = "VERIFIC_TOKEN_TIMER";
 
-export const HOME_ORIGIN = "http://www.caltextrader.com";
+export const HOME_ORIGIN = "https://www.caltextrader.com";
 
 export const CLIENT_ORIGIN = isProdMode
   ? "https://stupendous-sorbet-26cfc4.netlify.app"

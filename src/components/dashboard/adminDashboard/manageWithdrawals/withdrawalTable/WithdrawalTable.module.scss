@@ -8,6 +8,12 @@
  line-height: normal;
  border: none;
  padding: 0;
+
+ @media (max-width: 768px) {
+  width: 100px;
+  font-size: 10px;
+  padding: 0;
+ }
 }
 
 td {
@@ -41,6 +47,11 @@ td:nth-child(3) {
  line-height: normal;
  border: none;
  cursor: pointer;
+
+ @media (max-width: 768px) {
+  width: 100px;
+  padding: 10px 5px;
+ }
 }
 
 .pagination {

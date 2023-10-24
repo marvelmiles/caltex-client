@@ -47,7 +47,7 @@
   @media (max-width: 768px) {
     display: flex;
     flex-direction: column;
-    gap: 30px;
+    gap: 20px;
     margin: 20px;
   }
 
@@ -58,7 +58,6 @@
     @media (max-width: 768px) {
       margin: 5px !important;
       font-size: 12px;
-      text-align: center;
     }
   }
 }

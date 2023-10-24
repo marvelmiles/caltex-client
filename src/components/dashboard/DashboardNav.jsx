@@ -10,7 +10,7 @@ import Avatar from "@mui/material/Avatar";
 import { HOME_ORIGIN } from "../../config/constants";
 
 const DashboardNav = () => {
-  const { currentUser, handleSignout } = useAuth();
+  const { currentUser } = useAuth();
 
   const { firstname, photoUrl, lastname } = currentUser;
 
@@ -23,8 +23,6 @@ const DashboardNav = () => {
   const closeMenuBar = () => {
     setMenuBarVisibility(false);
   };
-
-  const [profileMenu, setProfileMenu] = useState(false);
 
   return (
     <div>
@@ -40,8 +38,6 @@ const DashboardNav = () => {
                 src={photoUrl}
                 height={50}
                 width={50}
-                onClick={() => setProfileMenu(!profileMenu)}
-                onMouseEnter={() => setProfileMenu(!profileMenu)}
                 sx={{
                   position: "relative",
                   mt: "26px",
@@ -54,52 +50,7 @@ const DashboardNav = () => {
                 }}
               />
             </span>
-            {profileMenu && (
-              <ul
-                className={styles.profile_ul_container}
-                onMouseLeave={() => setProfileMenu(!profileMenu)}
-              >
-                <li>{firstname}</li>
-                <li>
-                  <span>
-                    <Avatar
-                      src={photoUrl}
-                      sx={{
-                        height: 20,
-                        width: 20,
-                        mt: "20px",
-                        mr: "15px",
-                        border: "1px solid currentColor",
-                        borderColor: "divider",
-                        img: {
-                          m: 0
-                        }
-                      }}
-                    />
-                  </span>
-                  <span>
-                    <p>
-                      <Link to="/profile/Profile">My Profile</Link>
-                    </p>
-                    <p>Account Information and security</p>
-                  </span>
-                </li>
-                <li style={{ display: "none" }}>
-                  <span>
-                    <img src={wallet} height={16} width={16} alt="wallet" />
-                  </span>
-                  <span>
-                    <p>My wallet</p>
-                    <p>Finances and Password Management</p>
-                  </span>
-                </li>
-                <li>
-                  <Link to={HOME_ORIGIN} onClick={handleSignout}>
-                    <button type="button">Sign Out</button>
-                  </Link>
-                </li>
-              </ul>
-            )}
+          
             <span class="john">
               <p>
                 {firstname} {lastname}

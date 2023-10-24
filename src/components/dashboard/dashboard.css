@@ -40,7 +40,7 @@ body {
 
 .MySidenav a {
   text-decoration: none;
-  display: block;
+  display: flex;
   text-align: left;
   font-size: 16px;
   font-weight: 400;
@@ -48,6 +48,11 @@ body {
   line-height: 24px;
   color: white;
   transition: 0.3s;
+}
+
+.link_cont {
+  display: flex;
+  align-items: center !important;
 }
 
 .MySidenav a:hover {
@@ -471,6 +476,14 @@ Invest With Caltex[ --** CHOOSE YOUR FOREX/CRYPTO PLAN **-- ] Page
   transition: ease-out 0.3s;
 }
 
+@media (max-width: 768px) {
+  .starter-plan,
+  .professional-plan,
+  .master-plan {
+    width: 80%;
+  }
+}
+
 .starter-plan:hover,
 .professional-plan:hover,
 .master-plan:hover {
@@ -501,6 +514,12 @@ Invest With Caltex[ --** CHOOSE YOUR FOREX/CRYPTO PLAN **-- ] Page
 
 .invest-carltex {
   margin-left: var(--if-pl);
+}
+
+@media (max-width: 768px) {
+  .invest-carltex {
+    margin-left: 40px;
+  }
 }
 
 .invest-now:hover {

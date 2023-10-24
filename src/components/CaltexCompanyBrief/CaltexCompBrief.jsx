@@ -2,7 +2,7 @@ import React from "react";
 import "../../components/Invest/InvestPage.css";
 import "./CaltexCompBrief.css";
 import pdfIcon from "../../images/pdfLogo.png";
-import companyBrief from "./CaltexCompanyBrief.pdf";
+import companyBrief from "../../svgs/CaltexCompanyBrief.pdf";
 
 import { Link, useSearchParams } from "react-router-dom";
 import { useCtx } from "../../context";
@@ -31,7 +31,12 @@ const CaltexCompBrief = () => {
               </div>
 
               <div className="downloadBtn">
-                <Link to={companyBrief} id="downloadBtn" download>
+                <Link
+                  to={companyBrief}
+                  id="downloadBtn"
+                  target="_blank"
+                  download="CaltexCompanyBrief.pdf"
+                >
                   Download
                 </Link>
               </div>

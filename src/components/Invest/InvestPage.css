@@ -281,6 +281,12 @@ body {
   color: grey;
 }
 
+@media (max-width: 768px) {
+  .choose-plan1 {
+    width: 80%;
+  }
+}
+
 .choose-plan2 {
   display: flex;
   justify-content: space-between;

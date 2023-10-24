@@ -630,6 +630,24 @@ body {
   text-align: center;
 }
 
+@media (max-width: 768px) {
+  .invest-masterCrypto {
+    margin-left: 20px;
+    padding: 12px 20px;
+    height: 40px;
+    width: 120px;
+    margin-top: 20px;
+  }
+
+  .change-masterCrypto {
+    margin-top: 20px;
+    margin-left: 20px;
+    padding: 12px 5px;
+     height: 40px;
+    width: 120px;
+  }
+}
+
 .invest-masterCrypto:hover,
 .change-masterCrypto:hover {
   color: grey;

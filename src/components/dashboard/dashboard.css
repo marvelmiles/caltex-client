@@ -71,6 +71,7 @@ body {
   z-index: 1;
   padding-top: 20px;
   transition: 0.5s !important;
+  z-index: 2;
 }
 
 .mySidenav a {
@@ -128,7 +129,7 @@ body {
   font-size: 40px;
 }
 
-.other-icon {
+#other-icon {
   color: black;
 }
 
@@ -480,7 +481,7 @@ Invest With Caltex[ --** CHOOSE YOUR FOREX/CRYPTO PLAN **-- ] Page
   .starter-plan,
   .professional-plan,
   .master-plan {
-    width: 80%;
+    width: 80% !important;
   }
 }
 
@@ -578,6 +579,15 @@ STARTER PLAN FOREX
   margin-top: 65px;
   margin-bottom: 40px;
   margin-left: 70px;
+}
+
+@media (max-width: 768px) {
+  .investment-buttons {
+    margin: 20px 0 20px 0;
+    display: flex;
+    gap: 10px;
+    align-items: center;
+  }
 }
 
 /**

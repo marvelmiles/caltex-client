@@ -38,14 +38,14 @@ const MasterplanForex = () => {
         <div class="investment-buttons">
           <Link
             to="/ForexInvestForms/masterPlanInvF"
-            class="invest-masterForex"
+            class="invest-masterCrypto"
           >
             Invest
           </Link>
           <Link
             replace
             to="/Invest/InvestPage?tradeType=forex"
-            class="change-masterForex"
+            class="change-masterCrypto"
           >
             Change Plan
           </Link>

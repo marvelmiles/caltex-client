@@ -106,10 +106,10 @@ const HistoryTable = ({ date, transactionType, status, paymentType }) => {
           <td id={styles.table_data}>{item.paymentType}</td>
           <td id={styles.table_data}>{item.transactionType || sep}</td>
           <td id={styles.table_data}>{item.walletAddress || sep}</td>
-          <td id={styles.table_data}>{item.status}</td>
           <td id={styles.table_data}>
             {moment(item.createdAt).format(DATE_FORMAT_TRANS_HIS)}
           </td>
+          <td id={styles.table_data}>{item.status}</td>
           <td id={styles.table_data}>
             {item.paymentProofUrl ? (
               <Link

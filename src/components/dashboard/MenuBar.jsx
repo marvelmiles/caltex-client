@@ -58,7 +58,7 @@ const MenuBar = ({ isVisible, onClose }) => {
             Forex
           </Link>
           <Link to="/investment/Investment" class="linkss">
-            <FiTrendingUp style={{ fontSize: "24px", marginRight: "10px" }} />
+            <FiTrendingUp style={{ fontSize: "24px", marginRight: "10px", color: "#000" }} />
             Investment
           </Link>
           <Link to="/help/Help" class="linkss">

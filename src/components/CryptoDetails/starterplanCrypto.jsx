@@ -39,14 +39,14 @@ const StarterplanCrypto = () => {
         <div class="investment-buttons">
           <Link
             to="/CryptoInvestForms/starterPlanInvC"
-            class="invest-starterCrypto"
+            class="invest-masterCrypto"
           >
             Invest
           </Link>
           <Link
             replace
             to="/Invest/InvestPage?tradeType=forex"
-            class="change-starterCrypto"
+            class="change-masterCrypto"
           >
             Change Plan
           </Link>

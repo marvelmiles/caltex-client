@@ -6,7 +6,7 @@ import { useCtx } from "../../../../context";
 import {
   MSG_DEFAULT_ERR,
   currencySymbols,
-  DATE_FORMAT_TRANS_HIS
+  DATE_FORMAT_TRANS_HIS,
 } from "../../../../config/constants";
 import Loading from "../../../Loading";
 import { Link } from "react-router-dom";
@@ -14,7 +14,7 @@ import { formatToDecimalPlace } from "../../../../utils/normalizers";
 import moment from "moment";
 import useMediaQuery from "../../../../hooks/useMediaQuery";
 
-const HistoryTable = ({ transactionType, status, tradeType }) => {
+const HistoryTable = ({ date, transactionType, status, paymentType }) => {
   const isMobile = useMediaQuery("(max-width: 768px)");
 
   const { setSnackBar } = useCtx();
@@ -43,7 +43,7 @@ const HistoryTable = ({ transactionType, status, tradeType }) => {
         transactionType = "",
         status = "",
         paymentType = "",
-        date
+        date,
       } = config;
 
       try {
@@ -52,7 +52,7 @@ const HistoryTable = ({ transactionType, status, tradeType }) => {
         const response = await http.get(
           `/users/${id}/transactions?transactionType=${transactionType}&paymentType=${paymentType}&status=${status}&lteDate=${date}`,
           {
-            withCredentials: true
+            withCredentials: true,
           }
         );
 
@@ -68,14 +68,16 @@ const HistoryTable = ({ transactionType, status, tradeType }) => {
   );
 
   useEffect(() => {
-    fetchData({ tradeType, status, transactionType });
-  }, [fetchData, tradeType, status, transactionType]);
+    fetchData({ date, paymentType, status, transactionType });
+  }, [fetchData, paymentType, status, transactionType, date]);
 
   const renderTableHeader = () => {
     return (
       <thead className={styles.table_head}>
         <tr>
-          <th id={styles.tableI}>{isMobile ? "Currency /Network" : "Currency/Network"}</th>
+          <th id={styles.tableI}>
+            {isMobile ? "Currency /Network" : "Currency/Network"}
+          </th>
           <th id={styles.tableI}>Amount Invested</th>
           <th id={styles.tableI}>Payment type</th>
           <th id={styles.tableI}>Transaction type</th>
@@ -88,7 +90,7 @@ const HistoryTable = ({ transactionType, status, tradeType }) => {
     );
   };
 
-  const renderData = data =>
+  const renderData = (data) =>
     data.map((item, i) => {
       const sep = "----";
 

@@ -28,7 +28,7 @@ const MenuBar = ({ isVisible, onClose }) => {
           <Link to=" " class="closebtn" id="close-btn" onClick={onClose}>
             &times;
           </Link>
-          <Link to="/u/dashboard" class=" ">
+          <Link to="/u/dashboard" className="link_cont ">
             <BiSolidDashboard id="other-icon" className="dashboard-icon" />
             Dashboard
           </Link>
@@ -75,24 +75,24 @@ const MenuBar = ({ isVisible, onClose }) => {
                 {
                   to: "/manageUsers/ManageUsers",
                   label: "Manage Users",
-                  icon: profile
+                  icon: profile,
                 },
                 {
                   to: "/manageDeposits/ManageDeposits",
                   label: "Manage Deposit",
-                  icon: deposit
+                  icon: deposit,
                 },
                 {
                   to: "/manageWithdrawals/ManageWithdrawals",
                   label: "Manage Withdrawal",
-                  icon: withdraw
+                  icon: withdraw,
                 },
                 {
                   nullify: !isSuperAdmin,
                   to: "/manageAdmin/ManageAdmin",
                   label: "Manage Admins",
-                  icon: admin
-                }
+                  icon: admin,
+                },
               ].map((l, i) =>
                 l.nullify ? null : (
                   <Link key={i} to={l.to} class="linkss">

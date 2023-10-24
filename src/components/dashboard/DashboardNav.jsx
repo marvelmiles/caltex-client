@@ -10,7 +10,7 @@ import Avatar from "@mui/material/Avatar";
 import { HOME_ORIGIN } from "../../config/constants";
 
 const DashboardNav = () => {
-  const { currentUser, handleSignout } = useAuth();
+  const { currentUser } = useAuth();
 
   const { firstname, photoUrl, lastname } = currentUser;
 

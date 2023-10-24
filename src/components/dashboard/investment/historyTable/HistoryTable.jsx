@@ -68,8 +68,8 @@ const HistoryTable = ({ transactionType, status, tradeType }) => {
   );
 
   useEffect(() => {
-    fetchData({ status, transactionType, });
-  }, [fetchData, status, transactionType,]);
+    fetchData({ tradeType, status, transactionType });
+  }, [fetchData, tradeType, status, transactionType]);
 
   const renderTableHeader = () => {
     return (

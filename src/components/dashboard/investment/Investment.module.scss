@@ -34,6 +34,7 @@
     width: 330px;
     text-align: center;
     margin: 0 auto 0 auto;
+    font-size: 12px;
   }
 }
 
@@ -81,7 +82,7 @@ th {
 
     span {
       color: #1E1E1E;
-      font-size: 10px;
+      font-size: 8px;
       font-style: normal;
       font-weight: 400;
       line-height: normal;
@@ -126,12 +127,24 @@ th {
   padding: 20px;
   margin: 100px 0 0 185px;
 
+  @media (max-width: 768px) {
+    width: 100px;
+    margin: 0;
+    gap: 5px;
+    margin: 100px 0 0 120px;
+    padding: 5px 0;
+  }
+
   li:nth-child(1) {
     color: #1E1E1E;
     font-size: 10px;
     font-style: normal;
     font-weight: 700;
     line-height: normal;
+
+    @media (max-width: 768px) {
+      font-size: 8px;
+    }
   }
 
   li {
@@ -146,6 +159,13 @@ th {
     height: 30px;
     padding: 3px 0 0 20px;
 
+    @media (max-width: 768px) {
+      width: 100px;
+      height: 20px;
+      padding: 0;
+      font-size: 8px;
+    }
+
     &:hover {
       background: rgba(18, 14, 251, 0.05);
     }
@@ -155,10 +175,18 @@ th {
 #tans_ul2 {
   height: 127px;
   margin: 100px 0 0 335px;
+
+  @media (max-width: 768px) {
+    margin: 100px 0 0 220px;
+  }
 }
 
 #tans_ul3 {
   margin: 100px 0 0 465px;
+
+  @media (max-width: 768px) {
+    margin: 100px 0 0 300px;
+  }
 }
 
 .trans_history_main {

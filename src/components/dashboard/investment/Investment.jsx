@@ -92,7 +92,7 @@ const Investment = () => {
                 flexWrap: {
                   // xs: "wrap-reverse",
                   // sm: "nowrap"
-                }
+                },
               }}
             >
               <input
@@ -105,7 +105,7 @@ const Investment = () => {
               <IconButton
                 onClick={handleDateSelection}
                 sx={{
-                  backgroundColor: "rgba(215, 215, 215, 0.2)"
+                  backgroundColor: "rgba(215, 215, 215, 0.2)",
                 }}
               >
                 <AiOutlineSearch style={{ fontSize: "20px" }} />
@@ -117,8 +117,8 @@ const Investment = () => {
                 component="span"
                 sx={{
                   "&::first-letter": {
-                    textTransform: "uppercase"
-                  }
+                    textTransform: "uppercase",
+                  },
                 }}
               >
                 {transType || "All"} type
@@ -132,8 +132,8 @@ const Investment = () => {
                 component="span"
                 sx={{
                   "&::first-letter": {
-                    textTransform: "uppercase"
-                  }
+                    textTransform: "uppercase",
+                  },
                 }}
               >
                 {status || "All"} status
@@ -142,20 +142,20 @@ const Investment = () => {
                 <img src={arrow} height={10} width={10} alt="arrow" />
               </span>
             </li>
-            <li>
+            <li onClick={() => setTrans2(!trans2)}>
               <Box
                 component="span"
                 sx={{
                   "&::first-letter": {
-                    textTransform: "uppercase"
-                  }
+                    textTransform: "uppercase",
+                  },
                 }}
               >
                 {paymentType || "Crypto"} payments
               </Box>
-              {/* <span>
+              <span>
                 <img src={arrow} height={10} width={10} alt="arrow" />
-              </span> */}
+              </span>
             </li>
           </ul>
           {trans && (

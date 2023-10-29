@@ -9,10 +9,18 @@
  font-style: normal;
  font-weight: 500;
  line-height: normal;
+
+ @media (max-width: 768px){
+  font-size: 12px;
+ }
 }
 
 .id_ul_main_cont {
  margin: 40px;
+
+ @media (max-width: 768px) {
+   margin: 20px;
+  }
 }
 
 .id_ul {
@@ -28,6 +36,10 @@
   font-style: normal;
   font-weight: 400;
   line-height: normal;
+
+  @media (max-width: 768px) {
+    font-size: 16px;
+   }
  }
 }
 
@@ -38,6 +50,12 @@
  justify-content: center;
  padding: 50px 0;
 
+ @media (max-width: 768px) {
+   flex-direction: column;
+   gap: 20px;
+   padding: 20px 0;
+  }
+
  div {
   border-radius: 5px;
   border: 1px solid rgba(215, 215, 215, 0.75);
@@ -45,6 +63,11 @@
   width: 433px;
   flex-shrink: 0;
   padding: 30px 20px;
+
+  @media (max-width: 768px) {
+    padding: 15px 10px;
+    width: 300px;
+   }
 
   ul {
    list-style-type: none;
@@ -83,6 +106,10 @@
     font-weight: 500;
     line-height: normal;
     margin: 20px 0 0 200px;
+
+    @media (max-width: 768px) {
+      margin: 20px 0 0 100px;
+     }
    }
   }
  }

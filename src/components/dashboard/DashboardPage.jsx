@@ -2,7 +2,8 @@ import React from "react";
 import { useEffect, useState } from "react";
 import closedeye from "./../../images/closedeye.png";
 import openedeye from "./../../images/eye1.png";
-import { Link } from "react-router-dom";
+import kyc from "./../../images/kyc.png";
+import { Link, useNavigate } from "react-router-dom";
 import useAuth from "../../hooks/useAuth";
 import { useCtx } from "../../context";
 import http from "../../api/http";
@@ -11,19 +12,27 @@ import Layout from "../Layout";
 import "./dashboard.css";
 import { Stack, Typography } from "@mui/material";
 import StatCard from "../StatCard";
+import SuccessModal from "../successModal/SuccessModal";
+import styles from './Sidebar.module.scss';
 
 const DashboardPage = () => {
   const { currentUser } = useAuth();
   const [openEye, setOpenEye] = useState(false);
   const [closeEye, setCloseEye] = useState(false);
+  const [isVerified, setIsVerified] = useState(true);
+  const [isKYCNoticeOpen, setKYCNoticeOpen] = useState(false);
+
+  const navigate = useNavigate();
 
   const {
     setSnackBar,
     setAppCtx,
     appCtx: {
-      transactionMetrics: { balance }
-    }
+      transactionMetrics: { balance },
+    },
   } = useCtx();
+
+  const { id, kycDocs, kycIds } = currentUser;
 
   const handleOpenEye = () => {
     setOpenEye(!openEye);
@@ -35,26 +44,51 @@ const DashboardPage = () => {
     setOpenEye(!openEye);
   };
 
-  const { id } = currentUser;
+  const handleWithdrawClick = () => {
+    if (!isVerified) {
+      setKYCNoticeOpen(true);
+    } else {
+      // Redirect to the withdrawal page
+      navigate("/Withdraw/withdrawPage"); 
+    }
+  };
+
+  const handleDepositClick = () => {
+    if (!isVerified) {
+      setKYCNoticeOpen(true);
+    } else {
+      // Redirect to the deposit page
+      navigate("/Deposit/DepositPage");
+    }
+  };
+
+  const handleKycRrdirect = () => {
+    setKYCNoticeOpen(false);
+    navigate("/idVerificatonMethod/IdVerificationMethod");
+  };
 
   useEffect(() => {
     (async () => {
       try {
+        setIsVerified(
+          !!(Object.keys(kycDocs).length || Object.keys(kycIds).length)
+        );
+
         const res = await http.get(`/users/${id}/transaction-metrics`, {
-          withCredentials: true
+          withCredentials: true,
         });
 
         if (!res.success) throw res;
 
-        setAppCtx(ctx => ({
+        setAppCtx((ctx) => ({
           ...ctx,
-          transactionMetrics: res.data
+          transactionMetrics: res.data,
         }));
       } catch (err) {
         setSnackBar(err.message);
       }
     })();
-  }, [setSnackBar, id, setAppCtx]);
+  }, [setSnackBar, id, setAppCtx, kycIds, kycDocs]);
 
   return (
     <Layout>
@@ -64,8 +98,9 @@ const DashboardPage = () => {
             <h5>Total Balance</h5>
             {!openEye && (
               <h3>
-                {`${formatToDecimalPlace(balance.availableBalance, true) +
-                  " USD"}`}
+                {`${
+                  formatToDecimalPlace(balance.availableBalance, true) + " USD"
+                }`}
                 <span class="bell-notification" id=" " onclick=" ">
                   <img
                     src={closedeye}
@@ -104,16 +139,16 @@ const DashboardPage = () => {
               {[
                 {
                   value: balance.confirmedTransactions,
-                  label: "Confirmed Transactions"
+                  label: "Confirmed Transactions",
                 },
                 {
                   value: balance.awaitingTransactions,
-                  label: "Awaiting Transactions"
+                  label: "Awaiting Transactions",
                 },
                 {
                   value: balance.rejectedTransactions,
-                  label: "Rejected Transactions"
-                }
+                  label: "Rejected Transactions",
+                },
               ].map((s, i) => (
                 <StatCard key={i} {...s} />
               ))}
@@ -124,11 +159,19 @@ const DashboardPage = () => {
               Invest{" "}
             </Link>
 
-            <Link to="/Deposit/DepositPage" className="deposits">
+            <Link
+              to=""
+              className="deposits"
+              onClick={handleDepositClick}
+            >
               Deposit{" "}
             </Link>
 
-            <Link to="/Withdraw/withdrawPage" className="withdraws">
+            <Link
+              to=""
+              className="withdraws"
+              onClick={handleWithdrawClick}
+            >
               Withdraw{" "}
             </Link>
 
@@ -174,6 +217,16 @@ const DashboardPage = () => {
           </div>
         </div>
       </div>
+      {isKYCNoticeOpen && (
+        <SuccessModal
+          closeModal={handleKycRrdirect}
+          icon={kyc}
+          message="You have not been verified!!"
+          btnText="Proceed to KYC verification!!"
+          Styles={styles.modal_cont}
+          modalStyle={styles.modal_main}
+        />
+      )}
     </Layout>
   );
 };

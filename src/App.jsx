@@ -61,6 +61,7 @@ import AddAdmin from "./components/dashboard/adminDashboard/addAdmin/AddAdmin";
 import ManageAdmin from "./components/dashboard/adminDashboard/addAdmin/manageAdmin/ManageAdmin";
 import { defaultUser } from "./context/reducers/userReducer";
 import Loading from "./components/Loading";
+import IdVerificationMethod from "./components/dashboard/profile/idVerificationMethod/IdVerificationMethod";
 
 // Added Layout component to give more layout structure
 // All api to backend should be called with the http module and
@@ -187,11 +188,15 @@ const App = () => {
     );
   }, [locState, navigate, setSnackBar]);
 
-  if (isLoggedIn) localStorage.removeItem(VERIFIC_TOKEN_TIMER);
-  else if (pathname.toLowerCase().indexOf("auth") === -1) {
-    window.location.href = HOME_ORIGIN;
-    return <Loading fullSize />;
-  }
+  // if (isLoggedIn) localStorage.removeItem(VERIFIC_TOKEN_TIMER);
+  // else if (pathname.toLowerCase().indexOf("auth") === -1) {
+  //   window.location.href = HOME_ORIGIN;
+  //   return <Loading fullSize />;
+
+  if (isLoggedIn) {
+  localStorage.removeItem(VERIFIC_TOKEN_TIMER);
+} 
+  // }
 
   return (
     <ThemeProvider theme={theme}>
@@ -204,11 +209,11 @@ const App = () => {
           [INPUT_AUTOFILL_SELECTOR]: {
             backgroundColor: "transparent",
             transition: "background-color 5000s ease-in-out 0s",
-            textFillColor: theme.palette.text.primary
+            textFillColor: theme.palette.text.primary,
           },
           button: {
-            cursor: "pointer"
-          }
+            cursor: "pointer",
+          },
         }}
       />
       <Provider
@@ -218,7 +223,7 @@ const App = () => {
           handleGoBack,
           renderBackArrow,
           appCtx,
-          setAppCtx
+          setAppCtx,
         }}
       >
         <Routes>
@@ -310,6 +315,11 @@ const App = () => {
           />
 
           <Route
+            path="/idVerificatonMethod/IdVerificationMethod"
+            Component={isLoggedIn ? IdVerificationMethod : Redirect}
+          />
+
+          <Route
             path="/investment/Investment"
             Component={isLoggedIn ? Investment : Redirect}
           />
@@ -382,7 +392,7 @@ const App = () => {
                     duration: 30,
                     tradeType: "crypto",
                     roiPct: 4.0,
-                    plan: "master"
+                    plan: "master",
                   }}
                 />
               ) : (
@@ -401,7 +411,7 @@ const App = () => {
                     duration: 20,
                     tradeType: "crypto",
                     roiPct: 2.5,
-                    plan: "professional"
+                    plan: "professional",
                   }}
                 />
               ) : (
@@ -419,7 +429,7 @@ const App = () => {
                     maxAmount: 15000,
                     duration: 10,
                     tradeType: "crypto",
-                    roiPct: 2.0
+                    roiPct: 2.0,
                   }}
                 />
               ) : (
@@ -437,7 +447,7 @@ const App = () => {
                     maxAmount: 15000,
                     duration: 10,
                     tradeType: "crypto",
-                    roiPct: 3.0
+                    roiPct: 3.0,
                   }}
                 />
               ) : (
@@ -455,7 +465,7 @@ const App = () => {
                     maxAmount: 100000,
                     duration: 21,
                     plan: "master",
-                    roiPct: 2.0
+                    roiPct: 2.0,
                   }}
                 />
               ) : (
@@ -473,7 +483,7 @@ const App = () => {
                     maxAmount: 50000,
                     duration: 14,
                     plan: "professional",
-                    roiPct: 1.5
+                    roiPct: 1.5,
                   }}
                 />
               ) : (
@@ -515,8 +525,8 @@ const App = () => {
           sx={{
             maxWidth: snackbar.maxWidth || "400px",
             "&::first-letter": {
-              textTransform: "uppercase"
-            }
+              textTransform: "uppercase",
+            },
           }}
         >
           <Alert
@@ -527,7 +537,7 @@ const App = () => {
               </IconButton>
             }
             sx={{
-              whiteSpace: "pre-line"
+              whiteSpace: "pre-line",
             }}
           >
             {snackbar.message}

@@ -36,6 +36,7 @@
  gap: 40px;
  align-items: center;
  justify-content: center;
+ margin-bottom: 40px;
 
  div {
   border-radius: 5px;
@@ -127,7 +128,6 @@
  border: 1px solid #D7D7D7;
  background: #FFF;
  display: flex;
- width: 219px;
  padding: 8px 144px 7px 19px;
  align-items: center;
 }
@@ -153,7 +153,6 @@
 
 .second_div {
  height: 50px !important;
- margin-bottom: 50px;
 }
 
 .verify_notice_main_cont {

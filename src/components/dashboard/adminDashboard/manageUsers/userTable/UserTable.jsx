@@ -130,14 +130,13 @@ const UserTable = () => {
     ) : (
       data.slice(startIndex, endIndex).map((item) => {
         const kycStatus = item.status;
-        // const hasProcessed = kycStatus !== "awaiting";
-         const hasProcessed = kycStatus === "confirm" || kycStatus === "reject";
+        const hasProcessed = kycStatus !== "awaiting";
         const isProc = processing[item.id];
         const actionSx = {
           cursor: isProc ? "not-allowed" : hasProcessed ? "default" : "pointer",
           padding: "8px",
           width: "auto",
-          font: "8px",
+          fontSize: "8px",
         };
 
         return (

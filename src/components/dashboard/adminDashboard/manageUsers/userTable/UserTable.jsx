@@ -130,8 +130,8 @@ const UserTable = () => {
     ) : (
       data.slice(startIndex, endIndex).map((item) => {
         const kycStatus = item.status;
-        const hasProcessed =
-          kycStatus === "confirmed" || kycStatus === "rejected";
+        const hasProcessed = kycStatus !== "awaiting";
+          // kycStatus === "confirmed" || kycStatus === "rejected";
         const isProc = processing[item.id];
         const actionSx = {
           cursor: isProc ? "not-allowed" : hasProcessed ? "default" : "pointer",
@@ -215,7 +215,7 @@ const UserTable = () => {
                 <Stack justifyContent="normal">
                   <Button
                     type="button"
-                    color="error"
+                    color="secondary"
                     variant="contained"
                     sx={actionSx}
                     disabled={isProc}
@@ -230,9 +230,7 @@ const UserTable = () => {
                       variant="contained"
                       sx={actionSx}
                       disabled={isProc}
-                      onClick={() =>
-                        updateUserStatus(item.id, "reject", "id")
-                      }
+                      onClick={() => updateUserStatus(item.id, "reject", "id")}
                     >
                       Reject ID
                     </Button>

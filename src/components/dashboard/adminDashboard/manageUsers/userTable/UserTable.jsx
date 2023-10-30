@@ -104,7 +104,8 @@ const UserTable = () => {
           <th id={styles.tableU}>Email address</th>
           <th id={styles.tableU}>Status</th>
           <th id={styles.tableU}>KYC Proof</th>
-          <th id={styles.tableU}>Action</th>
+          <th id={styles.tableU}>Manual Action</th>
+          <th id={styles.tableU}>Elect Action</th>
           <th id={styles.tableU}>Manage</th>
         </tr>
       </thead>
@@ -134,8 +135,9 @@ const UserTable = () => {
         const isProc = processing[item.id];
         const actionSx = {
           cursor: isProc ? "not-allowed" : hasProcessed ? "default" : "pointer",
-          padding: "8px 15px",
+          padding: "8px",
           width: "auto",
+          font: "8px",
         };
 
         return (
@@ -150,7 +152,12 @@ const UserTable = () => {
               )}
             </td>
             <td>
-              <span onClick={() => handleViewProof(item.kycDocs)}>View</span>
+              <span
+                onClick={() => handleViewProof(item.kycDocs)}
+                style={{ cursor: "pointer" }}
+              >
+                View
+              </span>
             </td>
             <td>
               {hasProcessed ? (
@@ -175,16 +182,37 @@ const UserTable = () => {
                   >
                     Confirm
                   </Button>
-                  <Button
-                    type="button"
-                    color="error"
-                    variant="contained"
-                    sx={actionSx}
-                    disabled={isProc}
-                    onClick={() => updateUserStatus(item.id, "reject", "file")}
-                  >
-                    Reject
-                  </Button>
+                  {hasProcessed ? null : (
+                    <Button
+                      type="button"
+                      color="error"
+                      variant="contained"
+                      sx={actionSx}
+                      disabled={isProc}
+                      onClick={() =>
+                        updateUserStatus(item.id, "reject", "file")
+                      }
+                    >
+                      Reject
+                    </Button>
+                  )}
+                </Stack>
+              )}
+            </td>
+
+            <td>
+              {hasProcessed ? (
+                <Typography
+                  sx={{
+                    "&::first-letter": {
+                      textTransform: "uppercase",
+                    },
+                  }}
+                >
+                  {kycStatus}
+                </Typography>
+              ) : (
+                <Stack justifyContent="normal">
                   <Button
                     type="button"
                     color="error"
@@ -195,6 +223,20 @@ const UserTable = () => {
                   >
                     Confirm ID
                   </Button>
+                  {hasProcessed ? null : (
+                    <Button
+                      type="button"
+                      color="error"
+                      variant="contained"
+                      sx={actionSx}
+                      disabled={isProc}
+                      onClick={() =>
+                        updateUserStatus(item.id, "reject", "id")
+                      }
+                    >
+                      Reject ID
+                    </Button>
+                  )}
                 </Stack>
               )}
             </td>

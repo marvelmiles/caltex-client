@@ -136,7 +136,7 @@ const UserTable = () => {
           cursor: isProc ? "not-allowed" : hasProcessed ? "default" : "pointer",
           padding: "8px",
           width: "auto",
-          font: "8px",
+          fontSize: "8px",
         };
 
         return (

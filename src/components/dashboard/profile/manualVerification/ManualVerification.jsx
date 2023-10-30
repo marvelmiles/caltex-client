@@ -1,9 +1,14 @@
 import React, { useState } from "react";
 import idIcon from "../../../../svgs/id-verify.svg";
-import check from "../../../../svgs/check-gray.svg";
 import styles from "./ManualVerification.module.scss";
 import VerificationNotice from "./VerificationNotice";
 import http from "../../../../api/http";
+
+const checkboxData = [
+  { label: "National Identity Card", value: "nin" },
+  { label: "Passport Number", value: "passport" },
+  { label: "Driving License", value: "driverLicense" },
+];
 
 const ManualVerification = () => {
   const [success, setSuccess] = useState(false);
@@ -11,6 +16,11 @@ const ManualVerification = () => {
   const [fileValue2, setFileValue2] = useState("");
   const [uploadedFile, setUploadedFile] = useState(null);
   const [uploadedFile2, setUploadedFile2] = useState(null);
+  const [selectedOption, setSelectedOption] = useState("");
+
+  const handleCheckboxChange = (value) => {
+    setSelectedOption(value);
+  };
 
   const handleFileChange = (event) => {
     const file = event.target.files[0];
@@ -22,7 +32,7 @@ const ManualVerification = () => {
       setUploadedFile(null);
     }
   };
-  
+
   const handleFileChange2 = (event) => {
     const file = event.target.files[0];
     if (file) {
@@ -35,21 +45,16 @@ const ManualVerification = () => {
   };
 
   const handleSubmit = async () => {
-    if (uploadedFile && uploadedFile2) {
+    if (uploadedFile && uploadedFile2 && selectedOption) {
       const formData = new FormData();
-      formData.append("front", uploadedFile);
-      formData.append("back", uploadedFile2);
+      formData.append(selectedOption + "-front", uploadedFile);
+      formData.append(selectedOption + "-back", uploadedFile2);
 
-      const payload = {
-        documentType: formData,
-        documentNumber: "ManualCheck",
-      };
-
-      // Replace 'your-api-endpoint' with the actual API endpoint.
       try {
+        const queryParams = `fields=${selectedOption}-front ${selectedOption}-back`;
         const res = await http.post(
-          "https://caltex-api.onrender.com/api/users/verify",
-          payload,
+          `/users/verify?${queryParams}`,
+          formData,
           { withCredentials: true }
         );
         if (res.status === 200) {
@@ -57,12 +62,13 @@ const ManualVerification = () => {
           setSuccess(true);
         }
       } catch (error) {
-        console.log("Uploaded Failed!", error);
+        console.log("Upload Failed!", error);
       }
     } else {
-      console.log("Add front and back of your document!");
+      console.log("Add front and back of your document and select a document type!");
     }
   };
+
   return (
     <div className={styles.main_cont}>
       <span id={styles.header}>ID VERIFICATION</span>
@@ -78,25 +84,21 @@ const ManualVerification = () => {
           <div className={styles.card_cont}>
             <div>
               <ul>
-                <li>Upload a clear copy Of the following documents.</li>
-                <li id={styles.li}>
-                  <span>
-                    <img src={check} height={10} width={10} alt="check" />
-                  </span>
-                  <span>National Identity Card</span>
-                </li>
-                <li id={styles.li}>
-                  <span>
-                    <img src={check} height={10} width={10} alt="check" />
-                  </span>
-                  <span>Passport Number</span>
-                </li>
-                <li id={styles.li}>
-                  <span>
-                    <img src={check} height={10} width={10} alt="check" />
-                  </span>
-                  <span>Driving License</span>
-                </li>
+                <li>Upload a clear copy of the following documents.</li>
+                {checkboxData.map((checkbox, index) => (
+                  <div key={index} className={styles.check_box_cont}>
+                    <label htmlFor={checkbox.value} className={styles.checkbox}>
+                      <input
+                        id={checkbox.value}
+                        type="checkbox"
+                        onChange={() => handleCheckboxChange(checkbox.value)}
+                        checked={selectedOption === checkbox.value}
+                      />
+                      <span className={styles.checkmark}></span>
+                    </label>
+                    <p id={styles.p_label}>{checkbox.label}</p>
+                  </div>
+                ))}
                 <li id={styles.file_view}>Front View of your document</li>
                 <label
                   htmlFor="upload_file"
@@ -123,7 +125,9 @@ const ManualVerification = () => {
                   htmlFor="upload_file2"
                   className={styles.custom_file_input}
                 >
-                  <span id={styles.input_label}>Choose file</span>
+                  <span id={styles.input_label} className={styles.label2}>
+                    Choose file
+                  </span>
                   <span id={styles.browse}>Browse</span>
                 </label>
                 <input
@@ -147,3 +151,4 @@ const ManualVerification = () => {
 };
 
 export default ManualVerification;
+

@@ -7,18 +7,22 @@ import rightArrow from "../../../../../svgs/right-arrow.svg";
 import { MSG_DEFAULT_ERR } from "../../../../../config/constants";
 import { useCtx } from "../../../../../context";
 import Loading from "../../../../../components/Loading";
+import SuccessModal from "../../../../successModal/SuccessModal";
+import { Stack, Button, Typography } from "@mui/material";
 
 const UserTable = () => {
   const [data, setData] = useState([]);
   const [currentPage, setCurrentPage] = useState(0);
   const [loading, setLoading] = useState(true);
+  const [processing, setProcessing] = useState({});
+  const [modalIsOpen, setModalIsOpen] = useState(false);
+  const [modalImageUrl, setModalImageUrl] = useState("");
   const itemsPerPage = 10; // Adjust the number of items per page as needed
   const navigate = useNavigate();
 
   const { setSnackBar } = useCtx();
 
   useEffect(() => {
-    // Function to fetch data from the API
     const fetchData = async () => {
       try {
         const response = await http.get("/users/", { withCredentials: true });
@@ -31,13 +35,64 @@ const UserTable = () => {
       }
     };
 
-    // Call the fetchData function when the component mounts
     fetchData();
-  }, [setSnackBar]); // The empty dependency array ensures this effect runs only once on mount
+  }, [setSnackBar]);
 
-  const handleManageUser = previewUser => {
+  const updateUserStatus = async (userId, reason, kycType) => {
+    try {
+      setProcessing((processing) => ({
+        ...processing,
+        [userId]: true,
+      }));
+
+      const res = await http.patch(
+        `/users/${userId}/kyc/${reason}?kycType=${kycType}`,
+        null,
+        {
+          withCredentials: true,
+        }
+      );
+
+      if (!res.success) throw res;
+
+      setData((data) =>
+        data.map((item) => (item.id === userId ? res.data : item))
+      );
+    } catch (error) {
+      setSnackBar(`Failed to ${reason} KYC`);
+    } finally {
+      setProcessing((processing) => {
+        delete processing[userId];
+
+        return {
+          ...processing,
+        };
+      });
+    }
+  };
+
+  const handleViewProof = (kycDocs) => {
+    const documentTypes = Object.keys(kycDocs);
+    documentTypes.forEach((documentType) => {
+      const proofUrl = kycDocs[documentType];
+      console.log(`Document type: ${documentType}, URL: ${proofUrl}`);
+    });
+
+    if (documentTypes.length > 0) {
+      setModalImageUrl(kycDocs[documentTypes[0]]);
+      setModalIsOpen(true);
+    }
+  };
+
+
+  const handleCloseModal = () => {
+    setModalIsOpen(false);
+    setModalImageUrl("");
+  };
+
+  const handleManageUser = (previewUser) => {
     navigate(`/userInformation/UserInformation/${previewUser.id}`, {
-      state: { previewUser }
+      state: { previewUser },
     });
   };
 
@@ -48,47 +103,113 @@ const UserTable = () => {
           <th id={styles.tableU}>User Full Name</th>
           <th id={styles.tableU}>Email address</th>
           <th id={styles.tableU}>Status</th>
+          <th id={styles.tableU}>KYC Proof</th>
+          <th id={styles.tableU}>Action</th>
           <th id={styles.tableU}>Manage</th>
         </tr>
       </thead>
     );
   };
 
-  // Calculate the start and end index based on the current page
   const startIndex = currentPage * itemsPerPage;
   const endIndex = startIndex + itemsPerPage;
   const pageCount = Math.ceil(data.length / itemsPerPage);
 
-  const handlePageChange = newPage => {
+  const handlePageChange = (newPage) => {
     setCurrentPage(newPage);
   };
 
   const renderTableData = () => {
     return loading ? (
       <tr>
-        <td colspan={4}>
+        <td colSpan={6}>
           <Loading />
         </td>
       </tr>
     ) : (
-      data.slice(startIndex, endIndex).map(item => (
-        <tr key={item.id}>
-          <td>{item.username}</td>
-          <td>{item.email}</td>
-          <td>
-            {item.isLogin ? (
-              <span style={{ color: "green" }}>Active</span>
-            ) : (
-              <span style={{ color: "red" }}>Offline</span>
-            )}
-          </td>
-          <td>
-            <button id={styles.user_btn} type="button" onClick={() => handleManageUser(item)}>
-              Manage
-            </button>
-          </td>
-        </tr>
-      ))
+      data.slice(startIndex, endIndex).map((item) => {
+        const kycStatus = item.status;
+        const hasProcessed =
+          kycStatus === "confirmed" || kycStatus === "rejected";
+        const isProc = processing[item.id];
+        const actionSx = {
+          cursor: isProc ? "not-allowed" : hasProcessed ? "default" : "pointer",
+          padding: "8px 15px",
+          width: "auto",
+        };
+
+        return (
+          <tr key={item.id}>
+            <td>{item.username}</td>
+            <td>{item.email}</td>
+            <td>
+              {item.isLogin ? (
+                <span style={{ color: "green" }}>Active</span>
+              ) : (
+                <span style={{ color: "red" }}>Offline</span>
+              )}
+            </td>
+            <td>
+              <span onClick={() => handleViewProof(item.kycDocs)}>View</span>
+            </td>
+            <td>
+              {hasProcessed ? (
+                <Typography
+                  sx={{
+                    "&::first-letter": {
+                      textTransform: "uppercase",
+                    },
+                  }}
+                >
+                  {kycStatus}
+                </Typography>
+              ) : (
+                <Stack justifyContent="normal">
+                  <Button
+                    type="button"
+                    color={"secondary"}
+                    variant={"contained"}
+                    sx={actionSx}
+                    disabled={isProc}
+                    onClick={() => updateUserStatus(item.id, "confirm", "file")}
+                  >
+                    Confirm
+                  </Button>
+                  <Button
+                    type="button"
+                    color="error"
+                    variant="contained"
+                    sx={actionSx}
+                    disabled={isProc}
+                    onClick={() => updateUserStatus(item.id, "reject", "file")}
+                  >
+                    Reject
+                  </Button>
+                  <Button
+                    type="button"
+                    color="error"
+                    variant="contained"
+                    sx={actionSx}
+                    disabled={isProc}
+                    onClick={() => updateUserStatus(item.id, "confirm", "id")}
+                  >
+                    Confirm ID
+                  </Button>
+                </Stack>
+              )}
+            </td>
+            <td>
+              <button
+                id={styles.user_btn}
+                type="button"
+                onClick={() => handleManageUser(item)}
+              >
+                Manage
+              </button>
+            </td>
+          </tr>
+        );
+      })
     );
   };
 
@@ -120,6 +241,16 @@ const UserTable = () => {
           <img src={rightArrow} height={22} width={22} alt="arrow" />
         </button>
       </center>
+
+      {modalIsOpen && (
+        <SuccessModal
+          closeModal={handleCloseModal}
+          icon={{ modalImageUrl }}
+          Styles={styles.modal_btn}
+          message={modalImageUrl ? "" : "No Image to display"}
+          btnText="X"
+        />
+      )}
     </div>
   );
 };

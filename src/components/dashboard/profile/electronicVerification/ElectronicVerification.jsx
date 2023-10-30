@@ -35,7 +35,7 @@ const ElectronicVerification = () => {
     // Assuming you want to upload the number when the button is clicked.
     try {
       const res = await http.post(
-        "https://caltex-api.onrender.com/api/users/verify",
+        "/users/verify",
         {
           documentType: selectedOption,
           documentNumber: numberValue,

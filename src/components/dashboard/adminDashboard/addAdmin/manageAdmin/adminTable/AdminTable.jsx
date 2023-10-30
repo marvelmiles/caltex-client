@@ -83,18 +83,18 @@ const AdminTable = () => {
         </td>
       </tr>
     ) : (
-      data.slice(startIndex, endIndex).map(item => (
+      data.slice(startIndex, endIndex).map((item) => (
         <tr key={item.id}>
-          <td>{item.username || item.firstname}</td>
-          <td>{item.email}</td>
-          <td>
+          <td id={styles.admin_td}>{item.username || item.firstname}</td>
+          <td id={styles.admin_td}>{item.email}</td>
+          <td id={styles.admin_td}>
             {item.isLogin ? (
               <span style={{ color: "green" }}>Active</span>
             ) : (
               <span style={{ color: "red" }}>Offline</span>
             )}
           </td>
-          <td>
+          <td id={styles.admin_td}>
             <button
               disbaled={!!ids[item.id]}
               style={{ cursor: ids[item.id] ? "not-allowed" : "pointer" }}

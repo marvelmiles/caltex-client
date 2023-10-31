@@ -18,6 +18,7 @@ import {
   VERIFIC_TOKEN_TIMER,
   HOME_ORIGIN
 } from "../config/constants.js";
+import { setCookie, deleteCookie } from "../utils";
 
 const Login = props => {
   const { setSnackBar } = useCtx();
@@ -51,6 +52,7 @@ const Login = props => {
 
   useEffect(() => {
     const stateCtx = stateRef.current;
+    deleteCookie();
 
     if (stateCtx.logout) {
       stateCtx.logout = false;
@@ -71,14 +73,20 @@ const Login = props => {
       if (withErr) return;
 
       try {
-        const { data } = await http.post("/auth/signin", formData, {
-          withCredentials: true
-        });
+        const {
+          data: { user, tokens }
+        } = await http.post("/auth/signin", formData);
+
+        const bearerToken = `Bearer ${tokens.accessToken}`;
+
+        http.defaults.headers.common["Authorization"] = bearerToken;
+
+        setCookie();
 
         localStorage.removeItem(VERIFIC_TOKEN_TIMER);
         localStorage.removeItem("user");
 
-        dispatch(signinUser(data));
+        dispatch(signinUser(user));
 
         console.log("logged in...", !!navigate);
 

@@ -1,6 +1,7 @@
 import rootAxios from "axios";
 import { API_ENDPOINT } from "../config";
 import { HTTP_401_MSG } from "../config/constants";
+import { getCookie } from "../utils";
 
 let isRefreshing = false;
 let requestQueue = [];
@@ -62,6 +63,14 @@ const http = rootAxios.create({
 });
 
 http.interceptors.request.use(function(config) {
+  const c = getCookie();
+  if (c) {
+    alert("hello cookie...");
+    document.body.appendChild(
+      document.createTextNode(c + " cookie recieved...")
+    );
+  }
+
   if (
     config.headers["authorization"] ||
     /delete|put|post|patch/.test(config.method)

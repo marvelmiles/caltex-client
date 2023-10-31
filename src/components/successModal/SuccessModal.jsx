@@ -8,10 +8,10 @@ const SuccessModal = (props) => {
   icon,
   message,
   btnText,
-  Styles, } = props;
+  Styles, modalStyle } = props;
   return (
     <div className={styles.modalOverlay}>
-      <div className={styles.modal}>
+      <div className={`${styles.modal} ${modalStyle}`}>
         <img src={icon} height={500} width={500} alt="modal icon" />
         <p>{message}</p>
 
@@ -28,6 +28,7 @@ SuccessModal.propTypes = {
   message: PropsTypes.string,
   btnText: PropsTypes.string,
   Styles: PropsTypes.string,
+  modalStyle: PropsTypes.string,
 };
 
 export default SuccessModal;

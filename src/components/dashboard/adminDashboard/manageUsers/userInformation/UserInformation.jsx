@@ -22,7 +22,7 @@ const UserInformation = () => {
     return (
       <Redirect
         to="/manageUsers/ManageUsers"
-        message="Invalid user selection. Access deneied!"
+        message="Invalid user selection. Access denied!"
       />
     );
 

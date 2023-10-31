@@ -286,7 +286,7 @@ const UserTable = () => {
       {modalIsOpen && (
         <SuccessModal
           closeModal={handleCloseModal}
-          icon={{ modalImageUrl }}
+          icon={modalImageUrl}
           Styles={styles.modal_btn}
           message={modalImageUrl ? "" : "No Image to display"}
           btnText="X"

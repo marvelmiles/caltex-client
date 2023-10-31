@@ -1,7 +1,8 @@
 import rootAxios from "axios";
 import { API_ENDPOINT } from "../config";
-import { HTTP_401_MSG } from "../config/constants";
+// import { HTTP_401_MSG } from "../config/constants";
 import { getCookie } from "../utils";
+import { COOKIE_REFRESH_TOKEN, COOKIE_ACCESS_TOKEN } from "../config/constants";
 
 let isRefreshing = false;
 let requestQueue = [];
@@ -56,27 +57,21 @@ export const handleRefreshToken = requestConfig => {
     });
 };
 
-console.log("baseURL ", API_ENDPOINT);
-
 const http = rootAxios.create({
   baseURL: API_ENDPOINT
 });
 
 http.interceptors.request.use(function(config) {
-  const c = getCookie();
-  if (c) {
-    alert("hello cookie...");
-    document.body.appendChild(
-      document.createTextNode(c + " cookie recieved...")
-    );
-  }
+  if (config.withCredentials || /delete|put|post|patch/.test(config.method)) {
+    config.headers["authorization"] = `Bearer ${getCookie(
+      config.url.indexOf("auth/refresh-token") > -1
+        ? COOKIE_REFRESH_TOKEN
+        : COOKIE_ACCESS_TOKEN
+    )}`;
 
-  if (
-    config.headers["authorization"] ||
-    /delete|put|post|patch/.test(config.method)
-  )
     config.withCredentials =
       config.withCredentials === undefined ? true : config.withCredentials;
+  }
 
   const source = rootAxios.CancelToken.source(); // create new source token on every request
 

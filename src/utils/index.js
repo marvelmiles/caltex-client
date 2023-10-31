@@ -11,16 +11,16 @@ export const getDaysDifference = (startDate, endDate) => {
   return Math.floor((utcEndDate - utcStartDate) / (1000 * 60 * 60 * 24));
 };
 
+export const deleteCookie = name => {
+  Cookies.remove(name);
+};
+
 export const setCookie = (name, data) => {
-  Cookies.set("cook", JSON.stringify({ id: "user-id" }));
+  Cookies.set(name, JSON.stringify(data));
 };
 
 export const getCookie = name => {
-  return Cookies.get("cook");
+  const u = Cookies.get(name);
+
+  return u ? JSON.parse(u) : null;
 };
-
-
-
-export const deleteCookie = name=>{
-  Cookies.remove("cookie")
-}

@@ -13,8 +13,7 @@ import "./dashboard.css";
 import { Stack, Typography } from "@mui/material";
 import StatCard from "../StatCard";
 import SuccessModal from "../successModal/SuccessModal";
-import styles from './Sidebar.module.scss';
-
+import styles from "./Sidebar.module.scss";
 
 const DashboardPage = () => {
   const { currentUser } = useAuth();
@@ -29,8 +28,8 @@ const DashboardPage = () => {
     setSnackBar,
     setAppCtx,
     appCtx: {
-      transactionMetrics: { balance },
-    },
+      transactionMetrics: { balance }
+    }
   } = useCtx();
 
   const { id, kycDocs, kycIds } = currentUser;
@@ -50,7 +49,7 @@ const DashboardPage = () => {
       setKYCNoticeOpen(true);
     } else {
       // Redirect to the withdrawal page
-      navigate("/Withdraw/withdrawPage"); 
+      navigate("/Withdraw/withdrawPage");
     }
   };
 
@@ -76,14 +75,14 @@ const DashboardPage = () => {
         );
 
         const res = await http.get(`/users/${id}/transaction-metrics`, {
-          withCredentials: true,
+          withCredentials: true
         });
 
         if (!res.success) throw res;
 
-        setAppCtx((ctx) => ({
+        setAppCtx(ctx => ({
           ...ctx,
-          transactionMetrics: res.data,
+          transactionMetrics: res.data
         }));
       } catch (err) {
         setSnackBar(err.message);
@@ -99,9 +98,8 @@ const DashboardPage = () => {
             <h5>Total Balance</h5>
             {!openEye && (
               <h3>
-                {`${
-                  formatToDecimalPlace(balance.availableBalance, true) + " USD"
-                }`}
+                {`${formatToDecimalPlace(balance.availableBalance, true) +
+                  " USD"}`}
                 <span class="bell-notification" id=" " onclick=" ">
                   <img
                     src={closedeye}
@@ -140,16 +138,16 @@ const DashboardPage = () => {
               {[
                 {
                   value: balance.confirmedTransactions,
-                  label: "Confirmed Transactions",
+                  label: "Confirmed Transactions"
                 },
                 {
                   value: balance.awaitingTransactions,
-                  label: "Awaiting Transactions",
+                  label: "Awaiting Transactions"
                 },
                 {
                   value: balance.rejectedTransactions,
-                  label: "Rejected Transactions",
-                },
+                  label: "Rejected Transactions"
+                }
               ].map((s, i) => (
                 <StatCard key={i} {...s} />
               ))}
@@ -160,19 +158,11 @@ const DashboardPage = () => {
               Invest{" "}
             </Link>
 
-            <Link
-              to=""
-              className="deposits"
-              onClick={handleDepositClick}
-            >
+            <Link to="" className="deposits" onClick={handleDepositClick}>
               Deposit{" "}
             </Link>
 
-            <Link
-              to=""
-              className="withdraws"
-              onClick={handleWithdrawClick}
-            >
+            <Link to="" className="withdraws" onClick={handleWithdrawClick}>
               Withdraw{" "}
             </Link>
 

@@ -23,3 +23,7 @@ export const currencySymbols = {
 };
 
 export const DATE_FORMAT_TRANS_HIS = "MMM D, YYYY";
+
+export const COOKIE_ACCESS_TOKEN = "_access_token";
+
+export const COOKIE_REFRESH_TOKEN = "_refresh_token";

@@ -76,7 +76,7 @@ const Layout = ({ children }) => {
           <Sidebar />
           <div class="dashboard-content">
             <div class="board-content">
-              {/* <DashboardNav /> */}
+              <DashboardNav />
               {children}
             </div>
           </div>

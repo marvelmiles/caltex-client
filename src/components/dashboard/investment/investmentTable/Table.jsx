@@ -23,15 +23,15 @@ const FixedHeaderTable = () => {
     const fetchData = async () => {
       try {
         const response = await http.get(`/users/${id}/investments`, {
-          withCredentials: true,
+          withCredentials: true
         });
 
-        const updatedData = response.data.data.map((item) => {
+        const updatedData = response.data.data.map(item => {
           const referrals = item.user.referrals
             ? item.user.referrals.length
             : 0;
 
-          const baseROI = item.amount * 0.025; 
+          const baseROI = item.amount * 0.025;
 
           let referralBonus = 0;
           if (referrals >= 1) {
@@ -103,16 +103,16 @@ const FixedHeaderTable = () => {
       );
     }
     return data.slice(0, 1).map(item => (
-      <tr key={item?.id}>
-        <td id={styles.table_data}>{item?.plan}</td>
-        <td id={styles.table_data}>{item?.amount}</td>
-        <td id={styles.table_data}>{item?.roi}</td>
-        <td id={styles.table_data}>{item?.roiPct}</td>
+      <tr key={item.id}>
+        <td id={styles.table_data}>{item.plan}</td>
+        <td id={styles.table_data}>{item.amount}</td>
+        <td id={styles.table_data}>{item.roi}</td>
+        <td id={styles.table_data}>{item.amount + item.roi}</td>
         <td id={styles.table_data}>
-          {moment(item?.startDate).format(DATE_FORMAT_TRANS_HIS)}
+          {moment(item.startDate).format(DATE_FORMAT_TRANS_HIS)}
         </td>
         <td id={styles.table_data}>
-          {moment(item?.endDate).format(DATE_FORMAT_TRANS_HIS)}
+          {moment(item.endDate).format(DATE_FORMAT_TRANS_HIS)}
         </td>
       </tr>
     ));
@@ -135,7 +135,7 @@ const FixedHeaderTable = () => {
         </tr>
       );
     }
-    return data.map((item) => (
+    return data.map(item => (
       <tr key={item?.id}>
         <td id={styles.table_data}>{item?.plan}</td>
         <td id={styles.table_data}>{item?.amount}</td>
@@ -150,7 +150,6 @@ const FixedHeaderTable = () => {
       </tr>
     ));
   };
-
 
   return (
     <>

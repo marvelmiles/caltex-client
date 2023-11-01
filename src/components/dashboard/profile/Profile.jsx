@@ -45,8 +45,6 @@ const Profile = () => {
   useEffect(() => {
     let v;
 
-    console.log(currentUser.kycIds, currentUser.kycDocs);
-
     for (const key in currentUser.kycIds) {
       const obj = currentUser.kycIds[key] || {};
 
@@ -66,7 +64,7 @@ const Profile = () => {
       }
     }
 
-    if (!v) v = "rejected";
+    if (!v) v = "awaiting";
 
     setKyc(v);
   }, [currentUser.kycIds, currentUser.kycDocs]);

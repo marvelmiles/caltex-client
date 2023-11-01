@@ -38,7 +38,9 @@ const InvestForm = ({
 
   const serializeData = useCallback(
     (formData, props = {}) => {
-      const { keyName, setErrors, prevData } = props;
+      const { keyName, setErrors, prevData, dataset = {} } = props;
+
+      const { name: dataName } = dataset;
 
       let { endYear, endMth, endDay, startYear, startMth, startDay } = formData;
 
@@ -50,40 +52,16 @@ const InvestForm = ({
       startMth = Number(startMth);
       startDay = Number(startDay);
 
-      if (keyName === "amount") {
-        const amt = formData[keyName];
-
-        const inputValue = Number(amt);
-
-        const err = "Input value is invalid.";
-
-        if (inputValue > -1) {
-          if (!inputValue) {
-            formData.roi = "";
-            formData.amount = "";
-          } else if (
-            minAmount < inputValue &&
-            inputValue > maxAmount &&
-            prevData
-          )
-            formData.amount = prevData.amount;
-          else {
-            const interest = inputValue * (roiPct / 100);
-            const total = inputValue + interest * defaultDuration;
-            formData.roi = formatToDecimalPlace(total, true);
-          }
-
-          setErrors(errors => {
-            delete errors.amount;
-            return {
-              ...errors
-            };
-          });
-        } else {
-          setErrors(errors => ({ ...errors, amount: err }));
-          setSnackBar(err);
+      const setROI = (inputValue = formData.amount) => {
+        if (inputValue) {
+          inputValue = Number(inputValue);
+          const interest = inputValue * (roiPct / 100);
+          const roi = interest * formData.duration;
+          formData.roi = formatToDecimalPlace(roi, true);
         }
-      } else {
+      };
+
+      const setTimeframe = () => {
         const today = new Date();
 
         let changed = false;
@@ -123,6 +101,43 @@ const InvestForm = ({
           formData.startDay = startDay;
 
           formData.endDay = endDay;
+
+          console.log(startMth, endMth, startDate, new Date(startDate));
+        }
+      };
+
+      if (dataName === "duration") {
+        setTimeframe();
+        setROI();
+      } else if (keyName === "amount") {
+        const amt = formData[keyName];
+
+        const inputValue = Number(amt);
+
+        const err = "Input value is invalid.";
+
+        if (inputValue > -1) {
+          if (!inputValue) {
+            formData.roi = "";
+            formData.amount = "";
+          } else if (
+            minAmount < inputValue &&
+            inputValue > maxAmount &&
+            prevData
+          )
+            formData.amount = prevData.amount;
+
+          setROI();
+
+          setErrors(errors => {
+            delete errors.amount;
+            return {
+              ...errors
+            };
+          });
+        } else {
+          setErrors(errors => ({ ...errors, amount: err }));
+          setSnackBar(err);
         }
       }
 
@@ -215,7 +230,28 @@ const InvestForm = ({
           type="text"
           name="roi"
           id="roi"
-          value={formData.roi || ""}
+          value={
+            formData.roi ? "$" + formatToDecimalPlace(formData.roi, true) : ""
+          }
+          readOnly
+          placeholder={roiPct + "% on investment"}
+        />
+      </div>
+      <div class="input-amount">
+        <span class="input-des">Net Gain</span>
+        <input
+          type="text"
+          name="fund"
+          id="roi"
+          value={
+            "$" +
+            formatToDecimalPlace(
+              formData.amount
+                ? Number(formData.amount) + Number(formData.roi)
+                : 0,
+              true
+            )
+          }
           readOnly
           placeholder={roiPct + "% on investment"}
         />

@@ -48,7 +48,7 @@ const useForm = (config = {}) => {
   const handleChange = useCallback(
     (e, validator) => {
       const node = e.currentTarget || e.target;
-      let { type, name: keyName, value } = node;
+      let { type, name: keyName, value, dataset } = node;
 
       let errMap = {};
 
@@ -77,7 +77,8 @@ const useForm = (config = {}) => {
           type,
           e,
           setErrors,
-          prevData: { ...formData }
+          prevData: { ...formData },
+          dataset
         };
 
         // console.log(

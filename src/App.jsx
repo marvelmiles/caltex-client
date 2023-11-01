@@ -4,7 +4,7 @@ import {
   Route,
   useLocation,
   Navigate,
-  useNavigate,
+  useNavigate
 } from "react-router-dom";
 import DashboardPage from "./components/dashboard/DashboardPage";
 import Congratulations from "./components/CongratulatoryMessage/Congratulations";
@@ -23,7 +23,7 @@ import {
   ThemeProvider,
   CssBaseline,
   GlobalStyles,
-  IconButton,
+  IconButton
 } from "@mui/material";
 import { createTheme, fontFamily } from "./styled/theme";
 import Login from "./pages/Login";
@@ -50,7 +50,7 @@ import backarrow from "./images/backArrow.png";
 import {
   HTTP_CODE_ACCOUNT_VERIFICATION_ERROR,
   VERIFIC_TOKEN_TIMER,
-  HOME_ORIGIN,
+  HOME_ORIGIN
 } from "./config/constants";
 import CaltexCompBrief from "./components/CaltexCompanyBrief/CaltexCompBrief";
 import ManageUsers from "./components/dashboard/adminDashboard/manageUsers/ManageUsers";
@@ -85,14 +85,14 @@ const App = () => {
       balance: {
         confirmedTransactions: 0,
         awaitingTransactions: 0,
-        rejectedTransactions: 0,
-      },
-    },
+        rejectedTransactions: 0
+      }
+    }
   });
 
   let { state: locState, pathname } = useLocation();
   locState = locState || {
-    previewUser: defaultUser,
+    previewUser: defaultUser
   };
 
   const { isLoggedIn } = useAuth(locState.user);
@@ -100,7 +100,7 @@ const App = () => {
   const navigate = useNavigate();
 
   const handleGoBack = useCallback(
-    (config) => {
+    config => {
       navigate(-1, { state: locState, ...config });
     },
     [navigate, locState]
@@ -118,11 +118,11 @@ const App = () => {
   const closeSnackBar = useCallback((e, reason) => {
     if (reason === "clickaway") return;
 
-    setSnackbar((snackbar) =>
+    setSnackbar(snackbar =>
       snackbar.open
         ? {
             ...snackbar,
-            open: false,
+            open: false
           }
         : snackbar
     );
@@ -132,7 +132,7 @@ const App = () => {
     (
       snackbar = {
         autoHideDuration: 10000,
-        message: "Something went wrong!",
+        message: "Something went wrong!"
       },
       withDelay
     ) => {
@@ -141,8 +141,8 @@ const App = () => {
         ...(snackbar.message
           ? snackbar
           : {
-              message: snackbar,
-            }),
+              message: snackbar
+            })
       };
 
       if (withDelay) {
@@ -161,8 +161,8 @@ const App = () => {
 
   useEffect(() => {
     http.interceptors.response.use(
-      (res) => res,
-      (err) => {
+      res => res,
+      err => {
         if (err.status === 403) {
           console.log(err, " in app 403 ");
           navigate(
@@ -172,7 +172,7 @@ const App = () => {
                 : `redirect=${createRelativeUrl()}`
             }`,
             {
-              state: locState,
+              state: locState
             }
           );
 
@@ -205,11 +205,11 @@ const App = () => {
           [INPUT_AUTOFILL_SELECTOR]: {
             backgroundColor: "transparent",
             transition: "background-color 5000s ease-in-out 0s",
-            textFillColor: theme.palette.text.primary,
+            textFillColor: theme.palette.text.primary
           },
           button: {
-            cursor: "pointer",
-          },
+            cursor: "pointer"
+          }
         }}
       />
       <Provider
@@ -219,7 +219,7 @@ const App = () => {
           handleGoBack,
           renderBackArrow,
           appCtx,
-          setAppCtx,
+          setAppCtx
         }}
       >
         <Routes>
@@ -388,7 +388,7 @@ const App = () => {
                     duration: 30,
                     tradeType: "crypto",
                     roiPct: 4.0,
-                    plan: "master",
+                    plan: "master"
                   }}
                 />
               ) : (
@@ -407,7 +407,7 @@ const App = () => {
                     duration: 20,
                     tradeType: "crypto",
                     roiPct: 2.5,
-                    plan: "professional",
+                    plan: "professional"
                   }}
                 />
               ) : (
@@ -425,7 +425,7 @@ const App = () => {
                     maxAmount: 15000,
                     duration: 10,
                     tradeType: "crypto",
-                    roiPct: 2.0,
+                    roiPct: 2.0
                   }}
                 />
               ) : (
@@ -443,7 +443,7 @@ const App = () => {
                     maxAmount: 15000,
                     duration: 10,
                     tradeType: "crypto",
-                    roiPct: 3.0,
+                    roiPct: 3.0
                   }}
                 />
               ) : (
@@ -461,7 +461,7 @@ const App = () => {
                     maxAmount: 100000,
                     duration: 21,
                     plan: "master",
-                    roiPct: 2.0,
+                    roiPct: 2.0
                   }}
                 />
               ) : (
@@ -479,7 +479,7 @@ const App = () => {
                     maxAmount: 50000,
                     duration: 14,
                     plan: "professional",
-                    roiPct: 1.5,
+                    roiPct: 1.5
                   }}
                 />
               ) : (
@@ -521,8 +521,8 @@ const App = () => {
           sx={{
             maxWidth: snackbar.maxWidth || "400px",
             "&::first-letter": {
-              textTransform: "uppercase",
-            },
+              textTransform: "uppercase"
+            }
           }}
         >
           <Alert
@@ -533,7 +533,7 @@ const App = () => {
               </IconButton>
             }
             sx={{
-              whiteSpace: "pre-line",
+              whiteSpace: "pre-line"
             }}
           >
             {snackbar.message}

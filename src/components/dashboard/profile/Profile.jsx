@@ -14,6 +14,7 @@ import { useDispatch } from "react-redux";
 import { BsLink45Deg } from "react-icons/bs";
 import { CLIENT_ORIGIN } from "../../../config/constants";
 import useMediaQuery from "../../../hooks/useMediaQuery";
+import { StyledLink } from "../../../styled";
 
 const defaultFormData = {
   firstname: "",
@@ -37,7 +38,36 @@ const Profile = () => {
 
   const [photoUrl, setPhotoUrl] = useState(currentUser.photoUrl);
 
+  const [kyc, setKyc] = useState("");
+
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    let v;
+
+    for (const key in currentUser.kycIds) {
+      const obj = currentUser.kycIds[key];
+
+      if (obj.status === "confirmed" || obj.status === "rejected") {
+        v = v.status;
+        break;
+      }
+    }
+
+    if (!v) {
+      for (const key in currentUser.kycDocs) {
+        const obj = currentUser.kycIds[key];
+        if (obj.status === "confirmed" || obj.status === "rejected") {
+          v = v.status;
+          break;
+        }
+      }
+    }
+
+    if (!v) v = "rejected";
+
+    setKyc(v);
+  }, [currentUser.kycIds, currentUser.kycDocs]);
 
   useEffect(() => {
     if (formData.avatar) {
@@ -53,6 +83,7 @@ const Profile = () => {
 
   const handleInputChange = event => {
     const { name, value } = event.target;
+
     setFormData({
       ...formData,
       [name]: value
@@ -147,7 +178,23 @@ const Profile = () => {
       {!swap && (
         <div className={`ct ${styles.main_cont}`} id="ct">
           <div className={styles.personal_cont}>
-            <p>Investor Profile and information</p>
+            <Stack>
+              <p>Investor Profile and information</p>
+              {
+                {
+                  rejected: (
+                    <StyledLink
+                      id="link-id"
+                      sx={{ color: "#000" }}
+                      to="/idVerificatonMethod/IdVerificationMethod"
+                    >
+                      Verify your identity
+                    </StyledLink>
+                  ),
+                  confirmed: <p>Identity verified</p>
+                }[kyc]
+              }
+            </Stack>
           </div>
           <Stack
             component="form"
@@ -163,14 +210,14 @@ const Profile = () => {
                     maxWidth: avatarSize,
                     mx: "auto",
                     div: {
-                      maxWidth: "inherit",
-                    },
+                      maxWidth: "inherit"
+                    }
                   }}
                 >
                   <div>
                     <div
                       style={{
-                        position: "relative",
+                        position: "relative"
                       }}
                     >
                       <Avatar
@@ -178,7 +225,7 @@ const Profile = () => {
                           width: avatarSize,
                           height: avatarSize,
                           border: "2px solid currentColor",
-                          borderColor: "divider",
+                          borderColor: "divider"
                         }}
                         src={photoUrl}
                       />
@@ -189,9 +236,9 @@ const Profile = () => {
                           right: "10px",
                           backgroundColor: "grey.200",
                           "&:hover": {
-                            backgroundColor: "grey.300",
+                            backgroundColor: "grey.300"
                           },
-                          cursor: isSubmitting ? "not-allowed" : "cursor",
+                          cursor: isSubmitting ? "not-allowed" : "cursor"
                         }}
                         component="label"
                         htmlFor={fileId}
@@ -225,7 +272,7 @@ const Profile = () => {
                 <Stack flexWrap="wrap-reverse" className={styles.rev_cont}>
                   <span
                     style={{
-                      borderBottom: "3px solid rgba(240, 166, 23, 0.5)",
+                      borderBottom: "3px solid rgba(240, 166, 23, 0.5)"
                     }}
                   >
                     Personal Information
@@ -235,7 +282,7 @@ const Profile = () => {
                     onClick={handleCopyReferralLink}
                     style={{
                       borderBottom: "3px solid rgba(240, 166, 23, 0.5)",
-                      cursor: "pointer",
+                      cursor: "pointer"
                     }}
                   >
                     Referral link
@@ -244,7 +291,7 @@ const Profile = () => {
                         fontSize: "18px",
                         position: "relative",
                         top: "4px",
-                        marginLeft: "5px",
+                        marginLeft: "5px"
                       }}
                     />
                   </span>
@@ -259,7 +306,7 @@ const Profile = () => {
                       type="text"
                       sx={{
                         width: isMobile ? "300px" : "430px",
-                        height: isMobile ? "30px" : "50px",
+                        height: isMobile ? "30px" : "50px"
                       }}
                       value={formData.firstname || currentUser.firstname}
                       onChange={handleInputChange}
@@ -273,7 +320,7 @@ const Profile = () => {
                       type="text"
                       sx={{
                         width: isMobile ? "300px" : "430px",
-                        height: isMobile ? "30px" : "50px",
+                        height: isMobile ? "30px" : "50px"
                       }}
                       defaultValue={formData.lastname || currentUser.lastname}
                       onChange={handleInputChange}
@@ -289,7 +336,7 @@ const Profile = () => {
                       type="text"
                       sx={{
                         width: isMobile ? "300px" : "430px",
-                        height: isMobile ? "30px" : "50px",
+                        height: isMobile ? "30px" : "50px"
                       }}
                       value={formData.username || currentUser.username}
                       onChange={handleInputChange}
@@ -303,7 +350,7 @@ const Profile = () => {
                       type="text"
                       sx={{
                         width: isMobile ? "300px" : "430px",
-                        height: isMobile ? "30px" : "50px",
+                        height: isMobile ? "30px" : "50px"
                       }}
                       defaultValue={formData.phone || currentUser.phone[0]}
                       onChange={handleInputChange}
@@ -321,7 +368,7 @@ const Profile = () => {
                       type="text"
                       sx={{
                         width: isMobile ? "300px" : "430px",
-                        height: isMobile ? "30px" : "50px",
+                        height: isMobile ? "30px" : "50px"
                       }}
                       value={formData.line1 || currentUser.address.line1}
                       onChange={handleInputChange}
@@ -335,7 +382,7 @@ const Profile = () => {
                       type="text"
                       sx={{
                         width: isMobile ? "300px" : "430px",
-                        height: isMobile ? "30px" : "50px",
+                        height: isMobile ? "30px" : "50px"
                       }}
                       value={formData.line2 || currentUser.address.line2}
                       onChange={handleInputChange}
@@ -351,7 +398,7 @@ const Profile = () => {
                       type="text"
                       sx={{
                         width: isMobile ? "300px" : "430px",
-                        height: isMobile ? "30px" : "50px",
+                        height: isMobile ? "30px" : "50px"
                       }}
                       value={formData.zipCode || currentUser.address.zipCode}
                       onChange={handleInputChange}
@@ -366,7 +413,7 @@ const Profile = () => {
                       type="text"
                       sx={{
                         width: isMobile ? "300px" : "430px",
-                        height: isMobile ? "30px" : "50px",
+                        height: isMobile ? "30px" : "50px"
                       }}
                       value={
                         formData.country ||

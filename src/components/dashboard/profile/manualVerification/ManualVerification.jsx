@@ -3,11 +3,13 @@ import idIcon from "../../../../svgs/id-verify.svg";
 import styles from "./ManualVerification.module.scss";
 import VerificationNotice from "./VerificationNotice";
 import http from "../../../../api/http";
+import useAuth from "../../../../hooks/useAuth";
+import { useCtx } from "../../../../context";
 
 const checkboxData = [
   { label: "National Identity Card", value: "nin" },
   { label: "Passport Number", value: "passport" },
-  { label: "Driving License", value: "driverLicense" },
+  { label: "Driving License", value: "driverLicense" }
 ];
 
 const ManualVerification = () => {
@@ -18,11 +20,17 @@ const ManualVerification = () => {
   const [uploadedFile2, setUploadedFile2] = useState(null);
   const [selectedOption, setSelectedOption] = useState("");
 
-  const handleCheckboxChange = (value) => {
+  const { setSnackBar } = useCtx();
+
+  const {
+    currentUser: { id: cid }
+  } = useAuth();
+
+  const handleCheckboxChange = value => {
     setSelectedOption(value);
   };
 
-  const handleFileChange = (event) => {
+  const handleFileChange = event => {
     const file = event.target.files[0];
     if (file) {
       setFileValue(file.name);
@@ -33,7 +41,7 @@ const ManualVerification = () => {
     }
   };
 
-  const handleFileChange2 = (event) => {
+  const handleFileChange2 = event => {
     const file = event.target.files[0];
     if (file) {
       setFileValue2(file.name);
@@ -44,7 +52,8 @@ const ManualVerification = () => {
     }
   };
 
-  const handleSubmit = async () => {
+  const handleSubmit = async e => {
+    e.preventDefault();
     if (uploadedFile && uploadedFile2 && selectedOption) {
       const formData = new FormData();
       formData.append(selectedOption + "-front", uploadedFile);
@@ -52,11 +61,10 @@ const ManualVerification = () => {
 
       try {
         const queryParams = `fields=${selectedOption}-front ${selectedOption}-back`;
-        const res = await http.post(
-          `/users/verify?${queryParams}`,
-          formData,
-          { withCredentials: true }
-        );
+
+        const res = await http.put(`/users/${cid}?${queryParams}`, formData, {
+          withCredentials: true
+        });
         if (res.status === 200) {
           console.log("Successfully Uploaded!");
           setSuccess(true);
@@ -65,7 +73,9 @@ const ManualVerification = () => {
         console.log("Upload Failed!", error);
       }
     } else {
-      console.log("Add front and back of your document and select a document type!");
+      setSnackBar(
+        "Add front and back of your document and select a document type!"
+      );
     }
   };
 
@@ -115,7 +125,6 @@ const ManualVerification = () => {
                   accept=".jpg, .jpeg, .png, .gif, .pdf"
                 />
                 <span>{fileValue}</span>
-                <button type="button">Upload</button>
               </ul>
             </div>
             <div className={styles.second_div}>
@@ -151,4 +160,3 @@ const ManualVerification = () => {
 };
 
 export default ManualVerification;
-

@@ -9,6 +9,7 @@ import {
 import Loading from "../../../Loading";
 import moment from "moment";
 import styles from "./Table.module.scss";
+import { formatToDecimalPlace } from "../../../../utils/normalizers";
 
 const FixedHeaderTable = () => {
   const { setSnackBar } = useCtx();
@@ -26,30 +27,7 @@ const FixedHeaderTable = () => {
           withCredentials: true
         });
 
-        const updatedData = response.data.data.map(item => {
-          const referrals = item.user.referrals
-            ? item.user.referrals.length
-            : 0;
-
-          const baseROI = item.amount * 0.025;
-
-          let referralBonus = 0;
-          if (referrals >= 1) {
-            referralBonus += item.amount * 0.15; // 15% for the first person
-          }
-          if (referrals >= 2) {
-            referralBonus += item.amount * 0.1; // 10% for the second person
-          }
-          if (referrals >= 3) {
-            referralBonus += item.amount * 0.07; // 7% for the third person
-          }
-
-          const updatedROI = baseROI + referralBonus;
-
-          return { ...item, roi: updatedROI };
-        });
-
-        setData(updatedData);
+        setData(response.data.data);
       } catch (error) {
         console.error("Error fetching data:", error);
         setSnackBar(MSG_DEFAULT_ERR);
@@ -102,20 +80,28 @@ const FixedHeaderTable = () => {
         </tr>
       );
     }
-    return data.slice(0, 1).map(item => (
-      <tr key={item.id}>
-        <td id={styles.table_data}>{item.plan}</td>
-        <td id={styles.table_data}>{item.amount}</td>
-        <td id={styles.table_data}>{item.roi}</td>
-        <td id={styles.table_data}>{item.amount + item.roi}</td>
-        <td id={styles.table_data}>
-          {moment(item.startDate).format(DATE_FORMAT_TRANS_HIS)}
-        </td>
-        <td id={styles.table_data}>
-          {moment(item.endDate).format(DATE_FORMAT_TRANS_HIS)}
-        </td>
-      </tr>
-    ));
+    return data.slice(0, 1).map(item => {
+      return (
+        <tr key={item.id}>
+          <td id={styles.table_data}>{item.plan}</td>
+          <td id={styles.table_data}>
+            ${formatToDecimalPlace(item.amount, true)}
+          </td>
+          <td id={styles.table_data}>
+            ${formatToDecimalPlace(item.roi, true)}
+          </td>
+          <td id={styles.table_data}>
+            ${formatToDecimalPlace(item.amount + item.roi, true)}
+          </td>
+          <td id={styles.table_data}>
+            {moment(item.startDate).format(DATE_FORMAT_TRANS_HIS)}
+          </td>
+          <td id={styles.table_data}>
+            {moment(item.endDate).format(DATE_FORMAT_TRANS_HIS)}
+          </td>
+        </tr>
+      );
+    });
   };
 
   const renderTableData2 = () => {

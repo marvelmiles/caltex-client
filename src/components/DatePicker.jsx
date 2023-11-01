@@ -8,6 +8,7 @@ const DatePicker = ({
   disabled,
   startYear,
   endYear,
+  groupName = "duration",
   ...props
 }) => {
   const today = new Date();
@@ -34,6 +35,7 @@ const DatePicker = ({
         className="custom-date"
         value={props.day}
         name={dayName}
+        data-name={groupName}
         onChange={props.handleChange}
         disabled={disabled}
       >
@@ -47,6 +49,7 @@ const DatePicker = ({
         className="custom-date"
         name={mthName}
         value={props.mth}
+        data-name={groupName}
         onChange={e => {
           let val = Number(e.target.value);
 
@@ -79,6 +82,7 @@ const DatePicker = ({
         value={props.year}
         onChange={props.handleChange}
         disabled={disabled}
+        data-name={groupName}
       >
         {yearList.map(y => (
           <option key={y} value={y}>

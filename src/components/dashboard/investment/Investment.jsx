@@ -6,6 +6,7 @@ import HistoryTable from "./historyTable/HistoryTable";
 import Layout from "../../Layout";
 import { Box, Stack, IconButton } from "@mui/material";
 import { AiOutlineSearch } from "react-icons/ai";
+import BackArrow from "../backArrow/BackArrow";
 
 const Investment = () => {
   const today = new Date();
@@ -75,6 +76,7 @@ const Investment = () => {
   return (
     <Layout>
       <div class={styles.main_cont}>
+        <BackArrow />
         <p id={styles.p_text}>My Investment</p>
         <FixedHeaderTable />
 

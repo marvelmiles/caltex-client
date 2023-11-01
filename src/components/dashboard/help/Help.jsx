@@ -2,11 +2,13 @@ import React from "react";
 import styles from "./Help.module.scss";
 import Cards from "./cards/Cards";
 import Layout from "../../Layout";
+import BackArrow from "../backArrow/BackArrow";
 
 const Help = () => {
   return (
     <Layout>
       <div className={styles.main_cont}>
+        <BackArrow />
         <h2>Need Help?</h2>
         <p>
           Reach out to us through our various support channel and get response

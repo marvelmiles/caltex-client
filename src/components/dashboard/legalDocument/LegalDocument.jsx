@@ -11,6 +11,7 @@ import file8 from "../../../svgs/file8.pdf";
 import download from "../../../svgs/download-icon.svg";
 import styles from "./LegalDocument.module.scss";
 import Layout from "../../Layout";
+import BackArrow from "../backArrow/BackArrow";
 
 const LegalDocument = () => {
   // Define an array of file names and their paths
@@ -40,6 +41,7 @@ const LegalDocument = () => {
   return (
     <Layout>
       <div className={styles.main_cont}>
+        <BackArrow />
         <h2>Legal Documents</h2>
         <p id={styles.p}>
           Have access to our company policy through our legal documents

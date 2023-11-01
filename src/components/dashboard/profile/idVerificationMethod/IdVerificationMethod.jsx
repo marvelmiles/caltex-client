@@ -4,7 +4,8 @@ import check from "../../../../svgs/check-gray.svg";
 import styles from "./IdVerificationMethod.module.scss";
 import ManualVerification from "../manualVerification/ManualVerification";
 import ElectronicVerification from "../electronicVerification/ElectronicVerification";
-import Layout from "../../../Layout";
+import BackArrow from "../../backArrow/BackArrow";
+// import Layout from "../../../Layout";
 
 const IdVerificationMethod = () => {
   const [swap, setSwap] = useState(false);
@@ -20,9 +21,10 @@ const IdVerificationMethod = () => {
     setSwap2(!swap2);
   };
   return (
-    <Layout>
+    <>
       {!swap && (
         <div className={styles.main_cont}>
+          <BackArrow />
           <span id={styles.header}>ID VERIFICATION</span>
           <div className={styles.id_ul_main_cont}>
             <ul className={styles.id_ul}>
@@ -94,7 +96,7 @@ const IdVerificationMethod = () => {
       )}
       {swap1 && <ManualVerification />}
       {swap2 && <ElectronicVerification />}
-    </Layout>
+    </>
   );
 };
 

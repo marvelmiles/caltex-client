@@ -19,7 +19,7 @@ const DashboardPage = () => {
   const { currentUser } = useAuth();
   const [openEye, setOpenEye] = useState(false);
   const [closeEye, setCloseEye] = useState(false);
-  const [isVerified, setIsVerified] = useState(true);
+  const [isVerified, setIsVerified] = useState(false);
   const [isKYCNoticeOpen, setKYCNoticeOpen] = useState(false);
 
   const navigate = useNavigate();
@@ -45,7 +45,7 @@ const DashboardPage = () => {
   };
 
   const handleWithdrawClick = () => {
-    if (!isVerified) {
+    if (isVerified) {
       setKYCNoticeOpen(true);
     } else {
       // Redirect to the withdrawal page
@@ -54,7 +54,7 @@ const DashboardPage = () => {
   };
 
   const handleDepositClick = () => {
-    if (!isVerified) {
+    if (isVerified) {
       setKYCNoticeOpen(true);
     } else {
       // Redirect to the deposit page

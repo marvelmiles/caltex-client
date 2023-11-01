@@ -8,7 +8,6 @@ import { Box, Stack, IconButton } from "@mui/material";
 import { AiOutlineSearch } from "react-icons/ai";
 
 const Investment = () => {
-  
   const today = new Date();
 
   const yr = today.getFullYear();
@@ -92,20 +91,21 @@ const Investment = () => {
                 flexWrap: {
                   // xs: "wrap-reverse",
                   // sm: "nowrap"
-                },
+                }
               }}
             >
               <input
                 type="date"
                 className={styles.date_input}
                 ref={dateRef}
-                defaultValue={`${yr}-${mth.toString().padStart(2, "0")}-${day}`}
+                defaultValue={`${yr}-${mth
+                  .toString()
+                  .padStart(2, "0")}-${day.toString().padStart(2, "0")}`}
               />
-
               <IconButton
                 onClick={handleDateSelection}
                 sx={{
-                  backgroundColor: "rgba(215, 215, 215, 0.2)",
+                  backgroundColor: "rgba(215, 215, 215, 0.2)"
                 }}
               >
                 <AiOutlineSearch style={{ fontSize: "20px" }} />
@@ -117,8 +117,8 @@ const Investment = () => {
                 component="span"
                 sx={{
                   "&::first-letter": {
-                    textTransform: "uppercase",
-                  },
+                    textTransform: "uppercase"
+                  }
                 }}
               >
                 {transType || "All"} type
@@ -132,8 +132,8 @@ const Investment = () => {
                 component="span"
                 sx={{
                   "&::first-letter": {
-                    textTransform: "uppercase",
-                  },
+                    textTransform: "uppercase"
+                  }
                 }}
               >
                 {status || "All"} status
@@ -147,8 +147,8 @@ const Investment = () => {
                 component="span"
                 sx={{
                   "&::first-letter": {
-                    textTransform: "uppercase",
-                  },
+                    textTransform: "uppercase"
+                  }
                 }}
               >
                 {paymentType || "Crypto"} payments

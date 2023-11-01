@@ -1,27 +1,30 @@
-import React, { useState } from 'react';
-import idIcon from '../../../../svgs/id-verify.svg';
-import check from '../../../../svgs/check-gray.svg';
-import styles from './IdVerificationMethod.module.scss';
-import ManualVerification from '../manualVerification/ManualVerification';
-import ElectronicVerification from '../electronicVerification/ElectronicVerification';
+import React, { useState } from "react";
+import idIcon from "../../../../svgs/id-verify.svg";
+import check from "../../../../svgs/check-gray.svg";
+import styles from "./IdVerificationMethod.module.scss";
+import ManualVerification from "../manualVerification/ManualVerification";
+import ElectronicVerification from "../electronicVerification/ElectronicVerification";
+import BackArrow from "../../backArrow/BackArrow";
+// import Layout from "../../../Layout";
 
 const IdVerificationMethod = () => {
- const [swap, setSwap] = useState(false);
- const [swap1, setSwap1] = useState(false);
- const [swap2, setSwap2] = useState(false);
+  const [swap, setSwap] = useState(false);
+  const [swap1, setSwap1] = useState(false);
+  const [swap2, setSwap2] = useState(false);
 
- const handleManualVerification = () => {
-    setSwap(!swap)
-    setSwap1(!swap1)
- }
- const handleElectronicVerification = () => {
-    setSwap(!swap)
-    setSwap2(!swap2)
- }
+  const handleManualVerification = () => {
+    setSwap(!swap);
+    setSwap1(!swap1);
+  };
+  const handleElectronicVerification = () => {
+    setSwap(!swap);
+    setSwap2(!swap2);
+  };
   return (
     <>
       {!swap && (
         <div className={styles.main_cont}>
+          <BackArrow />
           <span id={styles.header}>ID VERIFICATION</span>
           <div className={styles.id_ul_main_cont}>
             <ul className={styles.id_ul}>
@@ -95,6 +98,6 @@ const IdVerificationMethod = () => {
       {swap2 && <ElectronicVerification />}
     </>
   );
-}
+};
 
 export default IdVerificationMethod;

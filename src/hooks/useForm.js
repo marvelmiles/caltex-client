@@ -48,7 +48,7 @@ const useForm = (config = {}) => {
   const handleChange = useCallback(
     (e, validator) => {
       const node = e.currentTarget || e.target;
-      let { type, name: keyName, value } = node;
+      let { type, name: keyName, value, dataset } = node;
 
       let errMap = {};
 
@@ -77,7 +77,8 @@ const useForm = (config = {}) => {
           type,
           e,
           setErrors,
-          prevData: { ...formData }
+          prevData: { ...formData },
+          dataset
         };
 
         // console.log(
@@ -104,7 +105,7 @@ const useForm = (config = {}) => {
 
                   if (status !== "Strong") err = status;
 
-                  console.log(keyName, "in pwd", value, alt);
+                  // console.log(keyName, "in pwd", value, alt);
 
                   if (alt && value !== alt) {
                     err = "err";
@@ -121,7 +122,7 @@ const useForm = (config = {}) => {
               ? required[keyName]
               : `Your ${keyName} is required`;
 
-        console.log(err, errMap, "in err,errMap, onChange");
+        // console.log(err, errMap, "in err,errMap, onChange");
 
         if (err) addError(err);
         else
@@ -157,13 +158,13 @@ const useForm = (config = {}) => {
       let data = { ...formData };
 
       let withErr;
-      console.log(
-        required,
-        formData,
-        { ...errors },
-        blacklist,
-        "required...formData...errors...bl"
-      );
+      // console.log(
+      //   required,
+      //   formData,
+      //   { ...errors },
+      //   blacklist,
+      //   "required...formData...errors...bl"
+      // );
 
       const errs = { ...errors },
         _required = { ...required };
@@ -202,14 +203,14 @@ const useForm = (config = {}) => {
 
         setIsSubmitting(true);
       }
-      console.log(
-        { ...errs },
-        withErr,
-        { ...data },
-        { ...errors },
-        { ..._required },
-        "...errors...withErr...data...errors...required...post handle submit"
-      );
+      // console.log(
+      //   { ...errs },
+      //   withErr,
+      //   { ...data },
+      //   { ...errors },
+      //   { ..._required },
+      //   "...errors...withErr...data...errors...required...post handle submit"
+      // );
 
       const _data = config.formData;
 

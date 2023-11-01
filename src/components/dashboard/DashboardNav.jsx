@@ -50,7 +50,7 @@ const DashboardNav = () => {
                 }}
               />
             </span>
-          
+
             <span class="john">
               <p>
                 {firstname} {lastname}

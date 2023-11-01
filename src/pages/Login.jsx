@@ -16,8 +16,11 @@ import Typography from "@mui/material/Typography";
 import {
   HTTP_CODE_ACCOUNT_VERIFICATION_ERROR,
   VERIFIC_TOKEN_TIMER,
-  HOME_ORIGIN
+  HOME_ORIGIN,
+  COOKIE_ACCESS_TOKEN,
+  COOKIE_REFRESH_TOKEN
 } from "../config/constants.js";
+import { setCookie } from "../utils";
 
 const Login = props => {
   const { setSnackBar } = useCtx();
@@ -71,16 +74,23 @@ const Login = props => {
       if (withErr) return;
 
       try {
-        const { data } = await http.post("/auth/signin", formData, {
-          withCredentials: true
-        });
+        const {
+          data: { user, tokens }
+        } = await http.post("/auth/signin", formData);
 
-        localStorage.removeItem(VERIFIC_TOKEN_TIMER);
+        const bearerToken = `Bearer ${tokens.accessToken}`;
+
+        http.defaults.headers.common["Authorization"] = bearerToken;
+
+        setCookie(COOKIE_ACCESS_TOKEN, tokens.accessToken);
+        setCookie(COOKIE_REFRESH_TOKEN, tokens.refreshToken);
+
+        localStorage.removeItem(VERIFIC_TOKEN_TIMER, tokens.refreshToken);
         localStorage.removeItem("user");
 
-        dispatch(signinUser(data));
+        dispatch(signinUser(user));
 
-        console.log("logged in...", !!navigate);
+        console.log("logged in... ");
 
         const params = new URLSearchParams(window.location.search);
 

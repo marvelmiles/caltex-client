@@ -4,54 +4,60 @@ import errorIcon from "../../../../svgs/error.svg";
 import successIcon from "../../../../svgs/success.svg";
 import styles from "./ElectronicVerification.module.scss";
 import { useNavigate } from "react-router-dom";
-
+import BackArrow from "../../backArrow/BackArrow";
 import Toast from "../toast/Toast";
 import http from "../../../../api/http";
+import useAuth from "../../../../hooks/useAuth";
 
 const checkboxData = [
-  { label: "National Identity Card", value: " nationalId" },
+  { label: "National Identity Card", value: " nin" },
   { label: "Passport Number", value: "passport" },
-  { label: "Driving License", value: "driverLicense" },
+  { label: "Driving License", value: "driverLicense" }
 ];
 
 const ElectronicVerification = () => {
+  const {
+    currentUser: { id: cid }
+  } = useAuth();
+
   const [selectedOption, setSelectedOption] = useState("");
   const [responseMessage, setResponseMessage] = useState("");
   const [notice, setNotice] = useState({ success: false, fail: false });
 
-  const handleCheckboxChange = (value) => {
+  const handleCheckboxChange = value => {
     setSelectedOption(value);
   };
-  
+
   const [numberValue, setNumberValue] = useState("");
 
-  const handleNumberChange = (event) => {
+  const handleNumberChange = event => {
     setNumberValue(event.target.value);
   };
   const [swap, setSwap] = useState(false);
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async e => {
     e.preventDefault();
     // Assuming you want to upload the number when the button is clicked.
     try {
-      const res = await http.post(
-        "/users/verify",
+      const res = await http.put(
+        `/users/${cid}`,
         {
-          documentType: selectedOption,
-          documentNumber: numberValue,
+          kycIds: {
+            [selectedOption]: numberValue
+          }
         },
         {
-          withCredentials: true,
+          withCredentials: true
         }
       );
       if (res.status === 200) {
         setResponseMessage(res.message); // Handle the API response here
-        setNotice((prevState) => ({ ...prevState, success: true }));
+        setNotice(prevState => ({ ...prevState, success: true }));
         handleSuccess();
       }
     } catch (error) {
       console.error("Error:", error);
-      setNotice((prevState) => ({ ...prevState, fail: true }));
+      setNotice(prevState => ({ ...prevState, fail: true }));
       setSwap(!swap);
     }
   };
@@ -83,6 +89,7 @@ const ElectronicVerification = () => {
     <>
       {!swap && (
         <div className={styles.main_cont}>
+          <BackArrow />
           <span id={styles.header}>ID VERIFICATION</span>
           <div className={styles.id_ul_main_cont}>
             <ul className={styles.id_ul}>

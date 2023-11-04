@@ -379,24 +379,6 @@ const App = () => {
           />
 
           <Route
-            element={
-              isLoggedIn ? (
-                <InvestTab
-                  investFormProps={{
-                    maxAmount: Infinity,
-                    minAmount: 101000,
-                    duration: 30,
-                    tradeType: "crypto",
-                    roiPct: 4.0,
-                    plan: "master"
-                  }}
-                />
-              ) : (
-                <Redirect />
-              )
-            }
-          />
-          <Route
             path="/CryptoInvestForms/ProfessionalPlanInvC"
             element={
               isLoggedIn ? (
@@ -439,11 +421,12 @@ const App = () => {
               isLoggedIn ? (
                 <InvestTab
                   investFormProps={{
-                    minAmount: 300,
-                    maxAmount: 15000,
-                    duration: 10,
+                    maxAmount: Infinity,
+                    minAmount: 101000,
+                    duration: 30,
                     tradeType: "crypto",
-                    roiPct: 3.0
+                    roiPct: 3.0,
+                    plan: "master"
                   }}
                 />
               ) : (

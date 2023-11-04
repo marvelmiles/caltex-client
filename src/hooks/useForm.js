@@ -141,7 +141,11 @@ const useForm = (config = {}) => {
           [keyName]: value
         };
 
-        if (serializeData) formData = serializeData(formData, props);
+        if (serializeData) {
+          const _f = serializeData(formData, props);
+
+          if (_f) formData = _f;
+        }
 
         return formData;
       });

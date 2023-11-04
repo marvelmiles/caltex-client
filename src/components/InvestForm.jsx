@@ -38,7 +38,13 @@ const InvestForm = ({
 
   const serializeData = useCallback(
     (formData, props = {}) => {
-      const { keyName, setErrors, prevData, dataset = {} } = props;
+      const {
+        keyName,
+        setErrors,
+        dataset = {},
+        prevData,
+        isSubmitting
+      } = props;
 
       const { name: dataName } = dataset;
 
@@ -57,7 +63,8 @@ const InvestForm = ({
           inputValue = Number(inputValue);
           const interest = inputValue * (roiPct / 100);
           const roi = interest * formData.duration;
-          formData.roi = formatToDecimalPlace(roi, true);
+          formData.amount = Number(formData.amount);
+          formData.roi = Number(roi);
         }
       };
 
@@ -101,12 +108,13 @@ const InvestForm = ({
           formData.startDay = startDay;
 
           formData.endDay = endDay;
-
-          console.log(startMth, endMth, startDate, new Date(startDate));
         }
       };
 
-      if (dataName === "duration") {
+      if (isSubmitting) {
+        setROI();
+        setTimeframe();
+      } else if (dataName === "duration") {
         setTimeframe();
         setROI();
       } else if (keyName === "amount") {
@@ -120,11 +128,7 @@ const InvestForm = ({
           if (!inputValue) {
             formData.roi = "";
             formData.amount = "";
-          } else if (
-            minAmount < inputValue &&
-            inputValue > maxAmount &&
-            prevData
-          )
+          } else if (minAmount < inputValue && inputValue > maxAmount)
             formData.amount = prevData.amount;
 
           setROI();
@@ -246,9 +250,7 @@ const InvestForm = ({
           value={
             "$" +
             formatToDecimalPlace(
-              formData.amount
-                ? Number(formData.amount) + Number(formData.roi)
-                : 0,
+              formData.amount ? formData.amount + formData.roi : 0,
               true
             )
           }

@@ -5,6 +5,7 @@ import VerificationNotice from "./VerificationNotice";
 import http from "../../../../api/http";
 import useAuth from "../../../../hooks/useAuth";
 import { useCtx } from "../../../../context";
+import BackArrow from "../../backArrow/BackArrow";
 
 const checkboxData = [
   { label: "National Identity Card", value: "nin" },
@@ -81,6 +82,7 @@ const ManualVerification = () => {
 
   return (
     <div className={styles.main_cont}>
+      <BackArrow />
       <span id={styles.header}>ID VERIFICATION</span>
       <div className={styles.id_ul_main_cont}>
         <ul className={styles.id_ul}>

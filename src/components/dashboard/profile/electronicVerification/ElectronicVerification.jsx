@@ -4,7 +4,7 @@ import errorIcon from "../../../../svgs/error.svg";
 import successIcon from "../../../../svgs/success.svg";
 import styles from "./ElectronicVerification.module.scss";
 import { useNavigate } from "react-router-dom";
-
+import BackArrow from "../../backArrow/BackArrow";
 import Toast from "../toast/Toast";
 import http from "../../../../api/http";
 import useAuth from "../../../../hooks/useAuth";
@@ -89,6 +89,7 @@ const ElectronicVerification = () => {
     <>
       {!swap && (
         <div className={styles.main_cont}>
+          <BackArrow />
           <span id={styles.header}>ID VERIFICATION</span>
           <div className={styles.id_ul_main_cont}>
             <ul className={styles.id_ul}>
@@ -124,8 +125,9 @@ const ElectronicVerification = () => {
                     ))}
                     <li id={styles.selected}>
                       {
-                        checkboxData.find(item => item.value === selectedOption)
-                          ?.label
+                        checkboxData.find(
+                          (item) => item.value === selectedOption
+                        )?.label
                       }
                     </li>
 

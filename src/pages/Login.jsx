@@ -90,8 +90,6 @@ const Login = props => {
 
         dispatch(signinUser(user));
 
-        console.log("logged in... ");
-
         const params = new URLSearchParams(window.location.search);
 
         navigate(params.get("redirect") || "/u/dashboard", { state: locState });
@@ -130,19 +128,6 @@ const Login = props => {
     <AuthLayout
       bgColor="transparent"
       btnTitle="Login"
-      postFormEl={
-        <Stack sx={{ mt: 1 }}>
-          <StyledLink to={HOME_ORIGIN}>
-            @Caltex {new Date().getFullYear()}
-          </StyledLink>
-          <StyledLink
-            onClick={storeTempUser}
-            to="/auth/token-verification/account"
-          >
-            Verify my account
-          </StyledLink>
-        </Stack>
-      }
       isSubmitting={isSubmitting}
       onSubmit={onSubmit}
       formData={formData}

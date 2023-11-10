@@ -165,6 +165,7 @@ const App = () => {
       err => {
         if (err.status === 403) {
           console.log(err, " in app 403 ");
+
           navigate(
             `/auth/login?${
               window.location.pathname.indexOf("auth") > -1
@@ -176,12 +177,13 @@ const App = () => {
             }
           );
 
-          setSnackBar(
-            err.code === HTTP_CODE_ACCOUNT_VERIFICATION_ERROR
-              ? err.message
-              : "You need to login! Session timeout.",
-            true
-          );
+          if (!err._noRefresh)
+            setSnackBar(
+              err.code === HTTP_CODE_ACCOUNT_VERIFICATION_ERROR
+                ? err.message
+                : "You need to login! Session timeout.",
+              true
+            );
         }
         return Promise.reject(err);
       }
@@ -204,8 +206,7 @@ const App = () => {
           a: { textDecoration: "none" },
           [INPUT_AUTOFILL_SELECTOR]: {
             backgroundColor: "transparent",
-            transition: "background-color 5000s ease-in-out 0s",
-            textFillColor: theme.palette.text.primary
+            transition: "background-color 5000s ease-in-out 0s"
           },
           button: {
             cursor: "pointer"
@@ -246,7 +247,7 @@ const App = () => {
             />
             <Route path="recover-password" element={<RecoverPwd />} />
             <Route
-              path="token-verification/:reason"
+              path="token-verification/:reason/:userId"
               element={<TokenVerification />}
             />
             <Route path="reset-password" element={<ResetPwd />} />

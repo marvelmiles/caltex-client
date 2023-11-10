@@ -1,37 +1,28 @@
-import React, { useCallback, useMemo, useState } from "react";
+import React, { useCallback, useMemo, useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import AuthLayout from "../components/AuthLayout";
 import Typography from "@mui/material/Typography";
 import Stack from "@mui/material/Stack";
 import { StyledLink } from "../styled";
-import { useParams, useNavigate, useSearchParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import http from "../api/http";
 import { useCtx } from "../context";
 import useForm, { isNumber } from "../hooks/useForm";
 import CountdownTimer from "../components/CountdownTimer";
-import { signinUser } from "../context/reducers/userReducer";
-import { useDispatch } from "react-redux";
 import { VERIFIC_TOKEN_TIMER } from "../config/constants";
+import { useSelector, useDispatch } from "react-redux";
+import { updateUser } from "../context/reducers/userReducer";
 
 const TokenVerification = ({}) => {
-  // temp fix;
+  const [requestingToken, setRequestingToken] = useState(false);
 
-  const [searchParams] = useSearchParams();
+  const { _sentTokenVerification, isLogin } = useSelector(
+    state => state.user.currentUser
+  );
 
-  let _user = localStorage.getItem("user");
-
-  _user = _user ? JSON.parse(_user) : {};
-
-  const [user] = useState({
-    token: searchParams.get("token") || _user.token,
-    email: searchParams.get("email") || _user.email
-  });
-
-  let { reason = "" } = useParams();
+  let { userId = "", reason = "" } = useParams();
 
   reason = reason.toLowerCase();
-
-  const isPwd = reason === "password";
 
   let { setSnackBar } = useCtx();
 
@@ -47,18 +38,75 @@ const TokenVerification = ({}) => {
   } = useForm(
     useMemo(
       () => ({
-        placeholders: user,
+        placeholders: {
+          userId
+        },
         required: {
-          token: "Verification token is required",
-          email: isPwd && user.email ? false : true
-          // password: !isPwd
+          token: "Verification token is required"
         }
       }),
-      [user, isPwd]
+      [userId]
     )
   );
 
   const navigate = useNavigate();
+
+  const dispatch = useDispatch();
+
+  const resendToken = useCallback(
+    async cb => {
+      try {
+        const { formData, withErr } = handleSubmit(undefined, {
+          blacklist: ["token"]
+        });
+
+        if (withErr) return;
+
+        setRequestingToken(true);
+
+        const type = reason === "password" ? "reset" : "";
+
+        const { message } = await http.post(
+          `/auth/generate-new-token/${type ? `${reason}-${type}` : reason}`,
+          formData
+        );
+
+        localStorage.removeItem(VERIFIC_TOKEN_TIMER);
+
+        setTimeUp(false);
+
+        resetForm(true);
+
+        setSnackBar({
+          message,
+          severity: "success"
+        });
+      } catch (err) {
+        resetForm(true);
+        setSnackBar(
+          cb ? "Something went wrong while requesting token!" : err.message
+        );
+      } finally {
+        setRequestingToken(false);
+        typeof cb === "function" && cb();
+      }
+    },
+    [handleSubmit, reason, resetForm, setSnackBar]
+  );
+
+  useEffect(() => {
+    if (!_sentTokenVerification && isLogin) {
+      (async () => {
+        resendToken(() => {
+          dispatch(
+            updateUser({
+              _sentTokenVerification: true
+            })
+          );
+        });
+      })();
+    }
+  }, [_sentTokenVerification, dispatch, resendToken, isLogin]);
 
   const onTimeUp = useCallback(() => {
     localStorage.removeItem(VERIFIC_TOKEN_TIMER);
@@ -66,100 +114,39 @@ const TokenVerification = ({}) => {
     setTimeUp(true);
   }, []);
 
-  const dispatch = useDispatch();
-
-  const resendToken = async () => {
-    try {
-      const { formData, withErr } = handleSubmit(undefined, {
-        blacklist: ["token"]
-      });
-
-      console.log(formData);
-
-      if (withErr) return;
-
-      const type = reason === "password" ? "reset" : "";
-
-      const { message } = await http.post(
-        `/auth/generate-new-token/${type ? `${reason}-${type}` : reason}`,
-        formData
-      );
-
-      localStorage.removeItem(VERIFIC_TOKEN_TIMER);
-
-      setTimeUp(false);
-
-      resetForm(true);
-
-      setSnackBar({
-        message,
-        severity: "success"
-      });
-    } catch (err) {
-      resetForm(true);
-      setSnackBar(err.message);
-    }
-  };
-
   const onSubmit = useCallback(
     async e => {
-      e.preventDefault();
+      try {
+        const { withErr, formData } = handleSubmit(e);
 
-      let { formData, withErr } = handleSubmit(e);
+        if (withErr) return;
 
-      formData = {
-        ...user,
-        ...formData
-      };
+        switch (reason) {
+          case "password":
+            navigate("/auth/reset-password", {
+              state: { tokenBody: formData }
+            });
+            break;
+          default:
+            await http.post(`/auth/verify-token/${reason}`, formData);
 
-      if (withErr) return;
-
-      switch (reason) {
-        case "account":
-          try {
-            await http.post(
-              "/auth/verify-token/account",
-              {
-                email: formData.email || user.email,
-                password: formData.password || user.password,
-                token: formData.token
-              },
-              { withCredentials: false }
-            );
-
-            dispatch(signinUser({ accountExpires: null }));
-
-            localStorage.removeItem("user");
+            if (isLogin)
+              dispatch(
+                updateUser({
+                  accountExpires: null
+                })
+              );
 
             navigate("/auth/account-success");
-          } catch ({ message }) {
-            setSnackBar(message);
-          } finally {
-            resetForm(true);
-          }
-          break;
-        case "password":
-          try {
-            formData = {
-              ...user,
-              ...formData
-            };
-
-            localStorage.setItem("user", JSON.stringify(formData));
-
-            navigate("/auth/reset-password");
-          } catch ({ message }) {
-            setSnackBar(message);
-          } finally {
-            resetForm(true);
-          }
-
-          break;
-        default:
-          break;
+            break;
+        }
+      } catch (err) {
+        setSnackBar(err.message);
+      } finally {
+        resetForm(true);
       }
     },
-    [reason, handleSubmit, navigate, setSnackBar, user, resetForm, dispatch]
+    [handleSubmit, navigate, reason, setSnackBar, resetForm, dispatch, isLogin]
   );
 
   const authProps = { account: true, password: true }[reason]
@@ -167,13 +154,6 @@ const TokenVerification = ({}) => {
         onSubmit,
         title: `${reason} Verification`,
         btnTitle: "Proceed",
-        preInputsEl: (
-          <Typography>
-            {user.email
-              ? "Enter the confirmation code sent to your registered email address"
-              : "We couldn't identify your account. To proceed, all fields are required."}
-          </Typography>
-        ),
         postFormEl: (
           <Stack sx={{ mt: 2 }}>
             {timeUp ? (
@@ -198,30 +178,14 @@ const TokenVerification = ({}) => {
           </Stack>
         ),
         forms: [
-          ...(user.email
-            ? []
-            : [
-                {
-                  label: "Email",
-                  type: "email",
-                  name: "email"
-                }
-              ]),
-          // ...(user.password
-          //   ? []
-          //   : [
-          //       {
-          //         label: "Password",
-          //         type: "password",
-          //         name: "password",
-          //         nullify: isPwd
-          //       }
-          //     ]),
           {
-            label: "6-digit verification code",
+            label: requestingToken
+              ? "Please wait requesting token..."
+              : "6-digit verification code",
             name: "token",
             type: "password",
             maxLength: "6",
+            readOnly: requestingToken,
             withBorderErr: true,
             validator: ({ value }) =>
               isNumber(value) ? false : "Invalid token. Whole numbers only!"
@@ -242,7 +206,7 @@ const TokenVerification = ({}) => {
       formData={formData}
       errors={errors}
       handleChange={handleChange}
-      isSubmitting={isSubmitting}
+      isSubmitting={isSubmitting || requestingToken}
       {...authProps}
     />
   );

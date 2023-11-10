@@ -8,11 +8,8 @@ import { useCtx } from "../context";
 import { StyledLink } from "../styled";
 import Typography from "@mui/material/Typography";
 import http from "../api/http";
-import { useNavigate } from "react-router-dom";
 import { HTTP_CODE_MAIL_ERROR, VERIFIC_TOKEN_TIMER } from "../config/constants";
 import { useSearchParams } from "react-router-dom";
-import Stack from "@mui/material/Stack";
-import { HOME_ORIGIN } from "../config/constants.js";
 
 const pwdRequirementEl = (
   <ul style={{ marginLeft: "-24px" }}>
@@ -60,7 +57,6 @@ const Signup = props => {
   );
 
   const { setSnackBar } = useCtx();
-  const navigate = useNavigate();
 
   // State to track the number of referred users
   const [referredUsersCount, setReferredUsersCount] = useState(0);
@@ -84,16 +80,12 @@ const Signup = props => {
 
         // Increment the referred user count on successful sign-up
         setReferredUsersCount(referredUsersCount + 1);
-        localStorage.removeItem(VERIFIC_TOKEN_TIMER);
-
-        setSnackBar({ message, severity: "success" });
 
         resetForm();
 
-        //temporary
-        localStorage.removeItem("user");
+        localStorage.removeItem(VERIFIC_TOKEN_TIMER);
 
-        navigate("/auth/token-verification/account");
+        setSnackBar({ message, severity: "success" });
       } catch ({ message, code }) {
         resetForm({
           ...formData,
@@ -116,14 +108,7 @@ const Signup = props => {
         );
       }
     },
-    [
-      handleSubmit,
-      navigate,
-      resetForm,
-      setSnackBar,
-      referralCode,
-      referredUsersCount
-    ]
+    [handleSubmit, resetForm, setSnackBar, referralCode, referredUsersCount]
   );
 
   const storeTempUser = () => {
@@ -139,19 +124,6 @@ const Signup = props => {
       errors={errors}
       formData={formData}
       handleChange={handleChange}
-      postFormEl={
-        <Stack sx={{ mt: 1 }}>
-          <StyledLink to={HOME_ORIGIN}>
-            @Caltex {new Date().getFullYear()}
-          </StyledLink>
-          <StyledLink
-            onClick={storeTempUser}
-            to="/auth/token-verification/account"
-          >
-            Verify my account
-          </StyledLink>
-        </Stack>
-      }
       postInputsEl={
         <FormGroup sx={{ mb: 3 }}>
           <FormControlLabel

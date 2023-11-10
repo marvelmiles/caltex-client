@@ -5,17 +5,17 @@ import { useCtx } from "../context";
 import Redirect from "../components/Redirect";
 import useForm from "../hooks/useForm";
 import http from "../api/http";
-import Typography from "@mui/material/Typography";
 import { StyledLink } from "../styled";
 import Stack from "@mui/material/Stack";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { VERIFIC_TOKEN_TIMER } from "../config/constants";
 
 const ResetPwd = () => {
   const { setSnackBar } = useCtx();
 
-  let _user = localStorage.getItem("user");
-  _user = _user ? JSON.parse(_user) : undefined;
+  const {
+    state: { tokenBody }
+  } = useLocation();
 
   const {
     formData,
@@ -27,7 +27,7 @@ const ResetPwd = () => {
   } = useForm(
     useMemo(
       () => ({
-        placeholders: _user,
+        placeholders: tokenBody,
         rules: {
           password: {
             type: "password"
@@ -38,7 +38,7 @@ const ResetPwd = () => {
           confirmPassword: true
         }
       }),
-      [_user]
+      [tokenBody]
     )
   );
 
@@ -57,11 +57,9 @@ const ResetPwd = () => {
 
         localStorage.removeItem(VERIFIC_TOKEN_TIMER);
 
-        formData.hasReset = true;
-
-        localStorage.setItem("user", JSON.stringify(formData));
-
-        navigate("/auth/reset-password-success");
+        navigate("/auth/reset-password-success", {
+          state: { hasResetPwd: true }
+        });
       } catch ({ message }) {
         setSnackBar(message);
         resetForm(true);
@@ -70,10 +68,10 @@ const ResetPwd = () => {
     [handleSubmit, resetForm, setSnackBar, navigate]
   );
 
-  if (!_user)
+  if (!tokenBody)
     return (
       <Redirect
-        to="/auth/token-verification/password"
+        to="/auth/recover-password"
         message="Access denied. Token is missing!"
       />
     );

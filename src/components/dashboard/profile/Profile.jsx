@@ -64,7 +64,7 @@ const Profile = () => {
       }
     }
 
-    if (!v) v = "awaiting";
+    if (!v) v = "rejected";
 
     setKyc(v);
   }, [currentUser.kycIds, currentUser.kycDocs]);
@@ -179,7 +179,28 @@ const Profile = () => {
         <div className={`ct ${styles.main_cont}`} id="ct">
           <div className={styles.personal_cont}>
             <Stack>
-              <p>Investor Profile and information</p>
+              <div>
+                {currentUser.accountExpires ? (
+                  <StyledLink
+                    onClick={() =>
+                      dispatch(
+                        updateUser({
+                          _sentTokenVerification: false
+                        })
+                      )
+                    }
+                    to={`/auth/token-verification/account/${currentUser.id}`}
+                    sx={{
+                      color: "error.main",
+                      fontSize: "16px",
+                      display: "inline-block"
+                    }}
+                  >
+                    Verify account
+                  </StyledLink>
+                ) : null}
+                <p style={{ margin: 0 }}>Investor Profile and information</p>
+              </div>
               {
                 {
                   rejected: (

@@ -162,34 +162,29 @@ const App = () => {
     http.interceptors.response.use(
       res => res,
       err => {
-        if (err.status === 403) {
+        if (
+          err.status === 403 &&
+          window.location.pathname.indexOf("auth") === -1
+        ) {
           console.log(err, " in app 403 ");
 
-          navigate(
-            `/auth/login?${
-              window.location.pathname.indexOf("auth") > -1
-                ? ""
-                : `redirect=${createRelativeUrl()}`
-            }`,
-            {
-              state: locState
-            }
-          );
+          navigate(`/auth/login?${`redirect=${createRelativeUrl()}`}`, {
+            state: locState
+          });
 
-          if (!err._noRefresh)
-            setSnackBar(
-              err.code === HTTP_CODE_ACCOUNT_VERIFICATION_ERROR
-                ? err.message
-                : "You need to login! Session timeout.",
-              true
-            );
+          setSnackBar(
+            err.code === HTTP_CODE_ACCOUNT_VERIFICATION_ERROR
+              ? err.message
+              : "You need to login! Session timeout.",
+            true
+          );
         }
         return Promise.reject(err);
       }
     );
   }, [locState, navigate, setSnackBar]);
 
-  if (pathname.toLowerCase().indexOf("auth") === -1) {
+  if (!isLoggedIn && pathname.toLowerCase().indexOf("auth") === -1) {
     window.location.href = HOME_ORIGIN;
     return <Loading fullSize />;
   }

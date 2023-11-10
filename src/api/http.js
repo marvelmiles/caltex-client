@@ -7,9 +7,8 @@ import { COOKIE_REFRESH_TOKEN, COOKIE_ACCESS_TOKEN } from "../config/constants";
 let isRefreshing = false;
 let requestQueue = [];
 
-export const getHttpErrMsg = (err, _noRefresh) => {
-  err = err.response ? err.response.data : { message: err.message };
-  err._noRefresh = true;
+export const getHttpErrMsg = err => {
+  return err.response ? err.response.data : { message: err.message };
 };
 
 export const processQueue = (err, data) => {
@@ -98,7 +97,7 @@ http.interceptors.response.use(
         return handleRefreshToken(requestConfig);
     }
 
-    return Promise.reject(getHttpErrMsg(err, requestConfig._noRefresh));
+    return Promise.reject(getHttpErrMsg(err));
   }
 );
 

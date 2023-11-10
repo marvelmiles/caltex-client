@@ -49,7 +49,6 @@ import InvestTab from "./components/InvestTab";
 import backarrow from "./images/backArrow.png";
 import {
   HTTP_CODE_ACCOUNT_VERIFICATION_ERROR,
-  VERIFIC_TOKEN_TIMER,
   HOME_ORIGIN
 } from "./config/constants";
 import CaltexCompBrief from "./components/CaltexCompanyBrief/CaltexCompBrief";
@@ -190,8 +189,7 @@ const App = () => {
     );
   }, [locState, navigate, setSnackBar]);
 
-  if (isLoggedIn) localStorage.removeItem(VERIFIC_TOKEN_TIMER);
-  else if (pathname.toLowerCase().indexOf("auth") === -1) {
+  if (pathname.toLowerCase().indexOf("auth") === -1) {
     window.location.href = HOME_ORIGIN;
     return <Loading fullSize />;
   }

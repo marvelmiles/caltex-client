@@ -165,7 +165,7 @@ const TokenVerification = ({}) => {
                   }
                 }}
                 color="text.main"
-                onClick={resendToken}
+                onClick={requestingToken ? undefined : resendToken}
               >
                 Resend code
               </Typography>

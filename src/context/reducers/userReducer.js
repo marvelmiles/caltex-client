@@ -3,7 +3,8 @@ import http from "../../api/http";
 import { deleteCookie } from "../../utils";
 import {
   COOKIE_ACCESS_TOKEN,
-  COOKIE_REFRESH_TOKEN
+  COOKIE_REFRESH_TOKEN,
+  VERIFIC_TOKEN_TIMER
 } from "../../config/constants";
 
 export const defaultUser = {
@@ -43,6 +44,8 @@ const userSlice = createSlice({
           .then(res => console.log("signed out successfully!"))
           .catch(err => console.log(err));
       }
+
+      localStorage.removeItem(VERIFIC_TOKEN_TIMER);
 
       state.currentUser = {
         accountExpires: state.currentUser.accountExpires

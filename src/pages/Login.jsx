@@ -16,7 +16,6 @@ import Typography from "@mui/material/Typography";
 import {
   HTTP_CODE_ACCOUNT_VERIFICATION_ERROR,
   VERIFIC_TOKEN_TIMER,
-  HOME_ORIGIN,
   COOKIE_ACCESS_TOKEN,
   COOKIE_REFRESH_TOKEN
 } from "../config/constants.js";

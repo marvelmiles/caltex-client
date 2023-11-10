@@ -3,10 +3,8 @@ import PropTypes from "prop-types";
 import { VERIFIC_TOKEN_TIMER } from "../config/constants";
 
 const CountdownTimer = ({ onTimeUp, delay = 30 }) => {
-  const sec = Number(localStorage.getItem(VERIFIC_TOKEN_TIMER));
-
   const [seconds, setSeconds] = useState(
-    sec ? (sec > delay ? sec - delay : delay - sec) : delay
+    Number(localStorage.getItem(VERIFIC_TOKEN_TIMER)) || delay
   );
 
   useEffect(() => {
@@ -25,7 +23,9 @@ const CountdownTimer = ({ onTimeUp, delay = 30 }) => {
       }, 1000);
     }
 
-    return () => clearInterval(timer);
+    return () => {
+      clearInterval(timer);
+    };
   }, [onTimeUp, seconds]);
 
   const formatTime = time => {

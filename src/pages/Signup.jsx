@@ -68,7 +68,7 @@ const Signup = props => {
       if (!formData.agreed) return setSnackBar(agreeCheckErr);
 
       if (withErr) return;
-
+      return;
       try {
         delete formData.agreed;
 
@@ -115,6 +115,7 @@ const Signup = props => {
     localStorage.setItem(VERIFIC_TOKEN_TIMER, "30");
     localStorage.setItem("user", JSON.stringify(formData));
   };
+ 
 
   return (
     <AuthLayout

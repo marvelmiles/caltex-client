@@ -40,40 +40,38 @@ const UserTable = () => {
 
   const updateUserStatus = async (userId, reason, kycType) => {
     try {
-      setProcessing((processing) => ({
+      setProcessing(processing => ({
         ...processing,
-        [userId]: true,
+        [userId]: true
       }));
 
       const res = await http.patch(
         `/users/${userId}/kyc/${reason}?kycType=${kycType}`,
         null,
         {
-          withCredentials: true,
+          withCredentials: true
         }
       );
 
       if (!res.success) throw res;
 
-      setData((data) =>
-        data.map((item) => (item.id === userId ? res.data : item))
-      );
+      setData(data => data.map(item => (item.id === userId ? res.data : item)));
     } catch (error) {
       setSnackBar(`Failed to ${reason} KYC`);
     } finally {
-      setProcessing((processing) => {
+      setProcessing(processing => {
         delete processing[userId];
 
         return {
-          ...processing,
+          ...processing
         };
       });
     }
   };
 
-  const handleViewProof = (kycDocs) => {
+  const handleViewProof = kycDocs => {
     const documentTypes = Object.keys(kycDocs);
-    documentTypes.forEach((documentType) => {
+    documentTypes.forEach(documentType => {
       const proofUrl = kycDocs[documentType];
       console.log(`Document type: ${documentType}, URL: ${proofUrl}`);
     });
@@ -84,15 +82,14 @@ const UserTable = () => {
     }
   };
 
-
   const handleCloseModal = () => {
     setModalIsOpen(false);
     setModalImageUrl("");
   };
 
-  const handleManageUser = (previewUser) => {
+  const handleManageUser = previewUser => {
     navigate(`/userInformation/UserInformation/${previewUser.id}`, {
-      state: { previewUser },
+      state: { previewUser }
     });
   };
 
@@ -116,7 +113,7 @@ const UserTable = () => {
   const endIndex = startIndex + itemsPerPage;
   const pageCount = Math.ceil(data.length / itemsPerPage);
 
-  const handlePageChange = (newPage) => {
+  const handlePageChange = newPage => {
     setCurrentPage(newPage);
   };
 
@@ -128,17 +125,17 @@ const UserTable = () => {
         </td>
       </tr>
     ) : (
-      data.slice(startIndex, endIndex).map((item) => {
+      data.slice(startIndex, endIndex).map(item => {
         const kycStatus = item.status;
         // const hasProcessed = kycStatus !== "awaiting";
-         const hasProcessed =
-           kycStatus === "confirmed" || kycStatus === "rejected";
+        const hasProcessed =
+          kycStatus === "confirmed" || kycStatus === "rejected";
         const isProc = processing[item.id];
         const actionSx = {
           cursor: isProc ? "not-allowed" : hasProcessed ? "default" : "pointer",
           padding: "8px",
           width: "auto",
-          fontSize: "8px",
+          fontSize: "8px"
         };
 
         return (
@@ -165,8 +162,8 @@ const UserTable = () => {
                 <Typography
                   sx={{
                     "&::first-letter": {
-                      textTransform: "uppercase",
-                    },
+                      textTransform: "uppercase"
+                    }
                   }}
                 >
                   {kycStatus}
@@ -206,8 +203,8 @@ const UserTable = () => {
                 <Typography
                   sx={{
                     "&::first-letter": {
-                      textTransform: "uppercase",
-                    },
+                      textTransform: "uppercase"
+                    }
                   }}
                 >
                   {kycStatus}

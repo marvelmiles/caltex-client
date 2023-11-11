@@ -32,7 +32,7 @@ import RecoverPwd from "./pages/RecoverPwd";
 import TokenVerification from "./pages/TokenVerification";
 import ResetPwd from "./pages/ResetPwd";
 import AuthSuccess from "./components/AuthSuccess";
-import { INPUT_AUTOFILL_SELECTOR } from "./styled";
+import { INPUT_AUTOFILL_SELECTOR, StyledLink } from "./styled";
 import { Provider } from "./context";
 import Snackbar from "@mui/material/Snackbar";
 import Alert from "@mui/material/Alert";
@@ -89,12 +89,17 @@ const App = () => {
     }
   });
 
+  const [showVerificationWarning, setShowVerificationWarning] = useState(false);
+
   let { state: locState, pathname } = useLocation();
   locState = locState || {
     previewUser: defaultUser
   };
 
-  const { isLoggedIn } = useAuth(locState.user);
+  const {
+    isLoggedIn,
+    currentUser: { accountExpires, id: cid }
+  } = useAuth(locState.user);
 
   const navigate = useNavigate();
 
@@ -155,6 +160,10 @@ const App = () => {
   );
 
   useEffect(() => {
+    if (isLoggedIn && accountExpires) setShowVerificationWarning(true);
+  }, [isLoggedIn, accountExpires]);
+
+  useEffect(() => {
     if (pathname) closeSnackBar();
   }, [pathname, closeSnackBar]);
 
@@ -188,6 +197,8 @@ const App = () => {
     window.location.href = HOME_ORIGIN;
     return <Loading fullSize />;
   }
+
+  const closeVerificationWarning = () => setShowVerificationWarning(false);
 
   return (
     <ThemeProvider theme={theme}>
@@ -490,7 +501,7 @@ const App = () => {
         </Routes>
 
         <Snackbar
-          open={snackbar.open}
+          open={snackbar.open || true}
           autoHideDuration={snackbar.autoHideDuration || 8000}
           onClose={
             snackbar.closeSnackBar === undefined ? closeSnackBar : undefined
@@ -499,7 +510,8 @@ const App = () => {
             maxWidth: snackbar.maxWidth || "400px",
             "&::first-letter": {
               textTransform: "uppercase"
-            }
+            },
+            bottom: showVerificationWarning ? "80px !important" : undefined
           }}
         >
           <Alert
@@ -514,6 +526,34 @@ const App = () => {
             }}
           >
             {snackbar.message}
+          </Alert>
+        </Snackbar>
+
+        <Snackbar
+          open={showVerificationWarning}
+          autoHideDuration={8000}
+          sx={{
+            maxWidth: snackbar.maxWidth || "400px",
+            "&::first-letter": {
+              textTransform: "uppercase"
+            }
+          }}
+        >
+          <Alert
+            severity={"error"}
+            action={
+              <IconButton onClick={closeVerificationWarning}>
+                <AiOutlineClose />
+              </IconButton>
+            }
+            sx={{
+              whiteSpace: "pre-line"
+            }}
+          >
+            Account will be deleted. if not verified within 7 days.{" "}
+            <StyledLink to={`/auth/token-verification/account/${cid}`}>
+              Verify account now!
+            </StyledLink>
           </Alert>
         </Snackbar>
       </Provider>

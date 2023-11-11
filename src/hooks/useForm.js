@@ -91,7 +91,7 @@ const useForm = (config = {}) => {
         if (value) {
           if (withValidator) err = validator(props);
           else
-            switch ((rules && rules[keyName]?.type) || keyName || type) {
+            switch ((rules && rules[keyName]?.type) || type || keyName) {
               case "email":
                 if (!isEmail(value)) err = "Invalid email address";
                 break;
@@ -105,7 +105,7 @@ const useForm = (config = {}) => {
 
                   if (status !== "Strong") err = status;
 
-                  // console.log(keyName, "in pwd", value, alt);
+                  console.log(keyName, "in pwd", value, alt);
 
                   if (alt && value !== alt) {
                     err = "err";

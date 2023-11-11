@@ -4,7 +4,7 @@ export const setFutureDate = days => {
   return new Date(new Date().getTime() + days * 86400000);
 };
 
-export const getDaysDifference = (startDate, endDate) => {
+export const getDaysDifference = (endDate, startDate = Date.now()) => {
   const utcStartDate = new Date(startDate);
   const utcEndDate = new Date(endDate);
 

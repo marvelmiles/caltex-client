@@ -62,6 +62,7 @@ import { defaultUser, updateUser } from "./context/reducers/userReducer";
 import Loading from "./components/Loading";
 import IdVerificationMethod from "./components/dashboard/profile/idVerificationMethod/IdVerificationMethod";
 import { useDispatch } from "react-redux";
+import { getDaysDifference } from "./utils";
 
 // Added Layout component to give more layout structure
 // All api to backend should be called with the http module and
@@ -563,7 +564,8 @@ const App = () => {
               whiteSpace: "pre-line"
             }}
           >
-            Account will be deleted. if not verified within 7 days.{" "}
+            Account will be deleted. if not verified within{" "}
+            {getDaysDifference(accountExpires)} days.{" "}
             <StyledLink
               onClick={handleAutoResendToken}
               to={`/auth/token-verification/account/${cid}`}

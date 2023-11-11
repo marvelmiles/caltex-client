@@ -96,7 +96,7 @@ const InvestForm = ({
 
         const endDate = createUTCDate(endYear, endMth, endDay);
 
-        const duration = getDaysDifference(startDate, endDate);
+        const duration = getDaysDifference(endDate, startDate);
 
         if (duration >= 0) {
           formData.startDate = startDate;

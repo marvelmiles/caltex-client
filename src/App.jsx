@@ -49,6 +49,7 @@ import InvestTab from "./components/InvestTab";
 import backarrow from "./images/backArrow.png";
 import {
   HTTP_CODE_ACCOUNT_VERIFICATION_ERROR,
+  HTTP_CODE_ACCOUNT_DISABLED,
   HOME_ORIGIN
 } from "./config/constants";
 import CaltexCompBrief from "./components/CaltexCompanyBrief/CaltexCompBrief";
@@ -196,7 +197,10 @@ const App = () => {
           });
 
           setSnackBar(
-            err.code === HTTP_CODE_ACCOUNT_VERIFICATION_ERROR
+            {
+              [HTTP_CODE_ACCOUNT_VERIFICATION_ERROR]: true,
+              [HTTP_CODE_ACCOUNT_DISABLED]: true
+            }[err.code]
               ? err.message
               : "You need to login! Session timeout.",
             true
@@ -564,7 +568,7 @@ const App = () => {
               whiteSpace: "pre-line"
             }}
           >
-            Account will be deleted. if not verified within{" "}
+            Account will be disabled. if not verified within{" "}
             {getDaysDifference(accountExpires)} days.{" "}
             <StyledLink
               onClick={handleAutoResendToken}

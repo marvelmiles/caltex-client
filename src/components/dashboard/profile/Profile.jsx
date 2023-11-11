@@ -7,7 +7,7 @@ import http from "../../../api/http";
 import useAuth from "../../../hooks/useAuth";
 import { updateUser } from "../../../context/reducers/userReducer";
 import Layout from "../../Layout";
-import { Avatar, Box, Stack, IconButton, Button } from "@mui/material";
+import { Avatar, Stack, IconButton, Button } from "@mui/material";
 import { AiOutlineCamera } from "react-icons/ai";
 import { useCtx } from "../../../context";
 import { useDispatch } from "react-redux";
@@ -28,7 +28,7 @@ const defaultFormData = {
 const Profile = () => {
   const isMobile = useMediaQuery("(max-width: 768px)");
 
-  const { setSnackBar } = useCtx();
+  const { setSnackBar, handleAutoResendToken } = useCtx();
 
   const { currentUser } = useAuth();
 
@@ -182,13 +182,7 @@ const Profile = () => {
               <div>
                 {currentUser.accountExpires ? (
                   <StyledLink
-                    onClick={() =>
-                      dispatch(
-                        updateUser({
-                          _sentTokenVerification: false
-                        })
-                      )
-                    }
+                    onClick={handleAutoResendToken}
                     to={`/auth/token-verification/account/${currentUser.id}`}
                     sx={{
                       color: "error.main",
@@ -253,8 +247,14 @@ const Profile = () => {
                       <IconButton
                         sx={{
                           position: "absolute",
-                          bottom: "1px",
-                          right: "10px",
+                          bottom: {
+                            xs: "-10px",
+                            s800: "0px"
+                          },
+                          right: {
+                            xs: "5px",
+                            s800: "15px"
+                          },
                           backgroundColor: "grey.200",
                           "&:hover": {
                             backgroundColor: "grey.300"

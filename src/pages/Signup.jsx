@@ -68,7 +68,7 @@ const Signup = props => {
       if (!formData.agreed) return setSnackBar(agreeCheckErr);
 
       if (withErr) return;
-      return;
+
       try {
         delete formData.agreed;
 
@@ -93,15 +93,7 @@ const Signup = props => {
         });
         setSnackBar(
           code === HTTP_CODE_MAIL_ERROR ? (
-            <Typography>
-              {message}{" "}
-              <StyledLink
-                to="/auth/token-verification/account"
-                state={{ user: formData }}
-              >
-                Get a new code
-              </StyledLink>
-            </Typography>
+            <Typography>{message}</Typography>
           ) : (
             message
           )
@@ -115,7 +107,6 @@ const Signup = props => {
     localStorage.setItem(VERIFIC_TOKEN_TIMER, "30");
     localStorage.setItem("user", JSON.stringify(formData));
   };
- 
 
   return (
     <AuthLayout

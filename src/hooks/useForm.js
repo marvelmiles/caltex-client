@@ -105,8 +105,6 @@ const useForm = (config = {}) => {
 
                   if (status !== "Strong") err = status;
 
-                  console.log(keyName, "in pwd", value, alt);
-
                   if (alt && value !== alt) {
                     err = "err";
                     errMap.confirmPassword = "Password don't match";

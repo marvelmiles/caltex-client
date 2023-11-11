@@ -58,9 +58,10 @@ import ManageDeposits from "./components/dashboard/adminDashboard/ManageDeposits
 import ManageWithdrawals from "./components/dashboard/adminDashboard/manageWithdrawals/ManageWithdrawals";
 import AddAdmin from "./components/dashboard/adminDashboard/addAdmin/AddAdmin";
 import ManageAdmin from "./components/dashboard/adminDashboard/addAdmin/manageAdmin/ManageAdmin";
-import { defaultUser } from "./context/reducers/userReducer";
+import { defaultUser, updateUser } from "./context/reducers/userReducer";
 import Loading from "./components/Loading";
 import IdVerificationMethod from "./components/dashboard/profile/idVerificationMethod/IdVerificationMethod";
+import { useDispatch } from "react-redux";
 
 // Added Layout component to give more layout structure
 // All api to backend should be called with the http module and
@@ -102,6 +103,8 @@ const App = () => {
   } = useAuth(locState.user);
 
   const navigate = useNavigate();
+
+  const dispatch = useDispatch();
 
   const handleGoBack = useCallback(
     config => {
@@ -157,6 +160,16 @@ const App = () => {
       } else setSnackbar(config);
     },
     []
+  );
+
+  const handleAutoResendToken = useCallback(
+    () =>
+      dispatch(
+        updateUser({
+          _sentTokenVerification: false
+        })
+      ),
+    [dispatch]
   );
 
   useEffect(() => {
@@ -222,6 +235,7 @@ const App = () => {
           setSnackBar,
           locState,
           handleGoBack,
+          handleAutoResendToken,
           renderBackArrow,
           appCtx,
           setAppCtx
@@ -501,7 +515,7 @@ const App = () => {
         </Routes>
 
         <Snackbar
-          open={snackbar.open || true}
+          open={snackbar.open}
           autoHideDuration={snackbar.autoHideDuration || 8000}
           onClose={
             snackbar.closeSnackBar === undefined ? closeSnackBar : undefined
@@ -511,7 +525,7 @@ const App = () => {
             "&::first-letter": {
               textTransform: "uppercase"
             },
-            bottom: showVerificationWarning ? "80px !important" : undefined
+            bottom: showVerificationWarning ? "100px !important" : undefined
           }}
         >
           <Alert
@@ -531,7 +545,6 @@ const App = () => {
 
         <Snackbar
           open={showVerificationWarning}
-          autoHideDuration={8000}
           sx={{
             maxWidth: snackbar.maxWidth || "400px",
             "&::first-letter": {
@@ -551,7 +564,10 @@ const App = () => {
             }}
           >
             Account will be deleted. if not verified within 7 days.{" "}
-            <StyledLink to={`/auth/token-verification/account/${cid}`}>
+            <StyledLink
+              onClick={handleAutoResendToken}
+              to={`/auth/token-verification/account/${cid}`}
+            >
               Verify account now!
             </StyledLink>
           </Alert>

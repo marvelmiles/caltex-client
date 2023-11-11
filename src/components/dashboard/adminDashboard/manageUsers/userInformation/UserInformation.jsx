@@ -4,15 +4,21 @@ import styles from "./UserInformation.module.scss";
 import Layout from "../../../../Layout";
 import { useCtx } from "../../../../../context";
 import Redirect from "../../../../Redirect";
-import moment from "moment";
-import { DATE_FORMAT_TRANS_HIS } from "../../../../../config/constants";
 
 const UserInformation = () => {
   const {
     locState: { previewUser = {} }
   } = useCtx();
 
-  const { firstname, lastname, email, phone, address, country,createdAt } = previewUser;
+  const {
+    firstname,
+    lastname,
+    email,
+    phone,
+    address,
+    country,
+    createdAt
+  } = previewUser;
 
   const navigate = useNavigate();
 
@@ -76,13 +82,6 @@ const UserInformation = () => {
               <span>Country Of Residence</span>
               <span>|</span>
               <span>{country}</span>
-            </li>
-            <li>
-              <span>Joined At</span>
-              <span>|</span>
-              <span>
-                {moment(createdAt).format(DATE_FORMAT_TRANS_HIS)}
-              </span>
             </li>
           </ul>
         </div>

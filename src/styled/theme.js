@@ -87,6 +87,7 @@ export const createTheme = (theme = "light") =>
         s280: 280,
         s320: 320,
         s640: 640,
+        s800: 800,
         xxxl: 1595,
         s1200: 1200,
         s1400: 1400

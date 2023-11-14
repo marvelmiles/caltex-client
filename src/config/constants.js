@@ -16,7 +16,7 @@ export const VERIFIC_TOKEN_TIMER = "VERIFIC_TOKEN_TIMER";
 export const HOME_ORIGIN = "https://www.caltextrader.com";
 
 export const CLIENT_ORIGIN = isProdMode
-  ? "https://stupendous-sorbet-26cfc4.netlify.app"
+  ? "https://www.app.caltextrader.com" //"https://stupendous-sorbet-26cfc4.netlify.app"
   : "http://localhost:3000";
 
 export const currencySymbols = {

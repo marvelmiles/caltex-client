@@ -161,10 +161,13 @@ const Profile = () => {
   const avatarSize = isMobile ? "75px" : "150px";
 
   const fileId = "avatar-id";
-
   const handleCopyReferralLink = () => {
     navigator.clipboard.writeText(
-      `${CLIENT_ORIGIN}/auth/signup?ref=${currentUser.referralCode}`
+      `${CLIENT_ORIGIN}/auth/signup?ref=${
+        currentUser.referralCode
+      }&u=${encodeURIComponent(
+        `${currentUser.username || currentUser.fullname}`
+      )}`
     );
     setSnackBar({
       message: "Refferal link copied to clipboard",

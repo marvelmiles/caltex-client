@@ -30,6 +30,7 @@ const userSlice = createSlice({
     signinUser(state, { payload }) {
       state.currentUser = {
         ...payload,
+        fullname: payload.firstname + " " + payload.lastname,
         referralCode: payload.referralCode,
         referredBy: payload.referredBy
       };

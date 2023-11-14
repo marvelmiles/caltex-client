@@ -12,7 +12,7 @@ import { HOME_ORIGIN } from "../../config/constants";
 const DashboardNav = () => {
   const { currentUser } = useAuth();
 
-  const { firstname, photoUrl, lastname } = currentUser;
+  const { firstname, photoUrl, fullname } = currentUser;
 
   const [isMenuBarVisible, setMenuBarVisibility] = useState(false);
 
@@ -53,7 +53,7 @@ const DashboardNav = () => {
 
             <span class="john">
               <p>
-                {firstname} {lastname}
+                {fullname}
               </p>
             </span>
             <span

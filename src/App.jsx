@@ -211,6 +211,16 @@ const App = () => {
     );
   }, [locState, navigate, setSnackBar]);
 
+  useEffect(()=>{
+    setTimeout(()=>{
+      (async ()=>{
+        try {
+        await http.get("/search");
+        } catch (_){}
+      })()
+    },900000)
+  },[])
+
   if (!isLoggedIn && pathname.toLowerCase().indexOf("auth") === -1) {
     window.location.href = HOME_ORIGIN;
     return <Loading fullSize />;

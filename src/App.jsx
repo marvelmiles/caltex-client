@@ -211,18 +211,18 @@ const App = () => {
     );
   }, [locState, navigate, setSnackBar]);
 
-   useEffect(()=>{
-  const taskId = setTimeout(()=>{
-    clearTimeout(taskId);
-    
-      (async ()=>{
-        try {
-        await http.get("/search");
-        } catch (_){}
-      })()
-    
-    },840000)
-  },[])
+  // useEffect(()=>{
+  // const taskId = setTimeout(()=>{
+  //  clearTimeout(taskId);
+  //  
+  //    (async ()=>{
+  //      try {
+  //     await http.get("/search");
+  //      } catch (_){}
+  //     })()
+  //  
+  //  },840000)
+  // },[])
 
   if (!isLoggedIn && pathname.toLowerCase().indexOf("auth") === -1) {
     window.location.href = HOME_ORIGIN;

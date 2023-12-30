@@ -4,8 +4,7 @@ import Typography from "@mui/material/Typography";
 import { StyledLink } from "../styled";
 import useForm from "../hooks/useForm";
 import { useCtx } from "../context";
-import http from "../api/http";
-import { useNavigate } from "react-router-dom";
+import http from "../api/http"; 
 import { VERIFIC_TOKEN_TIMER } from "../config/constants";
 
 const RecoverPwd = () => {
@@ -27,9 +26,7 @@ const RecoverPwd = () => {
       email: true
     }
   });
-
-  const navigate = useNavigate();
-
+ 
   const onSubmit = useCallback(
     async e => {
       const { withErr, formData } = handleSubmit(e);
@@ -51,7 +48,7 @@ const RecoverPwd = () => {
         resetForm(true);
       }
     },
-    [handleSubmit, resetForm, setSnackBar, navigate]
+    [handleSubmit, resetForm, setSnackBar]
   );
 
   return (

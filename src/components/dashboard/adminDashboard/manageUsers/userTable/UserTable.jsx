@@ -71,13 +71,19 @@ const UserTable = () => {
 
   const handleViewProof = kycDocs => {
     const documentTypes = Object.keys(kycDocs);
-    documentTypes.forEach(documentType => {
-      const proofUrl = kycDocs[documentType];
-      console.log(`Document type: ${documentType}, URL: ${proofUrl}`);
-    });
-
+    
     if (documentTypes.length > 0) {
-      setModalImageUrl(kycDocs[documentTypes[0]]);
+      let url =  "";
+     
+      for (const kind of documentTypes){
+        if(url) break;
+        
+        const doc =  kycDocs[kind];
+  
+        url =  doc?.front || doc?.back;
+      }
+      
+      setModalImageUrl(url);
       setModalIsOpen(true);
     }
   };

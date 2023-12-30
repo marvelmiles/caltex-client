@@ -44,8 +44,8 @@ const RecoverPwd = () => {
         localStorage.removeItem(VERIFIC_TOKEN_TIMER);
 
         localStorage.setItem("user", JSON.stringify(formData));
+        setSnackBar({message:"A mail with further instructions has been sent to your email.",severity:"success"})
 
-        navigate("/auth/token-verification/password");
       } catch ({ message }) {
         setSnackBar(message);
         resetForm(true);

@@ -73,6 +73,7 @@ const WithdrawalTable = () => {
         <tr>
           <th id={styles.tableW}>User Full Name</th>
           <th id={styles.tableW}>Email address</th>
+          <th id={styles.tableW}>Wallet Address</th>
           <th id={styles.tableW}>Amount Requested</th>
           <th id={styles.tableW}>Payment Method</th>
           <th id={styles.tableW}>Status</th>
@@ -102,6 +103,7 @@ const WithdrawalTable = () => {
         <tr key={item.id}>
           <td>{item.user.username}</td>
           <td>{item.user.email}</td>
+          <td>{item.walletAddress}</td>
           <td>{formatToDecimalPlace(item.amount, true)}</td>
           <td>{item.paymentType}</td>
           <td>{item.status}</td>

@@ -9,7 +9,7 @@ import { StyledLink } from "../styled";
 import Typography from "@mui/material/Typography";
 import http from "../api/http";
 import { HTTP_CODE_MAIL_ERROR, VERIFIC_TOKEN_TIMER } from "../config/constants";
-import { useSearchParams } from "react-router-dom";
+import { useSearchParams, useNavigate } from "react-router-dom";
 
 const pwdRequirementEl = (
   <ul style={{ marginLeft: "-24px" }}>
@@ -26,6 +26,8 @@ const Signup = props => {
 
   const agreeCheckErr = "You haven't agreed to the terms and conditions above!";
 
+  const navigate =  useNavigate()
+  
   const {
     formData,
     errors,
@@ -76,7 +78,7 @@ const Signup = props => {
         formData.referralCode = referralCode;
 
         // API call to register the user with the referral code and ROI
-        const { message } = await http.post("/auth/signup", formData);
+        const { message,data } = await http.post("/auth/signup", formData);
 
         // Increment the referred user count on successful sign-up
         setReferredUsersCount(referredUsersCount + 1);
@@ -84,8 +86,8 @@ const Signup = props => {
         resetForm();
 
         localStorage.removeItem(VERIFIC_TOKEN_TIMER);
-
-        setSnackBar({ message, severity: "success" });
+        
+        navigate(`/auth/token-verification/account/${data.id}`);
       } catch ({ message, code }) {
         resetForm({
           ...formData,
@@ -100,7 +102,7 @@ const Signup = props => {
         );
       }
     },
-    [handleSubmit, resetForm, setSnackBar, referralCode, referredUsersCount]
+    [handleSubmit, resetForm, setSnackBar, referralCode, referredUsersCount,navigate]
   );
 
   const storeTempUser = () => {

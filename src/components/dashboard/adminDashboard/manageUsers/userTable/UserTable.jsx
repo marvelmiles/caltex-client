@@ -47,7 +47,9 @@ const UserTable = () => {
 
       const res = await http.patch(
         `/users/${userId}/kyc/${reason}?kycType=${kycType}`,
-        null,
+        {
+          kyc:"driverLicense nin passport"
+        },
         {
           withCredentials: true
         }

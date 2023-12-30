@@ -45,7 +45,8 @@ const RecoverPwd = () => {
 
       } catch ({ message }) {
         setSnackBar(message);
-        resetForm(true);
+      } finally {
+        resetForm(true)
       }
     },
     [handleSubmit, resetForm, setSnackBar]

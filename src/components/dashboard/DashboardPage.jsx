@@ -53,16 +53,7 @@ const DashboardPage = () => {
     }
   };
 
-  const handleDepositClick = () => {
-    if (isVerified) {
-      setKYCNoticeOpen(true);
-    } else {
-      // Redirect to the deposit page
-      navigate("/Deposit/DepositPage");
-    }
-  };
-
-  const handleKycRrdirect = () => {
+  const handleKycRedirect = () => {
     setKYCNoticeOpen(false);
     navigate("/idVerificatonMethod/IdVerificationMethod");
   };
@@ -98,8 +89,9 @@ const DashboardPage = () => {
             <h5>Total Balance</h5>
             {!openEye && (
               <h3>
-                {`${formatToDecimalPlace(balance.availableBalance, true) +
-                  " USD"}`}
+                {`${
+                  formatToDecimalPlace(balance.availableBalance, true) + " USD"
+                }`}
                 <span class="bell-notification" id=" " onclick=" ">
                   <img
                     src={closedeye}
@@ -138,16 +130,16 @@ const DashboardPage = () => {
               {[
                 {
                   value: balance.confirmedTransactions,
-                  label: "Confirmed Transactions"
+                  label: "Confirmed Transactions",
                 },
                 {
                   value: balance.awaitingTransactions,
-                  label: "Awaiting Transactions"
+                  label: "Awaiting Transactions",
                 },
                 {
                   value: balance.rejectedTransactions,
-                  label: "Rejected Transactions"
-                }
+                  label: "Rejected Transactions",
+                },
               ].map((s, i) => (
                 <StatCard key={i} {...s} />
               ))}
@@ -158,7 +150,10 @@ const DashboardPage = () => {
               Invest{" "}
             </Link>
 
-            <Link to="" className="deposits" onClick={handleDepositClick}>
+            <Link
+              to="/Deposit/DepositPage"
+              className="deposits"
+            >
               Deposit{" "}
             </Link>
 
@@ -210,7 +205,7 @@ const DashboardPage = () => {
       </div>
       {isKYCNoticeOpen && (
         <SuccessModal
-          closeModal={handleKycRrdirect}
+          closeModal={handleKycRedirect}
           icon={kyc}
           message="You have not been verified!!"
           btnText="Proceed to KYC verification!!"

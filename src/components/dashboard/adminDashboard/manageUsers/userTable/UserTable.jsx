@@ -210,7 +210,7 @@ const UserTable = () => {
                   {kycStatus}
                 </Typography>
               ) : (
-                <Stack justifyContent="normal">
+                <Stack justifyContent="normal" marginLeft="5px">
                   <Button
                     type="button"
                     color="secondary"

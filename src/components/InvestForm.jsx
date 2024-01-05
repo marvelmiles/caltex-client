@@ -111,13 +111,11 @@ const InvestForm = ({
         }
       };
 
-      if (isSubmitting) {
-        setROI();
-        setTimeframe();
-      } else if (dataName === "duration") {
+      if (isSubmitting || dataName === "duration") {
         setTimeframe();
         setROI();
-      } else if (keyName === "amount") {
+      }
+      else if (keyName === "amount") {
         const amt = formData[keyName];
 
         const inputValue = Number(amt);

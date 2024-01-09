@@ -43,22 +43,23 @@ const Profile = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    let v;
+    let v = "";
 
     for (const key in currentUser.kycIds) {
       const obj = currentUser.kycIds[key] || {};
 
       if (obj.status === "confirmed" || obj.status === "rejected") {
-        v = v.status;
+        v = obj.status;
         break;
       }
-    }
+    };
 
     if (!v) {
       for (const key in currentUser.kycDocs) {
         const obj = currentUser.kycDocs[key] || {};
+     
         if (obj.status === "confirmed" || obj.status === "rejected") {
-          v = v.status;
+          v = obj.status;
           break;
         }
       }

@@ -43,28 +43,16 @@ const Profile = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    let v;
+    let v = "";
 
-    for (const key in currentUser.kycIds) {
+    for (const key in Object.assign(currentUser.kycIds || {}, currentUser.kycDocs || {})) {
       const obj = currentUser.kycIds[key] || {};
 
-      if (obj.status === "confirmed" || obj.status === "rejected") {
-        v = v.status;
+      if (obj.status !== "awaiting") {
+        v = obj.status;
         break;
-      }
-    }
-
-    if (!v) {
-      for (const key in currentUser.kycDocs) {
-        const obj = currentUser.kycDocs[key] || {};
-        if (obj.status === "confirmed" || obj.status === "rejected") {
-          v = v.status;
-          break;
-        }
-      }
-    }
-
-    if (!v) v = "rejected";
+      };
+    };
 
     setKyc(v);
   }, [currentUser.kycIds, currentUser.kycDocs]);

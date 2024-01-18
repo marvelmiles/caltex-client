@@ -15,6 +15,7 @@ import { BsLink45Deg } from "react-icons/bs";
 import { CLIENT_ORIGIN } from "../../../config/constants";
 import useMediaQuery from "../../../hooks/useMediaQuery";
 import { StyledLink } from "../../../styled";
+import { getKycStatus } from "../../../utils";
 
 const defaultFormData = {
   firstname: "",
@@ -43,28 +44,10 @@ const Profile = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    let v = "";
+    let kyc = getKycStatus(currentUser.kycDocs);
 
-    console.log(currentUser);
-
-    const kyc = Object.assign(
-      currentUser.kycIds || {},
-      currentUser.kycDocs || {}
-    );
-
-    console.log(kyc);
-
-    for (const key in kyc) {
-      const obj = kyc[key];
-
-      if (obj.status !== "awaiting") {
-        v = obj.status;
-        break;
-      }
-    }
-
-    setKyc(v);
-  }, [currentUser]);
+    setKyc(kyc || getKycStatus(currentUser.kycIds));
+  }, [currentUser.kycDocs, currentUser.kycIds]);
 
   useEffect(() => {
     if (formData.avatar) {

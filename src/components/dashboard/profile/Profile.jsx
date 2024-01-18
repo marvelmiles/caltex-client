@@ -43,8 +43,7 @@ const Profile = () => {
 
   const dispatch = useDispatch();
 
-  useEffect(() => {
-    let kyc = getKycStatus(currentUser.kycDocs);
+  useEffect(() => 
 
     setKyc(kyc || getKycStatus(currentUser.kycIds));
   }, [currentUser.kycDocs, currentUser.kycIds]);

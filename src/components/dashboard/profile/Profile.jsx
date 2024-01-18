@@ -22,7 +22,7 @@ const defaultFormData = {
   line1: "",
   line2: "",
   zipCode: "",
-  country: ""
+  country: "",
 };
 
 const Profile = () => {
@@ -45,14 +45,17 @@ const Profile = () => {
   useEffect(() => {
     let v = "";
 
-    for (const key in Object.assign(currentUser.kycIds || {}, currentUser.kycDocs || {})) {
+    for (const key in Object.assign(
+      currentUser.kycIds || {},
+      currentUser.kycDocs || {}
+    )) {
       const obj = currentUser.kycIds[key] || {};
 
       if (obj.status !== "awaiting") {
         v = obj.status;
         break;
-      };
-    };
+      }
+    }
 
     setKyc(v);
   }, [currentUser.kycIds, currentUser.kycDocs]);
@@ -69,21 +72,21 @@ const Profile = () => {
 
   const { id } = currentUser;
 
-  const handleInputChange = event => {
+  const handleInputChange = (event) => {
     const { name, value } = event.target;
 
     setFormData({
       ...formData,
-      [name]: value
+      [name]: value,
     });
   };
 
-  const handleFileChange = async event => {
+  const handleFileChange = async (event) => {
     const file = event.target.files[0];
-    if (file) setFormData(data => ({ ...data, avatar: file }));
+    if (file) setFormData((data) => ({ ...data, avatar: file }));
   };
 
-  const handleSubmit = async e => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     try {
       setIsSubmitting(true);
@@ -107,7 +110,7 @@ const Profile = () => {
       }
 
       const response = await http.put(`/users/${id}`, _formData, {
-        withCredentials: true
+        withCredentials: true,
       });
 
       if (!response.success) throw response;
@@ -131,7 +134,7 @@ const Profile = () => {
     setIsSuccessModalOpen(false);
   };
 
-  const handleSuccess = user => {
+  const handleSuccess = (user) => {
     setFormData(defaultFormData);
     dispatch(updateUser(user));
     setSwap(!swap);
@@ -140,7 +143,7 @@ const Profile = () => {
 
   const resetPhotoUrl = () => {
     setPhotoUrl(currentUser.photoUrl);
-    setFormData(data => {
+    setFormData((data) => {
       delete data.avatar;
       return { ...data };
     });
@@ -160,7 +163,7 @@ const Profile = () => {
     setSnackBar({
       message: "Refferal link copied to clipboard",
       severity: "success",
-      autoHideDuration: 2000
+      autoHideDuration: 2000,
     });
   };
 
@@ -178,7 +181,7 @@ const Profile = () => {
                     sx={{
                       color: "error.main",
                       fontSize: "16px",
-                      display: "inline-block"
+                      display: "inline-block",
                     }}
                   >
                     Verify account
@@ -197,7 +200,7 @@ const Profile = () => {
                       Verify your identity
                     </StyledLink>
                   ),
-                  confirmed: <p>Identity verified</p>
+                  confirmed: <p>Identity verified</p>,
                 }[kyc]
               }
             </Stack>
@@ -216,14 +219,14 @@ const Profile = () => {
                     maxWidth: avatarSize,
                     mx: "auto",
                     div: {
-                      maxWidth: "inherit"
-                    }
+                      maxWidth: "inherit",
+                    },
                   }}
                 >
                   <div>
                     <div
                       style={{
-                        position: "relative"
+                        position: "relative",
                       }}
                     >
                       <Avatar
@@ -231,7 +234,7 @@ const Profile = () => {
                           width: avatarSize,
                           height: avatarSize,
                           border: "2px solid currentColor",
-                          borderColor: "divider"
+                          borderColor: "divider",
                         }}
                         src={photoUrl}
                       />
@@ -240,17 +243,17 @@ const Profile = () => {
                           position: "absolute",
                           bottom: {
                             xs: "-10px",
-                            s800: "0px"
+                            s800: "0px",
                           },
                           right: {
                             xs: "5px",
-                            s800: "15px"
+                            s800: "15px",
                           },
                           backgroundColor: "grey.200",
                           "&:hover": {
-                            backgroundColor: "grey.300"
+                            backgroundColor: "grey.300",
                           },
-                          cursor: isSubmitting ? "not-allowed" : "cursor"
+                          cursor: isSubmitting ? "not-allowed" : "cursor",
                         }}
                         component="label"
                         htmlFor={fileId}
@@ -284,7 +287,7 @@ const Profile = () => {
                 <Stack flexWrap="wrap-reverse" className={styles.rev_cont}>
                   <span
                     style={{
-                      borderBottom: "3px solid rgba(240, 166, 23, 0.5)"
+                      borderBottom: "3px solid rgba(240, 166, 23, 0.5)",
                     }}
                   >
                     Personal Information
@@ -294,7 +297,7 @@ const Profile = () => {
                     onClick={handleCopyReferralLink}
                     style={{
                       borderBottom: "3px solid rgba(240, 166, 23, 0.5)",
-                      cursor: "pointer"
+                      cursor: "pointer",
                     }}
                   >
                     Referral link
@@ -303,7 +306,7 @@ const Profile = () => {
                         fontSize: "18px",
                         position: "relative",
                         top: "4px",
-                        marginLeft: "5px"
+                        marginLeft: "5px",
                       }}
                     />
                   </span>
@@ -318,7 +321,7 @@ const Profile = () => {
                       type="text"
                       sx={{
                         width: isMobile ? "300px" : "430px",
-                        height: isMobile ? "30px" : "50px"
+                        height: isMobile ? "30px" : "50px",
                       }}
                       value={formData.firstname || currentUser.firstname}
                       onChange={handleInputChange}
@@ -332,7 +335,7 @@ const Profile = () => {
                       type="text"
                       sx={{
                         width: isMobile ? "300px" : "430px",
-                        height: isMobile ? "30px" : "50px"
+                        height: isMobile ? "30px" : "50px",
                       }}
                       defaultValue={formData.lastname || currentUser.lastname}
                       onChange={handleInputChange}
@@ -348,7 +351,7 @@ const Profile = () => {
                       type="text"
                       sx={{
                         width: isMobile ? "300px" : "430px",
-                        height: isMobile ? "30px" : "50px"
+                        height: isMobile ? "30px" : "50px",
                       }}
                       value={formData.username || currentUser.username}
                       onChange={handleInputChange}
@@ -362,7 +365,7 @@ const Profile = () => {
                       type="text"
                       sx={{
                         width: isMobile ? "300px" : "430px",
-                        height: isMobile ? "30px" : "50px"
+                        height: isMobile ? "30px" : "50px",
                       }}
                       defaultValue={formData.phone || currentUser.phone[0]}
                       onChange={handleInputChange}
@@ -380,7 +383,7 @@ const Profile = () => {
                       type="text"
                       sx={{
                         width: isMobile ? "300px" : "430px",
-                        height: isMobile ? "30px" : "50px"
+                        height: isMobile ? "30px" : "50px",
                       }}
                       value={formData.line1 || currentUser.address.line1}
                       onChange={handleInputChange}
@@ -394,7 +397,7 @@ const Profile = () => {
                       type="text"
                       sx={{
                         width: isMobile ? "300px" : "430px",
-                        height: isMobile ? "30px" : "50px"
+                        height: isMobile ? "30px" : "50px",
                       }}
                       value={formData.line2 || currentUser.address.line2}
                       onChange={handleInputChange}
@@ -410,7 +413,7 @@ const Profile = () => {
                       type="text"
                       sx={{
                         width: isMobile ? "300px" : "430px",
-                        height: isMobile ? "30px" : "50px"
+                        height: isMobile ? "30px" : "50px",
                       }}
                       value={formData.zipCode || currentUser.address.zipCode}
                       onChange={handleInputChange}
@@ -425,7 +428,7 @@ const Profile = () => {
                       type="text"
                       sx={{
                         width: isMobile ? "300px" : "430px",
-                        height: isMobile ? "30px" : "50px"
+                        height: isMobile ? "30px" : "50px",
                       }}
                       value={
                         formData.country ||

@@ -45,11 +45,13 @@ const Profile = () => {
   useEffect(() => {
     let v = "";
 
-    for (const key in Object.assign(
+    const kyc = Object.assign(
       currentUser.kycIds || {},
       currentUser.kycDocs || {}
-    )) {
-      const obj = currentUser.kycIds[key] || {};
+    );
+
+    for (const key in kyc) {
+      const obj = kyc[key] || {};
 
       if (obj.status !== "awaiting") {
         v = obj.status;

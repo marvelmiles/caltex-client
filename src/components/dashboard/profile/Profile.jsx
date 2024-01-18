@@ -45,13 +45,17 @@ const Profile = () => {
   useEffect(() => {
     let v = "";
 
+    console.log(currentUser);
+
     const kyc = Object.assign(
       currentUser.kycIds || {},
       currentUser.kycDocs || {}
     );
 
+    console.log(kyc);
+
     for (const key in kyc) {
-      const obj = kyc[key] || {};
+      const obj = kyc[key];
 
       if (obj.status !== "awaiting") {
         v = obj.status;
@@ -60,7 +64,7 @@ const Profile = () => {
     }
 
     setKyc(v);
-  }, [currentUser.kycIds, currentUser.kycDocs]);
+  }, [currentUser]);
 
   useEffect(() => {
     if (formData.avatar) {

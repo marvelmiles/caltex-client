@@ -44,9 +44,8 @@ const Profile = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    setKyc(
-      getKycStatus(currentUser.kycDocs) || getKycStatus(currentUser.kycIds)
-    );
+    const kyc = getKycStatus(currentUser.kycDocs);
+    setKyc(kyc === "awaiting" ? getKycStatus(currentUser.kycIds) : kyc);
   }, [currentUser.kycDocs, currentUser.kycIds]);
 
   useEffect(() => {

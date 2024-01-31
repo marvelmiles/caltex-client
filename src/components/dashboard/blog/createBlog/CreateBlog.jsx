@@ -197,14 +197,14 @@ const CreateBlog = () => {
               <p>Selected Tags One: {selectedTags1.join(", ")}</p>
             </div>
             <div className={styles.tags}>
-              <label htmlFor="tags">
+              <label htmlFor="tags2">
                 Select Tags Two:
                 <span>
                   (Press and hold the Ctrl key to select multiple tags)
                 </span>
               </label>
               <select
-                id="tags"
+                id="tags2"
                 name="tags"
                 multiple
                 onChange={handleTagChange2}

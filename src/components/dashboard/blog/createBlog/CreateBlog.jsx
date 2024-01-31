@@ -84,19 +84,24 @@ const CreateBlog = () => {
     setFormData((prevFormData) => ({
       ...prevFormData,
       tags1: selectedOptions,
-      // tags2: selectedOptions,
     }));
 
-    const selectedOptions2 = Array.from(event.target.selectedOptions2).map(
-      (option) => option.value
-    );
-    setFormData((prevFormData) => ({
-      ...prevFormData,
-      tags2: selectedOptions2,
-      // tags2: selectedOptions,
-    }));
+   
     setSelectedTags1(selectedOptions);
+    
+  };
+  const handleTagChange2 = (event) => {
+     const selectedOptions2 = Array.from(event.target.selectedOptions2).map(
+       (option) => option.value
+     );
+     setFormData((prevFormData) => ({
+       ...prevFormData,
+       tags2: selectedOptions2,
+     }));
+
+   
     setSelectedTags2(selectedOptions2);
+    
   };
 
   const categories = [
@@ -192,17 +197,17 @@ const CreateBlog = () => {
               <p>Selected Tags One: {selectedTags1.join(", ")}</p>
             </div>
             <div className={styles.tags}>
-              <label htmlFor="tags">
+              <label htmlFor="tags2">
                 Select Tags Two:
                 <span>
                   (Press and hold the Ctrl key to select multiple tags)
                 </span>
               </label>
               <select
-                id="tags"
+                id="tags2"
                 name="tags"
                 multiple
-                onChange={handleTagChange}
+                onChange={handleTagChange2}
                 value={selectedTags2}
               >
                 <option value="company news">Company News</option>

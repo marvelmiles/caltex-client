@@ -54,9 +54,13 @@ const ViewBlog = () => {
           {rowItems.map((blog) => (
             <div key={blog.id} className={styles.gridColumn}>
               <Link to={`/blog/${blog.id}`}>
-                <img src={blog.coverImage} width={367}
-height={180} alt="Blog" />
-                <p>{blog.timestamps}</p>
+                <img
+                  src={blog.coverImage}
+                  width={367}
+                  height={180}
+                  alt="Blog"
+                />
+                <p>{blog.timestamp}</p>
                 <h3>{blog.title}</h3>
                 <p id={styles.content}>{blog.content}</p>
               </Link>

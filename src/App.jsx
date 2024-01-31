@@ -227,10 +227,10 @@ const App = () => {
   //  },840000)
   // },[])
 
-  if (!isLoggedIn && pathname.toLowerCase().indexOf("auth") === -1) {
-    window.location.href = HOME_ORIGIN;
-    return <Loading fullSize />;
-  }
+  // if (!isLoggedIn && pathname.toLowerCase().indexOf("auth") === -1) {
+  //   window.location.href = HOME_ORIGIN;
+  //   return <Loading fullSize />;
+  // }
 
   const closeVerificationWarning = () => setShowVerificationWarning(false);
 
@@ -299,7 +299,7 @@ const App = () => {
             <Route path="*" element={<Page404 />} />
           </Route>
           <Route path="/u/*">
-            {isLoggedIn ? (
+            {!isLoggedIn ? (
               <>
                 <Route path="dashboard" element={<DashboardPage />} />
                 <Route path="*" element={<Page404 />} />
@@ -337,7 +337,7 @@ const App = () => {
 
           <Route
             path="/manageWithdrawals/ManageWithdrawals"
-            Component={isLoggedIn ? ManageWithdrawals : Redirect}
+            Component={!isLoggedIn ? ManageWithdrawals : Redirect}
           />
 
           <Route

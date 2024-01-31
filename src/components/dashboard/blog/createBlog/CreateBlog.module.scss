@@ -2,6 +2,10 @@
 
 .main_cont {
   padding: 20px;
+
+  @media (max-width: 768px) {
+    padding: 0 10px;
+  }
 }
 
 .form_ul {
@@ -22,9 +26,20 @@
   font-weight: bold;
   padding: 20px;
 
+  @media (max-width: 768px) {
+    padding: 10px;
+    width: 300px;
+    border-radius: 7px;
+    font-size: 16px;
+  }
+
   li:nth-child(2) {
     font-family: 'Dancing Script', cursive;
     font-size: 22px;
+
+    @media (max-width: 768px) {
+      font-size: 18px;
+    }
   }
 }
 
@@ -41,6 +56,12 @@
   border-radius: 8px;
   padding: 30px;
   box-shadow: 6px 6px 10px 4px rgba(225, 204, 215, 0.50);
+
+  @media (max-width: 768px) {
+    width: 100%;
+    margin: 10px 0 0 0;
+    padding: 15px;
+  }
 
 
   form {
@@ -59,6 +80,10 @@
       font-size: 16px;
       outline: none;
       border: 1px solid #cccfd4;
+
+      @media (max-width: 768px) {
+          width: 300px;
+        }
     }
 
     textarea {
@@ -67,6 +92,10 @@
       outline: none;
       border: 1px solid #cccfd4;
       padding: 10px;
+
+      @media (max-width: 768px) {
+          width: 300px;
+        }
     }
 
     select {
@@ -75,6 +104,10 @@
       border: 1px solid #cccfd4;
       outline: none;
       padding: 10px;
+
+      @media (max-width: 768px) {
+          width: 300px;
+        }
     }
 
     button {
@@ -101,6 +134,10 @@
   text-align: center;
   padding: 12px;
   border-radius: 4px;
+
+  @media (max-width: 768px) {
+      width: 300px;
+    }
 }
 
 .tags {
@@ -114,11 +151,19 @@
     border: 1px solid #cccfd4;
     outline: none;
     padding: 10px;
+
+    @media (max-width: 768px) {
+        width: 300px;
+      }
   }
 
   label {
     font-size: 12px;
     font-weight: bold;
+
+    @media (max-width: 768px) {
+        font-size: 8px;
+      }
 
     span {
       font-weight: 400;

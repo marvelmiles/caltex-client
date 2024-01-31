@@ -52,32 +52,6 @@ const CreateBlog = () => {
     }
   };
 
-  // const handleSubmit = async (e) => {
-  //   e.preventDefault();
-  //   if (uploadedFile) {
-  //     const apiFormData = new FormData();
-  //     apiFormData.append("coverImage", uploadedFile);
-
-  //     // Append other form data properties
-  //     Object.entries(formData).forEach(([key, value]) => {
-  //       formData.append(key, value);
-  //     });
-
-  //     try {
-  //       const res = await http.post(`/posts/new`, formData, {
-  //         withCredentials: true,
-  //       });
-  //       if (res.status === 200) {
-  //         console.log("Successfully Uploaded!");
-  //       }
-  //     } catch (error) {
-  //       console.log("Upload Failed!", error);
-  //     }
-  //   } else {
-  //     setSnackBar("Something went wrong! Please try again later.");
-  //   }
-  // };
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (uploadedFile) {
@@ -95,6 +69,14 @@ const CreateBlog = () => {
         });
         if (res.status === 200) {
           console.log("Successfully Uploaded!");
+          setSnackBar("Blog published successfully.");
+          // Reset the form to its default values
+          setFormData(defaultFormData);
+          setUploadedFile(null);
+          setFileValue("");
+          setSelectedTags1([]);
+          setSelectedTags2([]);
+          setSelectedCategory("");
         }
       } catch (error) {
         console.log("Upload Failed!", error);
@@ -103,34 +85,6 @@ const CreateBlog = () => {
       setSnackBar("Something went wrong! Please try again later.");
     }
   };
-
-
-  // const handleTagChange = (event) => {
-  //   const selectedOptions = Array.from(event.target.selectedOptions).map(
-  //     (option) => option.value
-  //   );
-  //   setFormData((prevFormData) => ({
-  //     ...prevFormData,
-  //     tags1: selectedOptions,
-  //   }));
-
-   
-  //   setSelectedTags1(selectedOptions);
-    
-  // };
-  // const handleTagChange2 = (event) => {
-  //    const selectedOptions2 = Array.from(event.target.selectedOptions2).map(
-  //      (option) => option.value
-  //    );
-  //    setFormData((prevFormData) => ({
-  //      ...prevFormData,
-  //      tags2: selectedOptions2,
-  //    }));
-
-   
-  //   setSelectedTags2(selectedOptions2);
-    
-  // };
 
   const handleTagChange = (event) => {
     const selectedOptions = Array.from(event.target.selectedOptions).map(

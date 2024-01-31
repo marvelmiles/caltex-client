@@ -11,6 +11,8 @@ import admin from "./../../svgs/admin.svg";
 import deposit from "./../../images/deposit.png";
 import legal from "./../../images/legal.png";
 import logout from "./../../images/logout.png";
+import createBlog from "./../../images/blog1.png";
+import viewBlog from "./../../images/view-blog.png";
 import { Link } from "react-router-dom";
 import useAuth from "../../hooks/useAuth";
 import { BiSolidDashboard } from "react-icons/bi";
@@ -38,7 +40,7 @@ const Sidebar = () => {
           </span>
         </div>
 
-        {isSuperAdmin || isAdmin ? (
+        {!isSuperAdmin || !isAdmin ? (
           <div class="panel-control" id={styles.admin}>
             <Link to="/u/dashboard" class="controld" id="dashboard" onclick=" ">
               <BiSolidDashboard id="other-icon" className="dashboard-icon" />
@@ -73,7 +75,25 @@ const Sidebar = () => {
               <img src={withdraw} id="other-icon" alt="withdraw-icon" />
               Manage Withdrawal
             </Link>
-            {isSuperAdmin && (
+            <Link
+              to="/blog/CreateBlog"
+              class="control"
+              id={bgActive ? styles.colorActive : ""}
+              onclick={() => setBgactive(!bgActive)}
+            >
+              <img src={viewBlog} id="other-icon" alt="withdraw-icon" />
+              Create Blog
+            </Link>
+            <Link
+              to="/blog/ViewBlog"
+              class="control"
+              id={bgActive ? styles.colorActive : ""}
+              onclick={() => setBgactive(!bgActive)}
+            >
+              <img src={createBlog} id="other-icon" alt="withdraw-icon" />
+              View Blogs
+            </Link>
+            {!isSuperAdmin && (
               <>
                 <Link
                   to="/manageAdmin/ManageAdmin"

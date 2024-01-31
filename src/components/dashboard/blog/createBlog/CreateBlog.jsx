@@ -138,7 +138,7 @@ const CreateBlog = () => {
           <ul className={styles.form_ul}>
             <li>CREATE THE</li>
             <li>Perfect</li>
-            <li>BLOCK POST</li>
+            <li>BLOG POST</li>
           </ul>
           <form action="" onSubmit={handleSubmit}>
             <label htmlFor="image" className={styles.label}>

@@ -18,7 +18,7 @@ const CreateBlog = () => {
     content: "",
     category: "",
     tags1: [],
-    setSelectedTags2: [],
+    tags2: [],
   };
 
   const [formData, setFormData] = useState(defaultFormData);
@@ -84,10 +84,19 @@ const CreateBlog = () => {
     setFormData((prevFormData) => ({
       ...prevFormData,
       tags1: selectedOptions,
-      tags2: selectedOptions,
+      // tags2: selectedOptions,
+    }));
+
+    const selectedOptions2 = Array.from(event.target.selectedOptions2).map(
+      (option) => option.value
+    );
+    setFormData((prevFormData) => ({
+      ...prevFormData,
+      tags2: selectedOptions2,
+      // tags2: selectedOptions,
     }));
     setSelectedTags1(selectedOptions);
-    setSelectedTags2(selectedOptions);
+    setSelectedTags2(selectedOptions2);
   };
 
   const categories = [

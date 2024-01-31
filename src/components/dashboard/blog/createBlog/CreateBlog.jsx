@@ -19,6 +19,7 @@ const CreateBlog = () => {
     category: "",
     tags1: [],
     tags2: [],
+    coverImage: "",
   };
 
   const [formData, setFormData] = useState(defaultFormData);

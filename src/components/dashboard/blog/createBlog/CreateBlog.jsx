@@ -58,16 +58,15 @@ const CreateBlog = () => {
       const apiFormData = new FormData();
       apiFormData.append("coverImage", uploadedFile);
 
-      // Append other form data properties
       Object.entries(formData).forEach(([key, value]) => {
-        apiFormData.append(key, value); // Use apiFormData instead of formData
+        apiFormData.append(key, value); 
       });
 
       try {
         const res = await http.post(`/posts/new`, apiFormData, {
           withCredentials: true,
         });
-        console.log(apiFormData);
+
         if (res.status === 200) {
           console.log("Successfully Uploaded!");
           setSnackBar("Blog published successfully.");
@@ -93,7 +92,7 @@ const CreateBlog = () => {
     );
     setFormData((prevFormData) => ({
       ...prevFormData,
-      [event.target.name]: selectedOptions, // Use event.target.name
+      [event.target.name]: selectedOptions, 
     }));
 
     setSelectedTags1(selectedOptions);
@@ -105,7 +104,7 @@ const CreateBlog = () => {
     );
     setFormData((prevFormData) => ({
       ...prevFormData,
-      [event.target.name]: selectedOptions2, // Use event.target.name
+      [event.target.name]: selectedOptions2, 
     }));
 
     setSelectedTags2(selectedOptions2);

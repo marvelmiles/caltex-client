@@ -67,6 +67,7 @@ const CreateBlog = () => {
         const res = await http.post(`/posts/new`, apiFormData, {
           withCredentials: true,
         });
+        console.log(apiFormData);
         if (res.status === 200) {
           console.log("Successfully Uploaded!");
           setSnackBar("Blog published successfully.");

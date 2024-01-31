@@ -8,6 +8,8 @@ import help from "../../images/help.png";
 import profile from "../../images/profile.png";
 import deposit from "../../images/deposit.png";
 import legal from "../../images/legal.png";
+import createBlog from "./../../images/blog1.png";
+import viewBlog from "./../../images/view-blog.png";
 import logout from "../../images/logout.png";
 import { BiSolidDashboard } from "react-icons/bi";
 import useAuth from "../../hooks/useAuth";
@@ -58,7 +60,9 @@ const MenuBar = ({ isVisible, onClose }) => {
             Forex
           </Link>
           <Link to="/investment/Investment" class="linkss">
-            <FiTrendingUp style={{ fontSize: "24px", marginRight: "10px", color: "#000" }} />
+            <FiTrendingUp
+              style={{ fontSize: "24px", marginRight: "10px", color: "#000" }}
+            />
             Investment
           </Link>
           <Link to="/help/Help" class="linkss">
@@ -86,6 +90,16 @@ const MenuBar = ({ isVisible, onClose }) => {
                   to: "/manageWithdrawals/ManageWithdrawals",
                   label: "Manage Withdrawal",
                   icon: withdraw,
+                },
+                {
+                  to: "/blog/CreateBlog",
+                  label: "Create Blog",
+                  icon: createBlog,
+                },
+                {
+                  to: "/blog/ViewBlog",
+                  label: "View Blogs",
+                  icon: viewBlog,
                 },
                 {
                   nullify: !isSuperAdmin,

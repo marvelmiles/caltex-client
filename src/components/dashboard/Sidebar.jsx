@@ -40,7 +40,7 @@ const Sidebar = () => {
           </span>
         </div>
 
-        {!isSuperAdmin || !isAdmin ? (
+        {isSuperAdmin || isAdmin ? (
           <div class="panel-control" id={styles.admin}>
             <Link to="/u/dashboard" class="controld" id="dashboard" onclick=" ">
               <BiSolidDashboard id="other-icon" className="dashboard-icon" />
@@ -93,7 +93,7 @@ const Sidebar = () => {
               <img src={createBlog} id="other-icon" alt="withdraw-icon" />
               View Blogs
             </Link>
-            {!isSuperAdmin && (
+            {isSuperAdmin && (
               <>
                 <Link
                   to="/manageAdmin/ManageAdmin"

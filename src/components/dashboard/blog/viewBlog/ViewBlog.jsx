@@ -13,7 +13,7 @@ const ViewBlog = () => {
     // Fetch all blogs from the backend
     const fetchBlogs = async () => {
       try {
-        const res = await http.get("/posts");
+        const res = await http.get("/posts", { withCredentials: true });
 
         if (res.status === 200) {
           setBlogs(res.data);
@@ -60,7 +60,7 @@ const ViewBlog = () => {
                   height={180}
                   alt="Blog"
                 />
-                <p>{blog.timestamp}</p>
+                <p>{blog.createdAt}</p>
                 <h3>{blog.title}</h3>
                 <p id={styles.content}>{blog.content}</p>
               </Link>

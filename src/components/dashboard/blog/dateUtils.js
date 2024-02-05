@@ -21,5 +21,5 @@ export const formatDate = (createdAt) => {
 
   const year = date.getFullYear(); // Full year as a number
 
-  return `${day}, ${month}, ${year}`;
+  return `${day} ${month}, ${year}`;
 };

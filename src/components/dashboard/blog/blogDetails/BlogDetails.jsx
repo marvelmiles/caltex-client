@@ -53,7 +53,7 @@ console.log(blog);
             height={180}
             alt="Blog"
           />
-          <p>{blog[blogId].timestamp}</p>
+          <p>{blog[blogId].createdAt}</p>
           <h3>{blog[blogId].title}</h3>
           <p id={styles.content}>{blog[blogId].content}</p>
           <button onClick={handleDelete}>Delete Blog</button>

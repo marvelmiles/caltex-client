@@ -46,7 +46,7 @@ console.log(blog);
   return (
     <div className={styles.main_cont}>
       <img src={backarrow} alt="backarrow" onClick={handleProceed} />
-      {blog ? (
+      {/* {blog ? (
         <div className={styles.main_inner_cont}>
           <img
             src={blog[blogId].coverImage}
@@ -57,6 +57,17 @@ console.log(blog);
           <p>{formatDate(blog[blogId].createdAt)}</p>
           <h3>{blog[blogId].title}</h3>
           <p id={styles.content}>{blog[blogId].content}</p>
+          <button onClick={handleDelete}>Delete Blog</button>
+        </div>
+      ) : (
+        <p>Loading...</p>
+      )} */}
+      {blog ? (
+        <div className={styles.main_inner_cont}>
+          <img src={blog.coverImage} width={367} height={180} alt="Blog" />
+          <p>{formatDate(blog.createdAt)}</p>
+          <h3>{blog.title}</h3>
+          <p id={styles.content}>{blog.content}</p>
           <button onClick={handleDelete}>Delete Blog</button>
         </div>
       ) : (

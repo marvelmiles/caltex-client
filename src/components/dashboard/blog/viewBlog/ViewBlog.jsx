@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import http from "../../../../api/http";
 import { useNavigate } from "react-router-dom";
 import backarrow from "./../../../../images/backArrow.png";
+import { formatDate } from "../dateUtils";
 import styles from "./ViewBlog.module.scss";
 
 const ViewBlog = () => {
@@ -60,7 +61,8 @@ const ViewBlog = () => {
                   height={180}
                   alt="Blog"
                 />
-                <p>{blog.createdAt}</p>
+                <p>{formatDate(blog.createdAt)}</p>
+
                 <h3>{blog.title}</h3>
                 <p id={styles.content}>{blog.content}</p>
               </Link>

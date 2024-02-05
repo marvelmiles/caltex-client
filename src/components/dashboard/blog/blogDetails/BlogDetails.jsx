@@ -17,7 +17,7 @@ const BlogDetails = () => {
       try {
         const res = await http.get(`/posts/${blogId}`);
         if (res.status === 200) {
-          setBlog(res.data.data);
+          setBlog(res.data);
         }
       } catch (error) {
         console.error("Error fetching blog:", error);

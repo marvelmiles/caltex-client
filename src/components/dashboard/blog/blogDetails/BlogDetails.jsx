@@ -3,6 +3,7 @@ import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import http from "../../../../api/http";
 import backarrow from "./../../../../images/backArrow.png";
+import { formatDate } from "../dateUtils";
 import styles from './BlogDetails.module.scss';
 
 const BlogDetails = () => {
@@ -14,9 +15,9 @@ const BlogDetails = () => {
     // Fetch the individual blog using the blogId parameter
     const fetchBlog = async () => {
       try {
-        const res = await http.get(`/posts/${blogId}`);
+        const res = await http.get(`/posts/${blogId}`, {withCredentials: true });
         if (res.status === 200) {
-          setBlog(res.data);
+          setBlog(res.data.data);
         }
       } catch (error) {
         console.error("Error fetching blog:", error);
@@ -32,7 +33,7 @@ const BlogDetails = () => {
 
   const handleDelete = async () => {
     try {
-      const res = await http.delete(`/posts/${blogId}`);
+      const res = await http.delete(`/posts/${blogId}`, {withCredentials: true });
       if (res.status === 200) {
         // Blog deleted successfully, navigate back to the blog list
         navigate("/blog/ViewBlog");
@@ -53,7 +54,7 @@ console.log(blog);
             height={180}
             alt="Blog"
           />
-          <p>{blog[blogId].createdAt}</p>
+          <p>{formatDate(blog[blogId].createdAt)}</p>
           <h3>{blog[blogId].title}</h3>
           <p id={styles.content}>{blog[blogId].content}</p>
           <button onClick={handleDelete}>Delete Blog</button>

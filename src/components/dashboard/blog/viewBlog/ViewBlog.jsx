@@ -16,8 +16,8 @@ const ViewBlog = () => {
         const res = await http.get("/posts", { withCredentials: true });
 
         if (res.status === 200) {
-          setBlogs(res.data);
-          setFilteredBlogs(res.data);
+          setBlogs(res.data.data);
+          setFilteredBlogs(res.data.data);
         }
       } catch (error) {
         console.error("Error fetching blogs:", error);

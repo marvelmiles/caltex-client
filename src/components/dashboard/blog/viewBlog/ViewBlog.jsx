@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import http from "../../../../api/http";
 import { useNavigate } from "react-router-dom";
 import backarrow from "./../../../../images/backArrow.png";
-import styles from './ViewBlog.module.scss';
+import styles from "./ViewBlog.module.scss";
 
 const ViewBlog = () => {
   const [blogs, setBlogs] = useState([]);
@@ -13,7 +13,8 @@ const ViewBlog = () => {
     // Fetch all blogs from the backend
     const fetchBlogs = async () => {
       try {
-        const res = await http.get("/posts");
+        const res = await http.get("/posts", { withCredentials: true });
+
         if (res.status === 200) {
           setBlogs(res.data);
           setFilteredBlogs(res.data);
@@ -34,12 +35,11 @@ const ViewBlog = () => {
       setFilteredBlogs(filtered);
     }
   };
-  
 
   const navigate = useNavigate();
 
   const handleProceed = () => {
-    navigate('/blog/CreateBlog');
+    navigate("/blog/CreateBlog");
   };
 
   const renderGrid = () => {
@@ -60,7 +60,7 @@ const ViewBlog = () => {
                   height={180}
                   alt="Blog"
                 />
-                <p>{blog.timestamp}</p>
+                <p>{blog.createdAt}</p>
                 <h3>{blog.title}</h3>
                 <p id={styles.content}>{blog.content}</p>
               </Link>

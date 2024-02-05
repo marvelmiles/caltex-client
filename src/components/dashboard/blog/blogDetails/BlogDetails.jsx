@@ -15,7 +15,7 @@ const BlogDetails = () => {
     // Fetch the individual blog using the blogId parameter
     const fetchBlog = async () => {
       try {
-        const res = await http.get(`/posts/${blogId}`, {withCredentials: true });
+        const res = await http.get(`/posts/${blogId}`);
         if (res.status === 200) {
           setBlog(res.data.data);
         }
@@ -33,7 +33,7 @@ const BlogDetails = () => {
 
   const handleDelete = async () => {
     try {
-      const res = await http.delete(`/posts/${blogId}`, {withCredentials: true });
+      const res = await http.delete(`/posts/${blogId}`);
       if (res.status === 200) {
         // Blog deleted successfully, navigate back to the blog list
         navigate("/blog/ViewBlog");

@@ -40,7 +40,7 @@ const ViewBlog = () => {
   const navigate = useNavigate();
 
   const handleProceed = () => {
-    navigate("/blog/CreateBlog");
+    navigate("/u/dashboard");
   };
 
   const renderGrid = () => {

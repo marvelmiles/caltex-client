@@ -52,7 +52,7 @@ const WithdrawPage = () => {
   const [walletAddress, setWalletAddress] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const handleRequestWithdrawal = async e => {
+  const handleRequestWithdrawal = async (e) => {
     try {
       e.preventDefault();
       setIsSubmitting(true);
@@ -61,15 +61,16 @@ const WithdrawPage = () => {
         walletAddress,
         currency: cryptoNetwork,
         localPayment: {
-          currency
+          currency,
         },
-        paymentType: "crypto"
+        paymentType: "crypto",
       });
 
       setSnackBar({
         message: res.message,
-        severity: "success"
+        severity: "success",
       });
+      window.alert("Withdrawal successful!");
       setAmount("");
       setWalletAddress("");
       setCurrency("USD");
@@ -107,7 +108,7 @@ const WithdrawPage = () => {
                 name="currency"
                 size="1"
                 value={currency}
-                onChange={e => setCurrency(e.target.value)}
+                onChange={(e) => setCurrency(e.target.value)}
               >
                 <option value="USD" id="usd">
                   USD
@@ -122,7 +123,7 @@ const WithdrawPage = () => {
                 name=""
                 placeholder=""
                 value={amount}
-                onChange={e => setAmount(e.currentTarget.value)}
+                onChange={(e) => setAmount(e.currentTarget.value)}
               />
             </Box>
 
@@ -133,7 +134,7 @@ const WithdrawPage = () => {
                 name="withdraw-net"
                 size="1"
                 value={cryptoNetwork}
-                onChange={e => setCryptoNetwork(e.target.value)}
+                onChange={(e) => setCryptoNetwork(e.target.value)}
               >
                 <option value="BTC" id="btc">
                   BTC - Bitcoin
@@ -164,7 +165,7 @@ const WithdrawPage = () => {
                 name="wallet-address "
                 value={walletAddress}
                 placeholder=" "
-                onChange={e => setWalletAddress(e.target.value)}
+                onChange={(e) => setWalletAddress(e.target.value)}
               />
             </div>
 

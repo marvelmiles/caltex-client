@@ -229,6 +229,9 @@ body {
 }
 
 .welcome-text {
+  display: flex;
+  align-items: center;
+  gap: 5px;
   padding-top: 15px;
   padding-left: var(--bc-pl);
   font-size: 22px;

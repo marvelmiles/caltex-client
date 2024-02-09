@@ -113,17 +113,15 @@ const DashboardNav = () => {
       <div className="welcome-user">
         <div className="welcome">
           <div className="welcome-text">
-            <p>
-              Welcome back, {firstname}
-              {isVerified && (
-                <img
-                  src={verifiedIcon}
-                  height={24}
-                  width={24}
-                  alt="verified icon"
-                />
-              )}
-            </p>
+            <p>Welcome back, {firstname}</p>
+            {isVerified && (
+              <img
+                src={verifiedIcon}
+                height={24}
+                width={24}
+                alt="verified icon"
+              />
+            )}
           </div>
           <div className="welcome-asset">
             <span>

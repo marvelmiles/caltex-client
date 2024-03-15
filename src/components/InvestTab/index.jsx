@@ -10,7 +10,7 @@ const InvestTab = ({
     tradeType: "forex",
     maxAmount: 10000,
     minAmount: 100,
-    roiPct: 1.0,
+    roiPct: 0.6,
     duration: 7
   }
 }) => {

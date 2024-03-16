@@ -461,7 +461,7 @@ const App = () => {
                     maxAmount: 15000,
                     duration: 10,
                     tradeType: "crypto",
-                    roiPct: 2.0,
+                    roiPct: 1.6,
                   }}
                 />
               ) : (

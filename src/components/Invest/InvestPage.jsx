@@ -61,7 +61,7 @@ const InvestPage = () => {
                         to={`/ForexDetails/StarterplanForex?${searchParam}`}
                         class="starter-plan"
                       >
-                        Starter Plan 1.0% ROI, 7 DAYS PACKAGE $100-$10000
+                        Starter Plan 0.6% ROI, 7 DAYS PACKAGE $100-$10000
                       </Link>
                       <Link
                         to={`/ForexDetails/professionalplanForex?${searchParam}`}
@@ -90,7 +90,7 @@ const InvestPage = () => {
                         to={`/CryptoDetails/starterplanCrypto?${searchParam}`}
                         class="starter-plan"
                       >
-                        Starter Plan 2.0% ROI, 10 DAYS PACKAGE $300-$15000
+                        Starter Plan 1.4% ROI, 10 DAYS PACKAGE $300-$15000
                       </Link>
                       <Link
                         to={`/CryptoDetails/professionalplanCrypto?${searchParam}`}

@@ -47,6 +47,7 @@ const WithdrawPage = () => {
         message: res.message,
         severity: "success",
       });
+      window.alert("Withdrawal successful!");
       setAmount("");
       setWalletAddress("");
       setCurrency("USD");

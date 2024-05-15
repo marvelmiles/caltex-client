@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import http from "../../../../api/http";
 import { useNavigate } from "react-router-dom";
 import backarrow from "./../../../../images/backArrow.png";
+import { formatDate } from "../dateUtils";
 import styles from "./ViewBlog.module.scss";
 
 const ViewBlog = () => {
@@ -13,11 +14,11 @@ const ViewBlog = () => {
     // Fetch all blogs from the backend
     const fetchBlogs = async () => {
       try {
-        const res = await http.get("/posts");
+        const res = await http.get("/posts", { withCredentials: true });
 
         if (res.status === 200) {
-          setBlogs(res.data);
-          setFilteredBlogs(res.data);
+          setBlogs(res.data.data);
+          setFilteredBlogs(res.data.data);
         }
       } catch (error) {
         console.error("Error fetching blogs:", error);
@@ -39,7 +40,7 @@ const ViewBlog = () => {
   const navigate = useNavigate();
 
   const handleProceed = () => {
-    navigate("/blog/CreateBlog");
+    navigate("/u/dashboard");
   };
 
   const renderGrid = () => {
@@ -60,7 +61,8 @@ const ViewBlog = () => {
                   height={180}
                   alt="Blog"
                 />
-                <p>{blog.timestamp}</p>
+                <p>{formatDate(blog.createdAt)}</p>
+
                 <h3>{blog.title}</h3>
                 <p id={styles.content}>{blog.content}</p>
               </Link>

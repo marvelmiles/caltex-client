@@ -43,6 +43,12 @@
 }
 
 .gridColumn {
+   margin-right: 40px;
+
+   @media (max-width: 768px) {
+      margin-right: 0;
+   }
+
    p {
       color: rgba(30, 30, 30, 0.75);
 
@@ -77,7 +83,7 @@
    font-style: normal;
    font-weight: 400;
    line-height: normal;
-   width: 406px;
+   width: 380px;
 
    @media (max-width: 768px) {
          width: 300px;

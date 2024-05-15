@@ -24,6 +24,9 @@ td {
  line-height: normal;
  border: none;
 
+ @media (max-width: 768px) {
+  font-size: 10px;
+ }
 }
 
 td:nth-child(3) {
@@ -34,7 +37,8 @@ td:nth-child(3) {
  border-radius: 5px;
  background: #F0A617;
  display: inline-flex;
- padding: 10px;
+ padding: 5px;
+ width: 120px;
  justify-content: center;
  align-items: center;
  color: #FFF;
@@ -48,7 +52,6 @@ td:nth-child(3) {
 
  @media (max-width: 768px) {
   width: 100px;
-  padding: 10px 5px;
  }
 }
 

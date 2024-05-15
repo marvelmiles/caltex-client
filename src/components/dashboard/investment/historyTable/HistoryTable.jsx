@@ -121,7 +121,15 @@ const HistoryTable = ({ date, transactionType, status, paymentType }) => {
           </td>
           <td id={styles.table_data}>{item.paymentType}</td>
           <td id={styles.table_data}>{item.transactionType || sep}</td>
-          <td id={styles.table_data}>{item.walletAddress || sep}</td>
+          <td
+            id={styles.table_data}
+            style={{
+              maxWidth: "200px",
+              overflow: "auto",
+            }}
+          >
+            {item.walletAddress || sep}
+          </td>
           <td id={styles.table_data}>
             {moment(item.createdAt).format(DATE_FORMAT_TRANS_HIS)}
           </td>
@@ -146,7 +154,13 @@ const HistoryTable = ({ date, transactionType, status, paymentType }) => {
 
   return (
     <>
-      <div className={styles.fixed_header_table}>
+      <div
+        className={styles.fixed_header_table}
+        style={{
+          width: "100%",
+          maxWidth: "100%",
+        }}
+      >
         <table>
           {renderTableHeader()}
           {!seeless && <tbody>{renderTableData(data.slice(0, 3))}</tbody>}

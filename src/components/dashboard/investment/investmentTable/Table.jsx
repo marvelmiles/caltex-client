@@ -107,7 +107,13 @@ const FixedHeaderTable = () => {
 
   return (
     <>
-      <div className={styles.fixed_header_table}>
+      <div
+        className={styles.fixed_header_table}
+        style={{
+          width: "100%",
+          maxWidth: "100%",
+        }}
+      >
         <table>
           {renderTableHeader()}
           {!seeless && <tbody>{renderTableData(data.slice(0, 3))}</tbody>}

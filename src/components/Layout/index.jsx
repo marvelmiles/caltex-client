@@ -1,4 +1,3 @@
-import React from "react";
 import forex from "../../images/forex.png";
 import crypto from "../../images/crypto.png";
 import withdraw from "../../images/withdraw.png";
@@ -24,58 +23,58 @@ const Layout = ({ children }) => {
 
   return (
     <>
-      <div class="mySidenav" id="sidenav">
-        <Link to=" " class="closebtn" id="close-btn" onClick={closeNav}>
+      <div className="mySidenav" id="sidenav">
+        <Link to=" " className="closebtn" id="close-btn" onClick={closeNav}>
           &times;
         </Link>
-        <Link to="/" class=" ">
+        <Link to="/" className=" ">
           <BiSolidDashboard id="other-icon" className="dashboard-icon" />
           Dashboard
         </Link>
-        <Link to="/profile/Profile" class="linkss">
+        <Link to="/profile/Profile" className="linkss">
           <img src={profile} id="other-icon" alt="profile-icon" />
           Profile
         </Link>
-        <Link to="/Deposit/DepositPage" class="linkss">
+        <Link to="/Deposit/DepositPage" className="linkss">
           <img src={deposit} id="other-icon" alt="deposit-icon" />
           Deposit
         </Link>
 
-        <Link to="/Invest/InvestPage?tradeType=forex" class="linkss">
+        <Link to="/Invest/InvestPage?tradeType=forex" className="linkss">
           <img src={deposit} id="other-icon" alt="deposit-icon" />
           Invest
         </Link>
-        <Link to="/Withdraw/withdrawPage" class="linkss">
+        <Link to="/Withdraw/withdrawPage" className="linkss">
           <img src={withdraw} id="other-icon" alt="withdraw-icon" />
           Withdraw
         </Link>
-        <Link to="/Invest/InvestPage?tradeType=crypto" class="linkss">
+        <Link to="/Invest/InvestPage?tradeType=crypto" className="linkss">
           <img src={crypto} id="other-icon" alt="crypto-icon" />
           Crypto
         </Link>
-        <Link to="/Invest/InvestPage?tradeType=forex" class="linkss">
+        <Link to="/Invest/InvestPage?tradeType=forex" className="linkss">
           <img src={forex} id="other-icon" alt="forex-icon" />
           Forex
         </Link>
-        <Link to="/help/Help" class="linkss">
+        <Link to="/help/Help" className="linkss">
           <img src={help} id="other-icon" alt="help-icon" />
           HELP
         </Link>
-        <Link to="/legalDocument/LegalDocument" class="linkss">
+        <Link to="/legalDocument/LegalDocument" className="linkss">
           <img src={legal} id="other-icon" alt="legal-icon" />
           Legal Documents
         </Link>
-        <Link to="/auth/login" class="linkss">
+        <Link to="/auth/login" className="linkss">
           <img src={logout} id="other-icon" alt="logout-icon" />
           Logout
         </Link>
       </div>
 
-      <div class="dashboard-container">
-        <div class="board">
+      <div className="dashboard-container">
+        <div className="board">
           <Sidebar />
-          <div class="dashboard-content">
-            <div class="board-content">
+          <div className="dashboard-content">
+            <div className="board-content">
               <DashboardNav />
               {children}
             </div>

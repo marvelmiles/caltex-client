@@ -36,7 +36,7 @@ const Investment = () => {
 
   const dateRef = useRef();
 
-  const handleTransType = e => {
+  const handleTransType = (e) => {
     const { type, status, paymentType } = e.target.dataset;
 
     if (typeof type === "string") {
@@ -55,7 +55,7 @@ const Investment = () => {
     }
   };
 
-  const handleDateSelection = e => {
+  const handleDateSelection = (e) => {
     const [yr, mth, day] = dateRef.current.value.split("-");
 
     const today = new Date();
@@ -75,12 +75,12 @@ const Investment = () => {
 
   return (
     <Layout>
-      <div class={styles.main_cont}>
+      <div className={styles.main_cont}>
         <BackArrow />
         <p id={styles.p_text}>My Investment</p>
         <FixedHeaderTable />
 
-        <p id={styles.p_note}>
+        <p id={styles.p_note} style={{ clear: "both" }}>
           Note: Your Return on Investment and capital will be added
           automatically to your dashboard balance once your investment is
           matured
@@ -93,21 +93,21 @@ const Investment = () => {
                 flexWrap: {
                   // xs: "wrap-reverse",
                   // sm: "nowrap"
-                }
+                },
               }}
             >
               <input
                 type="date"
                 className={styles.date_input}
                 ref={dateRef}
-                defaultValue={`${yr}-${mth
+                defaultValue={`${yr}-${mth.toString().padStart(2, "0")}-${day
                   .toString()
-                  .padStart(2, "0")}-${day.toString().padStart(2, "0")}`}
+                  .padStart(2, "0")}`}
               />
               <IconButton
                 onClick={handleDateSelection}
                 sx={{
-                  backgroundColor: "rgba(215, 215, 215, 0.2)"
+                  backgroundColor: "rgba(215, 215, 215, 0.2)",
                 }}
               >
                 <AiOutlineSearch style={{ fontSize: "20px" }} />
@@ -119,8 +119,8 @@ const Investment = () => {
                 component="span"
                 sx={{
                   "&::first-letter": {
-                    textTransform: "uppercase"
-                  }
+                    textTransform: "uppercase",
+                  },
                 }}
               >
                 {transType || "All"} type
@@ -134,8 +134,8 @@ const Investment = () => {
                 component="span"
                 sx={{
                   "&::first-letter": {
-                    textTransform: "uppercase"
-                  }
+                    textTransform: "uppercase",
+                  },
                 }}
               >
                 {status || "All"} status
@@ -149,8 +149,8 @@ const Investment = () => {
                 component="span"
                 sx={{
                   "&::first-letter": {
-                    textTransform: "uppercase"
-                  }
+                    textTransform: "uppercase",
+                  },
                 }}
               >
                 {paymentType || "Crypto"} payments

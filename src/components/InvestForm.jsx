@@ -1,5 +1,4 @@
-import React, { useCallback, useMemo } from "react";
-import PropTypes from "prop-types";
+import { useCallback, useMemo } from "react";
 import useForm from "../hooks/useForm";
 import DatePicker from "./DatePicker";
 import { setFutureDate, getDaysDifference } from "../utils";
@@ -15,7 +14,7 @@ const InvestForm = ({
   maxAmount = 10000,
   minAmount = 100,
   roiPct = 2.5,
-  duration: defaultDuration = 7
+  duration: defaultDuration = 7,
 }) => {
   const placeholders = useMemo(() => {
     const endDate = setFutureDate(defaultDuration);
@@ -30,7 +29,7 @@ const InvestForm = ({
       startDay: startDate.getDate(),
       startMth: startDate.getMonth(),
       startYear: startDate.getFullYear(),
-      duration: defaultDuration
+      duration: defaultDuration,
     };
   }, [tradeType, plan, defaultDuration]);
 
@@ -43,7 +42,7 @@ const InvestForm = ({
         setErrors,
         dataset = {},
         prevData,
-        isSubmitting
+        isSubmitting,
       } = props;
 
       const { name: dataName } = dataset;
@@ -114,8 +113,7 @@ const InvestForm = ({
       if (isSubmitting || dataName === "duration") {
         setTimeframe();
         setROI();
-      }
-      else if (keyName === "amount") {
+      } else if (keyName === "amount") {
         const amt = formData[keyName];
 
         const inputValue = Number(amt);
@@ -131,14 +129,14 @@ const InvestForm = ({
 
           setROI();
 
-          setErrors(errors => {
+          setErrors((errors) => {
             delete errors.amount;
             return {
-              ...errors
+              ...errors,
             };
           });
         } else {
-          setErrors(errors => ({ ...errors, amount: err }));
+          setErrors((errors) => ({ ...errors, amount: err }));
           setSnackBar(err);
         }
       }
@@ -148,19 +146,14 @@ const InvestForm = ({
     [setSnackBar, maxAmount, roiPct, defaultDuration, minAmount]
   );
 
-  const {
-    formData,
-    isSubmitting,
-    handleChange,
-    handleSubmit,
-    resetForm
-  } = useForm({
-    serializeData,
-    required: { amount: "Amount is required" },
-    placeholders
-  });
+  const { formData, isSubmitting, handleChange, handleSubmit, resetForm } =
+    useForm({
+      serializeData,
+      required: { amount: "Amount is required" },
+      placeholders,
+    });
 
-  const onSubmit = async e => {
+  const onSubmit = async (e) => {
     try {
       const { withErr, formData } = handleSubmit(e);
 
@@ -193,7 +186,7 @@ const InvestForm = ({
 
       setSnackBar({
         message: response.message,
-        severity: "success"
+        severity: "success",
       });
     } catch (error) {
       console.log("Error submitting investment details:", error);
@@ -205,11 +198,11 @@ const InvestForm = ({
 
   return (
     <form onSubmit={onSubmit}>
-      <div class="invest-text">
+      <div className="invest-text">
         <h3>Investment for {plan} Plan</h3>
       </div>
-      <div class="input-amount">
-        <span class="input-des">Input Amount</span>
+      <div className="input-amount">
+        <span className="input-des">Input Amount</span>
         <input
           type="number"
           id="amount"
@@ -226,8 +219,8 @@ const InvestForm = ({
       </div>
       <br />
 
-      <div class="input-amount">
-        <span class="input-des">Return On Investment</span>
+      <div className="input-amount">
+        <span className="input-des">Return On Investment</span>
         <input
           type="text"
           name="roi"
@@ -239,8 +232,8 @@ const InvestForm = ({
           placeholder={roiPct + "% on investment"}
         />
       </div>
-      <div class="input-amount">
-        <span class="input-des">Net Gain</span>
+      <div className="input-amount">
+        <span className="input-des">Net Gain</span>
         <input
           type="text"
           name="fund"
@@ -258,8 +251,8 @@ const InvestForm = ({
       </div>
       <br />
 
-      <div class="input-amount">
-        <span class="input-des">Date Of Investment</span>
+      <div className="input-amount">
+        <span className="input-des">Date Of Investment</span>
 
         <DatePicker
           key="start"
@@ -273,8 +266,8 @@ const InvestForm = ({
       </div>
       <br />
 
-      <div class="input-amount">
-        <span class="input-des">Duration Of Investment</span>
+      <div className="input-amount">
+        <span className="input-des">Duration Of Investment</span>
         <input
           type="text"
           id="doi"
@@ -286,8 +279,8 @@ const InvestForm = ({
       </div>
       <br />
 
-      <div class="input-amount">
-        <span class="input-des">Investment Last till</span>
+      <div className="input-amount">
+        <span className="input-des">Investment Last till</span>
         <DatePicker
           namePrefix="end"
           key="end"
@@ -300,7 +293,7 @@ const InvestForm = ({
       </div>
       <br />
 
-      <div class="invest-starter-btn">
+      <div className="invest-starter-btn">
         <Button
           variant="contained"
           type="submit"

@@ -1,24 +1,22 @@
-import React from "react";
 import "../../components/Invest/InvestPage.css";
 import "./CaltexCompBrief.css";
 import pdfIcon from "../../images/pdfLogo.png";
 import companyBrief from "../../svgs/CaltexCompanyBrief.pdf";
 
-import { Link, useSearchParams } from "react-router-dom";
-import { useCtx } from "../../context";
+import { Link } from "react-router-dom";
 import Layout from "../Layout";
 import ArrowAndTab from "../ArrowAndTab";
 
 const CaltexCompBrief = () => {
   return (
     <Layout>
-      <div class="invest-carltex" id="invest-carltex">
-        <div class="invest-inner">
+      <div className="invest-carltex" id="invest-carltex">
+        <div className="invest-inner">
           <ArrowAndTab />
 
-          <div class="invest-forex">
-            <div class="invex-forex-inner">
-              <p class="wide-array">
+          <div className="invest-forex">
+            <div className="invex-forex-inner">
+              <p className="wide-array">
                 We have a wide array of investment plans to choose from. Choose
                 from the options below the investment plan which best suits you.
               </p>
@@ -46,10 +44,6 @@ const CaltexCompBrief = () => {
       </div>
     </Layout>
   );
-
-  function openNav() {
-    document.getElementById("sidenav").style.width = "70%";
-  }
 };
 
 export default CaltexCompBrief;

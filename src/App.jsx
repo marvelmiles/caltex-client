@@ -1,10 +1,10 @@
-import React, { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback } from "react";
 import {
   Routes,
   Route,
   useLocation,
   Navigate,
-  useNavigate
+  useNavigate,
 } from "react-router-dom";
 import DashboardPage from "./components/dashboard/DashboardPage";
 import Congratulations from "./components/CongratulatoryMessage/Congratulations";
@@ -23,7 +23,7 @@ import {
   ThemeProvider,
   CssBaseline,
   GlobalStyles,
-  IconButton
+  IconButton,
 } from "@mui/material";
 import { createTheme, fontFamily } from "./styled/theme";
 import Login from "./pages/Login";
@@ -50,7 +50,7 @@ import backarrow from "./images/backArrow.png";
 import {
   HTTP_CODE_ACCOUNT_VERIFICATION_ERROR,
   HTTP_CODE_ACCOUNT_DISABLED,
-  HOME_ORIGIN
+  HOME_ORIGIN,
 } from "./config/constants";
 import CaltexCompBrief from "./components/CaltexCompanyBrief/CaltexCompBrief";
 import ManageUsers from "./components/dashboard/adminDashboard/manageUsers/ManageUsers";
@@ -64,6 +64,9 @@ import Loading from "./components/Loading";
 import IdVerificationMethod from "./components/dashboard/profile/idVerificationMethod/IdVerificationMethod";
 import { useDispatch } from "react-redux";
 import { getDaysDifference } from "./utils";
+import CreateBlog from "./components/dashboard/blog/createBlog/CreateBlog";
+import ViewBlog from "./components/dashboard/blog/viewBlog/ViewBlog";
+import BlogDetails from "./components/dashboard/blog/blogDetails/BlogDetails";
 
 // Added Layout component to give more layout structure
 // All api to backend should be called with the http module and
@@ -87,21 +90,21 @@ const App = () => {
       balance: {
         confirmedTransactions: 0,
         awaitingTransactions: 0,
-        rejectedTransactions: 0
-      }
-    }
+        rejectedTransactions: 0,
+      },
+    },
   });
 
   const [showVerificationWarning, setShowVerificationWarning] = useState(false);
 
   let { state: locState, pathname } = useLocation();
   locState = locState || {
-    previewUser: defaultUser
+    previewUser: defaultUser,
   };
 
   const {
     isLoggedIn,
-    currentUser: { accountExpires, id: cid }
+    currentUser: { accountExpires, id: cid },
   } = useAuth(locState.user);
 
   const navigate = useNavigate();
@@ -109,7 +112,7 @@ const App = () => {
   const dispatch = useDispatch();
 
   const handleGoBack = useCallback(
-    config => {
+    (config) => {
       navigate(-1, { state: locState, ...config });
     },
     [navigate, locState]
@@ -127,11 +130,11 @@ const App = () => {
   const closeSnackBar = useCallback((e, reason) => {
     if (reason === "clickaway") return;
 
-    setSnackbar(snackbar =>
+    setSnackbar((snackbar) =>
       snackbar.open
         ? {
             ...snackbar,
-            open: false
+            open: false,
           }
         : snackbar
     );
@@ -141,7 +144,7 @@ const App = () => {
     (
       snackbar = {
         autoHideDuration: 10000,
-        message: "Something went wrong!"
+        message: "Something went wrong!",
       },
       withDelay
     ) => {
@@ -150,8 +153,8 @@ const App = () => {
         ...(snackbar.message
           ? snackbar
           : {
-              message: snackbar
-            })
+              message: snackbar,
+            }),
       };
 
       if (withDelay) {
@@ -168,7 +171,7 @@ const App = () => {
     () =>
       dispatch(
         updateUser({
-          _sentTokenVerification: false
+          _sentTokenVerification: false,
         })
       ),
     [dispatch]
@@ -184,8 +187,8 @@ const App = () => {
 
   useEffect(() => {
     http.interceptors.response.use(
-      res => res,
-      err => {
+      (res) => res,
+      (err) => {
         if (
           err.status === 403 &&
           window.location.pathname.indexOf("auth") === -1
@@ -193,13 +196,13 @@ const App = () => {
           console.log(err, " in app 403 ");
 
           navigate(`/auth/login?${`redirect=${createRelativeUrl()}`}`, {
-            state: locState
+            state: locState,
           });
 
           setSnackBar(
             {
               [HTTP_CODE_ACCOUNT_VERIFICATION_ERROR]: true,
-              [HTTP_CODE_ACCOUNT_DISABLED]: true
+              [HTTP_CODE_ACCOUNT_DISABLED]: true,
             }[err.code]
               ? err.message
               : "You need to login! Session timeout.",
@@ -214,13 +217,13 @@ const App = () => {
   // useEffect(()=>{
   // const taskId = setTimeout(()=>{
   //  clearTimeout(taskId);
-  //  
+  //
   //    (async ()=>{
   //      try {
   //     await http.get("/search");
   //      } catch (_){}
   //     })()
-  //  
+  //
   //  },840000)
   // },[])
 
@@ -241,11 +244,11 @@ const App = () => {
           a: { textDecoration: "none" },
           [INPUT_AUTOFILL_SELECTOR]: {
             backgroundColor: "transparent",
-            transition: "background-color 5000s ease-in-out 0s"
+            transition: "background-color 5000s ease-in-out 0s",
           },
           button: {
-            cursor: "pointer"
-          }
+            cursor: "pointer",
+          },
         }}
       />
       <Provider
@@ -256,7 +259,7 @@ const App = () => {
           handleAutoResendToken,
           renderBackArrow,
           appCtx,
-          setAppCtx
+          setAppCtx,
         }}
       >
         <Routes>
@@ -348,6 +351,20 @@ const App = () => {
           />
 
           <Route
+            path="/blog/CreateBlog"
+            Component={isLoggedIn ? CreateBlog : Redirect}
+          />
+          <Route
+            path="/blog/ViewBlog"
+            Component={isLoggedIn ? ViewBlog : Redirect}
+          />
+
+          <Route
+            path="/blog/:blogId"
+            Component={isLoggedIn ? BlogDetails : Redirect}
+          />
+
+          <Route
             path="/idVerificatonMethod/IdVerificationMethod"
             Component={isLoggedIn ? IdVerificationMethod : Redirect}
           />
@@ -426,7 +443,7 @@ const App = () => {
                     duration: 20,
                     tradeType: "crypto",
                     roiPct: 2.5,
-                    plan: "professional"
+                    plan: "professional",
                   }}
                 />
               ) : (
@@ -444,7 +461,7 @@ const App = () => {
                     maxAmount: 15000,
                     duration: 10,
                     tradeType: "crypto",
-                    roiPct: 2.0
+                    roiPct: 1.4,
                   }}
                 />
               ) : (
@@ -463,7 +480,7 @@ const App = () => {
                     duration: 30,
                     tradeType: "crypto",
                     roiPct: 3.0,
-                    plan: "master"
+                    plan: "master",
                   }}
                 />
               ) : (
@@ -481,7 +498,7 @@ const App = () => {
                     maxAmount: 100000,
                     duration: 21,
                     plan: "master",
-                    roiPct: 2.0
+                    roiPct: 2.0,
                   }}
                 />
               ) : (
@@ -499,7 +516,7 @@ const App = () => {
                     maxAmount: 50000,
                     duration: 14,
                     plan: "professional",
-                    roiPct: 1.5
+                    roiPct: 1.5,
                   }}
                 />
               ) : (
@@ -541,9 +558,9 @@ const App = () => {
           sx={{
             maxWidth: snackbar.maxWidth || "400px",
             "&::first-letter": {
-              textTransform: "uppercase"
+              textTransform: "uppercase",
             },
-            bottom: showVerificationWarning ? "100px !important" : undefined
+            bottom: showVerificationWarning ? "100px !important" : undefined,
           }}
         >
           <Alert
@@ -554,7 +571,7 @@ const App = () => {
               </IconButton>
             }
             sx={{
-              whiteSpace: "pre-line"
+              whiteSpace: "pre-line",
             }}
           >
             {snackbar.message}
@@ -566,8 +583,8 @@ const App = () => {
           sx={{
             maxWidth: snackbar.maxWidth || "400px",
             "&::first-letter": {
-              textTransform: "uppercase"
-            }
+              textTransform: "uppercase",
+            },
           }}
         >
           <Alert
@@ -578,7 +595,7 @@ const App = () => {
               </IconButton>
             }
             sx={{
-              whiteSpace: "pre-line"
+              whiteSpace: "pre-line",
             }}
           >
             Account will be disabled. if not verified within{" "}

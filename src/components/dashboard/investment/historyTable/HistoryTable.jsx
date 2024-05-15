@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback } from "react";
 import useAuth from "../../../../hooks/useAuth";
 import styles from "./HistoryTable.module.scss";
 import http from "../../../../api/http";
@@ -90,8 +90,24 @@ const HistoryTable = ({ date, transactionType, status, paymentType }) => {
     );
   };
 
-  const renderData = (data) =>
-    data.map((item, i) => {
+  const renderTableData = (arr = []) => {
+    if (loading)
+      return (
+        <tr>
+          <td colSpan={8}>
+            <Loading />
+          </td>
+        </tr>
+      );
+
+    if (!arr.length) {
+      return (
+        <tr>
+          <td colSpan="8">No data available</td>
+        </tr>
+      );
+    }
+    return arr.map((item, i) => {
       const sep = "----";
 
       const cur = item.localPayment?.currency || "";
@@ -126,36 +142,6 @@ const HistoryTable = ({ date, transactionType, status, paymentType }) => {
         </tr>
       );
     });
-
-  const renderTableData = () => {
-    if (loading)
-      return (
-        <tr>
-          <td colspan={8}>
-            <Loading />
-          </td>
-        </tr>
-      );
-
-    if (!data.length) {
-      return (
-        <tr>
-          <td colSpan="8">No data available</td>
-        </tr>
-      );
-    }
-    return renderData(data.slice(0, 1));
-  };
-
-  const renderTableData2 = () => {
-    if (!data.length) {
-      return (
-        <tr>
-          <td colSpan="6">No data available</td>
-        </tr>
-      );
-    }
-    return renderData(data);
   };
 
   return (
@@ -163,8 +149,8 @@ const HistoryTable = ({ date, transactionType, status, paymentType }) => {
       <div className={styles.fixed_header_table}>
         <table>
           {renderTableHeader()}
-          {!seeless && <tbody>{renderTableData()}</tbody>}
-          {seemore && <tbody>{renderTableData2()}</tbody>}
+          {!seeless && <tbody>{renderTableData(data.slice(0, 3))}</tbody>}
+          {seemore && <tbody>{renderTableData(data)}</tbody>}
         </table>
       </div>
       <span

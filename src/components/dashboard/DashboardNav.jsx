@@ -1,20 +1,19 @@
-import React from "react";
-import { useState } from "react";
+import React, { useEffect, useState } from "react";
 import useAuth from "../../hooks/useAuth";
 import "./dashboard.css";
 import { Link } from "react-router-dom";
 import wallet from "../../../src/svgs/profile-wallet.svg";
 import styles from "./Sidebar.module.scss";
 import MenuBar from "./MenuBar";
+import verifiedIcon from "../../../src/images/verified.png";
 import Avatar from "@mui/material/Avatar";
 import { HOME_ORIGIN } from "../../config/constants";
 
 const DashboardNav = () => {
   const { currentUser } = useAuth();
-
-  const { firstname, photoUrl, fullname } = currentUser;
-
+  const { firstname, photoUrl, fullname, kycDocs, kycIds } = currentUser;
   const [isMenuBarVisible, setMenuBarVisibility] = useState(false);
+  const [isVerified, setIsVerified] = useState(false);
 
   const openMenuBar = () => {
     setMenuBarVisibility(true);
@@ -24,15 +23,29 @@ const DashboardNav = () => {
     setMenuBarVisibility(false);
   };
 
+  useEffect(() => {
+    setIsVerified(
+      !!(Object.keys(kycDocs).length || Object.keys(kycIds).length)
+    );
+  }, [kycDocs, kycIds]);
+
   return (
     <div>
       <MenuBar isVisible={isMenuBarVisible} onClose={closeMenuBar} />
-      <div class="welcome-user">
-        <div class="welcome">
-          <div class="welcome-text">
+      <div className="welcome-user">
+        <div className="welcome">
+          <div className="welcome-text">
             <p>Welcome back, {firstname}</p>
+            {isVerified && (
+              <img
+                src={verifiedIcon}
+                height={24}
+                width={24}
+                alt="verified icon"
+              />
+            )}
           </div>
-          <div class="welcome-asset">
+          <div className="welcome-asset">
             <span>
               <Avatar
                 src={photoUrl}
@@ -45,27 +58,25 @@ const DashboardNav = () => {
                   border: "1px solid currentColor",
                   borderColor: "divider",
                   img: {
-                    m: 0
-                  }
+                    m: 0,
+                  },
                 }}
               />
             </span>
 
-            <span class="john">
-              <p>
-                {fullname}
-              </p>
+            <span className="john">
+              <p>{fullname}</p>
             </span>
             <span
-              class="bell-notification"
+              className="bell-notification"
               id=" "
-              onclick=" "
+              onClick=" "
               style={{ display: "none" }}
             >
-              <i class="fa fa-bell" style={{ fontSize: "22px" }}></i>
+              <i className="fa fa-bell" style={{ fontSize: "22px" }}></i>
             </span>
           </div>
-          <div class="menu-button" onClick={openMenuBar}>
+          <div className="menu-button" onClick={openMenuBar}>
             &#9776;
           </div>
         </div>

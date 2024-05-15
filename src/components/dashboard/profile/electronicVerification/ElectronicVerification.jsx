@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import idIcon from "../../../../svgs/id-verify.svg";
 import errorIcon from "../../../../svgs/error.svg";
 import successIcon from "../../../../svgs/success.svg";
@@ -8,56 +8,74 @@ import BackArrow from "../../backArrow/BackArrow";
 import Toast from "../toast/Toast";
 import http from "../../../../api/http";
 import useAuth from "../../../../hooks/useAuth";
+import { useCtx } from "../../../../context";
 
 const checkboxData = [
   { label: "National Identity Card", value: " nin" },
   { label: "Passport Number", value: "passport" },
-  { label: "Driving License", value: "driverLicense" }
+  { label: "Driving License", value: "driverLicense" },
 ];
 
 const ElectronicVerification = () => {
   const {
-    currentUser: { id: cid }
+    currentUser: { id: cid },
   } = useAuth();
+
+  const { setSnackBar } = useCtx();
+
+  const [uploading, setUploading] = useState(false);
 
   const [selectedOption, setSelectedOption] = useState("");
   const [responseMessage, setResponseMessage] = useState("");
   const [notice, setNotice] = useState({ success: false, fail: false });
 
-  const handleCheckboxChange = value => {
+  const handleCheckboxChange = (value) => {
     setSelectedOption(value);
   };
 
   const [numberValue, setNumberValue] = useState("");
 
-  const handleNumberChange = event => {
+  const handleNumberChange = (event) => {
     setNumberValue(event.target.value);
   };
   const [swap, setSwap] = useState(false);
 
-  const handleSubmit = async e => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     // Assuming you want to upload the number when the button is clicked.
     try {
+      const m = {
+        message: "Uploading file. Please wait!",
+        severity: "info",
+      };
+
+      if (uploading) {
+        setSnackBar(m);
+        return;
+      }
+
+      setSnackBar(m);
+
       const res = await http.put(
         `/users/${cid}`,
         {
           kycIds: {
-            [selectedOption]: numberValue
-          }
+            [selectedOption]: numberValue,
+          },
         },
         {
-          withCredentials: true
+          withCredentials: true,
         }
       );
       if (res.status === 200) {
         setResponseMessage(res.message); // Handle the API response here
-        setNotice(prevState => ({ ...prevState, success: true }));
+        setNotice((prevState) => ({ ...prevState, success: true }));
+        setUploading(false);
         handleSuccess();
       }
     } catch (error) {
       console.error("Error:", error);
-      setNotice(prevState => ({ ...prevState, fail: true }));
+      setNotice((prevState) => ({ ...prevState, fail: true }));
       setSwap(!swap);
     }
   };

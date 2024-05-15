@@ -1,18 +1,17 @@
 import rootAxios from "axios";
 import { API_ENDPOINT } from "../config";
-// import { HTTP_401_MSG } from "../config/constants";
 import { getCookie } from "../utils";
 import { COOKIE_REFRESH_TOKEN, COOKIE_ACCESS_TOKEN } from "../config/constants";
 
 let isRefreshing = false;
 let requestQueue = [];
 
-export const getHttpErrMsg = err => {
+export const getHttpErrMsg = (err) => {
   return err.response ? err.response.data : { message: err.message };
 };
 
 export const processQueue = (err, data) => {
-  requestQueue.forEach((prom, i) => {
+  requestQueue.forEach((prom) => {
     if (err) prom.reject({ err, config: prom.requestConfig });
     else prom.resolve({ data, config: prom.requestConfig });
   });
@@ -31,23 +30,23 @@ export const createRelativeUrl = () => {
   );
 };
 
-export const handleRefreshToken = requestConfig => {
+export const handleRefreshToken = (requestConfig) => {
   console.log("refreshing...");
 
   isRefreshing = true;
 
   return http
     .get(`/auth/refresh-token`, {
-      withCredentials: true
+      withCredentials: true,
     })
-    .then(res => {
+    .then((res) => {
       requestConfig && (requestConfig._refreshed = true);
 
       processQueue(null);
 
       return requestConfig ? http.request(requestConfig) : res;
     })
-    .catch(err => {
+    .catch((err) => {
       processQueue(err);
 
       return Promise.reject(err);
@@ -58,10 +57,10 @@ export const handleRefreshToken = requestConfig => {
 };
 
 const http = rootAxios.create({
-  baseURL: API_ENDPOINT
+  baseURL: API_ENDPOINT,
 });
 
-http.interceptors.request.use(function(config) {
+http.interceptors.request.use(function (config) {
   if (config.withCredentials || /delete|put|post|patch/.test(config.method)) {
     config.headers["authorization"] = `Bearer ${getCookie(
       config.url.indexOf("auth/refresh-token") > -1
@@ -81,10 +80,10 @@ http.interceptors.request.use(function(config) {
 });
 
 http.interceptors.response.use(
-  response => {
+  (response) => {
     return Promise.resolve(response.data);
   },
-  async err => {
+  async (err) => {
     const requestConfig = err.config;
 
     if (rootAxios.isCancel(err)) return Promise.reject(err);

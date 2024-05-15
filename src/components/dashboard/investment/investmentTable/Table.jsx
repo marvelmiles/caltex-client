@@ -1,10 +1,10 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import useAuth from "../../../../hooks/useAuth";
 import http from "../../../../api/http";
 import { useCtx } from "../../../../context";
 import {
   MSG_DEFAULT_ERR,
-  DATE_FORMAT_TRANS_HIS
+  DATE_FORMAT_TRANS_HIS,
 } from "../../../../config/constants";
 import Loading from "../../../Loading";
 import moment from "moment";
@@ -24,7 +24,7 @@ const FixedHeaderTable = () => {
     const fetchData = async () => {
       try {
         const response = await http.get(`/users/${id}/investments`, {
-          withCredentials: true
+          withCredentials: true,
         });
 
         setData(response.data.data);
@@ -63,7 +63,7 @@ const FixedHeaderTable = () => {
     );
   };
 
-  const renderTableData = () => {
+  const renderTableData = (arr = []) => {
     if (loading)
       return (
         <tr>
@@ -73,14 +73,15 @@ const FixedHeaderTable = () => {
         </tr>
       );
 
-    if (!data.length) {
+    if (!arr.length) {
       return (
         <tr>
           <td colSpan="6">No data available</td>
         </tr>
       );
     }
-    return data.slice(0, 1).map(item => {
+
+    return arr.map((item) => {
       return (
         <tr key={item.id}>
           <td id={styles.table_data}>{item.plan}</td>
@@ -91,7 +92,7 @@ const FixedHeaderTable = () => {
             ${formatToDecimalPlace(item.roi, true)}
           </td>
           <td id={styles.table_data}>
-            ${formatToDecimalPlace(item.amount + item.roi, true)}
+            ${formatToDecimalPlace(item.amount + item.roi || item.amount, true)}
           </td>
           <td id={styles.table_data}>
             {moment(item.startDate).format(DATE_FORMAT_TRANS_HIS)}
@@ -104,46 +105,13 @@ const FixedHeaderTable = () => {
     });
   };
 
-  const renderTableData2 = () => {
-    if (loading)
-      return (
-        <tr>
-          <td colSpan={6}>
-            <Loading />
-          </td>
-        </tr>
-      );
-
-    if (!data.length) {
-      return (
-        <tr>
-          <td colSpan="6">No data available</td>
-        </tr>
-      );
-    }
-    return data.map(item => (
-      <tr key={item?.id}>
-        <td id={styles.table_data}>{item?.plan}</td>
-        <td id={styles.table_data}>{item?.amount}</td>
-        <td id={styles.table_data}>{item?.roi}</td>
-        <td id={styles.table_data}>{item?.roiPct}</td>
-        <td id={styles.table_data}>
-          {moment(item?.startDate).format(DATE_FORMAT_TRANS_HIS)}
-        </td>
-        <td id={styles.table_data}>
-          {moment(item?.endDate).format(DATE_FORMAT_TRANS_HIS)}
-        </td>
-      </tr>
-    ));
-  };
-
   return (
     <>
       <div className={styles.fixed_header_table}>
         <table>
           {renderTableHeader()}
-          {!seeless && <tbody>{renderTableData()}</tbody>}
-          {seemore && <tbody>{renderTableData2()}</tbody>}
+          {!seeless && <tbody>{renderTableData(data.slice(0, 3))}</tbody>}
+          {seemore && <tbody>{renderTableData(data)}</tbody>}
         </table>
       </div>
       <span

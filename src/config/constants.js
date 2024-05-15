@@ -21,7 +21,7 @@ export const CLIENT_ORIGIN = isProdMode
 
 export const currencySymbols = {
   USD: "$",
-  EUR: "€"
+  EUR: "€",
 };
 
 export const DATE_FORMAT_TRANS_HIS = "MMM D, YYYY";

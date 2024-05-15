@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useRef, useState } from "react";
 import idIcon from "../../../../svgs/id-verify.svg";
 import styles from "./ManualVerification.module.scss";
 import VerificationNotice from "./VerificationNotice";
@@ -10,10 +10,11 @@ import BackArrow from "../../backArrow/BackArrow";
 const checkboxData = [
   { label: "National Identity Card", value: "nin" },
   { label: "Passport Number", value: "passport" },
-  { label: "Driving License", value: "driverLicense" }
+  { label: "Driving License", value: "driverLicense" },
 ];
 
 const ManualVerification = () => {
+  const [uploading, setUploading] = useState(false);
   const [success, setSuccess] = useState(false);
   const [fileValue, setFileValue] = useState("");
   const [fileValue2, setFileValue2] = useState("");
@@ -23,15 +24,17 @@ const ManualVerification = () => {
 
   const { setSnackBar } = useCtx();
 
+  const formRef = useRef();
+
   const {
-    currentUser: { id: cid }
+    currentUser: { id: cid },
   } = useAuth();
 
-  const handleCheckboxChange = value => {
+  const handleCheckboxChange = (value) => {
     setSelectedOption(value);
   };
 
-  const handleFileChange = event => {
+  const handleFileChange = (event) => {
     const file = event.target.files[0];
     if (file) {
       setFileValue(file.name);
@@ -42,7 +45,7 @@ const ManualVerification = () => {
     }
   };
 
-  const handleFileChange2 = event => {
+  const handleFileChange2 = (event) => {
     const file = event.target.files[0];
     if (file) {
       setFileValue2(file.name);
@@ -53,25 +56,48 @@ const ManualVerification = () => {
     }
   };
 
-  const handleSubmit = async e => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+
+    const m = {
+      message: "Uploading file. Please wait!",
+      severity: "info",
+    };
+
+    if (uploading) {
+      setSnackBar(m);
+      return;
+    }
+
     if (uploadedFile && uploadedFile2 && selectedOption) {
       const formData = new FormData();
       formData.append(selectedOption + "-front", uploadedFile);
       formData.append(selectedOption + "-back", uploadedFile2);
 
+      setUploading(true);
+      setSnackBar(m);
+
       try {
         const queryParams = `fields=${selectedOption}-front ${selectedOption}-back`;
 
         const res = await http.put(`/users/${cid}?${queryParams}`, formData, {
-          withCredentials: true
+          withCredentials: true,
         });
         if (res.status === 200) {
           console.log("Successfully Uploaded!");
+          formRef.current.reset();
+          setFileValue("");
+          setFileValue2("");
+          setUploadedFile(null);
+          setUploadedFile2(null);
+          setSelectedOption("");
+
           setSuccess(true);
         }
       } catch (error) {
         console.log("Upload Failed!", error);
+      } finally {
+        setUploading(false);
       }
     } else {
       setSnackBar(
@@ -92,7 +118,7 @@ const ManualVerification = () => {
           <li>Manual Verification</li>
         </ul>
         <hr />
-        <form action="" onSubmit={handleSubmit}>
+        <form ref={formRef} action="" onSubmit={handleSubmit}>
           <div className={styles.card_cont}>
             <div>
               <ul>
@@ -101,6 +127,7 @@ const ManualVerification = () => {
                   <div key={index} className={styles.check_box_cont}>
                     <label htmlFor={checkbox.value} className={styles.checkbox}>
                       <input
+                        readOnly={uploading}
                         id={checkbox.value}
                         type="checkbox"
                         onChange={() => handleCheckboxChange(checkbox.value)}
@@ -122,6 +149,7 @@ const ManualVerification = () => {
                 <input
                   type="file"
                   id="upload_file"
+                  readOnly={uploading}
                   className={styles.hidden_file_input}
                   onChange={handleFileChange}
                   accept=".jpg, .jpeg, .png, .gif, .pdf"
@@ -142,6 +170,7 @@ const ManualVerification = () => {
                   <span id={styles.browse}>Browse</span>
                 </label>
                 <input
+                  readOnly={uploading}
                   type="file"
                   id="upload_file2"
                   className={styles.hidden_file_input}
@@ -149,7 +178,9 @@ const ManualVerification = () => {
                   accept=".jpg, .jpeg, .png, .gif, .pdf"
                 />
                 <span>{fileValue2}</span>
-                <button type="submit">Upload</button>
+                <button type="submit" disabled={uploading}>
+                  Upload
+                </button>
               </ul>
             </div>
           </div>

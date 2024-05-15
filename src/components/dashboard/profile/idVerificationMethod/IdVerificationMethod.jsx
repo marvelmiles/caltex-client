@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import idIcon from "../../../../svgs/id-verify.svg";
 import check from "../../../../svgs/check-gray.svg";
 import styles from "./IdVerificationMethod.module.scss";

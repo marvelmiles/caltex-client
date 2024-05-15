@@ -1,6 +1,5 @@
 import "../../components/Deposit/DepositPage.css";
 import "./withdrawPage.css";
-import React from "react";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import visa from "../../images/visa.png";
@@ -54,7 +53,7 @@ const WithdrawPage = () => {
   const [walletAddress, setWalletAddress] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const handleRequestWithdrawal = async e => {
+  const handleRequestWithdrawal = async (e) => {
     try {
       e.preventDefault();
       setIsSubmitting(true);
@@ -63,14 +62,14 @@ const WithdrawPage = () => {
         walletAddress,
         currency: cryptoNetwork,
         localPayment: {
-          currency
+          currency,
         },
-        paymentType: "crypto"
+        paymentType: "crypto",
       });
 
       setSnackBar({
         message: res.message,
-        severity: "success"
+        severity: "success",
       });
       setAmount("");
       setWalletAddress("");
@@ -85,36 +84,36 @@ const WithdrawPage = () => {
 
   return (
     <Layout>
-      <div class="withdraw-funds-container" id="withdraw-funds-container">
+      <div className="withdraw-funds-container" id="withdraw-funds-container">
         <Box
-          className="withdraw-funds"
+          classNameName="withdraw-funds"
           sx={{ border: "1px solid currentColor", borderColor: "divider" }}
         >
-          <div class="withdraw-fund-text">
+          <div className="withdraw-fund-text">
             <h3>Withdraw Funds</h3>
           </div>
-          <div class="withdraw-content-container">
-            <div class="withdraw-container">
-              <div class="withdraw-limit-text" id="withraw-limit-text">
+          <div className="withdraw-content-container">
+            <div className="withdraw-container">
+              <div className="withdraw-limit-text" id="withraw-limit-text">
                 <p>
                   Your withdrawal limit is $5,000 , get your account fully
                   verified to increase your withdraw limit by
-                  <span class="clicking-here">
+                  <span className="clicking-here">
                     <b>clicking here</b>
                   </span>
                 </p>
               </div>
-              <div class="withdraw-options" id="withdraw-options">
-                <div class="withdr-options">
-                  <div class="all" onClick={showAll}>
+              <div className="withdraw-options" id="withdraw-options">
+                <div className="withdr-options">
+                  <div className="all" onClick={showAll}>
                     <img src={wallet} id="depo-icon" alt="wallet-icon" />
                     <p>All</p>
                   </div>
-                  <div class="cryptos" onClick={cryptoWithdrawal}>
+                  <div className="cryptos" onClick={cryptoWithdrawal}>
                     <img src={btc} id="depo-icon" alt="btc-icon" />
                     <span>Cryptos</span>
                   </div>
-                  <div class="credit-cards">
+                  <div className="credit-cards">
                     <img
                       src={creditcard}
                       id="depo-icon"
@@ -125,62 +124,58 @@ const WithdrawPage = () => {
                 </div>
               </div>
 
-              <div class="crypto-options" id="crypto-options">
-                <h3 class="crypto-opt">Cryptos</h3>
+              <div className="crypto-options" id="crypto-options">
+                <h3 className="crypto-opt">Cryptos</h3>
               </div>
 
               <div
-                class="crypto-payments"
+                className="crypto-payments"
                 id="crypto-payments"
                 onClick={cryptoWithdrawal}
               >
-                <div class="crypto-pay1">
-                  <span class="CrypPayText">
+                <div className="crypto-pay1">
+                  <span className="CrypPayText">
                     <b>Crypto Payments</b>
                   </span>
-                  <span class="cp2">
+                  <span className="cp2">
                     <img src={cryptovec} alt="crypto-icon" />
                     Crypto
                   </span>
                 </div>
               </div>
 
-              <div class="credit-options" id="credit-options">
-                <h3 class="credit-opt">Credit Card</h3>
+              <div className="credit-options" id="credit-options">
+                <h3 className="credit-opt">Credit Card</h3>
               </div>
 
-              <div
-                class="credit-card-payments"
-                id="credit-card-payments"
-                onclick=""
-              >
-                <div class="credit-pay1">
-                  <span class="interS">
+              <div className="credit-card-payments" id="credit-card-payments">
+                <div className="credit-pay1">
+                  <span className="interS">
                     <b>Interswitch</b>
                   </span>
-                  <span class="cp1">
-                    <span class="visa">
+                  <span className="cp1">
+                    <span className="visa">
                       <img src={visa} alt="visa-icon" />
                     </span>
-                    <span class="master">
+                    <span className="master">
                       <img src={mastercard} alt="mastercard-icon" />
                     </span>
                   </span>
                 </div>
               </div>
 
-              <div class="cryptoWithdrawal" id="cryptoWithdrawal">
-                <div class="cryptowithdraw">
-                  <div class="cryptoprefix">
+              <div className="cryptoWithdrawal" id="cryptoWithdrawal">
+                <div className="cryptowithdraw">
+                  <div className="cryptoprefix">
                     <span>
                       <h4>Crypto Withdrawal</h4>
                     </span>
-                    <span class="cp2">
+                    <span className="cp2">
                       <h4>Crypto</h4>
                     </span>
                   </div>
 
-                  <div class="imp-instruction">
+                  <div className="imp-instruction">
                     <h4>Important instruction for successful withdrawing</h4>
                     <p>
                       At caltex, we strive to make withdrawals quick, convenient
@@ -198,14 +193,14 @@ const WithdrawPage = () => {
                     </p>
                   </div>
                   <form onSubmit={handleRequestWithdrawal}>
-                    <div class="enter-amount">
+                    <div className="enter-amount">
                       <h4>Enter amount</h4>
                       <select
                         id="currency"
                         name="currency"
                         size="1"
                         value={currency}
-                        onChange={e => setCurrency(e.target.value)}
+                        onChange={(e) => setCurrency(e.target.value)}
                       >
                         <option value="USD" id="usd">
                           USD
@@ -220,18 +215,18 @@ const WithdrawPage = () => {
                         name=""
                         placeholder=""
                         value={amount}
-                        onChange={e => setAmount(e.currentTarget.value)}
+                        onChange={(e) => setAmount(e.currentTarget.value)}
                       />
                     </div>
 
-                    <div class="withdrawal-network">
+                    <div className="withdrawal-network">
                       <h4>Withdrawal Network</h4>
                       <select
                         id="withdraw-net"
                         name="withdraw-net"
                         size="1"
                         value={cryptoNetwork}
-                        onChange={e => setCryptoNetwork(e.target.value)}
+                        onChange={(e) => setCryptoNetwork(e.target.value)}
                       >
                         <option value="BTC" id="btc">
                           BTC - Bitcoin
@@ -254,7 +249,7 @@ const WithdrawPage = () => {
                       </select>
                     </div>
 
-                    <div class="wallet-address">
+                    <div className="wallet-address">
                       <h4>Wallet Address</h4>
                       <input
                         type="text"
@@ -262,7 +257,7 @@ const WithdrawPage = () => {
                         name="wallet-address "
                         value={walletAddress}
                         placeholder=" "
-                        onChange={e => setWalletAddress(e.target.value)}
+                        onChange={(e) => setWalletAddress(e.target.value)}
                       />
                     </div>
 
@@ -276,13 +271,13 @@ const WithdrawPage = () => {
                     </Button>
                   </form>
 
-                  <div class="depositFee-processingTime">
-                    <div class="depoFeeProTime">
-                      <div class="deposit-fee">
+                  <div className="depositFee-processingTime">
+                    <div className="depoFeeProTime">
+                      <div className="deposit-fee">
                         <h4>Deposit Fee:</h4>
                         <p>10% withdrawal Fee</p>
                       </div>
-                      <div class="processingTime">
+                      <div className="processingTime">
                         <h4>Processing Time:</h4>
                         <p>
                           Up to 5minutes, but it can take longer depending on
@@ -294,70 +289,74 @@ const WithdrawPage = () => {
                 </div>
               </div>
 
-              <div class="trans-pro-del" id="trans-pro-del">
+              <div className="trans-pro-del" id="trans-pro-del">
                 <div
-                  class="transaction-processing"
+                  className="transaction-processing"
                   id="transactionPro1"
                   onClick={revealTransDetails}
                 >
                   <span>Transaction Processing And Security Of Funds</span>
                   <span>
-                    <i class="fa fa-caret-down"></i>
+                    <i className="fa fa-caret-down"></i>
                   </span>
                 </div>
                 <div
-                  class="transaction-processing"
+                  className="transaction-processing"
                   id="transactionPro2"
                   onClick={closeTransDetails}
                 >
                   <span>Transaction Processing And Security Of Funds</span>
                   <span>
-                    <i class="fa fa-caret-up"></i>
+                    <i className="fa fa-caret-up"></i>
                   </span>
                 </div>
 
-                <div class="transaction-processing-details" id="trans-pro-det">
+                <div
+                  className="transaction-processing-details"
+                  id="trans-pro-det"
+                >
                   <p>
-                    <i class="fa fa-circle" id="circle"></i> Manual deposits or
-                    refunds are credited to myWallet only. To transfer funds to
-                    your trading account, please proceed with an internal
+                    <i className="fa fa-circle" id="circle"></i> Manual deposits
+                    or refunds are credited to myWallet only. To transfer funds
+                    to your trading account, please proceed with an internal
                     transfer from myWallet.
                   </p>
                   <p>
-                    <i class="fa fa-circle" id="circle"></i> The company is not
-                    liable for potential losses that may occur as a result of
-                    market moves during the time your deposit is being approved.
+                    <i className="fa fa-circle" id="circle"></i> The company is
+                    not liable for potential losses that may occur as a result
+                    of market moves during the time your deposit is being
+                    approved.
                   </p>
                   <p>
-                    <i class="fa fa-circle" id="circle"></i> CALTEX does not
+                    <i className="fa fa-circle" id="circle"></i> CALTEX does not
                     collect, store, or process any personal credit or debit Card
                     information.All payment transactions are processed through
                     our independent international payment processors.
                   </p>
                   <p>
-                    <i class="fa fa-circle" id="circle"></i> CALTEX shall not
-                    accept any deposits from any third-party to the customer's
-                    account.
+                    <i className="fa fa-circle" id="circle"></i> CALTEX shall
+                    not accept any deposits from any third-party to the
+                    customer's account.
                   </p>
                   <p>
-                    <i class="fa fa-circle" id="circle"></i> CALTEX does not
+                    <i className="fa fa-circle" id="circle"></i> CALTEX does not
                     accept cheque payments.
                   </p>
                   <p>
-                    <i class="fa fa-circle" id="circle"></i> Deposits are
+                    <i className="fa fa-circle" id="circle"></i> Deposits are
                     processed 24/5 between 00:00 Server Time Monday to 00:00
                     Server Time Saturday.
                   </p>
                 </div>
               </div>
 
-              <div class="congratulations" id="congratulations">
-                <div class="congrats">
-                  <div class="congrat-text">
+              <div className="congratulations" id="congratulations">
+                <div className="congrats">
+                  <div className="congrat-text">
                     <p>Congratulations, your payment has been approved</p>
-                    <div class="see-investment-btn">
-                      <span class=" " onclick=" ">
-                        <Link to="/" class="see-btn">
+                    <div className="see-investment-btn">
+                      <span className=" ">
+                        <Link to="/" className="see-btn">
                           Trade More
                         </Link>
                       </span>
@@ -365,8 +364,7 @@ const WithdrawPage = () => {
                   </div>
                 </div>
               </div>
-            
-                      </div>
+            </div>
           </div>
         </Box>
       </div>

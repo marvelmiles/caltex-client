@@ -1,10 +1,12 @@
-import React from "react";
+import { useEffect } from "react";
 import AuthLayout from "../components/AuthLayout";
 import { Typography } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import CountdownTimer from "../components/CountdownTimer";
 import useAuth from "../hooks/useAuth";
 import { useCtx } from "../context";
+import { updateUser } from "../context/reducers/userReducer";
+import { useDispatch } from "react-redux";
 
 const AuthSuccess = ({ reason = "account", message = "" }) => {
   const isPwd = reason === "password";
@@ -14,21 +16,20 @@ const AuthSuccess = ({ reason = "account", message = "" }) => {
   } successfully.`;
 
   const {
-    locState: { hasResetPwd }
+    locState: { hasResetPwd },
   } = useCtx();
 
   const { accVerified } = useAuth();
 
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
-  const authProps = (isPwd
-  ? hasResetPwd
-  : accVerified)
+  const authProps = (isPwd ? hasResetPwd : accVerified)
     ? {
         title: isPwd ? "Password Reset" : "Account Verification",
         btnTitle: "Login",
         onBtnClick: () => navigate("/auth/login"),
-        preInputsEl: <Typography sx={{ my: 3 }}>{message}</Typography>
+        preInputsEl: <Typography sx={{ my: 3 }}>{message}</Typography>,
       }
     : {
         title: "Forbidden access!",
@@ -40,8 +41,16 @@ const AuthSuccess = ({ reason = "account", message = "" }) => {
               onTimeUp={() => navigate(`/auth/token-verification/${reason}`)}
             />
           </Typography>
-        )
+        ),
       };
+
+  useEffect(() => {
+    dispatch(
+      updateUser({
+        _sentTokenVerification: true,
+      })
+    );
+  }, [dispatch]);
 
   return <AuthLayout {...authProps} />;
 };

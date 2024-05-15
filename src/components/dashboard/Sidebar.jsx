@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import "./dashboard.css";
 import caltexTrader from "./../../images/caltexTrader.png";
 import logo from "./../../images/logo (1).png";
@@ -29,9 +29,9 @@ const Sidebar = () => {
   const [bgActive, setBgactive] = useState(false);
 
   return (
-    <div class="dashboard-panel" id="sidenav">
-      <div class="panel panels">
-        <div class="logo">
+    <div className="dashboard-panel" id="sidenav">
+      <div className="panel panels">
+        <div className="logo">
           <span>
             <img src={logo} alt="logo" />
           </span>
@@ -41,16 +41,19 @@ const Sidebar = () => {
         </div>
 
         {isSuperAdmin || isAdmin ? (
-          <div class="panel-control" id={styles.admin}>
-            <Link to="/u/dashboard" class="controld" id="dashboard" onclick=" ">
-              <BiSolidDashboard id="other-icon" className="dashboard-icon" />
+          <div className="panel-control" id={styles.admin}>
+            <Link to="/u/dashboard" className="controld" id="dashboard">
+              <BiSolidDashboard
+                id="other-icon"
+                classNameName="dashboard-icon"
+              />
               Admin Dashboard
             </Link>
             <Link to="/manageUsers/ManageUsers">
               <span
-                class="control"
+                className="control"
                 id={bgActive ? styles.colorActive : ""}
-                onclick={() => setBgactive(!bgActive)}
+                onClick={() => setBgactive(!bgActive)}
               >
                 <img src={profile} id="other-icon" alt="profile-icon" />
                 Manage Users
@@ -59,7 +62,7 @@ const Sidebar = () => {
 
             <Link
               to="/manageDeposits/ManageDeposits"
-              class="control"
+              className="control"
               id={bgActive ? styles.colorActive : ""}
               onclick={() => setBgactive(!bgActive)}
             >
@@ -68,7 +71,7 @@ const Sidebar = () => {
             </Link>
             <Link
               to="/manageWithdrawals/ManageWithdrawals"
-              class="control"
+              className="control"
               id={bgActive ? styles.colorActive : ""}
               onclick={() => setBgactive(!bgActive)}
             >
@@ -77,7 +80,7 @@ const Sidebar = () => {
             </Link>
             <Link
               to="/blog/CreateBlog"
-              class="control"
+              className="control"
               id={bgActive ? styles.colorActive : ""}
               onclick={() => setBgactive(!bgActive)}
             >
@@ -86,7 +89,7 @@ const Sidebar = () => {
             </Link>
             <Link
               to="/blog/ViewBlog"
-              class="control"
+              className="control"
               id={bgActive ? styles.colorActive : ""}
               onclick={() => setBgactive(!bgActive)}
             >
@@ -97,7 +100,7 @@ const Sidebar = () => {
               <>
                 <Link
                   to="/manageAdmin/ManageAdmin"
-                  class="control"
+                  className="control"
                   id={bgActive ? styles.colorActive : ""}
                   onclick={() => setBgactive(!bgActive)}
                 >
@@ -106,7 +109,7 @@ const Sidebar = () => {
                 </Link>
                 <Link
                   to="/addAdmin/AddAdmin"
-                  class="control"
+                  className="control"
                   id={bgActive ? styles.colorActive : ""}
                   onclick={() => setBgactive(!bgActive)}
                 >
@@ -117,96 +120,82 @@ const Sidebar = () => {
             )}
 
             <Link to={HOME_ORIGIN} onClick={handleSignout}>
-              <span class="control">
+              <span className="control">
                 <img src={logout} id="other-icon" alt="logout-icon" />
                 Signout
               </span>
             </Link>
           </div>
         ) : (
-          <div class="panel-control">
-            <Link to="/u/dashboard" class="controld" id="dashboard" onclick=" ">
-              <BiSolidDashboard id="other-icon" className="dashboard-icon" />
+          <div className="panel-control">
+            <Link to="/u/dashboard" className="controld" id="dashboard">
+              <BiSolidDashboard
+                id="other-icon"
+                classNameName="dashboard-icon"
+              />
               Dashboard
             </Link>
             <Link to="/profile/Profile">
               {" "}
-              <span class="control" id=" " onclick=" ">
+              <span className="control" id=" ">
                 <img src={profile} id="other-icon" alt="profile-icon" />
                 Profile
               </span>
             </Link>
-            <Link
-              to="/Deposit/DepositPage"
-              class="control"
-              id="funding"
-              onclick=" "
-            >
+            <Link to="/Deposit/DepositPage" className="control" id="funding">
               <b>FUNDING</b>
             </Link>
-            <Link to="/Deposit/DepositPage" class="control" id=" " onclick=" ">
+            <Link to="/Deposit/DepositPage" className="control" id=" ">
               <img src={deposit} id="other-icon" alt="deposit-icon" />
               Deposit
             </Link>
-            <Link
-              to="/Withdraw/WithdrawPage"
-              class="control"
-              id=" "
-              onclick=" "
-            >
+            <Link to="/Withdraw/WithdrawPage" className="control" id=" ">
               <img src={withdraw} id="other-icon" alt="withdraw-icon" />
               Withdraw
             </Link>
-            <Link
-              to="/Invest/InvestPage"
-              class="control"
-              id="trading"
-              onclick=" "
-            >
+            <Link to="/Invest/InvestPage" className="control" id="trading">
               <b>TRADING</b>
             </Link>
             <Link
               to="/Invest/InvestPage?tradeType=crypto"
-              class="control"
+              className="control"
               id=" "
-              onclick=" "
             >
               <img src={crypto} id="other-icon" alt="crypto-icon" />
               Crypto
             </Link>
             <Link
               to="/Invest/InvestPage?tradeType=forex"
-              class="control"
+              className="control"
               id=" "
-              onclick=" "
             >
               <img src={forex} id="other-icon" alt="forex-icon" />
               Forex
             </Link>
-            <Link to="/investment/Investment" class="control">
+            <Link to="/investment/Investment" className="control">
               <FiTrendingUp style={{ fontSize: "24px", marginRight: "10px" }} />
               Investment
             </Link>
-            <span class="control" id="partners" onclick=" ">
+            <span className="control" id="partners">
               <b> PARTNERS</b>
             </span>
-            <span class="control" id="bam" onclick=" ">
+            <span className="control" id="bam">
               Become a Merchant
             </span>
             <Link to="/help/Help">
-              <span class="control" id="help" onclick=" ">
+              <span className="control" id="help">
                 <img src={help} id="other-icon" alt="help-icon" />
                 HELP
               </span>
             </Link>
             <Link to="/legalDocument/LegalDocument">
-              <span class="control" id=" " onclick=" ">
+              <span className="control" id=" ">
                 <img src={legal} id="other-icon" alt="legal-icon" />
                 Legal Documents
               </span>
             </Link>
             <Link to={HOME_ORIGIN} onClick={handleSignout}>
-              <span class="control">
+              <span className="control">
                 <img src={logout} id="other-icon" alt="logout-icon" />
                 Signout
               </span>

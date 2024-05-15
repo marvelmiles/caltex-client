@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback } from "react";
 import {
   Routes,
   Route,
@@ -562,7 +562,6 @@ const App = () => {
             },
             bottom: showVerificationWarning ? "100px !important" : undefined,
           }}
-
         >
           <Alert
             severity={snackbar.severity || "error"}

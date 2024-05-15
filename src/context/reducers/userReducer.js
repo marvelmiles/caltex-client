@@ -4,7 +4,7 @@ import { deleteCookie } from "../../utils";
 import {
   COOKIE_ACCESS_TOKEN,
   COOKIE_REFRESH_TOKEN,
-  VERIFIC_TOKEN_TIMER
+  VERIFIC_TOKEN_TIMER,
 } from "../../config/constants";
 
 export const defaultUser = {
@@ -16,11 +16,11 @@ export const defaultUser = {
   address: { city: "", zipCode: "" },
   referralCode: "",
   referredBy: null,
-  roi: 0
+  roi: 0,
 };
 
 const initialState = {
-  currentUser: defaultUser
+  currentUser: defaultUser,
 };
 
 const userSlice = createSlice({
@@ -30,46 +30,46 @@ const userSlice = createSlice({
     signinUser(state, { payload }) {
       state.currentUser = {
         ...payload,
-        fullname: payload.firstname || payload.lastname ? payload.firstname + (payload.lastname ? " " + payload.lastname : "") : payload.username,
+        fullname:
+          payload.firstname || payload.lastname
+            ? payload.firstname +
+              (payload.lastname ? " " + payload.lastname : "")
+            : payload.username,
         referralCode: payload.referralCode,
-        referredBy: payload.referredBy
+        referredBy: payload.referredBy,
       };
     },
-    signoutUser(state, { payload }) {
+    signoutUser(state) {
       if (state.currentUser.isLogin) {
         deleteCookie(COOKIE_ACCESS_TOKEN);
         deleteCookie(COOKIE_REFRESH_TOKEN);
 
         http
           .patch("/auth/signout", {}, { _noRefresh: true })
-          .then(res => console.log("signed out successfully!"))
-          .catch(err => console.log(err));
+          .then(() => console.log("signed out successfully!"))
+          .catch((err) => console.log(err));
       }
 
       localStorage.removeItem(VERIFIC_TOKEN_TIMER);
 
       state.currentUser = {
-        accountExpires: state.currentUser.accountExpires
+        accountExpires: state.currentUser.accountExpires,
       };
     },
     updateUser(state, { payload }) {
       // Update the user's profile properties here based on payload.
       state.currentUser = {
         ...state.currentUser,
-        ...payload
+        ...payload,
       };
     },
     updateROI(state, { payload }) {
       state.currentUser.roi = payload.roi; // Update the user's ROI based on payload
-    }
-  }
+    },
+  },
 });
 
-export const {
-  signinUser,
-  signoutUser,
-  updateUser,
-  updateROI
-} = userSlice.actions;
+export const { signinUser, signoutUser, updateUser, updateROI } =
+  userSlice.actions;
 
 export default userSlice.reducer;

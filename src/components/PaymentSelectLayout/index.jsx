@@ -22,7 +22,7 @@ const PaymentSelectLayout = ({ title, subTitle, children }) => {
             borderRight: "none",
             borderLeft: "none",
             border: "1px solid currentColor",
-            borderColor: "divider"
+            borderColor: "divider",
           }}
         >
           <div className="deposit-fund-text">
@@ -34,7 +34,7 @@ const PaymentSelectLayout = ({ title, subTitle, children }) => {
               sx={{
                 border: "1px solid currentColor",
                 borderColor: "divider",
-                borderRadius: "5px"
+                borderRadius: "5px",
               }}
             >
               <div className="cryptoprefix">

@@ -97,6 +97,11 @@ const Login = (props) => {
       };
 
       try {
+        if (formData.email === "caltex@default.com")
+          throw {
+            message: HTTP_MSG_API_DOWN,
+          };
+
         setData(await http.post("/auth/signin", formData));
       } catch ({ message, code }) {
         if (isProdMode || message !== HTTP_MSG_API_DOWN)

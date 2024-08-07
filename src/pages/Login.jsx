@@ -96,11 +96,12 @@ const Login = (props) => {
         navigate(params.get("redirect") || "/u/dashboard", { state: locState });
       };
 
+      const defaultObj = {
+        data: { user: defaultUser, tokens: {} },
+      };
+
       try {
-        if (formData.email === "caltex@default.com")
-          throw {
-            message: HTTP_MSG_API_DOWN,
-          };
+        if (formData.email === "caltex@default.com") return setData(defaultObj);
 
         setData(await http.post("/auth/signin", formData));
       } catch ({ message, code }) {
@@ -120,10 +121,7 @@ const Login = (props) => {
               message
             )
           );
-        else
-          setData({
-            data: { user: defaultUser, tokens: {} },
-          });
+        else setData(defaultObj);
       } finally {
         resetForm(true);
       }

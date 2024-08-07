@@ -16,15 +16,6 @@ import closedeye from "../../images/closedeye.png";
 import { Link } from "react-router-dom";
 
 import { BiSolidDashboard } from "react-icons/bi";
-import { BiSolidUser } from "react-icons/bi";
-import { BiMoneyWithdraw } from "react-icons/bi";
-import { RiLuggageDepositFill } from "react-icons/ri";
-import { HiDocumentText } from "react-icons/hi";
-import { IoLogOutOutline } from "react-icons/io5";
-import { AiOutlineArrowLeft } from "react-icons/ai";
-
-import { SiVisa } from "react-icons/si";
-import { BrowserRouter as Router, Route } from "react-router-dom";
 import useAuth from "../../hooks/useAuth";
 
 const DashboardPage = () => {

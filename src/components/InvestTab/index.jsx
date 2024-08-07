@@ -4,16 +4,16 @@ import InvestForm from "../InvestForm";
 import ArrowAndTab from "../ArrowAndTab";
 import Layout from "../Layout";
 
-const InvestTab = ({
+const InvestTab = ({ investFormProps = {} }) => {
   investFormProps = {
     plan: "starter",
     tradeType: "forex",
     maxAmount: 10000,
     minAmount: 100,
     roiPct: 0.6,
-    duration: 7
-  }
-}) => {
+    duration: 7,
+    ...investFormProps,
+  };
   return (
     <Layout>
       <ArrowAndTab />

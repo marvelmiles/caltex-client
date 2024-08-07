@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState, useRef } from "react";
+import React, { useCallback, useEffect, useRef } from "react";
 import AuthLayout from "../components/AuthLayout";
 import Stack from "@mui/material/Stack";
 import FormGroup from "@mui/material/FormGroup";
@@ -7,7 +7,11 @@ import Checkbox from "@mui/material/Checkbox";
 import { StyledLink } from "../styled";
 import useForm from "../hooks/useForm";
 import http from "../api/http";
-import { signoutUser, signinUser } from "../context/reducers/userReducer";
+import {
+  signoutUser,
+  signinUser,
+  defaultUser,
+} from "../context/reducers/userReducer";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { useCtx } from "../context";
@@ -17,17 +21,19 @@ import {
   HTTP_CODE_ACCOUNT_VERIFICATION_ERROR,
   VERIFIC_TOKEN_TIMER,
   COOKIE_ACCESS_TOKEN,
-  COOKIE_REFRESH_TOKEN
+  COOKIE_REFRESH_TOKEN,
+  HTTP_MSG_API_DOWN,
 } from "../config/constants.js";
 import { setCookie } from "../utils";
+import { isProdMode } from "../config/index.js";
 
-const Login = props => {
+const Login = (props) => {
   const { setSnackBar } = useCtx();
 
   const { currentUser, locState } = useAuth();
 
   const stateRef = useRef({
-    logout: currentUser.isLogin
+    logout: currentUser.isLogin,
   });
 
   const {
@@ -36,15 +42,15 @@ const Login = props => {
     isSubmitting,
     handleChange,
     handleSubmit,
-    resetForm
+    resetForm,
   } = useForm({
     placeholders: {
-      rememberMe: true
+      rememberMe: true,
     },
     required: {
       email: true,
-      password: true
-    }
+      password: true,
+    },
   });
 
   const dispatch = useDispatch();
@@ -67,16 +73,12 @@ const Login = props => {
   }, [formData]);
 
   const onSubmit = useCallback(
-    async e => {
+    async (e) => {
       const { formData, withErr } = handleSubmit(e);
 
       if (withErr) return;
 
-      try {
-        const {
-          data: { user, tokens }
-        } = await http.post("/auth/signin", formData);
-
+      const setData = ({ data: { user, tokens } }) => {
         const bearerToken = `Bearer ${tokens.accessToken}`;
 
         http.defaults.headers.common["Authorization"] = bearerToken;
@@ -92,22 +94,31 @@ const Login = props => {
         const params = new URLSearchParams(window.location.search);
 
         navigate(params.get("redirect") || "/u/dashboard", { state: locState });
+      };
+
+      try {
+        setData(await http.post("/auth/signin", formData));
       } catch ({ message, code }) {
-        setSnackBar(
-          code === HTTP_CODE_ACCOUNT_VERIFICATION_ERROR ? (
-            <Typography>
-              {message}{" "}
-              <StyledLink
-                to="/auth/token-verification/account"
-                onClick={storeTempUser}
-              >
-                Get a new code
-              </StyledLink>{" "}
-            </Typography>
-          ) : (
-            message
-          )
-        );
+        if (isProdMode || message !== HTTP_MSG_API_DOWN)
+          setSnackBar(
+            code === HTTP_CODE_ACCOUNT_VERIFICATION_ERROR ? (
+              <Typography>
+                {message}{" "}
+                <StyledLink
+                  to="/auth/token-verification/account"
+                  onClick={storeTempUser}
+                >
+                  Get a new code
+                </StyledLink>{" "}
+              </Typography>
+            ) : (
+              message
+            )
+          );
+        else
+          setData({
+            data: { user: defaultUser, tokens: {} },
+          });
       } finally {
         resetForm(true);
       }
@@ -119,7 +130,7 @@ const Login = props => {
       navigate,
       setSnackBar,
       locState,
-      storeTempUser
+      storeTempUser,
     ]
   );
 
@@ -159,8 +170,8 @@ const Login = props => {
                 Forgot password?
               </StyledLink>
             </Stack>
-          )
-        }
+          ),
+        },
       ]}
     />
   );

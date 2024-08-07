@@ -17,6 +17,9 @@ export const defaultUser = {
   referralCode: "",
   referredBy: null,
   roi: 0,
+  id: new Date().getTime(),
+  kycDocs: {},
+  kycIds: {},
 };
 
 const initialState = {

@@ -13,6 +13,36 @@ const MasterplanForex = () => {
         <div class="master-planF">
           <h4>Master Plan</h4>
           <p>
+            <i class="fa fa-check" id="check"></i> Minimum Amount: $50,000
+          </p>
+
+          <p>
+            <i class="fa fa-check" id="check"></i> Withdraw: Daily
+          </p>
+
+          <p>
+            <i class="fa fa-check" id="check"></i>Withdrawal fee:5% (No hidden
+            fee)
+          </p>
+
+          <p>
+            <i class="fa fa-check" id="check"></i>3 stages referral commision
+          </p>
+
+          <p>
+            <i class="fa fa-check" id="check"></i>Average Spread: Daily yield
+          </p>
+
+          <p>
+            <i class="fa fa-check" id="check"></i>
+            Convertible bonds, commodity features
+          </p>
+
+          <p>
+            <i class="fa fa-check" id="check"></i> Bitcoin ETFs, Index CFds,
+            Bond ETfs
+          </p>
+          {/* <p>
             <i class="fa fa-check" id="check"></i>Minimum Investment:$51,000
           </p>
           <p>
@@ -33,14 +63,14 @@ const MasterplanForex = () => {
           </p>
           <p>
             <i class="fa fa-check" id="check"></i>10% referral for third person
-          </p>
+          </p> */}
         </div>
         <div class="investment-buttons">
           <Link
             to="/ForexInvestForms/masterPlanInvF"
             class="invest-masterCrypto"
           >
-            Invest
+            Buy
           </Link>
           <Link
             replace

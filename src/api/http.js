@@ -1,6 +1,5 @@
 import rootAxios from "axios";
 import { API_ENDPOINT } from "../config";
-// import { HTTP_401_MSG } from "../config/constants";
 import { getCookie } from "../utils";
 import { COOKIE_REFRESH_TOKEN, COOKIE_ACCESS_TOKEN } from "../config/constants";
 
@@ -12,7 +11,7 @@ export const getHttpErrMsg = (err) => {
 };
 
 export const processQueue = (err, data) => {
-  requestQueue.forEach((prom, i) => {
+  requestQueue.forEach((prom) => {
     if (err) prom.reject({ err, config: prom.requestConfig });
     else prom.resolve({ data, config: prom.requestConfig });
   });

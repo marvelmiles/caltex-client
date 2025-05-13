@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import styles from "./Profile.module.scss";
 import CustomInput from "../../../components/CustomInput";
 import IdVerificationMethod from "./idVerificationMethod/IdVerificationMethod";
@@ -76,6 +76,17 @@ const Profile = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    const m = {
+      message: "Updating Profile. Please wait!",
+      severity: "info",
+    };
+
+    if (isSubmitting) {
+      setSnackBar(m);
+      return;
+    }
+
     try {
       setIsSubmitting(true);
       const _formData = new FormData();
@@ -177,20 +188,17 @@ const Profile = () => {
                 ) : null}
                 <p style={{ margin: 0 }}>Investor Profile and information</p>
               </div>
-              {
-                {
-                  rejected: (
-                    <StyledLink
-                      id="link-id"
-                      sx={{ color: "#000" }}
-                      to="/idVerificatonMethod/IdVerificationMethod"
-                    >
-                      Verify your identity
-                    </StyledLink>
-                  ),
-                  confirmed: <p>Identity verified</p>,
-                }[kyc]
-              }
+              {kyc === "confirmed" ? (
+                <p>Identity verified</p>
+              ) : (
+                <StyledLink
+                  id="link-id"
+                  sx={{ color: "#000" }}
+                  to="/idVerificatonMethod/IdVerificationMethod"
+                >
+                  Verify your identity
+                </StyledLink>
+              )}
             </Stack>
           </div>
           <Stack

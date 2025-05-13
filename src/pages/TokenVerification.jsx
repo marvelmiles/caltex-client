@@ -1,5 +1,4 @@
-import React, { useCallback, useMemo, useState, useEffect } from "react";
-import PropTypes from "prop-types";
+import { useCallback, useMemo, useState, useEffect } from "react";
 import AuthLayout from "../components/AuthLayout";
 import Typography from "@mui/material/Typography";
 import Stack from "@mui/material/Stack";
@@ -13,11 +12,11 @@ import { VERIFIC_TOKEN_TIMER } from "../config/constants";
 import { useSelector, useDispatch } from "react-redux";
 import { updateUser } from "../context/reducers/userReducer";
 
-const TokenVerification = ({}) => {
+const TokenVerification = () => {
   const [requestingToken, setRequestingToken] = useState(false);
 
   const { _sentTokenVerification, isLogin } = useSelector(
-    state => state.user.currentUser
+    (state) => state.user.currentUser
   );
 
   let { userId = "", reason = "" } = useParams();
@@ -34,16 +33,16 @@ const TokenVerification = ({}) => {
     isSubmitting,
     handleChange,
     handleSubmit,
-    resetForm
+    resetForm,
   } = useForm(
     useMemo(
       () => ({
         placeholders: {
-          userId
+          userId,
         },
         required: {
-          token: "Verification token is required"
-        }
+          token: "Verification token is required",
+        },
       }),
       [userId]
     )
@@ -54,10 +53,10 @@ const TokenVerification = ({}) => {
   const dispatch = useDispatch();
 
   const resendToken = useCallback(
-    async cb => {
+    async (cb) => {
       try {
         const { formData, withErr } = handleSubmit(undefined, {
-          blacklist: ["token"]
+          blacklist: ["token"],
         });
 
         if (withErr) return;
@@ -79,7 +78,7 @@ const TokenVerification = ({}) => {
 
         setSnackBar({
           message,
-          severity: "success"
+          severity: "success",
         });
       } catch (err) {
         resetForm(true);
@@ -100,7 +99,7 @@ const TokenVerification = ({}) => {
         resendToken(() => {
           dispatch(
             updateUser({
-              _sentTokenVerification: true
+              _sentTokenVerification: true,
             })
           );
         });
@@ -115,7 +114,7 @@ const TokenVerification = ({}) => {
   }, []);
 
   const onSubmit = useCallback(
-    async e => {
+    async (e) => {
       try {
         const { withErr, formData } = handleSubmit(e);
 
@@ -124,7 +123,7 @@ const TokenVerification = ({}) => {
         switch (reason) {
           case "password":
             navigate("/auth/reset-password", {
-              state: { tokenBody: formData }
+              state: { tokenBody: formData },
             });
             break;
           default:
@@ -133,7 +132,7 @@ const TokenVerification = ({}) => {
             if (isLogin)
               dispatch(
                 updateUser({
-                  accountExpires: null
+                  accountExpires: null,
                 })
               );
 
@@ -161,8 +160,8 @@ const TokenVerification = ({}) => {
                 sx={{
                   cursor: "pointer",
                   "&:hover": {
-                    textDecoration: "underline"
-                  }
+                    textDecoration: "underline",
+                  },
                 }}
                 color="text.main"
                 onClick={requestingToken ? undefined : resendToken}
@@ -188,9 +187,9 @@ const TokenVerification = ({}) => {
             readOnly: requestingToken,
             withBorderErr: true,
             validator: ({ value }) =>
-              isNumber(value) ? false : "Invalid token. Whole numbers only!"
-          }
-        ]
+              isNumber(value) ? false : "Invalid token. Whole numbers only!",
+          },
+        ],
       }
     : {
         title: "Verification page not found",
@@ -198,7 +197,7 @@ const TokenVerification = ({}) => {
           <Typography sx={{ mb: 2 }}>Verification page not found!</Typography>
         ),
         btnTitle: { account: "Create account" }[reason],
-        onBtnClick: () => navigate("/auth/signup")
+        onBtnClick: () => navigate("/auth/signup"),
       };
 
   return (

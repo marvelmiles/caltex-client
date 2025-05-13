@@ -1,4 +1,4 @@
-import React, { useRef, useMemo, useCallback, useEffect } from "react";
+import { useRef, useMemo, useCallback, useEffect } from "react";
 import { useState } from "react";
 import "../../components/Deposit/DepositPage.css";
 import { Link } from "react-router-dom";
@@ -62,8 +62,8 @@ const DepositPage = () => {
   const [currency, setCurrency] = useState("USD");
   const [cryptoNetwork, setCryptoNetwork] = useState("btc");
   const [amount, setAmount] = useState("");
-  const [paymentDetails, setPaymentDetails] = useState(null);
-  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [paymentDetails] = useState(null);
+  const [isSubmitting] = useState(false);
   const [copied, setCopied] = useState(false);
   const [address, setAddress] = useState(
     "bc1q6p3yppgffw08dkeau0cnnpxhemkadnr07p3jq0"
@@ -72,18 +72,11 @@ const DepositPage = () => {
 
   const addressRef = useRef();
 
-  const handleCryptoDeposit = async e => {
+  const handleCryptoDeposit = async (e) => {
     e.preventDefault();
 
     setShowNext(true);
   };
-
-  const [userData, setUserData] = useState({
-    firstName: "",
-    lastName: "",
-    photoUrl: "",
-    address: ""
-  });
 
   const cryptoDeposit = useCallback(() => {
     document.getElementById("cryptoDeposit").style.display = "block";
@@ -111,8 +104,8 @@ const DepositPage = () => {
       paymentType: cryptoNetwork ? "crypto" : "fiat",
       currency: cryptoNetwork,
       localPayment: {
-        currency
-      }
+        currency,
+      },
     }),
     [cryptoNetwork, amount, currency]
   );
@@ -134,7 +127,7 @@ const DepositPage = () => {
             borderRight: "none",
             borderLeft: "none",
             border: "1px solid currentColor",
-            borderColor: "divider"
+            borderColor: "divider",
           }}
         >
           <div className="deposit-fund-text">
@@ -146,7 +139,7 @@ const DepositPage = () => {
               sx={{
                 border: "1px solid currentColor",
                 borderColor: "divider",
-                borderRadius: "5px"
+                borderRadius: "5px",
               }}
             >
               <div className="deposit-limit-text" style={{ display: "none" }}>
@@ -336,18 +329,17 @@ const DepositPage = () => {
                         name="Cryptocurrency-Network"
                         size="1"
                         value={cryptoNetwork}
-                        onChange={e => {
+                        onChange={(e) => {
                           const v = e.target.value;
                           setCryptoNetwork(v);
                           setAddress(
                             {
                               btc: "bc1q6p3yppgffw08dkeau0cnnpxhemkadnr07p3jq0",
-                              ltc:
-                                "ltc1qkkvf7vjwaxggdhh4nsnuclmfqfkrt9pv4dnrp2",
+                              ltc: "ltc1qkkvf7vjwaxggdhh4nsnuclmfqfkrt9pv4dnrp2",
                               eth: "0xeD89AeaD1fF477311D27cDb87d411acCf07E17e1",
                               ustderc20:
                                 "0xeD89AeaD1fF477311D27cDb87d411acCf07E17e1",
-                              usdttrc20: "TUUUgN9yTnm3g3BfzW59N9cv2ZTooeE9kK"
+                              usdttrc20: "TUUUgN9yTnm3g3BfzW59N9cv2ZTooeE9kK",
                             }[v]
                           );
                         }}
@@ -387,7 +379,7 @@ const DepositPage = () => {
                       ml: "20px",
                       mt: 3,
                       width: "57%",
-                      display: showNext ? "block" : "none"
+                      display: showNext ? "block" : "none",
                     }}
                   >
                     <Typography variant="h4" sx={{ mb: 3 }}>
@@ -406,23 +398,18 @@ const DepositPage = () => {
                           py: 2,
                           background: "transparent",
                           outline: 0,
-                          boxShadow: "none"
+                          boxShadow: "none",
                         },
                         "& > div": {
                           fontSize: "20px",
                           margin: 0,
                           "&  > *": {
-                            margin: "0 !important"
-                          }
-                        }
+                            margin: "0 !important",
+                          },
+                        },
                       }}
                     >
-                      <input
-                        variant="h6"
-                        ref={addressRef}
-                        value={address}
-                        readOnly
-                      />
+                      <input ref={addressRef} value={address} readOnly />
 
                       <div>
                         {copied ? (
@@ -439,7 +426,7 @@ const DepositPage = () => {
                         name="currency"
                         size="1"
                         value={currency}
-                        onChange={e => setCurrency(e.target.value)}
+                        onChange={(e) => setCurrency(e.target.value)}
                       >
                         <option value="USD" id="usd">
                           USD
@@ -453,7 +440,7 @@ const DepositPage = () => {
                         id="number"
                         value={amount}
                         placeholder=" "
-                        onChange={e => setAmount(e.target.value)}
+                        onChange={(e) => setAmount(e.target.value)}
                       />
                     </div>
 
@@ -499,7 +486,7 @@ const DepositPage = () => {
                       name="currency"
                       size="1"
                       value={currency}
-                      onChange={e => setCurrency(e.target.value)}
+                      onChange={(e) => setCurrency(e.target.value)}
                     >
                       <option value="USD" id="usd">
                         USD
@@ -513,7 +500,7 @@ const DepositPage = () => {
                       id="number"
                       value={amount}
                       placeholder=" "
-                      onChange={e => setAmount(e.target.value)}
+                      onChange={(e) => setAmount(e.target.value)}
                     />
                   </div>
 

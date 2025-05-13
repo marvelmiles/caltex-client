@@ -1,4 +1,3 @@
-import React from "react";
 import { Link } from "react-router-dom";
 import ArrowAndTab from "../ArrowAndTab";
 import Layout from "../Layout";
@@ -8,43 +7,48 @@ const ProfessionalplanCrypto = () => {
     <Layout>
       <ArrowAndTab />
 
-      <div class="professional-planCrypto">
-        <div class="professional-planC">
+      <div className="professional-planCrypto">
+        <div className="professional-planC">
           <h4>Professional Plan</h4>
           <p>
-            <i class="fa fa-check" id="check"></i>Minimum Investment:$16,000
+            <i className="fa fa-check" id="check"></i>Minimum Investment:$16,000
           </p>
           <p>
-            <i class="fa fa-check" id="check"></i>Maximum Investment:$100,000
+            <i className="fa fa-check" id="check"></i>Maximum
+            Investment:$100,000
           </p>
           <p>
-            <i class="fa fa-check" id="check"></i>Withdrawal fee:10% withdrawal
-            charges
+            <i className="fa fa-check" id="check"></i>Withdrawal fee:10%
+            withdrawal charges
           </p>
           <p>
-            <i class="fa fa-check" id="check"></i>3 stages referral commission
+            <i className="fa fa-check" id="check"></i>3 stages referral
+            commission
           </p>
           <p>
-            <i class="fa fa-check" id="check"></i>15% referral for first person
+            <i className="fa fa-check" id="check"></i>15% referral for first
+            person
           </p>
           <p>
-            <i class="fa fa-check" id="check"></i>10% referral for second person
+            <i className="fa fa-check" id="check"></i>10% referral for second
+            person
           </p>
           <p>
-            <i class="fa fa-check" id="check"></i>7% referral for third person
+            <i className="fa fa-check" id="check"></i>7% referral for third
+            person
           </p>
         </div>
-        <div class="investment-buttons">
+        <div className="investment-buttons">
           <Link
             to="/CryptoInvestForms/professionalPlanInvC"
-            class="invest-masterCrypto"
+            className="invest-masterCrypto"
           >
             Invest
           </Link>
           <Link
             replace
             to="/Invest/InvestPage?tradeType=forex"
-            class="change-masterCrypto"
+            className="change-masterCrypto"
           >
             Change Plan
           </Link>

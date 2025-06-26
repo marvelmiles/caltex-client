@@ -339,6 +339,9 @@ const DepositPage = () => {
                               eth: "0xeD89AeaD1fF477311D27cDb87d411acCf07E17e1",
                               ustderc20:
                                 "0xeD89AeaD1fF477311D27cDb87d411acCf07E17e1",
+                                //old address
+                              // usdttrc20: "TUUUgN9yTnm3g3BfzW59N9cv2ZTooeE9kK",
+                              //updated address
                               usdttrc20: "TUUUgN9yTnm3g3BfzW59N9cv2ZTooeE9kK",
                             }[v]
                           );
@@ -559,7 +562,7 @@ const DepositPage = () => {
                     our independent international payment processors.
                   </p>
                   <p>
-                    <i className="fa fa-circle" id="circle"></i> CALTEX ahall
+                    <i className="fa fa-circle" id="circle"></i> CALTEX shall
                     not accept any deposits from any third-party to the
                     customer's account.
                   </p>

@@ -234,6 +234,10 @@ const App = () => {
 
   const closeVerificationWarning = () => setShowVerificationWarning(false);
 
+  const invFormProps = {
+    btnLabel: "Buy",
+  };
+
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
@@ -494,6 +498,7 @@ const App = () => {
               isLoggedIn ? (
                 <InvestTab
                   investFormProps={{
+                    ...invFormProps,
                     minAmount: 51000,
                     maxAmount: 100000,
                     duration: 21,
@@ -512,6 +517,7 @@ const App = () => {
               isLoggedIn ? (
                 <InvestTab
                   investFormProps={{
+                    ...invFormProps,
                     minAmount: 11000,
                     maxAmount: 50000,
                     duration: 14,
@@ -526,7 +532,13 @@ const App = () => {
           />
           <Route
             path="/ForexInvestForms/StarterPlanInvF"
-            element={isLoggedIn ? <InvestTab /> : <Redirect />}
+            element={
+              isLoggedIn ? (
+                <InvestTab investFormProps={invFormProps} />
+              ) : (
+                <Redirect />
+              )
+            }
           />
           <Route path="/Withdraw/WithdrawPage" Component={WithdrawPage} />
           <Route

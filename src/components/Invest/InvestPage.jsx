@@ -26,8 +26,9 @@ const InvestPage = () => {
           <div className="invest-forex">
             <div className="invex-forex-inner">
               <p className="wide-array">
-                We have a wide array of investment plans to choose from. Choose
-                from the options below the investment plan which best suits you.
+                We have a wide array of securities and investment plans to
+                choose from. Select from the options below the market plan that
+                best suits you.
               </p>
 
               <div className="choose-your-plan">
@@ -61,20 +62,22 @@ const InvestPage = () => {
                         to={`/ForexDetails/StarterplanForex?${searchParam}`}
                         className="starter-plan"
                       >
-                        Starter Plan 0.6% ROI, 7 DAYS PACKAGE $100-$10000
+                        Starter Plan LR 0.6%, 14 DAYS roll over, Mini Dep
+                        $100-$10000
                       </Link>
                       <Link
                         to={`/ForexDetails/professionalplanForex?${searchParam}`}
                         className="professional-plan"
                       >
-                        Professional Plan 1.5% ROI, 14 DAYS PACKAGE
+                        Professional Plan LR 1.5%, 5 Weeks roll over, Mini Dep
                         $11000-$50000
                       </Link>
                       <Link
                         to={`/ForexDetails/masterplanForex?${searchParam}`}
                         className="master-plan"
                       >
-                        Master Plan 2.0% ROI 21 DAYS $50000-$100000
+                        Master Plan LR 2%,2 months roll over, Mini Dep
+                        $50000-$100000
                       </Link>
                     </div>
                   </div>

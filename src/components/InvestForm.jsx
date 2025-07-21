@@ -15,6 +15,7 @@ const InvestForm = ({
   minAmount = 100,
   roiPct = 2.5,
   duration: defaultDuration = 7,
+  btnLabel = "Invest",
 }) => {
   const placeholders = useMemo(() => {
     const endDate = setFutureDate(defaultDuration);
@@ -300,7 +301,7 @@ const InvestForm = ({
           sx={{ p: "12px", px: 5 }}
           disabled={isSubmitting}
         >
-          Invest
+          {btnLabel}
         </Button>
       </div>
     </form>

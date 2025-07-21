@@ -12,6 +12,37 @@ const ProfessionalplanForex = () => {
         <div class="professional-planF">
           <h4>Professional Plan</h4>
           <p>
+            <i class="fa fa-check" id="check"></i> Minimum Amount: $11,000
+          </p>
+
+          <p>
+            <i class="fa fa-check" id="check"></i> Withdraw: Daily
+          </p>
+
+          <p>
+            <i class="fa fa-check" id="check"></i>Withdrawal fee:7% (No hidden
+            fee)
+          </p>
+
+          <p>
+            <i class="fa fa-check" id="check"></i>3 stages referral commision
+          </p>
+
+          <p>
+            <i class="fa fa-check" id="check"></i>Average Spread: Daily yield
+          </p>
+
+          <p>
+            <i class="fa fa-check" id="check"></i>
+            Equity etfs,Crypto Derivatives, Symbol
+          </p>
+
+          <p>
+            <i class="fa fa-check" id="check"></i>
+            Forex pairs, Dax futures
+          </p>
+
+          {/* <p>
             <i class="fa fa-check" id="check"></i>Minimum Investment:$11,000
           </p>
           <p>
@@ -25,6 +56,9 @@ const ProfessionalplanForex = () => {
             <i class="fa fa-check" id="check"></i>3 stages referral commission
           </p>
           <p>
+            <i class="fa fa-check" id="check"></i>7% referral for third person
+          </p> */}
+          {/* <p>
             <i class="fa fa-check" id="check"></i>15% referral for first person
           </p>
           <p>
@@ -32,14 +66,14 @@ const ProfessionalplanForex = () => {
           </p>
           <p>
             <i class="fa fa-check" id="check"></i>7% referral for third person
-          </p>
+          </p> */}
         </div>
         <div class="investment-buttons">
           <Link
             to="/ForexInvestForms/professionalPlanInvF"
             class="invest-masterCrypto"
           >
-            Invest
+            Buy
           </Link>
           <Link
             replace

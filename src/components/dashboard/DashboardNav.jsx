@@ -1,13 +1,9 @@
 import React, { useEffect, useState } from "react";
 import useAuth from "../../hooks/useAuth";
 import "./dashboard.css";
-import { Link } from "react-router-dom";
-import wallet from "../../../src/svgs/profile-wallet.svg";
-import styles from "./Sidebar.module.scss";
 import MenuBar from "./MenuBar";
 import verifiedIcon from "../../../src/images/verified.png";
 import Avatar from "@mui/material/Avatar";
-import { HOME_ORIGIN } from "../../config/constants";
 
 const DashboardNav = () => {
   const { currentUser } = useAuth();
